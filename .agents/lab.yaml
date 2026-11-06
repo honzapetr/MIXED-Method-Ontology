@@ -1,0 +1,25 @@
+# Project Lab settings of this project (protected: a change needs the owner's approval).
+commands:
+  setup: uv sync
+  test: uv run pytest
+  lint: uv run ruff check . && uv run ruff format --check .
+preview:
+  port: 8400
+  compose: compose.preview.yaml
+  health: /healthz
+github:
+  owner: honzapetr
+  repo: MIXED-Method-Ontology
+# Overrides of the lab's default role -> provider/model chains, e.g.
+#   coder: [{provider: claude, model: sonnet}]
+roles: {}
+merge: approve
+protected_paths:
+  - .github/
+  - .claude/
+  - .agents/roles/
+  - .agents/skills/
+  - .agents/lab.yaml
+  - AGENTS.md
+  - CLAUDE.md
+  - tools/agents_sync.py

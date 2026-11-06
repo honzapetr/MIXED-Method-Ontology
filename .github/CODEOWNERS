@@ -1,0 +1,9 @@
+# Protected paths: changes are approved by the owner (the lab never merges them automatically).
+/.github/              @honzapetr
+/.claude/              @honzapetr
+/.agents/roles/        @honzapetr
+/.agents/skills/       @honzapetr
+/.agents/lab.yaml      @honzapetr
+/AGENTS.md             @honzapetr
+/CLAUDE.md             @honzapetr
+/tools/agents_sync.py  @honzapetr

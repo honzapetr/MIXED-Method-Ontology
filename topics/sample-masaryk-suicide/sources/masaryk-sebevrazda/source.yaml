@@ -1,0 +1,9 @@
+# Candidate book - check the rights of the edition you scan (the author died in 1937; a translation has its own rights).
+id: masaryk-sebevrazda
+kind: book
+title: Sebevražda hromadným jevem společenským moderní osvěty
+creator: Tomáš Garrigue Masaryk
+published: '1881 (German original); Czech edition 1904'
+language: cs
+note: Put page scans next to this file (page-001.jpg, ...), then run `mmo source scan`.
+pages: []

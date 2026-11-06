@@ -1,0 +1,19 @@
+# Sample topic for developing the infrastructure. The owner did not choose a book yet; any scanned book works.
+title: Suicide as a social phenomenon of modern civilisation (sample topic)
+created: '2026-11-06'
+language: cs
+questions:
+  - id: q1
+    text: Jak Masaryk vysvětluje růst sebevražednosti v moderní společnosti?
+  - id: q2
+    text: Jakou roli v tom přisuzuje náboženství, vzdělání a "polovzdělanosti"?
+goals:
+  - id: g1
+    text: Get clean, traceable text of the book (OCR variants compared on sample pages).
+    status: active
+    author: agent
+sources:
+  - masaryk-sebevrazda
+methods_planned:
+  - thematic-analysis
+  - grounded-theory

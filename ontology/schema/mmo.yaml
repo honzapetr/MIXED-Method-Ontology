@@ -1,0 +1,273 @@
+# Core ontology of MIXED-Method-Ontology - DRAFT (LinkML).
+# Status: proposal for discussion; nothing generated from it yet. Mapping to standards: ../mapping.md
+# (versions and exact scope of each standard still to be verified).
+id: https://w3id.org/mixed-method-ontology/core
+name: mmo
+title: Core ontology for qualitative and mixed-methods research
+version: 0.1.0-draft
+license: MIT
+prefixes:
+  linkml: https://w3id.org/linkml/
+  mmo: https://w3id.org/mixed-method-ontology/core/
+  skos: http://www.w3.org/2004/02/skos/core#
+  oa: http://www.w3.org/ns/oa#
+  prov: http://www.w3.org/ns/prov#
+  dcterms: http://purl.org/dc/terms/
+  cdi: http://ddialliance.org/Specification/DDI-CDI/1.0/RDF/
+default_prefix: mmo
+default_range: string
+imports:
+  - linkml:types
+
+enums:
+  ProposalStatus:
+    description: Every analytical statement is proposed by a model or a person and decided by a person.
+    permissible_values:
+      proposed:
+      confirmed:
+      rejected:
+      superseded:
+  SourceKind:
+    permissible_values:
+      book:
+      interview:
+      field_note:
+      document:
+      dataset:
+  AgentKind:
+    permissible_values:
+      person:
+      model:
+      software:
+
+classes:
+  NamedThing:
+    abstract: true
+    slots: [id, label, description]
+
+  Topic:
+    is_a: NamedThing
+    description: A long-lived research project; the unit of work and of versioning.
+    slots: [questions, goals, sources, methods_used]
+
+  ResearchQuestion:
+    is_a: NamedThing
+    slots: [topic]
+
+  Goal:
+    is_a: NamedThing
+    description: What the author and the agent want to find out next; changes over time.
+    slots: [topic, status, author, created]
+
+  Source:
+    is_a: NamedThing
+    class_uri: dcterms:BibliographicResource
+    slots: [kind, creator, published, language, rights, pages]
+
+  Page:
+    is_a: NamedThing
+    description: One scanned image of a source.
+    slots: [source, number, image_sha256]
+
+  Segment:
+    is_a: NamedThing
+    description: A span of source text with an exact position; the target of every annotation.
+    slots: [source, page, start, end, text]
+
+  Concept:
+    is_a: NamedThing
+    abstract: true
+    class_uri: skos:Concept
+    description: Common parent of codes, categories and themes; hierarchy via broader/narrower.
+    slots: [definition, broader, status, author, created, generated_by]
+
+  Code:
+    is_a: Concept
+    slots: [code_type]
+
+  Category:
+    is_a: Concept
+
+  Theme:
+    is_a: Concept
+
+  CoreCategory:
+    is_a: Category
+    description: Central category of a grounded theory.
+
+  Codebook:
+    is_a: NamedThing
+    class_uri: skos:ConceptScheme
+    slots: [topic, concepts, locked]
+
+  Annotation:
+    description: Assignment of a concept to a segment (W3C Web Annotation).
+    class_uri: oa:Annotation
+    slots: [id, body, target, quote, status, author, created, generated_by]
+
+  Relation:
+    description: A typed, directed relation between concepts, with evidence and confidence.
+    slots: [id, relation_type, subject, object, evidence, confidence, status, author, created, generated_by]
+
+  Memo:
+    is_a: NamedThing
+    description: Analytical note of a researcher or a model; a steering memo also feeds later steps.
+    slots: [about, text, steering, author, created]
+
+  Method:
+    is_a: NamedThing
+    description: A method module (methods/*.yaml) - phases, code types, relation types, outputs.
+    slots: [phases, relation_types]
+
+  AnalyticalStep:
+    description: Who or what did what, when, with which method, prompt and model (PROV-O activity).
+    class_uri: prov:Activity
+    slots: [id, method, phase, used, agent, model, prompt_version, started, ended]
+
+  Agent:
+    is_a: NamedThing
+    class_uri: prov:Agent
+    slots: [agent_kind]
+
+  # Quantitative part (mixed methods) - to be aligned with DDI-CDI.
+  Variable:
+    is_a: NamedThing
+    class_uri: cdi:InstanceVariable
+    slots: [question_text, linked_concepts]
+
+  Case:
+    is_a: NamedThing
+    description: A case or respondent; links qualitative sources to quantitative records.
+    slots: [sources]
+
+slots:
+  id:
+    identifier: true
+    range: uriorcurie
+  label:
+    slot_uri: skos:prefLabel
+  description:
+  definition:
+    slot_uri: skos:definition
+  questions:
+    range: ResearchQuestion
+    multivalued: true
+    inlined: false
+  goals:
+    range: Goal
+    multivalued: true
+    inlined: false
+  sources:
+    range: Source
+    multivalued: true
+    inlined: false
+  methods_used:
+    range: Method
+    multivalued: true
+    inlined: false
+  topic:
+    range: Topic
+  status:
+    range: ProposalStatus
+  author:
+    range: Agent
+    slot_uri: dcterms:creator
+  created:
+    range: datetime
+    slot_uri: dcterms:created
+  kind:
+    range: SourceKind
+  creator:
+    slot_uri: dcterms:creator
+  published:
+    slot_uri: dcterms:issued
+  language:
+    slot_uri: dcterms:language
+  rights:
+    slot_uri: dcterms:rights
+  pages:
+    range: Page
+    multivalued: true
+    inlined: false
+  source:
+    range: Source
+  page:
+    range: Page
+  number:
+    range: integer
+  image_sha256:
+  start:
+    range: integer
+  end:
+    range: integer
+  text:
+  broader:
+    range: Concept
+    multivalued: true
+    slot_uri: skos:broader
+  code_type:
+    description: Method-specific kind of code (e.g. in vivo, process, condition).
+  concepts:
+    range: Concept
+    multivalued: true
+    inlined: false
+  locked:
+    range: boolean
+  body:
+    range: Concept
+    slot_uri: oa:hasBody
+  target:
+    range: Segment
+    slot_uri: oa:hasTarget
+  quote:
+    description: Exact quoted text (oa:TextQuoteSelector exact).
+  relation_type:
+    description: Allowed values come from the method module.
+  subject:
+    range: Concept
+  object:
+    range: Concept
+  evidence:
+    range: Segment
+    multivalued: true
+    inlined: false
+  confidence:
+    range: float
+  generated_by:
+    range: AnalyticalStep
+    slot_uri: prov:wasGeneratedBy
+  about:
+    multivalued: true
+    range: uriorcurie
+  steering:
+    range: boolean
+  phases:
+    multivalued: true
+  relation_types:
+    multivalued: true
+  method:
+    range: Method
+  phase:
+  used:
+    range: Segment
+    multivalued: true
+    inlined: false
+    slot_uri: prov:used
+  agent:
+    range: Agent
+    slot_uri: prov:wasAssociatedWith
+  model:
+  prompt_version:
+  started:
+    range: datetime
+    slot_uri: prov:startedAtTime
+  ended:
+    range: datetime
+    slot_uri: prov:endedAtTime
+  agent_kind:
+    range: AgentKind
+  question_text:
+  linked_concepts:
+    range: Concept
+    multivalued: true
+    inlined: false

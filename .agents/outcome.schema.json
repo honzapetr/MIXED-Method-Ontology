@@ -1,0 +1,11 @@
+{
+  "title": "Outcome of a headless agent run",
+  "type": "object",
+  "required": ["status", "summary", "questions"],
+  "additionalProperties": false,
+  "properties": {
+    "status": {"enum": ["done", "question", "blocked"]},
+    "summary": {"type": "string"},
+    "questions": {"type": "array", "items": {"type": "string"}}
+  }
+}

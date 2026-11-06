@@ -1,0 +1,24 @@
+.env
+.env.local
+.agents/state/*
+!.agents/state/.gitkeep
+.worktrees/
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+dist/
+
+# Source scans and other large source files stay out of git (size, copyright); source.yaml keeps their hashes.
+topics/*/sources/**/*.jpg
+topics/*/sources/**/*.jpeg
+topics/*/sources/**/*.png
+topics/*/sources/**/*.tif
+topics/*/sources/**/*.tiff
+topics/*/sources/**/*.webp
+topics/*/sources/**/*.pdf
+topics/*/sources/**/*.epub
+# Rebuildable indexes
+topics/*/graph/.store/

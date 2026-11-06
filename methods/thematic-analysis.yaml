@@ -1,0 +1,59 @@
+# Method module - DRAFT. Read by agents to plan and run an analysis; validated by tests/test_methods.py.
+id: thematic-analysis
+name: Reflexive thematic analysis
+references:
+  - Braun & Clarke (2006, 2019, 2022)
+summary: >-
+  Develops themes - patterns of shared meaning organised around a central concept - through six recursive phases.
+code_types: [semantic, latent]
+relation_types:
+  - id: subtheme_of
+    description: A subtheme belongs to a theme.
+  - id: supports
+    description: A code supports a theme.
+  - id: tension_with
+    description: Two themes pull in different directions.
+phases:
+  - id: familiarisation
+    goal: Read the data and note first impressions.
+    input: segments
+    output: [memos]
+    model_role: summarise sources and list notable passages with quotes
+    human_gate: write familiarisation memos
+  - id: coding
+    goal: Code the whole dataset systematically.
+    input: segments
+    output: [codes]
+    model_role: propose semantic and latent codes per segment with a quote
+    human_gate: confirm, edit or reject codes
+  - id: generating-themes
+    goal: Cluster codes into candidate themes.
+    input: confirmed codes
+    output: [themes, relations]
+    allowed_relations: [supports, subtheme_of]
+    model_role: propose candidate themes and their central organising concept
+    human_gate: choose candidate themes
+  - id: reviewing-themes
+    goal: Check themes against the coded data and the whole dataset.
+    input: candidate themes
+    output: [themes, relations, memos]
+    allowed_relations: [supports, subtheme_of, tension_with]
+    model_role: point out weak or overlapping themes with evidence
+    human_gate: merge, split or drop themes
+  - id: defining-themes
+    goal: Name each theme and write its definition.
+    input: reviewed themes
+    output: [themes]
+    model_role: draft names and definitions
+    human_gate: approve names and definitions
+  - id: writing-up
+    goal: Write the analytic report with extracts.
+    input: defined themes
+    output: [report]
+    model_role: draft the report with quotes of confirmed segments
+    human_gate: edit and approve the report
+practices:
+  - researcher reflexivity - memos on the researcher's position
+  - recursive movement between phases
+conclusions: >-
+  A small set of defined themes, each with a central organising concept, supporting codes and quoted extracts.

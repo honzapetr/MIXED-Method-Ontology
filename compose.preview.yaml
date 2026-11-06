@@ -1,0 +1,13 @@
+# Preview of the application in the Project Lab (port assigned by the controller).
+name: mixed-method-ontology-preview
+services:
+  app:
+    build: .
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      PORT: "8000"
+    ports:
+      - "8400:8000"
+    restart: "no"
