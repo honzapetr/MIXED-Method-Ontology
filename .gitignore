@@ -22,3 +22,6 @@ topics/*/sources/**/*.pdf
 topics/*/sources/**/*.epub
 # Rebuildable indexes
 topics/*/graph/.store/
+
+# One-off scripts and temporary files of agents and the owner (AGENTS.md, Rules)
+scratch/

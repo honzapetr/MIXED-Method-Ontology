@@ -49,6 +49,11 @@ you claim a task is done, and quote its result.
   owner, never merged automatically: `.github/`, `.claude/`, `.agents/roles/`, `.agents/skills/`, `.agents/lab.yaml`,
   `AGENTS.md`, `CLAUDE.md`, `tools/agents_sync.py`.
 * **Language:** code, comments, commits and docs in English.
+* **One-off scripts and temporary files** (decoding, image crops, quick counts, test inputs) go only to `scratch/`
+  (git-ignored), one subfolder per task (`scratch/T<n>/`), never elsewhere in the repository. When the task ends,
+  delete what is no longer needed; a script worth keeping for later analysis stays there and is named in the task's
+  `docs/progress.md` entry. A script whose output enters the analysis is not a one-off: it becomes an `mmo` command
+  in `code/mmo/` with tests, so every result can be traced to the code that made it.
 
 ## Headless runs in the lab
 
