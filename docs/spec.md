@@ -19,20 +19,50 @@
 
 ## Topic folder
 
+Source-centric (ADR 0006, built in T2b): everything about one source is in its folder, and what the researcher
+writes is kept apart from what the machine produces.
+
 ```
 topics/<slug>/
-  topic.yaml            # title, questions, goals, sources (versioned)
-  sources/<source-id>/  # source.yaml (metadata) + page images (images are git-ignored)
-  work/ocr/<backend>/<source-id>/page-NNNN.json
-  work/numbers/<source-id>.json            # printed page numbers read from the page edges
-  work/order/<variant>/<source-id>.yaml    # reading order by printed page numbers (report to review)
-  work/text/<variant>/<source-id>.md       # the whole text of one variant in reading order
-  work/segments/<source-id>.jsonl
-  ground-truth/<source-id>/page-NNNN.txt   # optional hand-corrected pages for OCR evaluation
-  graph/                # (planned) sorted Turtle per named graph
+  topic.yaml                  # title, questions, goals, sources: [<id>, ...]
+  memos/                      # topic memos, research journal (written by the researcher)
+  graph/                      # (planned) sorted Turtle per named graph
+  sources/<id>/
+    source.yaml               # RESEARCHER: metadata, attributes, links, page-number fixes
+    notes.md                  # RESEARCHER: context memo - why the source is here, how it came about
+    files/                    # original files (page images git-ignored)
+    text/<variant>.md         # READ: whole text of one variant in reading order
+    segments/<variant>.jsonl  # segments of one variant
+    ground-truth/scan-NNNN.txt  # optional hand-corrected scans for OCR evaluation
+    ingest/                   # MACHINE: never edited by hand
+      files.yaml              #   every original file: scan number, name, SHA-256
+      ocr/<variant>/scan-NNNN.json
+      page-numbers.json       #   printed page numbers read from the page edges
+      order/<variant>.yaml    #   reading order report: gaps, duplicates, pages without a number
 ```
 
-Page images stay out of git; `source.yaml` lists each image with its SHA-256 so results stay traceable.
+**Scan and page.** `scan` is the position of a file in file-name order - the identity of an image. `page` is the
+printed page number. Results are stored by scan; the reading order maps scans to pages.
+
+**`source.yaml`** (all fields except `id` optional):
+
+| Field | Meaning |
+| :--- | :--- |
+| `id`, `title` | identity and a human name |
+| `kind` | `book`, `interview`, `field-note`, `document`, `article`, `web`, `dataset` |
+| `role` | `primary` (default) or `context` - supplementary material about other sources |
+| `about` | for `context`: ids of the sources it is about |
+| `language` | ISO 639-3 (`ces`) |
+| `citation` | `authors`, `year`, `title`, `publisher`, `isbn`, `url`, `accessed` |
+| `attributes` | free key-value pairs (document variables / cases in QDA terms) |
+| `questions` | ids of the topic's research questions the source serves |
+| `printed_pages` | hand fixes `{<file>: <page>}` where reading the page number failed |
+| `note` | one line; longer context goes to `notes.md` |
+
+Page images stay out of git; `ingest/files.yaml` lists each file with its SHA-256 so results stay traceable.
+
+**Supplementary information** (reviews, interviews with the author, context documents) is a source of its own with
+`role: context` and `about`, ingested and segmented the same way, so statements drawn from it are traceable too.
 
 ## Ingest pipeline
 
@@ -40,11 +70,11 @@ Page images stay out of git; `source.yaml` lists each image with its SHA-256 so 
 2. **OCR** – `mmo ocr run` sends every page image to one backend and stores one JSON per page:
    `page`, `image`, `image_sha256`, `backend`, `model`, `prompt_version`, `text`, `confidence` (if known),
    `quality` and `warnings` (if the backend reports them), `seconds`, `created`. Results of different backends live
-   side by side, so variants can be compared. `page` is the **scan number** (file-name order), the identity of an
+   side by side, so variants can be compared. `scan` (formerly `page`) is the **scan number** (file-name order), the identity of an
    image; `--workers N` reads N pages at once, and a failed page does not stop the others (a rerun retries it).
 3. **Order** – `mmo ocr numbers` reads the printed page number from the top and bottom edge of every image (the
    strips go to the fabric service's Extract: OCR models leave headers and footers out of the page text, Tesseract
-   cannot read a lone number from a photo); results in `work/numbers/<source>.json`, resumable. `mmo ocr order` takes
+   cannot read a lone number from a photo); results in `ingest/page-numbers.json` of the source, resumable. `mmo ocr order` takes
    that number, else a line that is only a number among the first or last three lines of the OCR text, and sorts the
    pages by it. A page without a number between two pages two apart gets
    the number between them (`inferred`); a number set by hand in `source.yaml` (`printed_pages: {<image>: <page>}`)
@@ -54,7 +84,7 @@ Page images stay out of git; `source.yaml` lists each image with its SHA-256 so 
 4. **Compare** – `mmo ocr compare` reports the character error rate (CER) of each backend against ground truth when
    it exists, otherwise between two backends.
 5. **Segment** – `mmo segment` joins the text of one backend's pages in reading order, repairs words hyphenated across line ends and
-   splits paragraphs into segments with ids `<source>:p<page>:<n>` and character offsets into the page text.
+   splits paragraphs into segments with ids `<source>:s<scan>:<n>` and character offsets into the scan's text.
 
 ### OCR backends
 

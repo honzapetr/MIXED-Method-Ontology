@@ -22,3 +22,14 @@
 - **First book / question:** not decided; the agent picks a sample topic and question for development. Which book
   does not matter – the goal is the infrastructure.
 - **Next step:** prepare folders, instructions and scripts; then continue locally with real scans and tune OCR.
+
+## 2026-11-12 – how a topic is stored
+
+- **Source-centric layout (approved):** everything about one source lives in its own folder; what the researcher
+  writes (metadata, notes, page-number fixes) is kept apart from what the machine produces (OCR, page numbers, order
+  report) and from the readable text. The current layout by processing step (`work/ocr`, `work/numbers`,
+  `work/order`, `work/text`) is hard to find one's way in.
+- **Supplementary information = new sources:** material about a source (reviews, interviews with the author,
+  context documents) is added as a source of its own with the role `context`, linked to the source it is about, and
+  goes through the same ingest; it is traceable the same way as the primary source.
+- **Adding a source should be one step** with the existing OCR tools, not five separate commands.
