@@ -1,0 +1,22 @@
+{
+  "source": "kniha",
+  "scan": 99,
+  "image": "IMG_20260902_222036.jpg",
+  "image_sha256": "ebd75f236547f0bc021734717ba0b20d21ba35da03c1ece3bbbcffe174772be6",
+  "backend": "fabric",
+  "model": "fabric/model",
+  "prompt_version": "fabric-service",
+  "confidence": null,
+  "quality": "full",
+  "warnings": [],
+  "seconds": 9.86,
+  "created": "2026-11-11T22:07:49+00:00",
+  "text": "Filozofka Shannon Vallor považuje vzhledem k počtu lidí na planetě náhradu jejich práce ze strany AI za zcela zbytečnou, neboť netrpíme nedostatkem pracovní síly. Jako vhodné pro využití AI vidí pouze oblasti označované ze strany AI výzkumníků jako „3D“, tedy „nudné, špinavé a nebezpečné“ (dull, dirty, and dangerous).²⁶ Vallor říká, že bychom se měli zamyslet, jestli skutečně potřebujeme nahrazovat lidi umělou inteligencí. Problém ovšem je, že AI dokáže firmám výrazně snížit náklady a zároveň vydělat velké peníze. Nemůžeme tedy očekávat, že pracovní pozice mimo oblasti „3D“ nebudou nijak ohroženy.\n\nPublikované studie potvrzují, že téměř všechny pracovní pozice budou mít překryv se schopnostmi AI.²⁷ Budou to naopak primárně pracovní pozice mimo oblast 3D, u nichž se předpokládá, že budou nejvíce ohroženy. Ekonomové Ed Felten, Manav Raj a Rob Seamans ve svém výzkumu dokumentují, že schopnosti AI se nejvíce překrývají s nejlépe finančně ohodnocenými pozicemi, které vyžadují kreativitu a dosažení vysokého stupně vzdělání. Z jejich výzkumu vyplývá, že pouze 36 pracovních kategorií z 1016 jimi zkoumaných nemá žádný překryv s AI. Těchto pár pozic se týkalo profesí velmi fyzicky náročných, při kterých je kritickou schopností orientace v prostoru.²⁸\n\nParadoxu, kdy jsou pro sofistikovanou AI nejtěžší úkony, které jsou pro nás automatické a nepovažujeme je za něco složitého, jako je koordinace v prostoru, se říká Moravcův paradox. Hans Moravec si povšiml toho, že mentální úkony, které jsou pro nás těžké, jako jsou složité matematické výpočty z hlavy či zapamotování si velkého objemu informací, jsou pro počítače snadnou záležitostí. Zatímco úkony pro nás zdánlivě samozřejmé a jednoduché, například běh nebo rozpoznávání tváří, představují pro AI mnohem složitější výzvu. Moravec to vysvětluje tím, že se úkony, které jsou pro nás lehké, vyvíjely stovky milionů let\n",
+  "cleaning": {
+    "version": "clean-v1",
+    "from_variant": "fabric",
+    "created": "2026-11-12T23:03:32+00:00",
+    "stuck": [],
+    "removed": []
+  }
+}

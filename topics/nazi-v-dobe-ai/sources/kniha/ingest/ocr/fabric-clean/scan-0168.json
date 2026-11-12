@@ -1,0 +1,24 @@
+{
+  "source": "kniha",
+  "scan": 168,
+  "image": "IMG_20260902_223058.jpg",
+  "image_sha256": "cbfbcaec44656892ad716aaf7028383990d8a954ea8e287d74872dfa99f93029",
+  "backend": "fabric",
+  "model": "fabric/model",
+  "prompt_version": "fabric-service",
+  "confidence": null,
+  "quality": "full",
+  "warnings": [
+    "page 1: rotated 270 degrees clockwise to read it"
+  ],
+  "seconds": 13.5,
+  "created": "2026-11-11T22:16:26+00:00",
+  "text": "míže pomoci pohlížet na tuto novou technologii s patřičným nadhledem.\n\nJako typický puberták jsem vnímal mnoho věcí až příliš exis-\ntenčně silně (a ano, byl jsem trochu zvláštní případ, který\nv šestnácti letech četl „veselá“ díla Camuse, Nietzscheho, Kier-\na užívali si objevu svého pohlavního ústrojí). Pomáhalo mi před-\nstavovat si při tom své předky a různé historické postavy, jak se\nna mě odkudsi z oblaků dívají a náramně se baví tím, jak vážně\nsvou situaci prožívám. To mi umožnilo zbavit se tříhy a jít dál.\nO několik let později, už během studia na vysoké škole, jsem\nopět naplno pocítil, jak ohromný dar smích je.\n\nByl jsem tehdy nešťastně zamilován. Dívka, o kterou jsem stáł, mé city neopětovala. Tušil jsem, že to nedopadne – ačkoliv jsme byli dobří kamarádi a vídali se téměř denně, věděl jsem, že se mnou nemá romantické úmysly a že jsem to neměl ani zkoušet. Ale zkusil jsem... a bolelo to. V pochmurné a duchem nepřítomné náladě jsem kráčel ulicemi Prahy, až jsem došel na Petřín. Jako bych cestou vzhůru očekával, že tam na kopci naleznu nějakou zázračnou úlevu od svého mladického utrpení.\n\nAsi v polovině cesty na kopec mi vytanula na mysli slova\nmého oblibeného Nietzscheho z Tak pravil Zarathustra: „A když\njsem viděl svého dábla, shledal jsem ho vážným, důkladným,\nhlubokým, slavnostním: byl to duch třeše – jím padají všechny\nvěci. Nikoli hněvem, leč smíchem se zabíjí. Vzhůru, zabme du-\ncha třeše!““\n\nNapadlo mě, že bych se mohl své situaci zasmát, přestat ji\nbrát tak vážně. Ale nešlo to. Realita je prostě taková, jaká je,\ntedy dál, ponořený do své chmurné nálady. A znovu: „Zkus se od\nsrdce zasmát své situaci, vždyť není tak vážná,“ ozvalo se ve mně.\n",
+  "cleaning": {
+    "version": "clean-v1",
+    "from_variant": "fabric",
+    "created": "2026-11-12T23:03:42+00:00",
+    "stuck": [],
+    "removed": []
+  }
+}

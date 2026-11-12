@@ -76,3 +76,23 @@
   task's paths: the sample source `masaryk-sebevrazda/source.yaml` still uses `creator`/`published` instead of
   `citation` and its note says to put scans next to the file; `AGENTS.md` lists the CLI commands of T1 only.
   The README still shows the OCR client's token name (`cli-vlastnik`) - asked the owner whether to remove it.
+
+## T2e – 2026-11-13
+- Done: `code/mmo/ingest/clean.py` and `mmo ocr clean` (rules `clean-v1`: separator lines, runs of number-only lines,
+  a long line repeated within a page, a phrase repeated within a line; every removed or shortened line kept in
+  `cleaning.removed` of the record; loops marked in `cleaning.stuck`; `--fallback W` takes the text of every scan that
+  variant `W` has). `mmo ocr import` stores `scan-NNNN.txt` transcriptions as an OCR variant with image hash, model,
+  prompt version and time. `mmo source check` lists stuck pages without a new reading.
+- Book `kniha`: 37 of 213 scans had looped or stopped early in `fabric` (counting columns, a line repeated up to 108
+  times, a phrase up to 180 times). The OCR service was unavailable, so the owner approved reading them with a cloud
+  model: variant `claude` (`claude-opus-5-5`, prompt `ingest/ocr/claude/PROMPT-reread-v1.md`), no unreadable word.
+  `fabric-clean` = `fabric` cleaned + those 37 pages: 4814 lines removed or shortened, text 620 kB -> 445 kB, 15090
+  -> 5862 lines; `text/fabric-clean.md` and `ingest/order/fabric-clean.yaml` built. `fabric` is unchanged.
+- Verified: `uv run pytest` (66 passed), `ruff check`, `ruff format --check`, `mmo ocr clean ... --fallback claude`
+  (213 scans, 37 replaced, none stuck left), `mmo source check` (no stuck OCR).
+- Found: the photos are stored upright; `fabric` reports "rotated 90/180/270 degrees" for 144 of them, which does not
+  match the stored pixels - possibly why some pages looped (not tested). Scan 38 (`IMG_20260902_200508.jpg`) reads as
+  page 53 on the photo, page 53 is missing and page 63 is counted twice - likely a misread number.
+- Left: running headers ("NAZÍ V AI DOBĚ", chapter titles) and page numbers are still in the text (needed for the
+  order; dropping them from segments is T3). Closing quotes: `"` on scans 96, 122, 125, `“` elsewhere in `claude`.
+  The 13 pages without a number and 6 duplicates of the reading order are unchanged (owner review).

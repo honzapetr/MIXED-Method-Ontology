@@ -1,0 +1,24 @@
+{
+  "source": "kniha",
+  "scan": 206,
+  "image": "IMG_20260902_223446.jpg",
+  "image_sha256": "c542590aed216f968cd25e9e867ab2f4cd36803b458901f15a1eb5668f7d481f",
+  "backend": "fabric",
+  "model": "fabric/model",
+  "prompt_version": "fabric-service",
+  "confidence": null,
+  "quality": "full",
+  "warnings": [
+    "page 1: rotated 90 degrees clockwise to read it"
+  ],
+  "seconds": 13.5,
+  "created": "2026-11-11T22:20:34+00:00",
+  "text": "Mack, Doug. „Jeff Sessions' Hawaii Comment Was a Throwback to American Imperialism\", TIME, 24. duben 2017, https://time.com/4752856/jeff-sessions-hawaii-pacific-island-travel-ban/\n\nMachiavelli, Niccolò a Hajný, Josef, Vladař, v tomto překladu 4. vyd., v nakl. XYZ 1. [i.e. 2.] (XYZ, 2009)\n\nMandaville, Peter a Williams, Andrew, Meaning and International Relations, roč. 2003 (Routledge, b.r.)\n\nMarek, Václav a Zachová, Jana, Moudrost věku: lexikon latinských výroků, přísluší a řízení, 4., rozš. a přeprac. vyd., v nakl. Leda vyd. 1, with Eva Kutáková (Leda, 2002)\n\nMark Zuckerberg - AI Will Write Most Meta Code in 18 Months, řídil Dwarkesh Patel, 2025, 01:55:50, https://www.youtube.com/watch?v=rYXeQbTuVIO Greg Marston, „Metaphor, Morality and Myth: A Critical Discourse Analysis of Public Housing Policy in Queensland\", Critical Social Policy 20, č. 3 (2000): 349–73, https://doi.org/10.1177/026101830002000305\n\nMatušťk, Martin Joseph, Postnational identity: critical theory and existential philosophy in Habermas, Kierkegaard, and Havel, Critical perspectives (Guilford Press, 1993)\n\nMcDougall, Walter, Promised Land, Crusader State: The American Encounter with the World Since 1776, roč. 1997 (Mariner Books, b.r.)\n\nMcFarland, Matt, „Elon Musk: „With Artificial Intelligence We Are summoning the Demon.“\", The Washington Post, 24. říjen 2024, https://www.washingtonpost.com/news/innovations/wp/2014/10/24/elon-musk-with-artificial-intelligence-we-are-summoning-the-demon/\n\nMearsheimer, John J., „China's Unpeaceful Rise\", Current History 105, č. 690 (2006): 160–62, https://doi.org/10.1525/curh.2006.105.690.160\n\nMearsheimer, John J., Why leaders lie: the truth about lying in international politics (Duckworth Overlook, 2011)\n\nMedley, Benjamin, An American Genocide, The United States and the California Catastrophe, 1846–1873, roč. 2016 (Yale University Press, b.r.)\n\nMelo, Luiz, The Cambridge Declaration on Consciousness, b.r., viděno 21. června 2025, https://www.academia.edu/36779274/The_Cambridge_Declaration_on_Consciousness\n\nMenges, Constantine Christopher a Program on Transitions to Democracy (George Washington University), ed., The Marshall Plan from those who made it succeed (Program on Transitions to Democracy: University Press of America, 1999)\n",
+  "cleaning": {
+    "version": "clean-v1",
+    "from_variant": "fabric",
+    "created": "2026-11-12T23:03:46+00:00",
+    "stuck": [],
+    "removed": []
+  }
+}

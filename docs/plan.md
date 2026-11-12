@@ -83,6 +83,28 @@
   `README.md`, `docs/`
 - Depends on: T2c. PDF with a text layer and audio transcripts: later, as their own tasks.
 
+### T2e – OCR clean-up and stuck pages
+- Goal: a clean text of the first book without losing information: remove OCR junk by rules, find the pages where
+  the OCR model got stuck in a loop and replace them with a new reading (owner's request 2026-11-12).
+- Acceptance criteria:
+  - `mmo ocr clean <topic> <source> --variant V [--fallback W]` writes the variant `V-clean` next to `V` (`V` is
+    never changed); rules: separator lines, runs of number-only lines, a long line repeated within a page, a phrase
+    repeated within a line; every removed or shortened line is kept in the record (`cleaning.removed`: line, rule)
+    so the raw text can be restored;
+  - a page is marked `stuck` (`cleaning.stuck` with reasons) when the rules found a loop; with `--fallback W` every
+    scan that variant `W` has takes its text (`cleaning.replaced_from`) - also a short page the rules cannot see;
+    a stuck page without a new reading stays marked;
+  - `mmo ocr import <topic> <source> <folder> --variant W --model M --prompt-version P` stores hand or model
+    transcriptions (`scan-NNNN.txt`) as an OCR variant with image hash, model, prompt version and time;
+  - `mmo source check` lists stuck pages that have no replacement;
+  - the 19 stuck scans of `kniha` transcribed (OCR service unavailable; owner approved a cloud model,
+    variant `claude`), `fabric-clean` built with `--fallback claude`, order and book rerun;
+  - tests with small invented texts for every rule.
+- Verify: `uv run pytest && uv run mmo ocr clean nazi-v-dobe-ai kniha --variant fabric --fallback claude`
+- Paths: `code/mmo/`, `tests/`, `topics/nazi-v-dobe-ai/sources/kniha/ingest/`,
+  `topics/nazi-v-dobe-ai/sources/kniha/text/`, `README.md`, `docs/`
+- Depends on: T2d.
+
 ### T3 – Image preprocessing and page layout
 - Goal: improve OCR input and drop running headers / page numbers from segments.
 - Acceptance criteria: optional deskew/contrast step; header and page-number lines detected and stored apart from

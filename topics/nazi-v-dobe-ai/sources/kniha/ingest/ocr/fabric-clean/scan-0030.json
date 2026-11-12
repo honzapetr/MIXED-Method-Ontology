@@ -1,0 +1,24 @@
+{
+  "source": "kniha",
+  "scan": 30,
+  "image": "IMG_20260902_195952.jpg",
+  "image_sha256": "08bd107e55361e50af2af1649275ffc8256efe94fb52af3e707b0d6caff7756c",
+  "backend": "fabric",
+  "model": "fabric/model",
+  "prompt_version": "fabric-service",
+  "confidence": null,
+  "quality": "full",
+  "warnings": [
+    "page 1: rotated 270 degrees clockwise to read it"
+  ],
+  "seconds": 13.86,
+  "created": "2026-11-11T21:58:38+00:00",
+  "text": "přes Krista, renesanci, osvícenství, Nietzscheho a ideologie až po\nnynější AI dobu zůstává tato touha stejná. Hebrejci zlomili kruh\nvěčného návratu a představili dějiny jako dramatický příběh se\nzačátkem, směřováním a koncem, jako cestu ke spáse. Křesťan-\nství tuto linii rozvinulo do univerzálního příběhu o vykoupení\ncelého lidstva. Augustin vložil do historie morální a teologický\nspolutvůrcem. S Jáchymem očekáváme i příchod mesiášského\nvůdce, a to také z okruhu představitelů vůdčích firem v oblasti\nbudoucnost.\n\nTuto proměnu posunuli myslitelé jako Voltaire a Condorcet,\nkterí odstranili Boha, ale zachovali stejné směřování. Víru v po-\nkrok nahradila víra v Prozřetelnost. Nietzsche poukázal na to,\nže když jsme „zabili Boha\", zároveň jsme na sebe vzali břeme-\nno hledání nového smyslu. Proudhon a Comte viděli v pokro-\nku sekulární náboženství. U Comta je to přímo „náboženství\nlidstva\", kde věda nahradila víru a pozitivní fakta nahradila\nzjevení. Hegel pak dějiny chápe jako seberozvíjení Ducha, jako\nputování k vyšším formám svobody a poznání: tedy proces, kte-\nrý v očích dnešních technologických proroků připomíná vývoj\numělé inteligence.\n\nDnes mnozí vidí v AI nástroj naplnění dávného mýtu. Vývoj\nAI je prezentován jako prostředek spásy od lidské nedokonalos-\ntí, jako cesta k nesmrtelnosti a vševědoucnosti. Toto očekávání\nmá aspekty až náboženské víry, která očekává, že nás další vývoj\nAI dovede do ráje – do světa bez utrpení, úmorného shánění\nfinancí, nemocí, a dokonce i smrti, kde konečně dosáhneme na-\nprostého štěstí. Budoucí pokrok v oblasti AI se prezentuje téměř\n",
+  "cleaning": {
+    "version": "clean-v1",
+    "from_variant": "fabric",
+    "created": "2026-11-12T23:03:25+00:00",
+    "stuck": [],
+    "removed": []
+  }
+}

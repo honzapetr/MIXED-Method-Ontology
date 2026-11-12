@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from mmo.core.topic import NOTES_TEMPLATE, ROLE_CONTEXT, ROLES, SOURCE_KINDS, Source, read_yaml
+from mmo.ingest.ocr import load_pages
 
 
 def check_source(source: Source) -> list[str]:
@@ -55,5 +56,15 @@ def check_source(source: Source) -> list[str]:
             found.append(
                 f"reading order ({variant}): {unknown} pages without a number, {len(duplicates)} numbers twice - "
                 f"see {source.order_file(variant)}"
+            )
+        stuck = [
+            r["scan"]
+            for r in load_pages(source.ocr_dir(variant))
+            if (r.get("cleaning") or {}).get("stuck") and not r["cleaning"].get("replaced_from")
+        ]
+        if stuck:
+            found.append(
+                f"stuck OCR ({variant}): scans {', '.join(map(str, stuck))} looped and have no replacement - "
+                f"read them again and run mmo ocr clean with --fallback"
             )
     return found

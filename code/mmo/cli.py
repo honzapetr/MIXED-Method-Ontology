@@ -10,9 +10,10 @@ from pathlib import Path
 from mmo.config import Settings
 from mmo.core.check import check_source
 from mmo.core.migrate import migrate_topic, needs_migration
-from mmo.core.topic import ROLES, SOURCE_KINDS, Topic
+from mmo.core.topic import ROLES, SOURCE_KINDS, Topic, sha256_file
+from mmo.ingest.clean import clean_record, import_record
 from mmo.ingest.compare import cer
-from mmo.ingest.ocr import BACKENDS, load_pages, make_backend, run_ocr
+from mmo.ingest.ocr import BACKENDS, load_pages, make_backend, run_ocr, scan_file
 from mmo.ingest.order import write_order
 from mmo.ingest.page_numbers import read_page_numbers
 from mmo.ingest.pipeline import TEXT_VARIANT, ingest_source, load_variant, order_of, write_segments, write_text
@@ -212,6 +213,58 @@ def cmd_ocr_book(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_ocr_clean(args: argparse.Namespace) -> int:
+    """Rule-based clean-up into <variant>-clean; stuck pages take the fallback variant's text when it has them."""
+    source = load_topic(args).source(args.source)
+    records = load_pages(source.ocr_dir(args.variant))
+    if not records:
+        print(f"no OCR records in {source.ocr_dir(args.variant)}", file=sys.stderr)
+        return 1
+    fallback = {r["scan"]: r for r in load_pages(source.ocr_dir(args.fallback))} if args.fallback else {}
+    out_dir = source.ocr_dir(f"{args.variant}-clean")
+    out_dir.mkdir(parents=True, exist_ok=True)
+    removed = replaced = 0
+    left: list[str] = []
+    for record in records:
+        cleaned = clean_record(record, args.variant, fallback.get(record["scan"]), args.fallback)
+        scan_file(out_dir, record["scan"]).write_text(
+            json.dumps(cleaned, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+        )
+        info = cleaned["cleaning"]
+        removed += len(info["removed"])
+        if info.get("replaced_from"):
+            replaced += 1
+        elif info["stuck"]:
+            left.append(f"scan {record['scan']} {record['image']}: {', '.join(info['stuck'])}")
+    summary = f"{len(records)} scans, {removed} lines removed or shortened"
+    print(f"{summary}, {replaced} scans replaced from {args.fallback} -> {out_dir}")
+    if left:
+        print(f"{len(left)} stuck scans without a replacement (read them again):")
+        for line in left:
+            print(f"  - {line}")
+    return 0
+
+
+def cmd_ocr_import(args: argparse.Namespace) -> int:
+    """Transcriptions scan-NNNN.txt made outside the OCR backends, stored as an OCR variant with provenance."""
+    source = load_topic(args).source(args.source)
+    pages = {page.scan: page for page in source.pages()}
+    out_dir = source.ocr_dir(args.variant)
+    out_dir.mkdir(parents=True, exist_ok=True)
+    count = 0
+    for path in sorted(args.folder.glob("scan-*.txt")):
+        scan = int(path.stem.split("-")[1])
+        if scan not in pages:
+            raise ValueError(f"{path.name}: {source.id} has no scan {scan}")
+        image = pages[scan].image
+        text = path.read_text(encoding="utf-8")
+        record = import_record(source.id, scan, image, sha256_file(image), text, args.model, args.prompt_version)
+        scan_file(out_dir, scan).write_text(json.dumps(record, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        count += 1
+    print(f"{count} transcriptions imported -> {out_dir}")
+    return 0 if count else 1
+
+
 def compact_ranges(numbers: list[int]) -> str:
     """[3, 4, 5, 9] -> "3-5, 9"."""
     ranges: list[list[int]] = []
@@ -316,6 +369,20 @@ def build_parser() -> argparse.ArgumentParser:
     book.add_argument("source")
     book.add_argument("--variant", default="tesseract", help=variant_help)
     book.set_defaults(func=cmd_ocr_book)
+    clean = ocr.add_parser("clean", help="remove OCR junk by rules into <variant>-clean; find stuck pages")
+    clean.add_argument("topic")
+    clean.add_argument("source")
+    clean.add_argument("--variant", required=True, help=variant_help)
+    clean.add_argument("--fallback", help="variant with new readings; each scan it has replaces the cleaned text")
+    clean.set_defaults(func=cmd_ocr_clean)
+    imp = ocr.add_parser("import", help="store transcriptions scan-NNNN.txt from a folder as an OCR variant")
+    imp.add_argument("topic")
+    imp.add_argument("source")
+    imp.add_argument("folder", type=Path)
+    imp.add_argument("--variant", required=True, help="new variant folder under ingest/ocr")
+    imp.add_argument("--model", required=True, help="who or what transcribed it, e.g. a model id or 'manual'")
+    imp.add_argument("--prompt-version", required=True, help="version of the instructions used")
+    imp.set_defaults(func=cmd_ocr_import)
 
     seg = sub.add_parser("segment", help="split OCR text of one variant into segments")
     seg.add_argument("topic")

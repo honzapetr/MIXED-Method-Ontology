@@ -1,0 +1,561 @@
+{
+  "source": "kniha",
+  "scan": 62,
+  "image": "IMG_20260902_200701.jpg",
+  "image_sha256": "f0acf5ba49afc69c39153631facc226559e0abcc4d883b2488df7b8fe0725a73",
+  "backend": "import",
+  "model": "claude-opus-5-5",
+  "prompt_version": "reread-v1",
+  "confidence": null,
+  "quality": null,
+  "warnings": [],
+  "seconds": null,
+  "created": "2026-11-12T22:58:43+00:00",
+  "text": "MĚSTO NA AI PAHORKU\nvypočítat těžké matematické příklady, je naprosto dostačující pro řešení současných globálních problémů. Mesiášské naděje spjaté s AI by se nám neměly stát záminkou pro zakrývání vlastní lenosti či neochoty řešit palčivé otázky blízké budoucnosti.\n\nPodle počítačového vědce Erika Larsona si můžeme nihilistickou budoucnost přivodit oklešťováním lidské inteligence a jedinečnosti. Larson se domnívá, že když se zbavíme neúměrného nadšení z AI a její automatické aplikace, můžeme se více soustředit na lidský vhled, inovace a nápady. Bylo by příhodné, kdybychom se snažili rozvíjet a používat svou lidskou inteligenci se stejným nadšením a vervou, jako to činíme u té umělé.\n\nNemít od AI příliš velká očekávání je zároveň racionální strategie v tom ohledu, abychom pak nebyli zklamaní. Náš materiální blahobyt a věk dožití se neustále zvyšují, ale to neznamená, že jsme jako lidstvo šťastnější než dřív. Vnímání blaha je subjektivní záležitost a je vždy relativní vůči vnímání štěstí u jiných. Díky novému autu budu šťastný prvních pár dnů, než si na něj zvyknu a než mi moje štěstí začnou kalit starosti, že nemám finance i na nový dům – nebo když zjistím, že si soused pořídil ještě krásnější a luxusnější vůz. Jung poznamenal, že ani s tou „nejlepší vůlí na světě nemůžeme vybudovat ráj na zemi“, a i kdybychom mohli, velice záhy bychom zdegenerovali ve všech směrech.⁶³ Nevěřil, že by moderní pojetí rozvoje a pokroku nějak významně pomohlo ulevit lidskému údělu.⁶⁴ Jung má v tomto bohužel pravdu – i kdyby nám vývoj AI přinesl naprostý ráj, nedokáže zakrýt naši existenciální nahotu.\n\n## PRYČ OD EXKLUZIVNÍCH MÝTŮ\n\nVnímání vývoje AI jako mesiášského projektu potvrzujícího národní výjimečnost tuto novou průlomovou technologii hází do\n78\n",
+  "cleaning": {
+    "version": "clean-v1",
+    "from_variant": "fabric",
+    "created": "2026-11-12T23:03:28+00:00",
+    "stuck": [
+      "107 repeated lines"
+    ],
+    "removed": [
+      {
+        "line": 12,
+        "rule": "repeated-line",
+        "text": "kou budoucnost přívodit oklešťováním lidské inteligence a jed-"
+      },
+      {
+        "line": 13,
+        "rule": "repeated-line",
+        "text": "mečnosti. Larson se domnívá, že když se zbavíme neúměrného"
+      },
+      {
+        "line": 14,
+        "rule": "repeated-line",
+        "text": "nadšení z AI a její automatické aplikace, můžeme se více sou-"
+      },
+      {
+        "line": 15,
+        "rule": "repeated-line",
+        "text": "kou budoucnost přívodit oklešťováním lidské inteligence a jed-"
+      },
+      {
+        "line": 16,
+        "rule": "repeated-line",
+        "text": "mečnosti. Larson se domnívá, že když se zbavíme neúměrného"
+      },
+      {
+        "line": 17,
+        "rule": "repeated-line",
+        "text": "nadšení z AI a její automatické aplikace, můžeme se více sou-"
+      },
+      {
+        "line": 18,
+        "rule": "repeated-line",
+        "text": "kou budoucnost přívodit oklešťováním lidské inteligence a jed-"
+      },
+      {
+        "line": 19,
+        "rule": "repeated-line",
+        "text": "mečnosti. Larson se domnívá, že když se zbavíme neúměrného"
+      },
+      {
+        "line": 20,
+        "rule": "repeated-line",
+        "text": "nadšení z AI a její automatické aplikace, můžeme se více sou-"
+      },
+      {
+        "line": 21,
+        "rule": "repeated-line",
+        "text": "kou budoucnost přívodit oklešťováním lidské inteligence a jed-"
+      },
+      {
+        "line": 22,
+        "rule": "repeated-line",
+        "text": "mečnosti. Larson se domnívá, že když se zbavíme neúměrného"
+      },
+      {
+        "line": 23,
+        "rule": "repeated-line",
+        "text": "nadšení z AI a její automatické aplikace, můžeme se více sou-"
+      },
+      {
+        "line": 24,
+        "rule": "repeated-line",
+        "text": "kou budoucnost přívodit oklešťováním lidské inteligence a jed-"
+      },
+      {
+        "line": 25,
+        "rule": "repeated-line",
+        "text": "mečnosti. Larson se domnívá, že když se zbavíme neúměrného"
+      },
+      {
+        "line": 26,
+        "rule": "repeated-line",
+        "text": "nadšení z AI a její automatické aplikace, můžeme se více sou-"
+      },
+      {
+        "line": 27,
+        "rule": "repeated-line",
+        "text": "kou budoucnost přívodit oklešťováním lidské inteligence a jed-"
+      },
+      {
+        "line": 28,
+        "rule": "repeated-line",
+        "text": "mečnosti. Larson se domnívá, že když se zbavíme neúměrného"
+      },
+      {
+        "line": 29,
+        "rule": "repeated-line",
+        "text": "nadšení z AI a její automatické aplikace, můžeme se více sou-"
+      },
+      {
+        "line": 30,
+        "rule": "repeated-line",
+        "text": "kou budoucnost přívodit oklešťováním lidské inteligence a jed-"
+      },
+      {
+        "line": 31,
+        "rule": "repeated-line",
+        "text": "mečnosti. Larson se domnívá, že když se zbavíme neúměrného"
+      },
+      {
+        "line": 32,
+        "rule": "repeated-line",
+        "text": "nadšení z AI a její automatické aplikace, můžeme se více sou-"
+      },
+      {
+        "line": 33,
+        "rule": "repeated-line",
+        "text": "kou budoucnost přívodit oklešťováním lidské inteligence a jed-"
+      },
+      {
+        "line": 34,
+        "rule": "repeated-line",
+        "text": "mečnosti. Larson se domnívá, že když se zbavíme neúměrného"
+      },
+      {
+        "line": 35,
+        "rule": "repeated-line",
+        "text": "nadšení z AI a její automatické aplikace, můžeme se více sou-"
+      },
+      {
+        "line": 36,
+        "rule": "repeated-line",
+        "text": "kou budoucnost přívodit oklešťováním lidské inteligence a jed-"
+      },
+      {
+        "line": 37,
+        "rule": "repeated-line",
+        "text": "mečnosti. Larson se domnívá, že když se zbavíme neúměrného"
+      },
+      {
+        "line": 38,
+        "rule": "repeated-line",
+        "text": "nadšení z AI a její automatické aplikace, můžeme se více sou-"
+      },
+      {
+        "line": 39,
+        "rule": "repeated-line",
+        "text": "kou budoucnost přívodit oklešťováním lidské inteligence a jed-"
+      },
+      {
+        "line": 40,
+        "rule": "repeated-line",
+        "text": "mečnosti. Larson se domnívá, že když se zbavíme neúměrného"
+      },
+      {
+        "line": 41,
+        "rule": "repeated-line",
+        "text": "nadšení z AI a její automatické aplikace, můžeme se více sou-"
+      },
+      {
+        "line": 42,
+        "rule": "repeated-line",
+        "text": "kou budoucnost přívodit oklešťováním lidské inteligence a jed-"
+      },
+      {
+        "line": 43,
+        "rule": "repeated-line",
+        "text": "mečnosti. Larson se domnívá, že když se zbavíme neúměrného"
+      },
+      {
+        "line": 44,
+        "rule": "repeated-line",
+        "text": "nadšení z AI a její automatické aplikace, můžeme se více sou-"
+      },
+      {
+        "line": 45,
+        "rule": "repeated-line",
+        "text": "kou budoucnost přívodit oklešťováním lidské inteligence a jed-"
+      },
+      {
+        "line": 46,
+        "rule": "repeated-line",
+        "text": "mečnosti. Larson se domnívá, že když se zbavíme neúměrného"
+      },
+      {
+        "line": 47,
+        "rule": "repeated-line",
+        "text": "nadšení z AI a její automatické aplikace, můžeme se více sou-"
+      },
+      {
+        "line": 48,
+        "rule": "repeated-line",
+        "text": "kou budoucnost přívodit oklešťováním lidské inteligence a jed-"
+      },
+      {
+        "line": 49,
+        "rule": "repeated-line",
+        "text": "mečnosti. Larson se domnívá, že když se zbavíme neúměrného"
+      },
+      {
+        "line": 50,
+        "rule": "repeated-line",
+        "text": "nadšení z AI a její automatické aplikace, můžeme se více sou-"
+      },
+      {
+        "line": 51,
+        "rule": "repeated-line",
+        "text": "kou budoucnost přívodit oklešťováním lidské inteligence a jed-"
+      },
+      {
+        "line": 52,
+        "rule": "repeated-line",
+        "text": "mečnosti. Larson se domnívá, že když se zbavíme neúměrného"
+      },
+      {
+        "line": 53,
+        "rule": "repeated-line",
+        "text": "nadšení z AI a její automatické aplikace, můžeme se více sou-"
+      },
+      {
+        "line": 54,
+        "rule": "repeated-line",
+        "text": "kou budoucnost přívodit oklešťováním lidské inteligence a jed-"
+      },
+      {
+        "line": 55,
+        "rule": "repeated-line",
+        "text": "mečnosti. Larson se domnívá, že když se zbavíme neúměrného"
+      },
+      {
+        "line": 56,
+        "rule": "repeated-line",
+        "text": "nadšení z AI a její automatické aplikace, můžeme se více sou-"
+      },
+      {
+        "line": 57,
+        "rule": "repeated-line",
+        "text": "kou budoucnost přívodit oklešťováním lidské inteligence a jed-"
+      },
+      {
+        "line": 58,
+        "rule": "repeated-line",
+        "text": "mečnosti. Larson se domnívá, že když se zbavíme neúměrného"
+      },
+      {
+        "line": 59,
+        "rule": "repeated-line",
+        "text": "nadšení z AI a její automatické aplikace, můžeme se více sou-"
+      },
+      {
+        "line": 60,
+        "rule": "repeated-line",
+        "text": "kou budoucnost přívodit oklešťováním lidské inteligence a jed-"
+      },
+      {
+        "line": 61,
+        "rule": "repeated-line",
+        "text": "mečnosti. Larson se domnívá, že když se zbavíme neúměrného"
+      },
+      {
+        "line": 62,
+        "rule": "repeated-line",
+        "text": "nadšení z AI a její automatické aplikace, můžeme se více sou-"
+      },
+      {
+        "line": 63,
+        "rule": "repeated-line",
+        "text": "kou budoucnost přívodit oklešťováním lidské inteligence a jed-"
+      },
+      {
+        "line": 64,
+        "rule": "repeated-line",
+        "text": "mečnosti. Larson se domnívá, že když se zbavíme neúměrného"
+      },
+      {
+        "line": 65,
+        "rule": "repeated-line",
+        "text": "nadšení z AI a její automatické aplikace, můžeme se více sou-"
+      },
+      {
+        "line": 66,
+        "rule": "repeated-line",
+        "text": "kou budoucnost přívodit oklešťováním lidské inteligence a jed-"
+      },
+      {
+        "line": 67,
+        "rule": "repeated-line",
+        "text": "mečnosti. Larson se domnívá, že když se zbavíme neúměrného"
+      },
+      {
+        "line": 68,
+        "rule": "repeated-line",
+        "text": "nadšení z AI a její automatické aplikace, můžeme se více sou-"
+      },
+      {
+        "line": 69,
+        "rule": "repeated-line",
+        "text": "kou budoucnost přívodit oklešťováním lidské inteligence a jed-"
+      },
+      {
+        "line": 70,
+        "rule": "repeated-line",
+        "text": "mečnosti. Larson se domnívá, že když se zbavíme neúměrného"
+      },
+      {
+        "line": 71,
+        "rule": "repeated-line",
+        "text": "nadšení z AI a její automatické aplikace, můžeme se více sou-"
+      },
+      {
+        "line": 72,
+        "rule": "repeated-line",
+        "text": "kou budoucnost přívodit oklešťováním lidské inteligence a jed-"
+      },
+      {
+        "line": 73,
+        "rule": "repeated-line",
+        "text": "mečnosti. Larson se domnívá, že když se zbavíme neúměrného"
+      },
+      {
+        "line": 74,
+        "rule": "repeated-line",
+        "text": "nadšení z AI a její automatické aplikace, můžeme se více sou-"
+      },
+      {
+        "line": 75,
+        "rule": "repeated-line",
+        "text": "kou budoucnost přívodit oklešťováním lidské inteligence a jed-"
+      },
+      {
+        "line": 76,
+        "rule": "repeated-line",
+        "text": "mečnosti. Larson se domnívá, že když se zbavíme neúměrného"
+      },
+      {
+        "line": 77,
+        "rule": "repeated-line",
+        "text": "nadšení z AI a její automatické aplikace, můžeme se více sou-"
+      },
+      {
+        "line": 78,
+        "rule": "repeated-line",
+        "text": "kou budoucnost přívodit oklešťováním lidské inteligence a jed-"
+      },
+      {
+        "line": 79,
+        "rule": "repeated-line",
+        "text": "mečnosti. Larson se domnívá, že když se zbavíme neúměrného"
+      },
+      {
+        "line": 80,
+        "rule": "repeated-line",
+        "text": "nadšení z AI a její automatické aplikace, můžeme se více sou-"
+      },
+      {
+        "line": 81,
+        "rule": "repeated-line",
+        "text": "kou budoucnost přívodit oklešťováním lidské inteligence a jed-"
+      },
+      {
+        "line": 82,
+        "rule": "repeated-line",
+        "text": "mečnosti. Larson se domnívá, že když se zbavíme neúměrného"
+      },
+      {
+        "line": 83,
+        "rule": "repeated-line",
+        "text": "nadšení z AI a její automatické aplikace, můžeme se více sou-"
+      },
+      {
+        "line": 84,
+        "rule": "repeated-line",
+        "text": "kou budoucnost přívodit oklešťováním lidské inteligence a jed-"
+      },
+      {
+        "line": 85,
+        "rule": "repeated-line",
+        "text": "mečnosti. Larson se domnívá, že když se zbavíme neúměrného"
+      },
+      {
+        "line": 86,
+        "rule": "repeated-line",
+        "text": "nadšení z AI a její automatické aplikace, můžeme se více sou-"
+      },
+      {
+        "line": 87,
+        "rule": "repeated-line",
+        "text": "kou budoucnost přívodit oklešťováním lidské inteligence a jed-"
+      },
+      {
+        "line": 88,
+        "rule": "repeated-line",
+        "text": "mečnosti. Larson se domnívá, že když se zbavíme neúměrného"
+      },
+      {
+        "line": 89,
+        "rule": "repeated-line",
+        "text": "nadšení z AI a její automatické aplikace, můžeme se více sou-"
+      },
+      {
+        "line": 90,
+        "rule": "repeated-line",
+        "text": "kou budoucnost přívodit oklešťováním lidské inteligence a jed-"
+      },
+      {
+        "line": 91,
+        "rule": "repeated-line",
+        "text": "mečnosti. Larson se domnívá, že když se zbavíme neúměrného"
+      },
+      {
+        "line": 92,
+        "rule": "repeated-line",
+        "text": "nadšení z AI a její automatické aplikace, můžeme se více sou-"
+      },
+      {
+        "line": 93,
+        "rule": "repeated-line",
+        "text": "kou budoucnost přívodit oklešťováním lidské inteligence a jed-"
+      },
+      {
+        "line": 94,
+        "rule": "repeated-line",
+        "text": "mečnosti. Larson se domnívá, že když se zbavíme neúměrného"
+      },
+      {
+        "line": 95,
+        "rule": "repeated-line",
+        "text": "nadšení z AI a její automatické aplikace, můžeme se více sou-"
+      },
+      {
+        "line": 96,
+        "rule": "repeated-line",
+        "text": "kou budoucnost přívodit oklešťováním lidské inteligence a jed-"
+      },
+      {
+        "line": 97,
+        "rule": "repeated-line",
+        "text": "mečnosti. Larson se domnívá, že když se zbavíme neúměrného"
+      },
+      {
+        "line": 98,
+        "rule": "repeated-line",
+        "text": "nadšení z AI a její automatické aplikace, můžeme se více sou-"
+      },
+      {
+        "line": 99,
+        "rule": "repeated-line",
+        "text": "kou budoucnost přívodit oklešťováním lidské inteligence a jed-"
+      },
+      {
+        "line": 100,
+        "rule": "repeated-line",
+        "text": "mečnosti. Larson se domnívá, že když se zbavíme neúměrného"
+      },
+      {
+        "line": 101,
+        "rule": "repeated-line",
+        "text": "nadšení z AI a její automatické aplikace, můžeme se více sou-"
+      },
+      {
+        "line": 102,
+        "rule": "repeated-line",
+        "text": "kou budoucnost přívodit oklešťováním lidské inteligence a jed-"
+      },
+      {
+        "line": 103,
+        "rule": "repeated-line",
+        "text": "mečnosti. Larson se domnívá, že když se zbavíme neúměrného"
+      },
+      {
+        "line": 104,
+        "rule": "repeated-line",
+        "text": "nadšení z AI a její automatické aplikace, můžeme se více sou-"
+      },
+      {
+        "line": 105,
+        "rule": "repeated-line",
+        "text": "kou budoucnost přívodit oklešťováním lidské inteligence a jed-"
+      },
+      {
+        "line": 106,
+        "rule": "repeated-line",
+        "text": "mečnosti. Larson se domnívá, že když se zbavíme neúměrného"
+      },
+      {
+        "line": 107,
+        "rule": "repeated-line",
+        "text": "nadšení z AI a její automatické aplikace, můžeme se více sou-"
+      },
+      {
+        "line": 108,
+        "rule": "repeated-line",
+        "text": "kou budoucnost přívodit oklešťováním lidské inteligence a jed-"
+      },
+      {
+        "line": 109,
+        "rule": "repeated-line",
+        "text": "mečnosti. Larson se domnívá, že když se zbavíme neúměrného"
+      },
+      {
+        "line": 110,
+        "rule": "repeated-line",
+        "text": "nadšení z AI a její automatické aplikace, můžeme se více sou-"
+      },
+      {
+        "line": 111,
+        "rule": "repeated-line",
+        "text": "kou budoucnost přívodit oklešťováním lidské inteligence a jed-"
+      },
+      {
+        "line": 112,
+        "rule": "repeated-line",
+        "text": "mečnosti. Larson se domnívá, že když se zbavíme neúměrného"
+      },
+      {
+        "line": 113,
+        "rule": "repeated-line",
+        "text": "nadšení z AI a její automatické aplikace, můžeme se více sou-"
+      },
+      {
+        "line": 114,
+        "rule": "repeated-line",
+        "text": "kou budoucnost přívodit oklešťováním lidské inteligence a jed-"
+      },
+      {
+        "line": 115,
+        "rule": "repeated-line",
+        "text": "mečnosti. Larson se domnívá, že když se zbavíme neúměrného"
+      },
+      {
+        "line": 116,
+        "rule": "repeated-line",
+        "text": "nadšení z AI a její automatické aplikace, můžeme se více sou-"
+      },
+      {
+        "line": 117,
+        "rule": "repeated-line",
+        "text": "kou budoucnost přívodit oklešťováním lidské inteligence a jed-"
+      },
+      {
+        "line": 118,
+        "rule": "repeated-line",
+        "text": "mečnosti. Larson se domnívá, že když se zbavíme neúměrného"
+      }
+    ],
+    "replaced_from": "claude"
+  }
+}

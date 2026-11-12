@@ -1,0 +1,24 @@
+{
+  "source": "kniha",
+  "scan": 156,
+  "image": "IMG_20260902_222943.jpg",
+  "image_sha256": "36a806a703861cf9a8c4f3fcb5e88ff65e812a15fa0466ab3a0aeb321e52615e",
+  "backend": "fabric",
+  "model": "fabric/model",
+  "prompt_version": "fabric-service",
+  "confidence": null,
+  "quality": "full",
+  "warnings": [
+    "page 1: rotated 270 degrees clockwise to read it"
+  ],
+  "seconds": 14.94,
+  "created": "2026-11-11T22:14:48+00:00",
+  "text": "možného přítele, protože nás díky dalšímu sběru dat a informa-\ncí bude schopná stále lépe zrcadlit.\n\nClem společností, které vyvíjejí AI chatboty, je jejich co nejsiřší a nejčastější užívání, samozřejmě kvůli zisku. Proto se budou snažit lákat nás všemi možnými způsoby. ChatGPT v roce 2024 spustil hlasový mód, který uživateli odpovídá velice podobně jako skutečný člověk. Dělá i konverzační pauzy, směje se a reaguje na přerušení. Se spuštěním této nové funkce OpenAI vydálo prohlášení, že se obává, že si lidé začnou stále více zvykat na společnost po boku AI, až to může být návykové.⁴⁰ Tyto „obavy“ však evidentně nebyly natolik závažné, aby by OpenAI funkci odstranila. Americký výzkumník v oblasti AI, Eliezer Yudkowsky, to pochmurně komentuje: „Jak vypadá pro korporaci člověk, který začne vyšilovat? Vypadá jako další uživatel.“⁴¹\n\nEugenia Kuyda, zakladatelka startupu Replika, jež vyrábí po-\npulární AI chatboty a v polovině roku 2025 měla víc než 30 mili-\nonů uživatelů, sdělila webu The Verge, že aplikace byla navržena\ntak, aby podporovala pozitivní vztah s AI, dlouhodobý závazek,\na potenciálně dokonce manželství s boty.⁴² Další startup zamě-\nřený na AI chatboty, Character.ai, měl v polovině roku 2025\npřes 20 milionů uživatelů a přes 200 milionů návštěv z celého\n18 milionů chatbotů.⁴³ Počet uživatelů platforem Candy AI nebo\nChub.ai nabízejících erotické dialogy s AI chatboty také silně na-\nkovat stále více, až s nimi budeme třeba pomocí brylí interagovat\nnepřetržitě.⁴⁴\n\nJe snadné trávit s ní stále více času, zvláště když po nás nic\nnechce (a některé platformy vyžadují jen minimální poplatky)\na je dostupná prostřednictvím mobilu. S AI si nemusíme slo-\nžitě domlouvat schůzky jako s přáteli, nevadí jí, když přijdeme\n\n177\n",
+  "cleaning": {
+    "version": "clean-v1",
+    "from_variant": "fabric",
+    "created": "2026-11-12T23:03:40+00:00",
+    "stuck": [],
+    "removed": []
+  }
+}

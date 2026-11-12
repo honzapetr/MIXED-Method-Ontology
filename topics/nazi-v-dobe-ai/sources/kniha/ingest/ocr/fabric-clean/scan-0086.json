@@ -1,0 +1,24 @@
+{
+  "source": "kniha",
+  "scan": 86,
+  "image": "IMG_20260902_221916.jpg",
+  "image_sha256": "65f63291e3957da8c3afc3fcbd68508e24c4669d04d44ee54ba5dd97da8e4b95",
+  "backend": "fabric",
+  "model": "fabric/model",
+  "prompt_version": "fabric-service",
+  "confidence": null,
+  "quality": "full",
+  "warnings": [
+    "page 1: rotated 90 degrees clockwise to read it"
+  ],
+  "seconds": 12.12,
+  "created": "2026-11-11T22:06:25+00:00",
+  "text": "* Shannon Vailor, The AI Mirror: How to Reclaim Our Humanity in an Age of Machine Thinking (Oxford University press, 2024), 71.\n\n* At what point do we decide AI's risks outweigh its promise? | Stanford Institute for Economic Policy Research (SIEPR)”, viděno 23. července 2025, https://siepr.stanford.edu/news/what-point-do-we-decide-ais-risks-outweigh-is-promise.\n\n* Mustafa Suleyman a Michael Bhaskar, The Coming Wave: Technology, Power, In-Space (Crowns, 2023), 48.\n\n* Nigei Toon, How AI Thinks: How We Built It, How It Can Help Us, and How We Can Control It (Torva, 2024), 194.\n\n* Juliette Powell a Art Kleiner, AI Dilemma: 7 Principles for Responsible Technology Can Control It (Bennett-Koehler, 2023), 71.\n\n* Powell a Kleiner, AI Dilemma: 7 Principles for Responsible Technology, 65.\n\n* (Ilah Reza Nourbakhsh a Jennifer Keating, AI & humanity (The MIT Press, 2020), 51–53.\n\n* Mark Coeckelbergh, The Political Philosophy of AI: An Introduction (polity, 2022), 21.\n\n* Coeckelbergh, The Political Philosophy of AI, 105.\n\n* Amy Webb, The Big Nine: How the Tech Titans and Their Thinking Machines Could Warp Humanity, First trade paperback edition (PublicAffairs, 2020), 139.\n\n* Webb, The Big Nine, 152.\n\n* Carissa Veliz, Privacy Is Power Why and How You Should Take Back Control of Your Data (Corgi Books, 2021), 86.\n\n* Webb, The Big Nine, 111.\n\n* Coeckelbergh, The Political Philosophy of AI, 107.\n\n* Kai-Fu Li, AI Superpowers: China, Silicon Valley, and the New World Order (Houghton Mifflin Harcourt, 2021), 151.\n\n* Li, AI Superpowers, 172.\n\n* Coeckelbergh, The Political Philosophy of AI, 103.\n\n* Suleyman a Bhaskar, The Coming Wave, 194.\n\n* Suleyman a Bhaskar, The Coming Wave, 196.\n\n* Nick Bostrom, Superintelligence: Paths, Dangers, Strategies, Reprinted with corrections (Oxford University Press, 2017), 127.\n\n* Bostrom, Superintelligence, 63.\n",
+  "cleaning": {
+    "version": "clean-v1",
+    "from_variant": "fabric",
+    "created": "2026-11-12T23:03:30+00:00",
+    "stuck": [],
+    "removed": []
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "source": "kniha",
+  "scan": 115,
+  "image": "IMG_20260902_222150.jpg",
+  "image_sha256": "efea6c2a5fde8c638dae08878ce2ee02a48a4c27c2a251c31491e560650b797b",
+  "backend": "fabric",
+  "model": "fabric/model",
+  "prompt_version": "fabric-service",
+  "confidence": null,
+  "quality": "full",
+  "warnings": [
+    "page 1: rotated 90 degrees clockwise to read it"
+  ],
+  "seconds": 12.89,
+  "created": "2026-11-11T22:09:55+00:00",
+  "text": "Z toho plyne základní utilitaristická logika, kdy morální je to,\nco přináší co největší štěstí co největšímu počtu lidí a zároveň\nzpůsobuje co nejméně bolesti.\n\nMill se bránil tvrzení, že utilitarismus je bezbožná doktrína\n(je pravda, že není založen na náboženských přesvědčeních, ale\nvychází z čistého rozumu), když prohlásil, že pokud považujeme\nBoha za dobrého, pak Bůh musí být také utilitaristou. Neboť jak\nby jinak dobrý a milující Bůh mohl chtít, aby jeho stvoření trpě-\nlo? Pokud je Bůh dobrý, pak musí toužit po největším štěstí a co\nnejmenším utrpení pro všechny, argumentuje. Mill také nachází\n„úplného ducha etiky užitku“ v Ježíšově učení. Poukazuje na Je-\nžíšova slova „čiňte jiným, co byste chtěli, aby činili vám“ a „miluj\nbližního svého jako sebe sama“. Mill uvádí, že tato slova „před-\nstavují ideální dokonalost utilitaristické morálky“.¹⁴\n\nUtilitarismus je univerzální teorie. Říká nám, co je správné\na co špatné, v pojmech srozumitelných napříč různými kul-\nturami, a také nám radí, jak se zachovat tváří v tvář etickým\ndílematům. Je nestranný, což znamená, že „princip největšího\nštěstí“ nedává přednost žádným konkrétním jednotlivcům ani\ntřeba našim příbuzným. V každé situaci musí být zvolena mož-\nnost, která vytvoří více štěstí pro všechny, bez ohledu na to, zda\ns ními máme nějaké zvláštní spojení, nebo nikoliv. Je to záro-\nveň praktická teorie, kterou může kdokoli aplikovat v jakékoli\nživotní situaci – v práci, ve škole, v domácnosti či v armádě.\nMnozí velcí vůdci se při obtížných rozhodnutích řídili principy\nutilitarismu.\n\nAmerický prezident Harry Truman stál před volbou, jestli\nsvrhnout atomové bomby na Hirošimu a Nagasaki, nebo risko-\nvat miliony mrtvých při klasické invazi do Japonska. Japonci byli\nznámí svou urputností a výsledkem jejich odporu by podle vše-\nho bylo hodně krve. Truman zvolil jadernou variantu, která si\n",
+  "cleaning": {
+    "version": "clean-v1",
+    "from_variant": "fabric",
+    "created": "2026-11-12T23:03:34+00:00",
+    "stuck": [],
+    "removed": []
+  }
+}

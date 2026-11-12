@@ -1,0 +1,24 @@
+{
+  "source": "kniha",
+  "scan": 129,
+  "image": "IMG_20260902_222301.jpg",
+  "image_sha256": "7c5b10ffc0afcc653ceb5ada4d19841052ae3630ce82c6a5ebe23f01698f3ae6",
+  "backend": "fabric",
+  "model": "fabric/model",
+  "prompt_version": "fabric-service",
+  "confidence": null,
+  "quality": "full",
+  "warnings": [
+    "page 1: rotated 90 degrees clockwise to read it"
+  ],
+  "seconds": 12.44,
+  "created": "2026-11-11T22:11:43+00:00",
+  "text": "stroj se rozvíjel pomalu a potřeboval spoustu učení.\" Další host, neurochirurg Geoffrey Jefferson, na to reagoval: „Ale kdo se učil? Vy, nebo stroj?\" – „No,\" odpověděl Turing, „předpokládám, že my oba.\"⁴¹\n\nObě strany, a to jak AI, tak my, se v etické oblasti vzájemně zrcadlí, ale můžeme se také navzájem vychovávat, a usilovat tak společně o vyšší moudrost. Filozofka Vallor se ptá, zda by AI jednoho dne mohla nejen zrcadlit naši inteligenci, ale umožnit i rozkvět naší moudrosti.⁴² Filozof Nick Bostrom, autor knihy Superintelligence, konstatoval: „Probíhá závod na dlouhou trať mezi technologickou zdatností lidstva, která je jako hřebec cválající po polích, a moudrostí lidstva, jež se podobá spíše hříběti na vratkých nohách.\"⁴³\n\nPro to, abychom udrželi krok s technologiemi a dokázali je správným směrem vyvíjet, potřebujeme pracovat na své moudrosti. Aristoteles uvádí, že člověk musí neustále volit mezi různými možnostmi, ale to předpokládá vědět, co je dobré. Což znamená znát důvody a na základě důvodů rozlišovat.⁴⁴ S tím nám může výrazně pomoci AI, která dokáže vyhledávat data a potřebné analýzy, abychom byli stále chytřejší a dokázali lépe rozhodovat ve složitých morálních dilematech. Díky AI se dokážeme dovzdělat, poučit se z chyb druhých, stejně jako pochopit východiska pro morální názory nám cizí. Pokud vstoupíme společně s AI do tohoto vzdělávacího procesu, obohatíme se navzájem a zvyšíme šanci, že naše vzájemné zrcadlení jednoho dne ukáže obraz, na který budeme moct být hrdí.\n\n## SUPERETIKA A SUPERMAN\n\nDokud se AI nevyvine do formy „superintelligence\", bude pouze zrcadlit naši etiku, a tím i náš zmatek v oblasti „správného\"\n",
+  "cleaning": {
+    "version": "clean-v1",
+    "from_variant": "fabric",
+    "created": "2026-11-12T23:03:36+00:00",
+    "stuck": [],
+    "removed": []
+  }
+}

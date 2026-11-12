@@ -1,0 +1,566 @@
+{
+  "source": "kniha",
+  "scan": 111,
+  "image": "IMG_20260902_222132.jpg",
+  "image_sha256": "e56fc4d5295a7fd906b3c0334aba88d012d8b8524228ca60b2d96cde0fbb1cb3",
+  "backend": "import",
+  "model": "claude-opus-5-5",
+  "prompt_version": "reread-v1",
+  "confidence": null,
+  "quality": null,
+  "warnings": [],
+  "seconds": null,
+  "created": "2026-11-12T22:58:44+00:00",
+  "text": "NAZÍ V AI DOBĚ\n\nnepovažovali za nic nepřirozeného, natož špatného. Byl to jednoduše řád věcí, a tak utrpení otroků vnímali stejně jako utrpení dobytka, tedy morálně lhostejně.\n\nMorální relativita je ostatně vidět i na příkladu Ježíše. Během svého života byl opakovaně obviňován náboženskými autoritami, že porušuje morální zákony židovství, protože léčil v sobotu (tedy v den, kdy bylo podle tradice zakázáno pracovat) nebo jedl s prostitutkami a výběrčími daní, kteří byli považováni za morální vyvrhele. Přesto je dnes Ježíš pro miliardy lidí vzorem nejvyššího morálního jednání.\n\nNejenže různé kultury chápou morálku různě, ale i uvnitř jedné kultury často narazíme na hluboké rozpory. Vegetariáni věří, že jíst maso je špatné. Konzervativní kruhy odmítají manželství lidí stejného pohlaví. Část křesťanů považuje potrat či eutanazii za zlo, zatímco jiní křesťané v nich vidí právo na svobodnou volbu a akt lidské důstojnosti.\n\nFilozofové se po staletí snaží vytvořit univerzální teorii, podle níž by bylo možné rozpoznat, co je správné a co špatné. Hledají pravidlo, které by se dalo uplatnit napříč všemi kulturami a sloužilo by jako společné měřítko. V následující části se podíváme na výběr nejodvážnějších pokusů o nalezení kritéria pro naše morální volby, a to na Aristotelův přístup k etice, utilitarianismus, Kantovu druhou formulaci kategorického soudu a etiku péče.\n\n## CTNOSTI NA PIEDESTALU\n\nAristotelovy spisy k etice se řadí mezi základní texty morální filozofie. Aristoteles se zaměřuje na ctnost a morální charakter. Dobro je podle něj to, k čemu všechno směřuje, protože každé lidské jednání a záměr k nějakému dobru směřují.⁷ Aristoteles tvrdil, že eudaimoniá (do češtiny se překládá jako blaženost\n\n131\n",
+  "cleaning": {
+    "version": "clean-v1",
+    "from_variant": "fabric",
+    "created": "2026-11-12T23:03:33+00:00",
+    "stuck": [
+      "108 repeated lines"
+    ],
+    "removed": [
+      {
+        "line": 4,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 5,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 6,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 7,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 8,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 9,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 10,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 11,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 12,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 13,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 14,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 15,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 16,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 17,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 18,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 19,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 20,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 21,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 22,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 23,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 24,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 25,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 26,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 27,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 28,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 29,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 30,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 31,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 32,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 33,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 34,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 35,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 36,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 37,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 38,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 39,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 40,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 41,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 42,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 43,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 44,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 45,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 46,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 47,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 48,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 49,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 50,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 51,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 52,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 53,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 54,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 55,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 56,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 57,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 58,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 59,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 60,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 61,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 62,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 63,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 64,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 65,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 66,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 67,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 68,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 69,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 70,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 71,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 72,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 73,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 74,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 75,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 76,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 77,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 78,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 79,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 80,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 81,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 82,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 83,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 84,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 85,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 86,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 87,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 88,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 89,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 90,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 91,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 92,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 93,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 94,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 95,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 96,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 97,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 98,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 99,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 100,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 101,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 102,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 103,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 104,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 105,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 106,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 107,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 108,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 109,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 110,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      },
+      {
+        "line": 111,
+        "rule": "repeated-line",
+        "text": "návodů, které byl určitě jako jedno z návodů na návodů"
+      }
+    ],
+    "replaced_from": "claude"
+  }
+}

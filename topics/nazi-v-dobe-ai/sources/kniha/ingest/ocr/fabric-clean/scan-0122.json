@@ -1,0 +1,31 @@
+{
+  "source": "kniha",
+  "scan": 122,
+  "image": "IMG_20260902_222223.jpg",
+  "image_sha256": "8f918485539d09c1be25fab2241e8a66c0ad6d1849f834b9b8ea73b4753c40d8",
+  "backend": "import",
+  "model": "claude-opus-5-5",
+  "prompt_version": "reread-v1",
+  "confidence": null,
+  "quality": null,
+  "warnings": [],
+  "seconds": null,
+  "created": "2026-11-12T22:58:45+00:00",
+  "text": "STÁLE NEJSME BOHY\n\n## SRDCEM K DRUHÉMU\n\nPřístupy utilitarismu i kategorického morálního imperativu předpokládají, že etika by měla být nestranná a že jakékoli speciální vztahy k našim blízkým musejí být odloženy stranou. Ale je to vůbec možné?\n\nPředstavte si, že vidíte, jak se ve vodě topí dva lidé – jeden je váš otec a druhý vědec, který je blízko objevu léku na AIDS. A vy máte čas zachránit jen jednoho z nich. Kterého si vyberete? Z utilitaristického pohledu a dle principu největšího štěstí byste měli zachránit vědce, který pravděpodobně vynalezne lék na záchranu milionů lidí. Záchrana jeho života tedy nejspíše zvýší celkové štěstí více než záchrana vašeho otce. Opravdu byste se ale rozhodli zachránit vědce a nechali vlastního otce utonout?\n\nPrávě tato otázka stojí v srdci etiky péče – přístupu, který rozvinula feministická filozofie, zejména americká psycholožka Carol Gilligan ve své průlomové knize Jiným hlasem. Etika péče vychází z předpokladu, že naše morální odpovědnost je zakořeněná především ve vztazích. Představitelé etiky péče kritizují jak utilitaristickou, tak kantovskou morální nestrannost. Ptají se: jak můžeme být skutečně nestranní, když je v sázce blaho těch, které máme rádi? Tyto morální teorie vnímají jako mužské, založené na přísné racionalitě, neberoucí ohledy na roli emocí, jako je empatie, přátelství nebo láska. Navíc tvrdí, že ve skutečnosti svou morálku striktně nezakládáme pouze na racionalitě – rodiče milují a chrání své děti více než jiné děti, pomáháme nejbližším více než těm, které jsme nikdy neviděli, a často jsme ochotni porušit morální pravidla z přátelství, věrnosti nebo lásky. Blaise Pascal by na toto konto nejspíše poznamenal: „Pravdu poznáváme nejen rozumem, ale také srdcem.\"¹⁹\n\nPředstavitelé etiky péče nevěří, že můžeme vytvořit univerzální pravidla, jak se chovat, protože žádné pravidlo nemůže zohlednit\n\n142\n",
+  "cleaning": {
+    "version": "clean-v1",
+    "from_variant": "fabric",
+    "created": "2026-11-12T23:03:35+00:00",
+    "stuck": [
+      "1 lines with a repeated phrase"
+    ],
+    "removed": [
+      {
+        "line": 15,
+        "rule": "repeated-phrase",
+        "text": "Právě tato otázka stojí v srdci etiky péče – přístupu, který rozvinula feministická filozofie, zejména americká psycholožka Carol Gilligan ve své průlomové knize Jiným hlasem. Etika péče němá především ve vztazích. Představitelé etiky péče kritizují jak utilitaristickou, tak kantovskou morální nestrannost. Ptají se: jak můžeme být skutečně nestranní, když je v sázce blaho těch, které máme rádi? Tyto morální teorie vnímají jako mužské, založené na přísné racionalitě, neberoucí ohledy na roli emocí, jako je empatie, přátelství nebo láska. Navíc tvrdí, že ve skutečních rodičích milují a chrání své děti více než jiné děti, pomáháme nejbližším více než těm, které jsme nikdy neviděli, a často jsme nejbližším více než těm, které jsme nikdy neviděli, a často jsme ochotni porušit morální pravidla z přátelství, věrnosti nebo lásdy. Blaise Pascal by na toto konto nejspíše poznamenal: „Pravdu poznáváme nejen rozumem, ale také srdcem.“¹⁹"
+      }
+    ],
+    "replaced_from": "claude"
+  }
+}
