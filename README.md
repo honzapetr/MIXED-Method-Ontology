@@ -29,8 +29,15 @@ cp .env.example .env            # fill in the gateway URL, key and a vision mode
 sudo apt install tesseract-ocr tesseract-ocr-ces
 
 uv run mmo topic new my-topic --title "My topic"
-# put page scans into topics/my-topic/sources/my-book/files/
-uv run mmo source scan my-topic my-book
+uv run mmo source add my-topic my-book --kind book --title "My book" --language ces
+# put page photos or text files into topics/my-topic/sources/my-book/files/
+uv run mmo ingest my-topic my-book --backend fabric      # everything: OCR, page numbers, order, text, segments
+uv run mmo source check my-topic                         # what the sources still lack (citation, memo, ...)
+
+# supplementary information about a source is a source of its own
+uv run mmo source add my-topic review --kind article --role context --about my-book
+
+# single steps, e.g. to compare OCR variants on a sample
 uv run mmo ocr run my-topic my-book --backend tesseract --scans 1-10
 uv run mmo ocr run my-topic my-book --backend openai --model <vision-model> --scans 1-10
 uv run mmo ocr run my-topic my-book --backend fabric --workers 2   # the homelab OCR service (ADR 0005)
@@ -50,6 +57,8 @@ project uses it through its client library `fabric-ocr`, vendored in `vendor/whe
 project needs no homelab access (CI on GitHub's runners works); **calling** the service works only from the owner's
 LAN or VPN.
 
+`uv run mmo ingest <topic> <source> --backend fabric` runs all of it; the steps one by one:
+
 | Step | Command | Result |
 | :--- | :--- | :--- |
 | page text | `uv run mmo ocr run <topic> <source> --backend fabric --workers 2` | `sources/<source>/ingest/ocr/fabric/scan-NNNN.json` |
@@ -58,7 +67,7 @@ LAN or VPN.
 | whole text | `uv run mmo ocr book <topic> <source> --variant fabric` | `sources/<source>/text/fabric.md` in reading order |
 
 Every step saves page by page; a rerun reads only what is missing, so an interrupted run is simply started again.
-Fix page numbers by hand with `printed_pages: {<image>: <page>}` in `source.yaml`, then rerun `order` and `book`.
+Fix page numbers by hand with `printed_pages: {<image>: <page>}` in `source.yaml`, then run `mmo ingest` again.
 How it works: `docs/spec.md` (Ingest pipeline); the first book: `docs/progress.md` (T2a).
 
 **Setup on the owner's Windows computer:**
@@ -70,6 +79,4 @@ How it works: `docs/spec.md` (Ingest pipeline); the first book: `docs/progress.m
 3. **Address and token** come from `~/.config/fabric-ocr/env` (`FABRIC_OCR_URL`, `FABRIC_OCR_TOKEN`; the owner's is
    already set, token `cli-vlastnik`), or from `FABRIC_OCR_URL` / `FABRIC_OCR_TOKEN` in `.env` (`.env.example`).
 
-**Known gap:** the skill `.agents/skills/ingest-sources` still describes only the `tesseract` and `openai` backends.
-It is a protected path, so it was not changed in T2a; updating it with the `fabric` steps above is a good first task,
-so that agents in this project know the workflow without reading the spec.
+Agents follow the skill `ingest-sources` (`.agents/skills/`) for this workflow.

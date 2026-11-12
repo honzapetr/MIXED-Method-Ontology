@@ -72,7 +72,11 @@ Page images stay out of git; `ingest/files.yaml` lists each file with its SHA-25
 
 ## Ingest pipeline
 
-1. **Inspect** – the agent lists the files of a source and proposes a parsing plan (skill `ingest-sources`).
+1. **Add and inspect** – `mmo source add` creates the source (`--role context --about <id>` for supplementary
+   material); the agent lists its files and proposes a parsing plan (skill `ingest-sources`). `mmo ingest` then
+   runs steps 2, 3 and 5 for it in one go (resumable) and ends with what to review; text files (`.txt`, `.md`)
+   skip OCR and become the variant `original`, in file-name order. `mmo source check` lists what a source
+   still lacks: citation, attributes, questions, `about`, the memo, unreviewed reading-order problems.
 2. **OCR** – `mmo ocr run` sends every page image to one backend and stores one JSON per page:
    `scan`, `image`, `image_sha256`, `backend`, `model`, `prompt_version`, `text`, `confidence` (if known),
    `quality` and `warnings` (if the backend reports them), `seconds`, `created`. Results of different backends live

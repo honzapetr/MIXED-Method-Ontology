@@ -23,6 +23,7 @@ import yaml
 PAGE_NUMBER_LINE = re.compile(r"^[\s\-\u2013\u2014|*_#>]*(\d{1,4})[\s\-\u2013\u2014|*_]*$")
 EDGE_LINES = 3  # page numbers sit in the first or last lines of a page
 HOW_PRINTED, HOW_INFERRED, HOW_MANUAL, HOW_UNKNOWN = "printed", "inferred", "manual", "unknown"
+HOW_TEXT = "text"  # a text file, in file-name order: it has no printed page number
 HOW_CORRECTED = "corrected"  # a number between two neighbours two apart that disagreed with them (a footnote misread)
 HOWS = (HOW_PRINTED, HOW_INFERRED, HOW_CORRECTED, HOW_MANUAL)
 
@@ -130,7 +131,10 @@ def book_markdown(records: list[dict], order: ReadingOrder, title: str) -> str:
     by_scan = {record["scan"]: record for record in records}
     parts = [f"# {title}\n"]
     for page in order.pages:
-        printed = f"page {page.printed} ({page.how})" if page.printed is not None else "page ? (unknown)"
         text = by_scan[page.scan]["text"].strip()
+        if page.how == HOW_TEXT:
+            parts.append(f"<!-- file {page.image} · scan {page.scan} -->\n\n{text}\n")
+            continue
+        printed = f"page {page.printed} ({page.how})" if page.printed is not None else "page ? (unknown)"
         parts.append(f"<!-- {printed} · scan {page.scan} · {page.image} -->\n\n{text}\n")
     return "\n".join(parts)

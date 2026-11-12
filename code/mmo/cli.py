@@ -8,13 +8,14 @@ import sys
 from pathlib import Path
 
 from mmo.config import Settings
+from mmo.core.check import check_source
 from mmo.core.migrate import migrate_topic, needs_migration
-from mmo.core.topic import Source, Topic
+from mmo.core.topic import ROLES, SOURCE_KINDS, Topic
 from mmo.ingest.compare import cer
 from mmo.ingest.ocr import BACKENDS, load_pages, make_backend, run_ocr
-from mmo.ingest.order import ReadingOrder, book_markdown, ordered_records, reading_order, write_order
-from mmo.ingest.page_numbers import load_page_numbers, read_page_numbers
-from mmo.ingest.segment import segment_records, write_jsonl
+from mmo.ingest.order import write_order
+from mmo.ingest.page_numbers import read_page_numbers
+from mmo.ingest.pipeline import TEXT_VARIANT, ingest_source, load_variant, order_of, write_segments, write_text
 
 
 def parse_scans(value: str | None) -> set[int] | None:
@@ -59,10 +60,68 @@ def cmd_topic_migrate(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_source_add(args: argparse.Namespace) -> int:
+    topic = load_topic(args)
+    source = topic.add_source(
+        args.source, args.kind, title=args.title, role=args.role, about=args.about, language=args.language
+    )
+    print(f"created {source.root}")
+    print(f"next: put the original files into {source.files_dir}, fill in {source.metadata_file} and")
+    print(f"{source.notes_file}, then run: mmo ingest {topic.slug} {source.id}")
+    return 0
+
+
 def cmd_source_scan(args: argparse.Namespace) -> int:
     source = load_topic(args).source(args.source)
     manifest = source.write_manifest()
     print(f"{source.files_manifest}: {len(manifest['files'])} files")
+    return 0
+
+
+def cmd_source_check(args: argparse.Namespace) -> int:
+    topic = load_topic(args)
+    sources = [topic.source(args.source)] if args.source else topic.sources()
+    for source in sources:
+        findings = check_source(source)
+        role = source.metadata().get("role", "primary")
+        print(f"{source.id} ({role}): {'complete' if not findings else f'{len(findings)} to fill in or review'}")
+        for finding in findings:
+            print(f"  - {finding}")
+    if not sources:
+        print(f"no sources yet: mmo source add {topic.slug} <id> --kind ...")
+    return 0
+
+
+def ocr_variant(args: argparse.Namespace, settings: Settings) -> tuple[str, str | None]:
+    """Variant folder name and the model of the openai backend, from --backend, --model and --mode."""
+    model = args.model or (settings.ocr_model if args.backend == "openai" else None)
+    detail = (
+        model if args.backend == "openai" else (args.mode if args.backend == "fabric" and args.mode != "auto" else None)
+    )
+    return ocr_backend_dir(args.backend, detail), model
+
+
+def cmd_ingest(args: argparse.Namespace) -> int:
+    """All ingest steps for one source; resumable; ends with what to review."""
+    settings = Settings.load()
+    source = load_topic(args).source(args.source)
+    if not source.metadata_file.is_file():
+        raise FileNotFoundError(f"no such source: {source.root} (create it with mmo source add)")
+    variant, model = ocr_variant(args, settings)
+    backend = make_backend(args.backend, settings, model=model, mode=args.mode) if source.images() else None
+    numbers = None
+    if backend is not None and args.backend == "fabric" and not args.no_numbers:
+        from mmo.ingest.ocr.fabric import FabricPageNumbers, connect_client  # needs the service's client
+
+        numbers = FabricPageNumbers(connect_client(settings.fabric_ocr_url, settings.fabric_ocr_token))
+    report = ingest_source(source, backend, variant, numbers=numbers, workers=args.workers)
+    for name in report.variants:
+        print(f"{name}: {report.segments[name]} segments -> {source.segments_file(name)}")
+    if report.review:
+        print("to review:")
+        for line in report.review:
+            print(f"  - {line}")
+    print(f"what the source still lacks: mmo source check {args.topic} {source.id}")
     return 0
 
 
@@ -72,12 +131,9 @@ def cmd_ocr_run(args: argparse.Namespace) -> int:
     if not source.pages():
         print(f"no page images in {source.files_dir}", file=sys.stderr)
         return 1
-    model = args.model or (settings.ocr_model if args.backend == "openai" else None)
+    variant, model = ocr_variant(args, settings)
     backend = make_backend(args.backend, settings, model=model, mode=args.mode)
-    variant = (
-        model if args.backend == "openai" else (args.mode if args.backend == "fabric" and args.mode != "auto" else None)
-    )
-    out_dir = source.ocr_dir(ocr_backend_dir(args.backend, variant))
+    out_dir = source.ocr_dir(variant)
     written = run_ocr(source, backend, out_dir, scans=parse_scans(args.scans), force=args.force, workers=args.workers)
     print(f"{len(written)} scans written to {out_dir}")
     return 0
@@ -110,18 +166,6 @@ def cmd_ocr_compare(args: argparse.Namespace) -> int:
     return 0
 
 
-def load_variant(source: Source, variant: str) -> list[dict]:
-    records = load_pages(source.ocr_dir(variant))
-    if not records:
-        raise FileNotFoundError(f"no OCR results for variant {variant!r} and source {source.id!r}")
-    return records
-
-
-def order_of(source: Source, records: list[dict]) -> ReadingOrder:
-    """Reading order from hand-set numbers, numbers read from the page edges and numbers found in the text."""
-    return reading_order(records, source.manual_page_numbers(), load_page_numbers(source.numbers_file))
-
-
 def cmd_ocr_numbers(args: argparse.Namespace) -> int:
     """Printed page numbers read from the top and bottom edge of every image (the fabric service's Extract)."""
     from mmo.ingest.ocr.fabric import FabricPageNumbers, connect_client  # needs the service's client
@@ -137,7 +181,7 @@ def cmd_ocr_numbers(args: argparse.Namespace) -> int:
 def cmd_ocr_order(args: argparse.Namespace) -> int:
     """Reading order by printed page numbers: a report to review, gaps and duplicates on the console."""
     source = load_topic(args).source(args.source)
-    order = order_of(source, load_variant(source, args.variant))
+    order = order_of(source, load_variant(source, args.variant), args.variant)
     target = source.order_file(args.variant)
     write_order(order, args.variant, target)
     summary = order.to_dict(args.variant)["summary"]
@@ -163,11 +207,8 @@ def cmd_ocr_book(args: argparse.Namespace) -> int:
     """The whole text of one variant in reading order, as one Markdown file."""
     source = load_topic(args).source(args.source)
     records = load_variant(source, args.variant)
-    order = order_of(source, records)
-    target = source.text_file(args.variant)
-    target.parent.mkdir(parents=True, exist_ok=True)
-    target.write_text(book_markdown(records, order, source.title), encoding="utf-8")
-    print(f"{len(records)} pages in reading order written to {target}")
+    write_text(source, args.variant, records, order_of(source, records, args.variant))
+    print(f"{len(records)} pages in reading order written to {source.text_file(args.variant)}")
     return 0
 
 
@@ -185,14 +226,20 @@ def compact_ranges(numbers: list[int]) -> str:
 def cmd_segment(args: argparse.Namespace) -> int:
     source = load_topic(args).source(args.source)
     records = load_variant(source, args.variant)
-    order = order_of(source, records)
-    # pages in reading order, so a paragraph that runs over a page break is followed by its continuation
-    printed = {page.scan: page.printed for page in order.pages}
-    segments = segment_records(ordered_records(records, order), printed)
-    target = source.segments_file(args.variant)
-    write_jsonl(segments, target)
-    print(f"{len(segments)} segments from {len(records)} scans written to {target}")
+    count = write_segments(source, args.variant, records, order_of(source, records, args.variant))
+    print(f"{count} segments from {len(records)} scans written to {source.segments_file(args.variant)}")
     return 0
+
+
+def add_backend_options(parser: argparse.ArgumentParser) -> None:
+    parser.add_argument("--backend", choices=BACKENDS, default="tesseract")
+    parser.add_argument("--model", help="model name for the openai backend (default: MMO_OCR_MODEL)")
+    parser.add_argument(
+        "--mode",
+        choices=("auto", "accurate", "fast"),
+        default="auto",
+        help="fabric backend: auto (OCR model for photos), accurate (always the model), fast (CPU Tesseract only)",
+    )
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -210,24 +257,40 @@ def build_parser() -> argparse.ArgumentParser:
     migrate.set_defaults(func=cmd_topic_migrate)
 
     source = sub.add_parser("source", help="sources").add_subparsers(dest="action", required=True)
+    add = source.add_parser("add", help="create a source: source.yaml, notes.md and files/, listed in topic.yaml")
+    add.add_argument("topic")
+    add.add_argument("source", help="id: lowercase letters, digits and dashes")
+    add.add_argument("--kind", required=True, choices=SOURCE_KINDS)
+    add.add_argument("--title", help="human-readable title")
+    add.add_argument(
+        "--role", choices=ROLES, default="primary", help="context = supplementary material about other sources"
+    )
+    add.add_argument("--about", action="append", help="for --role context: id of the source it is about (repeatable)")
+    add.add_argument("--language", help="ISO 639-3, e.g. ces")
+    add.set_defaults(func=cmd_source_add)
     scan = source.add_parser("scan", help="record the original files and their hashes in ingest/files.yaml")
     scan.add_argument("topic")
     scan.add_argument("source")
     scan.set_defaults(func=cmd_source_scan)
+    check = source.add_parser("check", help="what a source still lacks: metadata, links, ingest, review")
+    check.add_argument("topic")
+    check.add_argument("source", nargs="?", help="one source (default: all)")
+    check.set_defaults(func=cmd_source_check)
+
+    ingest = sub.add_parser("ingest", help=f"all ingest steps for a source (text files: variant {TEXT_VARIANT})")
+    ingest.add_argument("topic")
+    ingest.add_argument("source")
+    add_backend_options(ingest)
+    ingest.add_argument("--workers", type=int, default=2, help="images read at the same time")
+    ingest.add_argument("--no-numbers", action="store_true", help="fabric: skip reading page numbers from the edges")
+    ingest.set_defaults(func=cmd_ingest)
 
     variant_help = "OCR variant folder under ingest/ocr"
     ocr = sub.add_parser("ocr", help="OCR of page images").add_subparsers(dest="action", required=True)
     run = ocr.add_parser("run", help="OCR the page images of a source with one backend")
     run.add_argument("topic")
     run.add_argument("source")
-    run.add_argument("--backend", choices=BACKENDS, default="tesseract")
-    run.add_argument("--model", help="model name for the openai backend (default: MMO_OCR_MODEL)")
-    run.add_argument(
-        "--mode",
-        choices=("auto", "accurate", "fast"),
-        default="auto",
-        help="fabric backend: auto (OCR model for photos), accurate (always the model), fast (CPU Tesseract only)",
-    )
+    add_backend_options(run)
     run.add_argument("--workers", type=int, default=1, help="images read at the same time (fabric: 2)")
     run.add_argument("--scans", "--pages", dest="scans", help="only these scans (file-name order), e.g. 1-5,9")
     run.add_argument("--force", action="store_true", help="redo scans that already have a result")

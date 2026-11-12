@@ -18,6 +18,7 @@ from typing import Any
 import yaml
 
 IMAGE_SUFFIXES = {".jpg", ".jpeg", ".png", ".tif", ".tiff", ".webp"}
+TEXT_SUFFIXES = {".txt", ".md"}  # taken as text, no OCR
 SLUG = re.compile(r"^[a-z0-9][a-z0-9-]{0,62}[a-z0-9]$")
 SOURCE_KINDS = ("book", "interview", "field-note", "document", "article", "web", "dataset")
 ROLE_PRIMARY, ROLE_CONTEXT = "primary", "context"
@@ -155,24 +156,38 @@ class Source:
 
     # --- original files
 
-    def images(self) -> list[Path]:
+    def _originals(self, suffixes: set[str]) -> list[Path]:
         if not self.files_dir.is_dir():
             return []
-        files = [p for p in self.files_dir.iterdir() if p.is_file() and p.suffix.lower() in IMAGE_SUFFIXES]
+        files = [p for p in self.files_dir.iterdir() if p.is_file() and p.suffix.lower() in suffixes]
         return sorted(files, key=lambda p: natural_key(p.name))
+
+    def images(self) -> list[Path]:
+        return self._originals(IMAGE_SUFFIXES)
+
+    def texts(self) -> list[Path]:
+        """Original text files (`.txt`, `.md`), taken as text without OCR."""
+        return self._originals(TEXT_SUFFIXES)
 
     def pages(self) -> list[Page]:
         """Page images in natural file-name order, numbered from 1 (scan order, not the printed page number)."""
         return [Page(scan=i, image=image) for i, image in enumerate(self.images(), start=1)]
 
+    def text_pages(self) -> list[Page]:
+        """Text files in natural file-name order, numbered from 1 (their own sequence, apart from images)."""
+        return [Page(scan=i, image=path) for i, path in enumerate(self.texts(), start=1)]
+
     def write_manifest(self) -> dict[str, Any]:
-        """Record every original image with its scan number and hash in `ingest/files.yaml`."""
-        manifest = {
-            "source": self.id,
-            "files": [
-                {"scan": page.scan, "file": page.image.name, "sha256": sha256_file(page.image)} for page in self.pages()
-            ],
-        }
+        """Record every original file with its scan number and hash in `ingest/files.yaml`.
+
+        Images and text files are numbered apart, so adding a text never changes the scan number of an image.
+        """
+        files = [{"scan": p.scan, "file": p.image.name, "sha256": sha256_file(p.image)} for p in self.pages()]
+        files += [
+            {"scan": p.scan, "kind": "text", "file": p.image.name, "sha256": sha256_file(p.image)}
+            for p in self.text_pages()
+        ]
+        manifest = {"source": self.id, "files": files}
         write_yaml(self.files_manifest, manifest)
         self.topic.register_source(self.id)
         return manifest
@@ -221,6 +236,45 @@ class Topic:
         if source_id not in listed:
             self.data["sources"] = sorted([*listed, source_id])
             self.save()
+
+    def add_source(
+        self,
+        source_id: str,
+        kind: str,
+        title: str | None = None,
+        role: str = ROLE_PRIMARY,
+        about: list[str] | None = None,
+        language: str | None = None,
+    ) -> Source:
+        """Create `sources/<id>/` with `source.yaml`, `notes.md` and `files/`, and list it in `topic.yaml`."""
+        source = self.source(source_id)
+        if source.root.exists():
+            raise FileExistsError(f"source already exists: {source.root}")
+        if kind not in SOURCE_KINDS:
+            raise ValueError(f"unknown kind {kind!r}; known: {', '.join(SOURCE_KINDS)}")
+        if role not in ROLES:
+            raise ValueError(f"unknown role {role!r}; known: {', '.join(ROLES)}")
+        about = list(about or [])
+        if role == ROLE_CONTEXT and not about:
+            raise ValueError("a context source needs --about <source id>: the source it tells something about")
+        if role == ROLE_PRIMARY and about:
+            raise ValueError("--about is for context sources (--role context)")
+        known = {s.id for s in self.sources()}
+        missing = [a for a in about if a not in known]
+        if missing:
+            raise ValueError(f"--about names unknown sources: {', '.join(missing)}")
+        meta: dict[str, Any] = {"id": source.id, "title": title or source.id, "kind": kind, "role": role}
+        if about:
+            meta["about"] = about
+        if language:
+            meta["language"] = language
+        meta.update({"citation": {}, "attributes": {}, "questions": []})
+        source.files_dir.mkdir(parents=True)
+        (source.files_dir / ".gitkeep").touch()
+        write_yaml(source.metadata_file, meta)
+        source.notes_file.write_text(NOTES_TEMPLATE.format(title=meta["title"]), encoding="utf-8")
+        self.register_source(source.id)
+        return source
 
     def source(self, source_id: str) -> Source:
         return Source(topic=self, id=check_slug(source_id, "source id"))

@@ -59,3 +59,20 @@
   as undeletable ghosts for a while; git ignores empty folders and the migration check ignores them. Delete
   `topics/nazi-v-dobe-ai/work/` by hand once Drive lets go.
 - Next: T2d (one-step source ingest, context sources, `ingest-sources` skill).
+
+## T2d – 2026-11-12
+- Done: `mmo source add` (creates `source.yaml`, `notes.md`, `files/`, lists the source in `topic.yaml`; `--role
+  context --about <id>` for supplementary material, validated), `mmo ingest` (`code/mmo/ingest/pipeline.py`: file
+  hashes, OCR, page numbers with `--backend fabric`, reading order, text, segments; resumable; ends with what to
+  review), text files (`.txt`, `.md`) taken without OCR as the variant `original` (numbered apart from images, redone
+  only when changed), `mmo source check` (`code/mmo/core/check.py`: citation, attributes, questions, `about`,
+  memo, files, ingest, reading-order problems). Skill `ingest-sources` rewritten for this workflow incl. `fabric`
+  (protected path, approved in the plan; `.claude/` copy regenerated). README quick start and spec updated.
+- Verified: `uv run pytest` (57 passed), `ruff check`, `ruff format --check`, `python3 tools/agents_sync.py --check`.
+  `mmo source check nazi-v-dobe-ai` on the real book lists: citation, attributes, questions, memo, 13 pages without
+  a number and 6 numbers twice. `mmo ingest` was not run on the real book against the homelab (nothing new to read).
+- Next (owner): fill in `topics/nazi-v-dobe-ai/sources/kniha/source.yaml` (citation, attributes, questions),
+  `notes.md` and the research questions in `topic.yaml`; review the reading order. Small leftovers outside this
+  task's paths: the sample source `masaryk-sebevrazda/source.yaml` still uses `creator`/`published` instead of
+  `citation` and its note says to put scans next to the file; `AGENTS.md` lists the CLI commands of T1 only.
+  The README still shows the OCR client's token name (`cli-vlastnik`) - asked the owner whether to remove it.

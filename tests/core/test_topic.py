@@ -34,8 +34,9 @@ def test_manifest_records_scans_apart_from_metadata(tmp_path: Path) -> None:
     for name in ("p-10.png", "p-2.png", "notes.txt"):
         (source.files_dir / name).write_bytes(name.encode())
     manifest = source.write_manifest()
-    assert [f["file"] for f in manifest["files"]] == ["p-2.png", "p-10.png"]
-    assert [f["scan"] for f in manifest["files"]] == [1, 2]
+    assert [f["file"] for f in manifest["files"]] == ["p-2.png", "p-10.png", "notes.txt"]
+    assert [f["scan"] for f in manifest["files"]] == [1, 2, 1], "text files are numbered apart from images"
+    assert manifest["files"][2]["kind"] == "text" and "kind" not in manifest["files"][0]
     saved = yaml.safe_load(source.files_manifest.read_text(encoding="utf-8"))
     assert len(saved["files"][0]["sha256"]) == 64
     assert source.metadata() == {"title": "A book"}, "source.yaml holds only what the researcher wrote"
