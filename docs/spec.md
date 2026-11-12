@@ -24,6 +24,9 @@ topics/<slug>/
   topic.yaml            # title, questions, goals, sources (versioned)
   sources/<source-id>/  # source.yaml (metadata) + page images (images are git-ignored)
   work/ocr/<backend>/<source-id>/page-NNNN.json
+  work/numbers/<source-id>.json            # printed page numbers read from the page edges
+  work/order/<variant>/<source-id>.yaml    # reading order by printed page numbers (report to review)
+  work/text/<variant>/<source-id>.md       # the whole text of one variant in reading order
   work/segments/<source-id>.jsonl
   ground-truth/<source-id>/page-NNNN.txt   # optional hand-corrected pages for OCR evaluation
   graph/                # (planned) sorted Turtle per named graph
@@ -36,10 +39,21 @@ Page images stay out of git; `source.yaml` lists each image with its SHA-256 so 
 1. **Inspect** – the agent lists the files of a source and proposes a parsing plan (skill `ingest-sources`).
 2. **OCR** – `mmo ocr run` sends every page image to one backend and stores one JSON per page:
    `page`, `image`, `image_sha256`, `backend`, `model`, `prompt_version`, `text`, `confidence` (if known),
-   `seconds`, `created`. Results of different backends live side by side, so variants can be compared.
-3. **Compare** – `mmo ocr compare` reports the character error rate (CER) of each backend against ground truth when
+   `quality` and `warnings` (if the backend reports them), `seconds`, `created`. Results of different backends live
+   side by side, so variants can be compared. `page` is the **scan number** (file-name order), the identity of an
+   image; `--workers N` reads N pages at once, and a failed page does not stop the others (a rerun retries it).
+3. **Order** – `mmo ocr numbers` reads the printed page number from the top and bottom edge of every image (the
+   strips go to the fabric service's Extract: OCR models leave headers and footers out of the page text, Tesseract
+   cannot read a lone number from a photo); results in `work/numbers/<source>.json`, resumable. `mmo ocr order` takes
+   that number, else a line that is only a number among the first or last three lines of the OCR text, and sorts the
+   pages by it. A page without a number between two pages two apart gets
+   the number between them (`inferred`); a number set by hand in `source.yaml` (`printed_pages: {<image>: <page>}`)
+   wins (`manual`); other pages stay `unknown` and follow the page photographed before them. The report lists missing
+   pages, numbers found twice (a retaken photo or a misread number) and unknown pages. `mmo ocr book` writes the whole
+   text in that order, each page under a comment with its printed number, scan number and image.
+4. **Compare** – `mmo ocr compare` reports the character error rate (CER) of each backend against ground truth when
    it exists, otherwise between two backends.
-4. **Segment** – `mmo segment` joins the text of one backend's pages, repairs words hyphenated across line ends and
+5. **Segment** – `mmo segment` joins the text of one backend's pages in reading order, repairs words hyphenated across line ends and
    splits paragraphs into segments with ids `<source>:p<page>:<n>` and character offsets into the page text.
 
 ### OCR backends
@@ -48,6 +62,7 @@ Page images stay out of git; `source.yaml` lists each image with its SHA-256 so 
 | :--- | :--- | :--- |
 | `tesseract` | local `tesseract` binary, language `ces` by default | free, offline baseline; needs `tesseract-ocr-ces` |
 | `openai` | OpenAI-compatible `chat/completions` with the image as a data URL | the homelab LiteLLM gateway, Ollama or vLLM; Claude can sit behind the same gateway |
+| `fabric` | the homelab AI Fabric's OCR service through its client library `fabric-ocr` (ADR 0005) | the service turns photos upright, reads them with its OCR model (started on demand) and falls back to Tesseract (`quality: basic`); `--mode fast` = CPU only; 2 pages at once |
 
 Backends are registered in `src/mixed_method_ontology/ocr/`; a new one implements `OcrBackend.recognize()`.
 

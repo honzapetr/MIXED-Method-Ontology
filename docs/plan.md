@@ -19,6 +19,17 @@
 - Paths: `src/mixed_method_ontology/ocr/`, `topics/`, `tests/`, `docs/progress.md`
 - Depends on: T1. Runs on the owner's computer (homelab reachable).
 
+### T2a – Fabric OCR backend and reading order
+- Goal: read the first book (213 phone photos, taken out of order) with the homelab OCR service and sort its pages
+  by the printed page numbers.
+- Acceptance criteria: backend `fabric` with the vendored client (ADR 0005), parallel pages, a failed page does not
+  stop the run; `mmo ocr numbers` (page numbers from the page edges); `mmo ocr order` (printed / inferred / manual / unknown, gaps, duplicates) and `mmo ocr book`;
+  segments in reading order; the book read and its order report in `docs/progress.md`.
+- Verify: `uv run pytest && uv run mmo ocr order nazi-v-dobe-ai kniha --variant fabric`
+- Paths: `src/mixed_method_ontology/`, `tests/`, `vendor/wheels/`, `pyproject.toml`, `uv.lock`, `Dockerfile`, `docs/`,
+  `topics/nazi-v-dobe-ai/`
+- Depends on: T1. Runs on the owner's computer (homelab reachable). Takes the printed page numbers from T3.
+
 ### T3 – Image preprocessing and page layout
 - Goal: improve OCR input and drop running headers / page numbers from segments.
 - Acceptance criteria: optional deskew/contrast step; header and page-number lines detected and stored apart from

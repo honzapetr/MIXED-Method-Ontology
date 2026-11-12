@@ -33,7 +33,11 @@ uv run mmo topic new my-topic --title "My topic"
 uv run mmo source scan my-topic my-book
 uv run mmo ocr run my-topic my-book --backend tesseract --pages 1-10
 uv run mmo ocr run my-topic my-book --backend openai --model <vision-model> --pages 1-10
+uv run mmo ocr run my-topic my-book --backend fabric --workers 2   # the homelab OCR service (ADR 0005)
 uv run mmo ocr compare my-topic my-book          # add ground-truth/my-book/page-0001.txt for real CER
+uv run mmo ocr numbers my-topic my-book                  # printed page numbers from the page edges
+uv run mmo ocr order my-topic my-book --variant fabric   # reading order by printed page numbers
+uv run mmo ocr book my-topic my-book --variant fabric    # whole text in reading order -> work/text/
 uv run mmo segment my-topic my-book --variant tesseract
 ```
 

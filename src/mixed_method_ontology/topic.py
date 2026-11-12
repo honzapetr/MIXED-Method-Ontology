@@ -65,6 +65,10 @@ class Source:
         """Pages in natural file-name order, numbered from 1 (scan order, not the printed page number)."""
         return [Page(number=i, image=image) for i, image in enumerate(self.images(), start=1)]
 
+    def manual_page_numbers(self) -> dict[str, int]:
+        """`printed_pages` of `source.yaml`: image file name -> printed page number, set by hand where OCR failed."""
+        return {str(name): int(number) for name, number in (self.metadata().get("printed_pages") or {}).items()}
+
     def write_manifest(self) -> dict[str, Any]:
         """Record every page image with its hash in `source.yaml`, keeping the other metadata."""
         meta = self.metadata()
@@ -123,6 +127,15 @@ class Topic:
 
     def ocr_dir(self, backend: str, source_id: str) -> Path:
         return self.root / "work" / "ocr" / backend / source_id
+
+    def order_file(self, variant: str, source_id: str) -> Path:
+        return self.root / "work" / "order" / variant / f"{source_id}.yaml"
+
+    def numbers_file(self, source_id: str) -> Path:
+        return self.root / "work" / "numbers" / f"{source_id}.json"
+
+    def book_file(self, variant: str, source_id: str) -> Path:
+        return self.root / "work" / "text" / variant / f"{source_id}.md"
 
     def segments_file(self, source_id: str) -> Path:
         return self.root / "work" / "segments" / f"{source_id}.jsonl"

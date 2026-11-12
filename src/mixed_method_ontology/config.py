@@ -34,6 +34,9 @@ class Settings:
     openai_timeout: float = 600.0
     tesseract_cmd: str = "tesseract"
     tesseract_lang: str = "ces"
+    # the AI Fabric's OCR service; empty = the fabric-ocr client's own config file (~/.config/fabric-ocr/env)
+    fabric_ocr_url: str = ""
+    fabric_ocr_token: str = ""
 
     @classmethod
     def load(cls, env_file: Path | None = None, environ: dict[str, str] | None = None) -> Settings:
@@ -51,4 +54,6 @@ class Settings:
             openai_timeout=float(get("MMO_OPENAI_TIMEOUT", "600")),
             tesseract_cmd=get("MMO_TESSERACT_CMD", "tesseract"),
             tesseract_lang=get("MMO_TESSERACT_LANG", "ces"),
+            fabric_ocr_url=get("FABRIC_OCR_URL", ""),
+            fabric_ocr_token=get("FABRIC_OCR_TOKEN", ""),
         )

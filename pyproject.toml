@@ -5,6 +5,8 @@ description = "Ontology and tooling for qualitative and mixed-methods research: 
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
+    "fabric-ocr>=0.2.0",
+    "pillow>=11.0",
     "pyyaml>=6.0",
 ]
 
@@ -16,6 +18,16 @@ dev = [
     "pytest>=8.3",
     "ruff>=0.8",
 ]
+
+# Clients of the homelab AI Fabric come only from vendor/wheels (ADR 0005), never from PyPI.
+[[tool.uv.index]]
+name = "fabric-vendor"
+url = "./vendor/wheels"
+format = "flat"
+explicit = true
+
+[tool.uv.sources]
+fabric-ocr = { index = "fabric-vendor" }
 
 [build-system]
 requires = ["hatchling>=1.25"]

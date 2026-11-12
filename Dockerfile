@@ -3,6 +3,7 @@ COPY --from=ghcr.io/astral-sh/uv:0.13.5 /uv /usr/local/bin/uv
 WORKDIR /app
 # uv.lock comes from the lab's setup at founding; README.md is the package's readme (pyproject)
 COPY pyproject.toml uv.lock README.md ./
+COPY vendor ./vendor
 COPY src ./src
 RUN uv sync --frozen --no-dev
 EXPOSE 8000

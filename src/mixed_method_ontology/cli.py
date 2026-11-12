@@ -10,8 +10,10 @@ from pathlib import Path
 from mixed_method_ontology.config import Settings
 from mixed_method_ontology.metrics import cer
 from mixed_method_ontology.ocr import BACKENDS, load_pages, make_backend, run_ocr
+from mixed_method_ontology.order import ReadingOrder, book_markdown, ordered_records, reading_order, write_order
+from mixed_method_ontology.page_numbers import load_page_numbers, read_page_numbers
 from mixed_method_ontology.segment import segment_records, write_jsonl
-from mixed_method_ontology.topic import Topic
+from mixed_method_ontology.topic import Source, Topic
 
 
 def parse_pages(value: str | None) -> set[int] | None:
@@ -54,9 +56,12 @@ def cmd_ocr_run(args: argparse.Namespace) -> int:
         print(f"no page images in {source.root}", file=sys.stderr)
         return 1
     model = args.model or (settings.ocr_model if args.backend == "openai" else None)
-    backend = make_backend(args.backend, settings, model=model)
-    out_dir = topic.ocr_dir(ocr_backend_dir(args.backend, model), source.id)
-    written = run_ocr(source, backend, out_dir, pages=parse_pages(args.pages), force=args.force)
+    backend = make_backend(args.backend, settings, model=model, mode=args.mode)
+    variant = (
+        model if args.backend == "openai" else (args.mode if args.backend == "fabric" and args.mode != "auto" else None)
+    )
+    out_dir = topic.ocr_dir(ocr_backend_dir(args.backend, variant), source.id)
+    written = run_ocr(source, backend, out_dir, pages=parse_pages(args.pages), force=args.force, workers=args.workers)
     print(f"{len(written)} pages written to {out_dir}")
     return 0
 
@@ -88,13 +93,89 @@ def cmd_ocr_compare(args: argparse.Namespace) -> int:
     return 0
 
 
+def load_variant(topic: Topic, variant: str, source_id: str) -> list[dict]:
+    records = load_pages(topic.ocr_dir(variant, source_id))
+    if not records:
+        raise FileNotFoundError(f"no OCR results for variant {variant!r} and source {source_id!r}")
+    return records
+
+
+def order_of(topic: Topic, source: Source, records: list[dict]) -> ReadingOrder:
+    """Reading order from hand-set numbers, numbers read from the page edges and numbers found in the text."""
+    return reading_order(records, source.manual_page_numbers(), load_page_numbers(topic.numbers_file(source.id)))
+
+
+def cmd_ocr_numbers(args: argparse.Namespace) -> int:
+    """Printed page numbers read from the top and bottom edge of every image (the fabric service's Extract)."""
+    from mixed_method_ontology.ocr.fabric import FabricPageNumbers, connect_client  # needs the service's client
+
+    settings = Settings.load()
+    topic = Topic.load(args.topics / args.topic)
+    source = topic.source(args.source)
+    reader = FabricPageNumbers(connect_client(settings.fabric_ocr_url, settings.fabric_ocr_token))
+    target = topic.numbers_file(source.id)
+    count = read_page_numbers(source, reader, target, workers=args.workers)
+    print(f"{count} images read, numbers in {target}")
+    return 0
+
+
+def cmd_ocr_order(args: argparse.Namespace) -> int:
+    """Reading order by printed page numbers: a report to review, gaps and duplicates on the console."""
+    topic = Topic.load(args.topics / args.topic)
+    source = topic.source(args.source)
+    order = order_of(topic, source, load_variant(topic, args.variant, source.id))
+    target = topic.order_file(args.variant, source.id)
+    write_order(order, args.variant, target)
+    summary = order.to_dict(args.variant)["summary"]
+    print(
+        f"{summary['pages']} pages: {summary['printed']} printed, {summary['inferred']} inferred, "
+        f"{summary['corrected']} corrected, {summary['manual']} manual, {summary['unknown']} unknown -> {target}"
+    )
+    if order.gaps:
+        print(f"missing pages: {compact_ranges(order.gaps)}")
+    for number, images in order.duplicates.items():
+        print(f"page {number} twice: {', '.join(images)}")
+    for page in order.unknown:
+        print(f"no page number: scan {page.scan} {page.image}")
+    for page in order.pages:
+        if page.how == "corrected":
+            print(f"read {page.found}, between its neighbours -> {page.printed}: {page.image}")
+    if order.unknown or order.duplicates:
+        print("fix by hand: printed_pages: {<image>: <page>} in source.yaml, then run this again")
+    return 0
+
+
+def cmd_ocr_book(args: argparse.Namespace) -> int:
+    """The whole text of one variant in reading order, as one Markdown file."""
+    topic = Topic.load(args.topics / args.topic)
+    source = topic.source(args.source)
+    records = load_variant(topic, args.variant, source.id)
+    order = order_of(topic, source, records)
+    title = str(source.metadata().get("title") or source.id)
+    target = topic.book_file(args.variant, source.id)
+    target.parent.mkdir(parents=True, exist_ok=True)
+    target.write_text(book_markdown(records, order, title), encoding="utf-8")
+    print(f"{len(records)} pages in reading order written to {target}")
+    return 0
+
+
+def compact_ranges(numbers: list[int]) -> str:
+    """[3, 4, 5, 9] -> "3-5, 9"."""
+    ranges: list[list[int]] = []
+    for n in numbers:
+        if ranges and n == ranges[-1][1] + 1:
+            ranges[-1][1] = n
+        else:
+            ranges.append([n, n])
+    return ", ".join(str(a) if a == b else f"{a}-{b}" for a, b in ranges)
+
+
 def cmd_segment(args: argparse.Namespace) -> int:
     topic = Topic.load(args.topics / args.topic)
-    records = load_pages(topic.root / "work" / "ocr" / args.variant / args.source)
-    if not records:
-        print(f"no OCR results for variant {args.variant!r} and source {args.source!r}", file=sys.stderr)
-        return 1
-    segments = segment_records(records)
+    source = topic.source(args.source)
+    records = load_variant(topic, args.variant, source.id)
+    # pages in reading order, so a paragraph that runs over a page break is followed by its continuation
+    segments = segment_records(ordered_records(records, order_of(topic, source, records)))
     target = topic.segments_file(args.source)
     write_jsonl(segments, target)
     print(f"{len(segments)} segments from {len(records)} pages written to {target}")
@@ -124,6 +205,13 @@ def build_parser() -> argparse.ArgumentParser:
     run.add_argument("source")
     run.add_argument("--backend", choices=BACKENDS, default="tesseract")
     run.add_argument("--model", help="model name for the openai backend (default: MMO_OCR_MODEL)")
+    run.add_argument(
+        "--mode",
+        choices=("auto", "accurate", "fast"),
+        default="auto",
+        help="fabric backend: auto (OCR model for photos), accurate (always the model), fast (CPU Tesseract only)",
+    )
+    run.add_argument("--workers", type=int, default=1, help="pages read at the same time (fabric: 2)")
     run.add_argument("--pages", help="only these pages, e.g. 1-5,9")
     run.add_argument("--force", action="store_true", help="redo pages that already have a result")
     run.set_defaults(func=cmd_ocr_run)
@@ -133,6 +221,21 @@ def build_parser() -> argparse.ArgumentParser:
     compare.add_argument("variants", nargs="*", help="variant folders under work/ocr (default: all)")
     compare.add_argument("--json", type=Path, help="also write the report as JSON")
     compare.set_defaults(func=cmd_ocr_compare)
+    order = ocr.add_parser("order", help="reading order by printed page numbers (gaps, duplicates, unknown pages)")
+    order.add_argument("topic")
+    order.add_argument("source")
+    order.add_argument("--variant", default="tesseract", help="OCR variant folder under work/ocr")
+    order.set_defaults(func=cmd_ocr_order)
+    numbers = ocr.add_parser("numbers", help="read printed page numbers from the page edges (fabric service)")
+    numbers.add_argument("topic")
+    numbers.add_argument("source")
+    numbers.add_argument("--workers", type=int, default=2, help="images read at the same time")
+    numbers.set_defaults(func=cmd_ocr_numbers)
+    book = ocr.add_parser("book", help="the whole text of one variant in reading order as Markdown")
+    book.add_argument("topic")
+    book.add_argument("source")
+    book.add_argument("--variant", default="tesseract", help="OCR variant folder under work/ocr")
+    book.set_defaults(func=cmd_ocr_book)
 
     seg = sub.add_parser("segment", help="split OCR text of one variant into segments")
     seg.add_argument("topic")
