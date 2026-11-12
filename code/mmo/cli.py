@@ -7,13 +7,13 @@ import json
 import sys
 from pathlib import Path
 
-from mixed_method_ontology.config import Settings
-from mixed_method_ontology.metrics import cer
-from mixed_method_ontology.ocr import BACKENDS, load_pages, make_backend, run_ocr
-from mixed_method_ontology.order import ReadingOrder, book_markdown, ordered_records, reading_order, write_order
-from mixed_method_ontology.page_numbers import load_page_numbers, read_page_numbers
-from mixed_method_ontology.segment import segment_records, write_jsonl
-from mixed_method_ontology.topic import Source, Topic
+from mmo.config import Settings
+from mmo.core.topic import Source, Topic
+from mmo.ingest.compare import cer
+from mmo.ingest.ocr import BACKENDS, load_pages, make_backend, run_ocr
+from mmo.ingest.order import ReadingOrder, book_markdown, ordered_records, reading_order, write_order
+from mmo.ingest.page_numbers import load_page_numbers, read_page_numbers
+from mmo.ingest.segment import segment_records, write_jsonl
 
 
 def parse_pages(value: str | None) -> set[int] | None:
@@ -107,7 +107,7 @@ def order_of(topic: Topic, source: Source, records: list[dict]) -> ReadingOrder:
 
 def cmd_ocr_numbers(args: argparse.Namespace) -> int:
     """Printed page numbers read from the top and bottom edge of every image (the fabric service's Extract)."""
-    from mixed_method_ontology.ocr.fabric import FabricPageNumbers, connect_client  # needs the service's client
+    from mmo.ingest.ocr.fabric import FabricPageNumbers, connect_client  # needs the service's client
 
     settings = Settings.load()
     topic = Topic.load(args.topics / args.topic)

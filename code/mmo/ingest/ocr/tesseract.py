@@ -8,7 +8,7 @@ import shutil
 import subprocess
 from pathlib import Path
 
-from mixed_method_ontology.ocr.base import OcrResult
+from mmo.ingest.ocr.base import OcrResult
 
 
 def text_from_tsv(tsv: str) -> tuple[str, float | None]:

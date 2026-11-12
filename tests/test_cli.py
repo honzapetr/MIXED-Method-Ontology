@@ -1,7 +1,7 @@
 import json
 from pathlib import Path
 
-from mixed_method_ontology.cli import main, ocr_backend_dir, parse_pages
+from mmo.cli import main, ocr_backend_dir, parse_pages
 
 
 def test_parse_pages() -> None:

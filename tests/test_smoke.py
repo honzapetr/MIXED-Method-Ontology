@@ -2,7 +2,7 @@ import json
 import threading
 import urllib.request
 
-from mixed_method_ontology.__main__ import create_server
+from mmo.__main__ import create_server
 
 
 def test_healthz() -> None:

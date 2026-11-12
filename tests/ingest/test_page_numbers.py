@@ -7,10 +7,10 @@ import pytest
 from fabric_ocr.client import OcrClient
 from PIL import Image
 
-from mixed_method_ontology.ocr.fabric import FabricPageNumbers
-from mixed_method_ontology.order import HOW_MANUAL, HOW_PRINTED, reading_order
-from mixed_method_ontology.page_numbers import edge_strip, load_page_numbers, read_page_numbers
-from mixed_method_ontology.topic import Topic
+from mmo.core.topic import Topic
+from mmo.ingest.ocr.fabric import FabricPageNumbers
+from mmo.ingest.order import HOW_MANUAL, HOW_PRINTED, reading_order
+from mmo.ingest.page_numbers import edge_strip, load_page_numbers, read_page_numbers
 
 
 def page_photo(path: Path) -> None:

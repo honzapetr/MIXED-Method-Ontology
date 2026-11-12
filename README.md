@@ -15,8 +15,8 @@ the lab.
 
 | Path | What |
 | :--- | :--- |
-| `src/mixed_method_ontology/` | package and CLI `mmo` |
-| `topics/<slug>/` | research topics: sources, OCR results, segments, graph |
+| `code/mmo/` | the program and its command `mmo`: `core/` (topics, sources), `ingest/` (OCR, page numbers, reading order, segments) |
+| `topics/<slug>/` | research topics - the only place for research data: sources, OCR results, segments, graph |
 | `methods/` | method modules (grounded theory, thematic analysis, ...) |
 | `ontology/` | LinkML schema and mapping to standards |
 | `docs/` | brief, spec, plan, answers, progress, ADRs |
@@ -41,7 +41,7 @@ uv run mmo ocr book my-topic my-book --variant fabric    # whole text in reading
 uv run mmo segment my-topic my-book --variant tesseract
 ```
 
-`uv run python -m mixed_method_ontology` starts the health endpoint used by the lab preview (`/healthz`).
+`uv run python -m mmo` starts the health endpoint used by the lab preview (`/healthz`).
 
 ## OCR through the homelab (backend `fabric`)
 

@@ -1,4 +1,4 @@
-from mixed_method_ontology.segment import clean, paragraph_spans, segment_page, segment_records
+from mmo.ingest.segment import clean, paragraph_spans, segment_page, segment_records
 
 PAGE = "Sebevražda je zjev spo-\nlečenský a roste\ns moderní osvětou.\n\n  Rakousko-\nUhersko má mnoho pří-\npadů a"
 

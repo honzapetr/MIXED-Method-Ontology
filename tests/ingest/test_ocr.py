@@ -7,13 +7,13 @@ import httpx
 import pytest
 from fabric_ocr.client import OcrClient
 
-from mixed_method_ontology.config import Settings
-from mixed_method_ontology.ocr import OcrResult, load_pages, make_backend, run_ocr
-from mixed_method_ontology.ocr.fabric import PROMPT_VERSION as FABRIC_PROMPT_VERSION
-from mixed_method_ontology.ocr.fabric import FabricOcrBackend
-from mixed_method_ontology.ocr.openai_compat import PROMPT_VERSION, OpenAICompatBackend
-from mixed_method_ontology.ocr.tesseract import text_from_tsv
-from mixed_method_ontology.topic import Topic
+from mmo.config import Settings
+from mmo.core.topic import Topic
+from mmo.ingest.ocr import OcrResult, load_pages, make_backend, run_ocr
+from mmo.ingest.ocr.fabric import PROMPT_VERSION as FABRIC_PROMPT_VERSION
+from mmo.ingest.ocr.fabric import FabricOcrBackend
+from mmo.ingest.ocr.openai_compat import PROMPT_VERSION, OpenAICompatBackend
+from mmo.ingest.ocr.tesseract import text_from_tsv
 
 TSV_HEADER = "level\tpage_num\tblock_num\tpar_num\tline_num\tword_num\tleft\ttop\twidth\theight\tconf\ttext\n"
 

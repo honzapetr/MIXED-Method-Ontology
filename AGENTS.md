@@ -74,9 +74,10 @@ prompts for the lab live in `.agents/roles/`. Copies for Claude Code in `.claude
 ## Project specifics
 
 * **Talk to the owner in Czech**; code, comments, commits and docs stay in English.
-* **Layout:** `src/mixed_method_ontology/` (package, CLI `mmo`), `topics/<slug>/` (research topics: sources, OCR
-  results, segments, graph), `methods/*.yaml` (method modules), `ontology/` (LinkML schema and mapping to standards),
-  `docs/` (project memory). Details: `docs/spec.md`.
+* **Layout:** `code/mmo/` (the program, CLI `mmo`: `core/` topics and sources, `ingest/` bringing new data in),
+  `topics/<slug>/` (research topics, the only place for research data: sources, OCR results, segments, graph),
+  `methods/*.yaml` (method modules), `ontology/` (LinkML schema and mapping to standards), `docs/` (project memory).
+  Details: `docs/spec.md`.
 * **CLI:** `uv run mmo --help` – `topic new`, `source scan`, `ocr run`, `ocr compare`, `segment`.
 * **Traceability is the core rule:** never write analytical output that cannot be traced to a segment (source, page,
   offsets, quote) and to the step that produced it (model, prompt version, time).

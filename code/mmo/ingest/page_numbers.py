@@ -19,7 +19,7 @@ from typing import Protocol
 
 from PIL import Image, ImageOps
 
-from mixed_method_ontology.topic import Source, sha256_file
+from mmo.core.topic import Source, sha256_file
 
 TOP_SHARE = 0.12  # running header with the page number on some pages
 BOTTOM_SHARE = 0.15  # footer; phone photos often show some background below the page

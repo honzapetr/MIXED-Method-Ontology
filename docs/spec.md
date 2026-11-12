@@ -100,7 +100,7 @@ Page images stay out of git; `ingest/files.yaml` lists each file with its SHA-25
 | `openai` | OpenAI-compatible `chat/completions` with the image as a data URL | the homelab LiteLLM gateway, Ollama or vLLM; Claude can sit behind the same gateway |
 | `fabric` | the homelab AI Fabric's OCR service through its client library `fabric-ocr` (ADR 0005) | the service turns photos upright, reads them with its OCR model (started on demand) and falls back to Tesseract (`quality: basic`); `--mode fast` = CPU only; 2 pages at once |
 
-Backends are registered in `src/mixed_method_ontology/ocr/`; a new one implements `OcrBackend.recognize()`.
+Backends are registered in `code/mmo/ingest/ocr/`; a new one implements `OcrBackend.recognize()`.
 
 ## Homelab
 

@@ -11,7 +11,7 @@ dependencies = [
 ]
 
 [project.scripts]
-mmo = "mixed_method_ontology.cli:main"
+mmo = "mmo.cli:main"
 
 [dependency-groups]
 dev = [
@@ -34,9 +34,10 @@ requires = ["hatchling>=1.25"]
 build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/mixed_method_ontology"]
+packages = ["code/mmo"]
 
 [tool.ruff]
+src = ["code", "tests"]
 line-length = 120
 target-version = "py312"
 

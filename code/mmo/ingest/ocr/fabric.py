@@ -14,8 +14,8 @@ from pathlib import Path
 from fabric_ocr.cli import settings as client_settings
 from fabric_ocr.client import OcrApiError, OcrClient, Source, connect
 
-from mixed_method_ontology.ocr.base import OcrResult
-from mixed_method_ontology.page_numbers import INSTRUCTION, SCHEMA
+from mmo.ingest.ocr.base import OcrResult
+from mmo.ingest.page_numbers import INSTRUCTION, SCHEMA
 
 PROMPT_VERSION = "fabric-service"  # the service owns its prompt; the route it took is recorded in `model`
 MODES = ("auto", "accurate", "fast")  # fast = CPU only (Tesseract), never wakes the model

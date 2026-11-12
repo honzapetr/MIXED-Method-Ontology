@@ -1,6 +1,6 @@
 import pytest
 
-from mixed_method_ontology.metrics import cer, levenshtein, normalize
+from mmo.ingest.compare import cer, levenshtein, normalize
 
 
 def test_levenshtein() -> None:

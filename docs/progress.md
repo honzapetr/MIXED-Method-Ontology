@@ -35,3 +35,13 @@
 - Next session must know: the OCR setup on Windows (uv >= 0.13, `UV_PROJECT_ENVIRONMENT` off `G:`, token from
   `~/.config/fabric-ocr/env`) and the known gap of the `ingest-sources` skill are in README, section "OCR through the
   homelab". The branch `task/T2a-fabric-ocr-reading-order` is local only: the owner pushes it from this project.
+
+## T2b – 2026-11-12
+- Done: the program moved from `src/mixed_method_ontology/` to `code/mmo/` (`git mv`, history kept; ADR 0007):
+  `core/topic.py`; `ingest/ocr/`, `ingest/page_numbers.py`, `ingest/order.py`, `ingest/segment.py`,
+  `ingest/compare.py` (was `metrics.py`). Package `mmo`, command `mmo` unchanged. Tests split into `tests/core/` and
+  `tests/ingest/`. `pyproject.toml` (hatch package path, ruff `src`), `Dockerfile`, README, spec and `AGENTS.md`
+  (protected, approved by the owner in the plan) name the new path. The empty `data/` folder was removed.
+- Verified: `uv run pytest` (43 passed), `ruff check`, `ruff format --check`, `uv run mmo --help`. The Docker image
+  was not built (no Docker run on the owner's computer in this session).
+- Next: T2c (source-centric topic layout). Planning of T2b-T2d is in the same branch (docs commits before T2b).

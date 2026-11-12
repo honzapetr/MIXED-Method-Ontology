@@ -3,7 +3,7 @@ from pathlib import Path
 import pytest
 import yaml
 
-from mixed_method_ontology.topic import Topic, natural_key
+from mmo.core.topic import Topic, natural_key
 
 
 def test_natural_key_orders_numbers() -> None:

@@ -3,8 +3,8 @@ from pathlib import Path
 
 import yaml
 
-from mixed_method_ontology.cli import compact_ranges, main
-from mixed_method_ontology.order import (
+from mmo.cli import compact_ranges, main
+from mmo.ingest.order import (
     HOW_INFERRED,
     HOW_MANUAL,
     HOW_PRINTED,

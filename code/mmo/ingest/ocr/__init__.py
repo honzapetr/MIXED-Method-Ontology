@@ -9,11 +9,11 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import UTC, datetime
 from pathlib import Path
 
-from mixed_method_ontology.config import Settings
-from mixed_method_ontology.ocr.base import OcrBackend, OcrResult
-from mixed_method_ontology.ocr.openai_compat import OpenAICompatBackend
-from mixed_method_ontology.ocr.tesseract import TesseractBackend
-from mixed_method_ontology.topic import Page, Source, sha256_file
+from mmo.config import Settings
+from mmo.core.topic import Page, Source, sha256_file
+from mmo.ingest.ocr.base import OcrBackend, OcrResult
+from mmo.ingest.ocr.openai_compat import OpenAICompatBackend
+from mmo.ingest.ocr.tesseract import TesseractBackend
 
 __all__ = ["BACKENDS", "OcrBackend", "OcrResult", "load_pages", "make_backend", "page_file", "run_ocr"]
 
@@ -32,7 +32,7 @@ def make_backend(name: str, settings: Settings, model: str | None = None, mode: 
             timeout=settings.openai_timeout,
         )
     if name == "fabric":
-        from mixed_method_ontology.ocr.fabric import connect_backend  # needs the service's client library
+        from mmo.ingest.ocr.fabric import connect_backend  # needs the service's client library
 
         return connect_backend(settings.fabric_ocr_url, settings.fabric_ocr_token, mode=mode)
     raise ValueError(f"unknown OCR backend {name!r}; known: {', '.join(BACKENDS)}")

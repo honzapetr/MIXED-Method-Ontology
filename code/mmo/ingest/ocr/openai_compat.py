@@ -13,7 +13,7 @@ import urllib.error
 import urllib.request
 from pathlib import Path
 
-from mixed_method_ontology.ocr.base import OcrResult
+from mmo.ingest.ocr.base import OcrResult
 
 PROMPT_VERSION = "ocr-v1"
 SYSTEM_PROMPT = (
