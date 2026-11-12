@@ -17,9 +17,15 @@
 | Analysis run **(planned)** | Method × questions × selected segments → proposals in the graph. |
 | Proposal **(planned)** | A code, category, theme, relation or memo with status `proposed` / `confirmed` / `rejected`, author and provenance. |
 
+## Repository layout
+
+`code/mmo/` the program (ADR 0007: `core/` topic and sources, later graph and analysis; `ingest/` OCR, page
+numbers, reading order, segments) · `topics/` research data, the only data folder · `methods/` method modules ·
+`ontology/` schema and mapping · `docs/` project memory · `tests/` · `tools/`.
+
 ## Topic folder
 
-Source-centric (ADR 0006, built in T2b): everything about one source is in its folder, and what the researcher
+Source-centric (ADR 0006, built in T2c): everything about one source is in its folder, and what the researcher
 writes is kept apart from what the machine produces.
 
 ```

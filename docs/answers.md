@@ -33,3 +33,6 @@
   context documents) is added as a source of its own with the role `context`, linked to the source it is about, and
   goes through the same ingest; it is traceable the same way as the primary source.
 - **Adding a source should be one step** with the existing OCR tools, not five separate commands.
+- **Code layout:** `src/` is confusing here (it reads as research sources). The program moves to `code/mmo/`,
+  split into `core/` (project core) and `ingest/` (bringing new data in); command `mmo` unchanged. The empty
+  `data/` folder was removed - research data lives only in `topics/`.
