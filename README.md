@@ -42,3 +42,34 @@ uv run mmo segment my-topic my-book --variant tesseract
 ```
 
 `uv run python -m mixed_method_ontology` starts the health endpoint used by the lab preview (`/healthz`).
+
+## OCR through the homelab (backend `fabric`)
+
+The owner's AI Fabric runs an OCR service (dots.ocr for photos and scans, the main model for page numbers). This
+project uses it through its client library `fabric-ocr`, vendored in `vendor/wheels/` (ADR 0005), so installing the
+project needs no homelab access (CI on GitHub's runners works); **calling** the service works only from the owner's
+LAN or VPN.
+
+| Step | Command | Result |
+| :--- | :--- | :--- |
+| page text | `uv run mmo ocr run <topic> <source> --backend fabric --workers 2` | `work/ocr/fabric/<source>/page-NNNN.json` |
+| page numbers | `uv run mmo ocr numbers <topic> <source>` | `work/numbers/<source>.json` |
+| reading order | `uv run mmo ocr order <topic> <source> --variant fabric` | `work/order/fabric/<source>.yaml` + a report of gaps, duplicates and pages without a number |
+| whole text | `uv run mmo ocr book <topic> <source> --variant fabric` | `work/text/fabric/<source>.md` in reading order |
+
+Every step saves page by page; a rerun reads only what is missing, so an interrupted run is simply started again.
+Fix page numbers by hand with `printed_pages: {<image>: <page>}` in `source.yaml`, then rerun `order` and `book`.
+How it works: `docs/spec.md` (Ingest pipeline); the first book: `docs/progress.md` (T2a).
+
+**Setup on the owner's Windows computer:**
+
+1. **uv 0.13 or newer** - older uv (0.6.8 was installed) cannot resolve the relative flat index `./vendor/wheels` and
+   `uv sync` fails. Run `uv self update`, or call `uvx --from uv==0.13.5 uv ...`.
+2. **Keep the virtual environment off Google Drive** - creating `.venv` on `G:` is very slow. Set
+   `UV_PROJECT_ENVIRONMENT` to a folder on `C:` (e.g. `C:/Users/<you>/.venvs/mmo`).
+3. **Address and token** come from `~/.config/fabric-ocr/env` (`FABRIC_OCR_URL`, `FABRIC_OCR_TOKEN`; the owner's is
+   already set, token `cli-vlastnik`), or from `FABRIC_OCR_URL` / `FABRIC_OCR_TOKEN` in `.env` (`.env.example`).
+
+**Known gap:** the skill `.agents/skills/ingest-sources` still describes only the `tesseract` and `openai` backends.
+It is a protected path, so it was not changed in T2a; updating it with the `fabric` steps above is a good first task,
+so that agents in this project know the workflow without reading the spec.

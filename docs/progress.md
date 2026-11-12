@@ -32,3 +32,6 @@
   124, 134-137, 148-155, 158-160, 196, 219 - some may be the unknown pages, some not photographed); set
   `printed_pages` in `source.yaml` and rerun `mmo ocr order` / `mmo ocr book`. Compare a few pages with the photos
   (`mmo ocr compare` with ground truth) before analysis.
+- Next session must know: the OCR setup on Windows (uv >= 0.13, `UV_PROJECT_ENVIRONMENT` off `G:`, token from
+  `~/.config/fabric-ocr/env`) and the known gap of the `ingest-sources` skill are in README, section "OCR through the
+  homelab". The branch `task/T2a-fabric-ocr-reading-order` is local only: the owner pushes it from this project.
