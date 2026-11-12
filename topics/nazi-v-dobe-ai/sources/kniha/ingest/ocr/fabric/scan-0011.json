@@ -1,0 +1,17 @@
+{
+  "source": "kniha",
+  "scan": 11,
+  "image": "IMG_20260902_195714.jpg",
+  "image_sha256": "d7301f93873d08827b4bc077daf9a436724147eb50a1152fffc71c4872b7518c",
+  "backend": "fabric",
+  "model": "fabric/model",
+  "prompt_version": "fabric-service",
+  "confidence": null,
+  "quality": "full",
+  "warnings": [
+    "page 1: rotated 90 degrees clockwise to read it"
+  ],
+  "seconds": 12.45,
+  "created": "2026-11-11T21:55:56+00:00",
+  "text": "uvěříme mýtům, které nám dnes vnucují „shora\", a použijeme\nje jako smysl v době umělé inteligence, anebo si vytvoříme mýty\núplně nové. Právě schopnost tvořit nové příběhy pro nás a pro\nlidstvo bude klíčová, abychom zvládli obrovské výzvy a nebez-\npečí, jež přináší další vývoj a růst vlivu AI. Protože právě v této\nnaší schopnosti vytvářet nové příběhy a společně jim věřit mož-\nná leží naše největší síla, s jejíž pomocí se můžeme postavit bu-\ndoucnosti s umělou inteligencí.\n\nOD CYKLU K LINII\n\nJeště než přišel Thúkydidés, lidé chápali svět hlavně skrze mýty.\nByly to příběhy plné významu, které jim pomáhaly cítit se ve\nsvětě jistě. Mýty jim nevysvětlovaly jen to, co se děje, ale dáva-\nly smysl i tomu, co prožívali – své místo v nich měly i utrpení\na chaos. Události nebyly jen tak nějaké věci, měly hlubší význam.\nČasto se věřilo, že odrážejí vůli bohů nebo nějaký vyšší řád. Lidé\nv mýtech nacházeli útěchu a měli se díky nim čeho držet. Nebyly\nto jen popisy minulosti, ale i vysvětlení, proč se věci děly a co\nznamenaly. Řeký historik Thúkydidés to změnil. Místo hledá-\nní smyslu začal hledat příčiny, místo vyprávění nabídl rozbor\nudálostí.\n\nS Thúkydidem se objevil nový, střízlivější pohled na historii.\nUž to nebyly příběhy plné božských znamení a skrytých zpráv.\nDějiny už nebyly knihou napsanou bohy, kterou musíme rozluš-\ntit. Spíš to byl nekončící sled lidských bojů, ve kterých se pořád\ndokola odráží lidská povaha. Řekové, podobně jako mnoho ji-\nných starověkých národů, vnímali čas jako kruh. Co se jednou\nstalo, stane se zase. Neměli žádnou naději, že v budoucnu přijde\nnějaké vykoupení nebo že se věci budou zlepšovat. Dějiny se ne-\ntočily dopředu, ale pořád dokola."
+}

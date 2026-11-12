@@ -1,0 +1,17 @@
+{
+  "source": "kniha",
+  "scan": 161,
+  "image": "IMG_20260902_223021.jpg",
+  "image_sha256": "53610c6b8806676dc569889f4fa457aa7f160d88f4e2f285c96c219f990ecdbc",
+  "backend": "fabric",
+  "model": "fabric/model",
+  "prompt_version": "fabric-service",
+  "confidence": null,
+  "quality": "full",
+  "warnings": [
+    "page 1: rotated 270 degrees clockwise to read it"
+  ],
+  "seconds": 13.81,
+  "created": "2026-11-11T22:15:15+00:00",
+  "text": "prožívanou realitu do „oblaků AI“ může být paradoxně spíše útěkem od oblaků.\n\n## DOKONALÁ NEDOKONALOST\n\nDoba, ve které žijeme, se díky AI stává v jistém pohledu stále dokonalejší. Firemní procesy jsou optimalizovány, generované obrázky stále lepší. Rychlý rozvoj schopností AI v těchto směrech je obdivuhodný, protože nám v mnoha ohledech usnadňuje práci. Zároveň však o to více vyniká naše lidská pomalost a nedokonalost. Stále se zdáme být málo efektivní a i naše největší intelektnedostačující. A zarážející tempo zdokonalování AI často ňuje, jak se nám v honbě za dokonalostí stále více vzdaluje.\n\nGilbert Keith Chesterton napsal jako první větu úvodu své jeden je zůstat v něm, druhý je obejít celý svět, dokud se nevráporozumění svému vlastnímu domovu či identitě přichází teprve věk cestuje, objevuje vše, co není jeho domov a čím je jeho domov může přihodit, když sledujeme stále větší dokonalost AI. Možná lépe. Této nahoty bychom se tedy neměli bát ani se za ni stydět.\n\nLeonard Cohen popisuje lidský úděl ve své písni The Goal: „Už učit, jen to, že cíl nám vždycky uniká.“ Jako lidé jsme nedokativní, podléháme výkyvům nálad a občas řekneme nebo uděláme něco, čeho pak litujeme. Ale právě to nás činí lidmi."
+}

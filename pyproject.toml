@@ -38,6 +38,7 @@ packages = ["code/mmo"]
 
 [tool.ruff]
 src = ["code", "tests"]
+extend-exclude = ["topics"]  # research data, no Python; a synced drive may hold locked folders there
 line-length = 120
 target-version = "py312"
 

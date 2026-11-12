@@ -1,7 +1,8 @@
 """Split OCR page text into segments with exact positions.
 
-A segment is one paragraph of one page. `start`/`end` are character offsets into that page's OCR text (the record in
-`work/ocr/<backend>/<source>/page-NNNN.json`), so every segment can be traced back to the page and the scan. `text` is
+A segment is one paragraph of one page. `start`/`end` are character offsets into that scan's OCR text (the record in
+`sources/<source>/ingest/ocr/<variant>/scan-NNNN.json`), so every segment can be traced back to the image; `page` is the
+printed page number from the reading order (for quoting), when known. `text` is
 the paragraph cleaned for analysis: words hyphenated across line ends are joined and lines are joined with spaces.
 """
 
@@ -9,7 +10,7 @@ from __future__ import annotations
 
 import json
 import re
-from collections.abc import Iterable
+from collections.abc import Iterable, Mapping
 from dataclasses import asdict, dataclass
 from pathlib import Path
 
@@ -23,7 +24,8 @@ SENTENCE_END = re.compile(r"[.!?…:\"“”»)]\s*$")
 class Segment:
     id: str
     source: str
-    page: int
+    scan: int  # the image the text was read from (file-name order)
+    page: int | None  # printed page number, None when the reading order does not know it
     index: int  # paragraph number on the page, from 1
     start: int
     end: int
@@ -61,13 +63,14 @@ def paragraph_spans(text: str) -> list[tuple[int, int]]:
     return result
 
 
-def segment_page(source: str, page: int, text: str, backend: str) -> list[Segment]:
+def segment_page(source: str, scan: int, text: str, backend: str, page: int | None = None) -> list[Segment]:
     segments = []
     for index, (start, end) in enumerate(paragraph_spans(text), start=1):
         segments.append(
             Segment(
-                id=f"{source}:p{page}:{index}",
+                id=f"{source}:s{scan}:{index}",
                 source=source,
+                scan=scan,
                 page=page,
                 index=index,
                 start=start,
@@ -81,11 +84,12 @@ def segment_page(source: str, page: int, text: str, backend: str) -> list[Segmen
     return segments
 
 
-def segment_records(records: Iterable[dict]) -> list[Segment]:
-    """Segments of OCR records (one per page, as written by `run_ocr`)."""
+def segment_records(records: Iterable[dict], printed: Mapping[int, int | None] | None = None) -> list[Segment]:
+    """Segments of OCR records (one per scan, as written by `run_ocr`); `printed` = scan -> printed page number."""
     segments: list[Segment] = []
     for record in records:
-        segments.extend(segment_page(record["source"], record["page"], record["text"], record["backend"]))
+        page = (printed or {}).get(record["scan"])
+        segments.extend(segment_page(record["source"], record["scan"], record["text"], record["backend"], page))
     return segments
 
 

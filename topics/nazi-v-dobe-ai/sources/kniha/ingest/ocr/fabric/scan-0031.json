@@ -1,0 +1,17 @@
+{
+  "source": "kniha",
+  "scan": 31,
+  "image": "IMG_20260902_200421.jpg",
+  "image_sha256": "9dc4dc4e568ce0144dce81996e6b4f1c37a994aeab40239ac81a55d3e47b53a9",
+  "backend": "fabric",
+  "model": "fabric/model",
+  "prompt_version": "fabric-service",
+  "confidence": null,
+  "quality": "full",
+  "warnings": [
+    "page 1: rotated 90 degrees clockwise to read it"
+  ],
+  "seconds": 16.48,
+  "created": "2026-11-11T21:58:41+00:00",
+  "text": "eschatologicky jako konečný stupeň vývoje, v němž se člověk slíje se svým výtvorem a dosáhne božství.\n\nNaše víra v technologický ráj je ale jen jiným jazykem vyjádřený prastarý sen o návratu do ztraceného Edenu. Naše dílou a zároveň zpět. Z cyklického pojetí času jsme unikli do lineární rajský počátek. Tímto paradoxně žijeme stále v cyklickém pojetí času a z přímky se opět stává kruh. Cyklíme se jako bájný had který pojídá svůj ocas.\n\nV tomto zacyklení se odhaluje naše existenciální „nahota“ - zdá se, že máme potřebu hledat smysl v době jiné, než ve které se zrovna nacházíme. Nebo spíše nalézat smysl v usilování o budocnost, která by nám vrátila pohádkovou minulost. Zdá se, že máme tendenci vnímat přítomnost i v naší „yspělé AI době“ jako cosi smysl postrádající, příliš prosté, příliš nahé. A od budocího vývoje AI očekávat stejně zázraky, které by nás vysvobodily z našeho domněle bezútěšného stavu bytí, stejně jako dávní Hebrejové od svého Mesiáše.\n\n## NÁSTUP TEROR„ISMŮ“\n\nSpolečnost se přestala vnímat jako zdroj identity, řádu a smyslu a začala být chápána čistě jako nástroj k uspokojení individálních potřeb a tužeb. Její funkce se omezila na instrument-prostoru pak vstoupila ideologie. Ta měla nově spojit politiku, onáři přišli s vlastními recepty, jak by měl být vztah těchto tří oblastí nově uspořádán.⁷⁸ Věřili, že nás rozum zbaví utrpení,"
+}

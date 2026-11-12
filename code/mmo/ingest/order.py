@@ -1,6 +1,6 @@
 """Reading order of a source from the printed page numbers in its OCR text.
 
-Photos of a book are often taken out of order (a page retaken, a chapter photographed later). The scan number (`page`
+Photos of a book are often taken out of order (a page retaken, a chapter photographed later). The scan number (`scan`
 in OCR records = file-name order) stays the identity of an image; this module adds the printed page number and sorts by
 it. A number comes from the page itself (`printed`: read from its edges by `mmo ocr numbers`, else found in the OCR
 text), from both scan neighbours when they are two pages apart (`inferred`; a different number there is `corrected` -
@@ -39,7 +39,7 @@ def printed_page_number(text: str) -> int | None:
 
 @dataclass
 class PlacedPage:
-    scan: int  # page number in scan (file-name) order, the id of the OCR record
+    scan: int  # position in file-name order, the id of the OCR record
     image: str
     printed: int | None
     how: str
@@ -76,10 +76,10 @@ def _numbered(records: list[dict], manual: Mapping[str, int], read: Mapping[str,
     for record in records:
         image = str(record.get("image") or "")
         if image in manual:
-            placed.append(PlacedPage(record["page"], image, int(manual[image]), HOW_MANUAL))
+            placed.append(PlacedPage(record["scan"], image, int(manual[image]), HOW_MANUAL))
             continue
         number = read.get(image) or printed_page_number(record["text"])
-        placed.append(PlacedPage(record["page"], image, number, HOW_UNKNOWN if number is None else HOW_PRINTED))
+        placed.append(PlacedPage(record["scan"], image, number, HOW_UNKNOWN if number is None else HOW_PRINTED))
     for before, page, after in zip(placed, placed[1:], placed[2:], strict=False):
         if before.printed is None or after.printed != before.printed + 2 or page.how == HOW_MANUAL:
             continue
@@ -98,7 +98,7 @@ def reading_order(
     `manual` = image file name -> page number set by the owner; `read` = numbers read from the page edges
     (`mmo ocr numbers`), used before the number found in the OCR text.
     """
-    placed = _numbered(sorted(records, key=lambda r: r["page"]), manual or {}, read or {})
+    placed = _numbered(sorted(records, key=lambda r: r["scan"]), manual or {}, read or {})
     keys: dict[int, tuple[float, int]] = {}
     anchor = 0.0  # an unknown page follows the last numbered page photographed before it
     for page in placed:
@@ -121,13 +121,13 @@ def write_order(order: ReadingOrder, variant: str, path: Path) -> None:
 
 def ordered_records(records: list[dict], order: ReadingOrder) -> list[dict]:
     """The OCR records in the order's sequence."""
-    by_scan = {record["page"]: record for record in records}
+    by_scan = {record["scan"]: record for record in records}
     return [by_scan[page.scan] for page in order.pages]
 
 
 def book_markdown(records: list[dict], order: ReadingOrder, title: str) -> str:
     """The whole text in reading order, each page under a comment that says where it came from."""
-    by_scan = {record["page"]: record for record in records}
+    by_scan = {record["scan"]: record for record in records}
     parts = [f"# {title}\n"]
     for page in order.pages:
         printed = f"page {page.printed} ({page.how})" if page.printed is not None else "page ? (unknown)"

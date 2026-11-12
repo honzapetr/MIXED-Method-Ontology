@@ -1,0 +1,17 @@
+{
+  "source": "kniha",
+  "scan": 131,
+  "image": "IMG_20260902_222309.jpg",
+  "image_sha256": "ce866f0ed97501578fac4c71d7a9d4923cab11b86d26763b4c9c9018105f4ed0",
+  "backend": "fabric",
+  "model": "fabric/model",
+  "prompt_version": "fabric-service",
+  "confidence": null,
+  "quality": "full",
+  "warnings": [
+    "page 1: rotated 90 degrees clockwise to read it"
+  ],
+  "seconds": 12.36,
+  "created": "2026-11-11T22:11:55+00:00",
+  "text": "nabádá, abychom nelidské entity nesrovnávali s námi a nesnažili se je vytvářet k obrazu svému. To by AI umožnilo vyvíjet se nezávisle na lidských normách a prozkoumávat úplně nové formy bytí, inteligence nebo kreativity. Skutečný pokrok by pak spočíval v překročení lidských hranic a učení se od nelidských entit.⁵¹\n\nJak už jsme zmínili, futurista Ray Kurzweil věří, že v blízké budoucnosti nám nanotechnologie umožní rozšířit náš mózek připojením virtuálních neuronů přímo do cloudu. Tento okamžik nazývá Singularitou. Odhaduje, že by k němu mělo dojít okolo roku 2045.⁵² Brát však časovou trajektorii vývoje nových technologií a aplikovat ji do budoucna nemusí nutně vyjít. Vývoj AI zaznamenal již své „AI zimy“ v letech 1974–1980 a 1987–1993, kdy byl pokrok na tomto poli minimální. Teprve v roce 2012 začal vývoj AI výrazně zrychlovat. Očekávání stejně dynamického vývoje AI, jako máme nyní, tak v budoucnu nemusí být nutně naplněno. Velice pravděpodobně mohou nastat záseky a slepé uličky. Firma Apple publikovala v roce 2025 článek, ve kterém autoři napsali, že populární modely AI „čelí riziku úplného zhroucení přesnosti v případě překročení určité úrovně složitosti“. Modelům od OpenAI, Anthropic a DeepSeek předložili výzkumníci z Apple nové a složité logické hry – a zjistili, že jejich schopnost uvažování „roste se složitostí problému až do určitého bodu, poté klesá“.⁵³ Plynulost vývoje AI na cestě k superinteligenci a Singularitě není zaručena.\n\nSingularita bude podle Kurzweila představovat bod, kdy se lidské myšlení a naše existence plně propojí s technologiemi. Jak říká: „Po Singularitě nebude existovat žádný rozdíl mezi člověkem a strojem nebo mezi fyzickou a virtuální realitou. Pokud vás zajímá, co zůstane v takovém světě nepochybně lidské, je to jednoduše tato vlastnost: jsme druh, který se inherentně snaží rozšířit svůj fyzický a mentální dosah za současné limity.“⁵⁴"
+}

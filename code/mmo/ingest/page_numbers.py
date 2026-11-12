@@ -3,7 +3,7 @@
 The OCR model leaves running headers and footers out of the page text (dots.ocr treats them as layout, not content),
 and Tesseract cannot read a lone number from a phone photo, so the number is read separately: the top and the bottom
 strip of the photo, stacked into one small image, go to a vision model with a one-field question. Results are kept per
-image in `work/numbers/<source>.json`; a rerun reads only the images without a result.
+image in `ingest/page-numbers.json` of the source; a rerun reads only the images without a result.
 """
 
 from __future__ import annotations
@@ -97,13 +97,13 @@ def read_page_numbers(
                 entry = future.result()
             except Exception as err:  # one bad image must not lose the others; reported below
                 failed[page.image.name] = str(err)
-                log(f"page {page.number}: FAILED {err}")
+                log(f"scan {page.scan}: FAILED {err}")
                 continue
             with lock:
                 data["pages"][page.image.name] = entry
                 data["pages"] = dict(sorted(data["pages"].items()))
                 path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-            log(f"page {page.number} ({page.image.name}): printed {entry['page']}")
+            log(f"scan {page.scan} ({page.image.name}): printed page {entry['page']}")
     if failed:
         raise RuntimeError(f"{len(failed)} of {len(todo)} images failed; run again to retry only those")
     return len(todo)

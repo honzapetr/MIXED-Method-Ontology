@@ -45,3 +45,17 @@
 - Verified: `uv run pytest` (43 passed), `ruff check`, `ruff format --check`, `uv run mmo --help`. The Docker image
   was not built (no Docker run on the owner's computer in this session).
 - Next: T2c (source-centric topic layout). Planning of T2b-T2d is in the same branch (docs commits before T2b).
+
+## T2c – 2026-11-12
+- Done: source-centric topic layout (ADR 0006). Paths come from `Source` (`files/`, `ingest/`, `text/`,
+  `segments/`, `ground-truth/`); `source.yaml` keeps only researcher fields, image hashes are in
+  `ingest/files.yaml`; `topic.yaml` lists its sources. OCR records use `scan` (`scan-NNNN.json`), segment ids
+  `<source>:s<scan>:<n>` and segments carry the printed `page` for quoting; old `page` records still load.
+  `--scans` replaces `--pages` (kept as an alias). New `mmo topic migrate`; commands refuse an old-layout topic and
+  say how to migrate. Both topics migrated; the 213 photos of `kniha` moved to `files/` on the owner's disk.
+- Verified: `uv run pytest` (47 passed), `ruff check`, `ruff format --check`. `mmo ocr order` / `mmo ocr book` rerun
+  after the migration: the order report and the whole text are identical to the ones before (ignoring line ends).
+- Found: Google Drive keeps just-emptied folders (`topics/nazi-v-dobe-ai/work/ocr/fabric`, `.../order/fabric`)
+  as undeletable ghosts for a while; git ignores empty folders and the migration check ignores them. Delete
+  `topics/nazi-v-dobe-ai/work/` by hand once Drive lets go.
+- Next: T2d (one-step source ingest, context sources, `ingest-sources` skill).

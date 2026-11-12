@@ -48,10 +48,10 @@ class FakeReader:
 def test_numbers_are_saved_per_image_and_a_rerun_reads_only_the_missing(tmp_path: Path) -> None:
     topic = Topic.create(tmp_path, "t1", "T")
     source = topic.source("book")
-    source.root.mkdir()
+    source.files_dir.mkdir(parents=True)
     for i, width in enumerate((301, 302, 303), start=1):
-        Image.new("RGB", (width, 600), "white").save(source.root / f"IMG_{i}.jpg", format="JPEG")
-    target = topic.numbers_file("book")
+        Image.new("RGB", (width, 600), "white").save(source.files_dir / f"IMG_{i}.jpg", format="JPEG")
+    target = source.numbers_file
     with pytest.raises(RuntimeError, match="1 of 3 images failed"):
         read_page_numbers(source, FakeReader({301: 15, 303: None}, broken={302}), target, log=lambda _: None)
     assert load_page_numbers(target) == {"IMG_1.jpg": 15, "IMG_3.jpg": None}
@@ -63,9 +63,9 @@ def test_numbers_are_saved_per_image_and_a_rerun_reads_only_the_missing(tmp_path
 
 def test_numbers_from_the_edges_win_over_the_text_and_manual_wins_over_both() -> None:
     records = [
-        {"page": 1, "image": "a.jpg", "text": "text\n\n99"},
-        {"page": 2, "image": "b.jpg", "text": "text"},
-        {"page": 3, "image": "c.jpg", "text": "text"},
+        {"scan": 1, "image": "a.jpg", "text": "text\n\n99"},
+        {"scan": 2, "image": "b.jpg", "text": "text"},
+        {"scan": 3, "image": "c.jpg", "text": "text"},
     ]
     order = reading_order(records, manual={"c.jpg": 1}, read={"a.jpg": 3, "b.jpg": 2, "c.jpg": None})
     assert [(p.image, p.printed, p.how) for p in order.pages] == [

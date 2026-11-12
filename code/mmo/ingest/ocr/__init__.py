@@ -15,7 +15,7 @@ from mmo.ingest.ocr.base import OcrBackend, OcrResult
 from mmo.ingest.ocr.openai_compat import OpenAICompatBackend
 from mmo.ingest.ocr.tesseract import TesseractBackend
 
-__all__ = ["BACKENDS", "OcrBackend", "OcrResult", "load_pages", "make_backend", "page_file", "run_ocr"]
+__all__ = ["BACKENDS", "OcrBackend", "OcrResult", "load_pages", "make_backend", "run_ocr", "scan_file"]
 
 BACKENDS = ("tesseract", "openai", "fabric")
 
@@ -38,8 +38,8 @@ def make_backend(name: str, settings: Settings, model: str | None = None, mode: 
     raise ValueError(f"unknown OCR backend {name!r}; known: {', '.join(BACKENDS)}")
 
 
-def page_file(out_dir: Path, page: int) -> Path:
-    return out_dir / f"page-{page:04d}.json"
+def scan_file(out_dir: Path, scan: int) -> Path:
+    return out_dir / f"scan-{scan:04d}.json"
 
 
 def ocr_page(source: Source, backend: OcrBackend, page: Page) -> dict:
@@ -48,7 +48,7 @@ def ocr_page(source: Source, backend: OcrBackend, page: Page) -> dict:
     result = backend.recognize(page.image)
     return {
         "source": source.id,
-        "page": page.number,
+        "scan": page.scan,
         "image": page.image.name,
         "image_sha256": sha256_file(page.image),
         "backend": backend.name,
@@ -67,12 +67,12 @@ def run_ocr(
     source: Source,
     backend: OcrBackend,
     out_dir: Path,
-    pages: set[int] | None = None,
+    scans: set[int] | None = None,
     force: bool = False,
     log: Callable[[str], None] = print,
     workers: int = 1,
 ) -> list[Path]:
-    """OCR every page (or the selected ones) of a source; existing results are kept unless `force`.
+    """OCR every page image (or the selected scans) of a source; existing results are kept unless `force`.
 
     `workers` pages are read at the same time (a remote service with several slots). A failed page does not stop the
     others: the run ends with an error naming the failed pages, and a rerun reads only the pages without a result.
@@ -80,10 +80,10 @@ def run_ocr(
     out_dir.mkdir(parents=True, exist_ok=True)
     todo: list[Page] = []
     for page in source.pages():
-        if pages and page.number not in pages:
+        if scans and page.scan not in scans:
             continue
-        if page_file(out_dir, page.number).exists() and not force:
-            log(f"skip page {page.number} (exists)")
+        if scan_file(out_dir, page.scan).exists() and not force:
+            log(f"skip scan {page.scan} (exists)")
             continue
         todo.append(page)
     written: list[Path] = []
@@ -95,21 +95,31 @@ def run_ocr(
             try:
                 record = future.result()
             except Exception as err:  # one bad page must not lose the others; reported below
-                failed[page.number] = str(err)
-                log(f"page {page.number}: FAILED {err}")
+                failed[page.scan] = str(err)
+                log(f"scan {page.scan}: FAILED {err}")
                 continue
-            target = page_file(out_dir, page.number)
+            target = scan_file(out_dir, page.scan)
             target.write_text(json.dumps(record, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
             written.append(target)
             note = f", quality {record['quality']}" if record["quality"] not in (None, "full") else ""
-            log(f"page {page.number}: {len(record['text'])} chars in {record['seconds']} s{note}")
+            log(f"scan {page.scan}: {len(record['text'])} chars in {record['seconds']} s{note}")
     if failed:
         numbers = ", ".join(str(n) for n in sorted(failed))
-        raise RuntimeError(f"{len(failed)} of {len(todo)} pages failed ({numbers}); run again to retry only those")
+        raise RuntimeError(f"{len(failed)} of {len(todo)} scans failed ({numbers}); run again to retry only those")
     return sorted(written)
 
 
+def normalize_record(record: dict) -> dict:
+    """An OCR record with `scan`; records written before ADR 0006 call it `page`."""
+    if "scan" not in record and "page" in record:
+        record = {("scan" if key == "page" else key): value for key, value in record.items()}
+    return record
+
+
 def load_pages(out_dir: Path) -> list[dict]:
-    """OCR records of one backend for one source, ordered by page."""
-    records = [json.loads(p.read_text(encoding="utf-8")) for p in out_dir.glob("page-*.json")]
-    return sorted(records, key=lambda r: r["page"])
+    """OCR records of one variant of one source, ordered by scan."""
+    if not out_dir.is_dir():
+        return []
+    paths = [*out_dir.glob("scan-*.json"), *out_dir.glob("page-*.json")]
+    records = [normalize_record(json.loads(p.read_text(encoding="utf-8"))) for p in paths]
+    return sorted(records, key=lambda r: r["scan"])

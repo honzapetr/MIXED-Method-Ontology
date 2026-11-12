@@ -26,7 +26,7 @@ def test_page_number_at_the_foot_or_the_head() -> None:
 
 
 def record(scan: int, text: str) -> dict:
-    return {"source": "book", "page": scan, "image": f"IMG_{scan:03d}.jpg", "text": text, "backend": "fake"}
+    return {"source": "book", "scan": scan, "image": f"IMG_{scan:03d}.jpg", "text": text, "backend": "fake"}
 
 
 def test_photos_out_of_order_are_sorted_by_printed_page() -> None:
@@ -35,7 +35,7 @@ def test_photos_out_of_order_are_sorted_by_printed_page() -> None:
     assert [p.printed for p in order.pages] == [10, 11, 12, 14]
     assert [p.scan for p in order.pages] == [2, 3, 1, 4]
     assert order.gaps == [13] and order.duplicates == {}
-    assert [r["page"] for r in ordered_records(records, order)] == [2, 3, 1, 4]
+    assert [r["scan"] for r in ordered_records(records, order)] == [2, 3, 1, 4]
 
 
 def test_a_page_without_a_number_between_two_pages_apart_is_inferred() -> None:
@@ -91,25 +91,26 @@ def test_compact_ranges() -> None:
 def test_order_and_book_commands(tmp_path: Path, capsys) -> None:
     assert main(["--topics", str(tmp_path), "topic", "new", "t1", "--title", "T"]) == 0
     topic = tmp_path / "t1"
-    out = topic / "work" / "ocr" / "fabric" / "book"
+    out = topic / "sources" / "book" / "ingest" / "ocr" / "fabric"
     out.mkdir(parents=True)
     for rec in [record(1, "Konec odstavce\n\n2"), record(2, "Začátek odstavce,\n\n1"), record(3, "obrázek")]:
-        (out / f"page-{rec['page']:04d}.json").write_text(json.dumps(rec, ensure_ascii=False), encoding="utf-8")
+        (out / f"scan-{rec['scan']:04d}.json").write_text(json.dumps(rec, ensure_ascii=False), encoding="utf-8")
 
     assert main(["--topics", str(tmp_path), "ocr", "order", "t1", "book", "--variant", "fabric"]) == 0
     printed = capsys.readouterr().out
     assert "2 printed" in printed and "no page number: scan 3 IMG_003.jpg" in printed
-    data = yaml.safe_load((topic / "work" / "order" / "fabric" / "book.yaml").read_text(encoding="utf-8"))
+    data = yaml.safe_load((topic / "sources" / "book" / "ingest" / "order" / "fabric.yaml").read_text(encoding="utf-8"))
     order = [entry["scan"] for entry in data["order"]]
     assert order == [2, 3, 1], "the unknown page follows page 1, photographed before it"
 
     source = topic / "sources" / "book"
-    source.mkdir(parents=True)
     (source / "source.yaml").write_text("id: book\ntitle: Kniha\nprinted_pages:\n  IMG_003.jpg: 3\n", encoding="utf-8")
     assert main(["--topics", str(tmp_path), "ocr", "book", "t1", "book", "--variant", "fabric"]) == 0
-    book = (topic / "work" / "text" / "fabric" / "book.md").read_text(encoding="utf-8")
+    book = (topic / "sources" / "book" / "text" / "fabric.md").read_text(encoding="utf-8")
     assert book.startswith("# Kniha") and "page 3 (manual)" in book
 
     assert main(["--topics", str(tmp_path), "segment", "t1", "book", "--variant", "fabric"]) == 0
-    lines = (topic / "work" / "segments" / "book.jsonl").read_text(encoding="utf-8").splitlines()
-    assert json.loads(lines[0])["id"] == "book:p2:1", "segments follow the reading order, not the scan order"
+    lines = (topic / "sources" / "book" / "segments" / "fabric.jsonl").read_text(encoding="utf-8").splitlines()
+    first = json.loads(lines[0])
+    assert first["id"] == "book:s2:1", "segments follow the reading order, not the scan order"
+    assert first["scan"] == 2 and first["page"] == 1, "a segment knows its printed page for quoting"

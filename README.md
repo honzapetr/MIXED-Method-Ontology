@@ -29,15 +29,15 @@ cp .env.example .env            # fill in the gateway URL, key and a vision mode
 sudo apt install tesseract-ocr tesseract-ocr-ces
 
 uv run mmo topic new my-topic --title "My topic"
-# put page scans into topics/my-topic/sources/my-book/
+# put page scans into topics/my-topic/sources/my-book/files/
 uv run mmo source scan my-topic my-book
-uv run mmo ocr run my-topic my-book --backend tesseract --pages 1-10
-uv run mmo ocr run my-topic my-book --backend openai --model <vision-model> --pages 1-10
+uv run mmo ocr run my-topic my-book --backend tesseract --scans 1-10
+uv run mmo ocr run my-topic my-book --backend openai --model <vision-model> --scans 1-10
 uv run mmo ocr run my-topic my-book --backend fabric --workers 2   # the homelab OCR service (ADR 0005)
-uv run mmo ocr compare my-topic my-book          # add ground-truth/my-book/page-0001.txt for real CER
+uv run mmo ocr compare my-topic my-book          # add sources/my-book/ground-truth/scan-0001.txt for real CER
 uv run mmo ocr numbers my-topic my-book                  # printed page numbers from the page edges
 uv run mmo ocr order my-topic my-book --variant fabric   # reading order by printed page numbers
-uv run mmo ocr book my-topic my-book --variant fabric    # whole text in reading order -> work/text/
+uv run mmo ocr book my-topic my-book --variant fabric    # whole text in reading order -> text/fabric.md
 uv run mmo segment my-topic my-book --variant tesseract
 ```
 
@@ -52,10 +52,10 @@ LAN or VPN.
 
 | Step | Command | Result |
 | :--- | :--- | :--- |
-| page text | `uv run mmo ocr run <topic> <source> --backend fabric --workers 2` | `work/ocr/fabric/<source>/page-NNNN.json` |
-| page numbers | `uv run mmo ocr numbers <topic> <source>` | `work/numbers/<source>.json` |
-| reading order | `uv run mmo ocr order <topic> <source> --variant fabric` | `work/order/fabric/<source>.yaml` + a report of gaps, duplicates and pages without a number |
-| whole text | `uv run mmo ocr book <topic> <source> --variant fabric` | `work/text/fabric/<source>.md` in reading order |
+| page text | `uv run mmo ocr run <topic> <source> --backend fabric --workers 2` | `sources/<source>/ingest/ocr/fabric/scan-NNNN.json` |
+| page numbers | `uv run mmo ocr numbers <topic> <source>` | `sources/<source>/ingest/page-numbers.json` |
+| reading order | `uv run mmo ocr order <topic> <source> --variant fabric` | `sources/<source>/ingest/order/fabric.yaml` + a report of gaps, duplicates and pages without a number |
+| whole text | `uv run mmo ocr book <topic> <source> --variant fabric` | `sources/<source>/text/fabric.md` in reading order |
 
 Every step saves page by page; a rerun reads only what is missing, so an interrupted run is simply started again.
 Fix page numbers by hand with `printed_pages: {<image>: <page>}` in `source.yaml`, then rerun `order` and `book`.

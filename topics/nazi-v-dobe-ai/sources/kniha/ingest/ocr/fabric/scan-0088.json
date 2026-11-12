@@ -1,0 +1,15 @@
+{
+  "source": "kniha",
+  "scan": 88,
+  "image": "IMG_20260902_221929.jpg",
+  "image_sha256": "dcd7a81c53562b0755d4a02dee3fedc44539b0fd69d7e6eb6d0f9c9226d8487c",
+  "backend": "fabric",
+  "model": "fabric/model",
+  "prompt_version": "fabric-service",
+  "confidence": null,
+  "quality": "full",
+  "warnings": [],
+  "seconds": 8.89,
+  "created": "2026-11-11T22:06:34+00:00",
+  "text": "# VYSVLEČENÁ IDENTITA\n\n„Identita?\" řekl Jack, pohodlně si nalévaje další kávu. „Není identita něco, s čím se člověk narodí?\" „Identita, o které mluvím, je něco, co se vznáší mezi člověkem a zbytkem světa: střed mezi jeho pohledem na sebe sama a pohledem ostatních na něj – neboť každý z nich samozřejmě neustále ovlivňuje toho druhého. Vzájemný tok, pane. Na mé identitě není nic absolutního.\"\n\nPatrick O'Brian, Master and Commander\n\n„Vyber si své nepřátele pečlivě, protože tě budou definovat. Udělej je zajímavými, protože tě v jistém smyslu budou formovat.\"\n\nU2, Cedars of Lebanon"
+}

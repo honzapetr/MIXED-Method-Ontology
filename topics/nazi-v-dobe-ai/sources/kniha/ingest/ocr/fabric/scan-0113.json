@@ -1,0 +1,17 @@
+{
+  "source": "kniha",
+  "scan": 113,
+  "image": "IMG_20260902_222141.jpg",
+  "image_sha256": "acd58934fec3f2ba9923863ad47a90f807b3b02a7028dcca6dcfa7b10297b284",
+  "backend": "fabric",
+  "model": "fabric/model",
+  "prompt_version": "fabric-service",
+  "confidence": null,
+  "quality": "full",
+  "warnings": [
+    "page 1: rotated 90 degrees clockwise to read it"
+  ],
+  "seconds": 12.36,
+  "created": "2026-11-11T22:09:42+00:00",
+  "text": "která je správným postupem pro konkrétního jednotlivce v konkrétní situaci. 3) Každá ctnost se nachází mezi dvěma neřestmi. Aristoteles neříká, že ctnost leží přesně ve středu dvou neřeskrétní situaci. tedy že by to byl stejný postup pro každého v každé situaci. Pokud nám někdo šlápne na nohu v autobuse, neřestí by bylo zabít ho za to (extrémní reakce) nebo ho za to obejmout (další extrémní reakce) – měli bychom pravděpodobně projevit mírný ně šlápne na nohu osobě, která má zlomenou nohu. Pak by naše je správný postup v každé situaci. Podle něj je obtížné přesně vědět, co je v dané situaci vhodné. A proto je třeba se v umění zlaté střední cesty moudře zdokonalovat.\n\nAristotelův přístup k etice s důrazem na pěstování ctností se objevuje i v debatě o dalším vývoji AI. Pokud chceme, aby s námi AI sdílela naše hodnoty bez nutnosti ji naprogramovat pro všechností a nuance našich morálních dilemat (což může byt samo o sobě velice komplikované, až nemožné), nabízí se možnost načit ji našim ctnostem a pěstovat je v ní tak, aby její rozhodování z těchto ctností vycházelo. Ctnostný člověk se totiž podle Aristotelovy hypotézy rozhoduje morálně správně – či se tomu alespoň blíží. Filozofka Vallor uvádí, že bychom měli AI k aristotelovským ctnostem vychovávat. Volá po novém jazyku ctnosti, a jak uvádí, „potřebujeme, aby se tento jazyk stal morálním jazykem, který bude slyšen a mluven při tvorbě nových technologií“. u\n\nBude ale možné ctnosti jednoduše naprogramovat a AI k nim vychovávat? Není pro vývoj ctností a ctnostné jednání nutné vědomí? Bude AI schopná dosáhnout stavu blaženosti? A navíc, i kdyby se nám podařilo replikovat v AI naše ctnosti, nebo je dokonce sama vědomě měla, stále by nám to nepomohlo určit přesná kritéria pro morální volby."
+}

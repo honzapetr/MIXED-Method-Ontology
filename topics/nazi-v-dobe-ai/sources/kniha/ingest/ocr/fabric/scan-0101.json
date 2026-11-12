@@ -1,0 +1,17 @@
+{
+  "source": "kniha",
+  "scan": 101,
+  "image": "IMG_20260902_222046.jpg",
+  "image_sha256": "78638077e0d9fab52aec2eedf21eee15e71f804fcb7e6e06486d09736b61d373",
+  "backend": "fabric",
+  "model": "fabric/model",
+  "prompt_version": "fabric-service",
+  "confidence": null,
+  "quality": "full",
+  "warnings": [
+    "page 1: rotated 90 degrees clockwise to read it"
+  ],
+  "seconds": 11.22,
+  "created": "2026-11-11T22:08:09+00:00",
+  "text": "obecně očekávat pozitivní dopady AI na globální produktivitu, realitou nejspíše bude i zrychování nerovnosti a výrazný dopad na naši identitu a smysl.\n\n## KDE KONČÍ AI\n\nKai-Fu Lee poznamenává, že práci stále vnímáme nejen jako prostředek k přežití, ale také jako zdroj identity, osobní hrdosti a smyslu. Disrupce, kterou bude stále intenzivnější přítomnost mických, sociálních a politických dopadů také velice osobní. Jak Kai-Fu Lee varuje, tyto dopady AI budou představovat „přímý útok na pocit identity a náš smysl“, přičemž tato ztráta smyslu našich životů bude mít reálné a vážné důsledky na psychologické úrovni a v podobě zhoršeného duševního zdraví včetně depresí a alkoholismu.³⁶\n\nBelgický filozof Mark Coeckelbergh souhlasí: AI podle něj ovlivňuje nejen smysl práce, ale i smysl našich životů.³⁷ Poukazuje na to, že práce netkví jen ve vydělávání peněz – přináší nám zuje na to, že práce netkví jen ve vydělávání peněz – většího. Proto bychom lidem měli vždy ponechat alespoň části pracovních činností.³⁸\n\nAno, může se stát, že AI nahradí tu část práce, která nás nudí. V průzkumech lidé uvádějí, že se v práci nudí v průměru zhruba deset hodin týdně.³⁹ Práce, která by jim po boku AI byla ponechána, tedy ty zajímavější a podnětnější úkoly, pro ně může být nakonec i smysluplnější.⁴⁰ Toto je sice možný scénář, ale nejspíše až příliš optimistický. Zaměstnavatelé se budou pravděpodobně zabývat spíše optimalizací firemních procesů při využití AI než se starat o to, aby nás práce bavila a naplňovala smyslem. Zřejmě se s tím tedy budeme muset každý poprat sám."
+}

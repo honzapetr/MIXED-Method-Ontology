@@ -1,0 +1,17 @@
+{
+  "source": "kniha",
+  "scan": 84,
+  "image": "IMG_20260902_221906.jpg",
+  "image_sha256": "0af0a717c4f45ba3ba8151c8050058099e499c34c3fae748a10f7a5d2a3720f2",
+  "backend": "fabric",
+  "model": "fabric/model",
+  "prompt_version": "fabric-service",
+  "confidence": null,
+  "quality": "full",
+  "warnings": [
+    "page 1: rotated 90 degrees clockwise to read it"
+  ],
+  "seconds": 10.0,
+  "created": "2026-11-11T22:06:13+00:00",
+  "text": "svědčí spíš o naší vnitřní nejistotě. Svoboda nespočívá v kontro-\nle všeho, ale v příjetí věcí, jaké jsou. Protože i kdybychom měli\nvšechna data světa a s tím i veškerou moc, bez hlubšího pocho-\npení a nalezení naší identity a smyslu nám to stejně nepomůže\nzakotvit v přístavu vnitřního bezpečí. Přijetí vlastní nahoty je\n\ntedy osvobozující.\n\nHrozba, že by nás superintelligence vyhladila, se jeví jako spí-\nše nereálná. Za mnohem pravděpodobnější a už také aktuální\nhrozbu můžeme považovat rostoucí kontrolu nad námi – důsle-\ndek toho, jak s AI nakládají korporace a státy a jak kvůli své\npohodlnosti a lenosti do rukou AI dobrovolně předáváme stále\nvíce kontroly. Otázka tedy zní, jak můžeme svou identitu nově\nformulovat – tak, aby stála na pevnějších základech a aby pro ni\nvývoj AI nebyl hrozbou, ale příležitostí."
+}

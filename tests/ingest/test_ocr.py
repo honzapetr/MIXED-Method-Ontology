@@ -50,25 +50,25 @@ class FakeBackend:
 def make_source(tmp_path: Path, pages: int):
     topic = Topic.create(tmp_path, "t1", "T")
     source = topic.source("book")
-    source.root.mkdir()
+    source.files_dir.mkdir(parents=True)
     for i in range(1, pages + 1):
-        (source.root / f"page-{i}.png").write_bytes(b"img%d" % i)
+        (source.files_dir / f"page-{i}.png").write_bytes(b"img%d" % i)
     return topic, source
 
 
 def test_run_ocr_writes_records_and_skips_existing(tmp_path: Path) -> None:
-    topic, source = make_source(tmp_path, 3)
-    out = topic.ocr_dir("fake", source.id)
+    _, source = make_source(tmp_path, 3)
+    out = source.ocr_dir("fake")
     backend = FakeBackend()
-    run_ocr(source, backend, out, pages={1, 3}, log=lambda _: None)
+    run_ocr(source, backend, out, scans={1, 3}, log=lambda _: None)
     assert [p.name for p in backend.calls] == ["page-1.png", "page-3.png"]
-    record = json.loads((out / "page-0001.json").read_text(encoding="utf-8"))
+    record = json.loads((out / "scan-0001.json").read_text(encoding="utf-8"))
     assert record["text"] == "text of page-1.png"
     assert record["backend"] == "fake" and record["model"] == "fake-1"
     assert len(record["image_sha256"]) == 64
     run_ocr(source, backend, out, log=lambda _: None)
     assert [p.name for p in backend.calls][2:] == ["page-2.png"]  # pages 1 and 3 kept
-    assert [r["page"] for r in load_pages(out)] == [1, 2, 3]
+    assert [r["scan"] for r in load_pages(out)] == [1, 2, 3]
 
 
 def test_make_backend_validates_settings() -> None:
@@ -178,12 +178,12 @@ class FlakyBackend(FakeBackend):
 
 
 def test_run_ocr_in_parallel_keeps_going_after_a_failed_page(tmp_path: Path) -> None:
-    topic, source = make_source(tmp_path, 4)
-    out = topic.ocr_dir("fake", source.id)
-    with pytest.raises(RuntimeError, match=r"1 of 4 pages failed \(2\)"):
+    _, source = make_source(tmp_path, 4)
+    out = source.ocr_dir("fake")
+    with pytest.raises(RuntimeError, match=r"1 of 4 scans failed \(2\)"):
         run_ocr(source, FlakyBackend(), out, log=lambda _: None, workers=2)
-    assert [r["page"] for r in load_pages(out)] == [1, 3, 4]
+    assert [r["scan"] for r in load_pages(out)] == [1, 3, 4]
     record = load_pages(out)[0]
     assert record["quality"] is None and record["warnings"] == []
     written = run_ocr(source, FakeBackend(), out, log=lambda _: None, workers=2)
-    assert [p.name for p in written] == ["page-0002.json"], "a rerun reads only the failed page"
+    assert [p.name for p in written] == ["scan-0002.json"], "a rerun reads only the failed page"

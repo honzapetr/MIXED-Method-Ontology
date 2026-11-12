@@ -13,8 +13,9 @@ def test_natural_key_orders_numbers() -> None:
 
 def test_create_and_load_topic(tmp_path: Path) -> None:
     topic = Topic.create(tmp_path, "my-topic", "My topic")
-    for sub in ("sources", "work", "ground-truth", "graph"):
+    for sub in ("sources", "memos", "graph"):
         assert (topic.root / sub).is_dir()
+    assert not (topic.root / "work").exists()
     assert Topic.load(tmp_path / "my-topic").data["title"] == "My topic"
     with pytest.raises(FileExistsError):
         Topic.create(tmp_path, "my-topic", "again")
@@ -25,19 +26,20 @@ def test_invalid_slug(tmp_path: Path) -> None:
         Topic.create(tmp_path, "Bad Slug", "x")
 
 
-def test_manifest_records_pages_and_keeps_metadata(tmp_path: Path) -> None:
+def test_manifest_records_scans_apart_from_metadata(tmp_path: Path) -> None:
     topic = Topic.create(tmp_path, "t1", "T")
     source = topic.source("book")
-    source.root.mkdir()
+    source.files_dir.mkdir(parents=True)
     (source.root / "source.yaml").write_text("title: A book\n", encoding="utf-8")
     for name in ("p-10.png", "p-2.png", "notes.txt"):
-        (source.root / name).write_bytes(name.encode())
-    meta = source.write_manifest()
-    assert meta["title"] == "A book"
-    assert [p["file"] for p in meta["pages"]] == ["p-2.png", "p-10.png"]
-    assert [p["page"] for p in meta["pages"]] == [1, 2]
-    saved = yaml.safe_load((source.root / "source.yaml").read_text(encoding="utf-8"))
-    assert len(saved["pages"][0]["sha256"]) == 64
+        (source.files_dir / name).write_bytes(name.encode())
+    manifest = source.write_manifest()
+    assert [f["file"] for f in manifest["files"]] == ["p-2.png", "p-10.png"]
+    assert [f["scan"] for f in manifest["files"]] == [1, 2]
+    saved = yaml.safe_load(source.files_manifest.read_text(encoding="utf-8"))
+    assert len(saved["files"][0]["sha256"]) == 64
+    assert source.metadata() == {"title": "A book"}, "source.yaml holds only what the researcher wrote"
+    assert Topic.load(topic.root).data["sources"] == ["book"]
 
 
 def test_sample_topic_is_valid() -> None:
