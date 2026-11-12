@@ -68,7 +68,7 @@ Page images stay out of git; `ingest/files.yaml` lists each file with its SHA-25
 
 1. **Inspect** – the agent lists the files of a source and proposes a parsing plan (skill `ingest-sources`).
 2. **OCR** – `mmo ocr run` sends every page image to one backend and stores one JSON per page:
-   `page`, `image`, `image_sha256`, `backend`, `model`, `prompt_version`, `text`, `confidence` (if known),
+   `scan`, `image`, `image_sha256`, `backend`, `model`, `prompt_version`, `text`, `confidence` (if known),
    `quality` and `warnings` (if the backend reports them), `seconds`, `created`. Results of different backends live
    side by side, so variants can be compared. `scan` (formerly `page`) is the **scan number** (file-name order), the identity of an
    image; `--workers N` reads N pages at once, and a failed page does not stop the others (a rerun retries it).
