@@ -1,0 +1,17 @@
+{
+  "source": "kniha",
+  "page": 191,
+  "image": "IMG_20260902_223315.jpg",
+  "image_sha256": "0d2fc9cb3c9f8454c7dd08872dd292a68f8fb77df68aac7e5a5755d5c0a215c5",
+  "backend": "fabric",
+  "model": "fabric/model",
+  "prompt_version": "fabric-service",
+  "confidence": null,
+  "quality": "full",
+  "warnings": [
+    "page 1: rotated 270 degrees clockwise to read it"
+  ],
+  "seconds": 13.25,
+  "created": "2026-11-11T22:19:09+00:00",
+  "text": "plné smyslu. Víra v ně nám dává pocit smyslu – a právě ten je motorem naší aktivity i schopnosti posouvat věci dopředu.\n\nV současné době však máme k dispozici spíš jen kostry dáv- ných mýtů s vágními přísliby „ráje“ a „pokroku“, které jsou již vyprázdněné. Nemají už tak silný náboj jako kdysi. Nejmocnějšími z tradičních mýtů se zdají být ty národní, zdůrazňující vý- lučnost a výjimečnost, jak jsme to viděli na příkladu amerického mýtů. V posledních letech dokonce získávají novou sílu tím, že se obohacují o další dimenze, včetně umělé inteligence. Zároveň je ale evidentní, že se stávají překážkou pro globální spolupráci, kterou dnes tolik potřebujeme.\n\nTo, co nyní můžeme zvážit, je tvorba nového mýtu. Takového, který by zahrnoval lidstvo jako jeden celek. Potřebujeme společný hnací motor pro spolupráci a hledání funkčních řešení. Po- společnou vizi. Mohl by nás sjednocovat v globálním „my“ tváří které mají v tvář Al. Mohl by funkčně navázat na dávné mýty, sílu dodnes, ale dodat jim nový, relevantní obsah.\n\nTvorba společného mýtu se nám může zdát jako něco složitého či nemožného. Snad i proto, že jsme to prostě ještě nezkušili. Jak poznamenává Mary Midgley, ve středověku považovaly rouhačskou, ale taky za nesmyslnou, nepochopitelnou.⁵⁷ Jak ale říká John Browne, lidé mají dar snít – a každý pokrok začíná snem. Vizí lepšího světa.⁵⁸\n\nNeměli bychom rezignovat na snahu vytvořit lepší vizi pro náš sdílený svět. Důležité ale je, aby „tanec“ byl opravdu spořilečný. Nový, globální mýtus ani jakékoli jiné úsilí o vytvoření globálního „my“ nesmějí být nikomu vnucovány. Historie je plná pokusů „vylepšovat ty druhé“, které nevedly k ráji, ale k peklu na zemi."
+}

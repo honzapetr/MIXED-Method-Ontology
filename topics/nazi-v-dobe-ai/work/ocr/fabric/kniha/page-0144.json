@@ -1,0 +1,17 @@
+{
+  "source": "kniha",
+  "page": 144,
+  "image": "IMG_20260902_222541.jpg",
+  "image_sha256": "b3618c7b759b0df8ad852c838522ab69fc8e406649668054b04cf990194db7a1",
+  "backend": "fabric",
+  "model": "fabric/model",
+  "prompt_version": "fabric-service",
+  "confidence": null,
+  "quality": "full",
+  "warnings": [
+    "page 1: rotated 90 degrees clockwise to read it"
+  ],
+  "seconds": 12.52,
+  "created": "2026-11-11T22:13:05+00:00",
+  "text": "Vrátil jsem se na pokoj a znovu se začetl do Jungovy knihy *O alchymii*. Našel jsem v ní symboliku tvorby něčeho nového, božského, a to z chaosu, „temnoty hmoty“, podle Junga nevědomí. Napadla mne u toho židovská kabala, gnóze a novoplatonismus, tedy náboženské a filozofické tradice, které věřily v božské paprsky skryté v temnotě tohoto světa. I Jung byl přesvědčený, že nevědomé obsahy naší psychiky dokážeme nalézt psychologicky prostě sem, který nazval kreativní imaginací.\n\nKazdý z nás má existenciální prožitky, kdy něco cítíme celou svou bytostí. Momenty, kdy nejsme uvězněni ve své mysli jako většinu času, ale jaksi přímo realitu zažíváme; kdy prožitky duní naším tělem tak hlasitě, že se stáváme samotným duněním. Takové momenty umělá inteligence, aniž by dosáhla vědomí, nikdy nezažije. Stejně tak nezažije náboženský či mystický prožitek, teplo lidského doteku, bezpečí objetí a něhu pohlazení. Svou identitu a smysl můžeme nalézat krom tvoření vlastních morálních rozhodnutí také v těchto výjimečných zážitcích. Stejně jako je můžeme objevovat při tvoření vlastních mýtů a příběhů, jimž chceme věřit a které nám dávají smysl.\n\n## SMYSL TVOŘIT SI SMYSL\n\nNové metafory mají sílu přetvářet naši vnímanou realitu.² Fakta máme tendenci organizovat do určitého příběhu, dramatu.³ Proto je vytváření nových mýtů a příběhů, které by nám budovaly identitu a poskytovaly palivo do motoru našeho snažení, tak důležité.\n\nTato schopnost tvoření a přetváření se týká i mocenských vzhů ve společnosti. Michel Foucault poukazuje na to, že moc není statická, ale cirkuluje skrze síť vztahů, kde „každý z nás je nositelem moci, nikoliv pouhým objektem jejího působení... Jedinec“"
+}

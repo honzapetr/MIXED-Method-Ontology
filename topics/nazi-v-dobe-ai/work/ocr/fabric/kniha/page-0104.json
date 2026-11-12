@@ -1,0 +1,17 @@
+{
+  "source": "kniha",
+  "page": 104,
+  "image": "IMG_20260902_222057.jpg",
+  "image_sha256": "5e4375761c2face2e0d1e56d015705aba66119b97bc086d74ba4f3dc0991dca4",
+  "backend": "fabric",
+  "model": "fabric/model",
+  "prompt_version": "fabric-service",
+  "confidence": null,
+  "quality": "full",
+  "warnings": [
+    "page 1: rotated 90 degrees clockwise to read it"
+  ],
+  "seconds": 8.77,
+  "created": "2026-11-11T22:08:30+00:00",
+  "text": "³⁰ Kissing er et al., The Age of AI, 4.\n\n³¹ Kissing er et al., Superpowers: China, Silicon Valley, and the New World Order\n\n³² Kai-Fu Li, AI Superpowers: China, Silicon Valley, and the New World Order (Houghton Mifflin Harcourt, 2021), 158.\n\n³³ Li, AI Superpowers, 199.\n\n³⁴ Li, AI Superpowers, 160.\n\n³⁵ Li, AI Superpowers, 160.\n\n³⁶ Shannon Vallor, The AI Mirror: How to Reclaim Our Humanity in an Age of\n\n³⁷ Machine Thinking (Oxford University press, 2024), 85.\n\n³⁸ Ethan Mollick, Co-Intelligence: Living and Working with AI (W H Allen, 2024),\n\n123.\n\n³⁹ Mollick, Co-Intelligence, 124.\n\n⁴⁰ Ray Kurzweil, The Singularity Is Nearer: When We Merge with AI (The Bodley\n\n⁴¹ John Mollick, Co-Intelligence, 188.\n\n⁴² Nigell Toon, How AI Thinks: How We Built It, How It Can Help Us, and How We Can Control It (Torva, 2024), 218.\n\n⁴³ Mustafa Suleyman a Michael Bhaskar, The Coming Wave: Technology, Power, and the Twenty-First Century's Greatest Dilemma, International edition (Crowns, 2023), 282.\n\n⁴⁴ Browne, Make, Think, Imagine, 29.\n\n⁴⁵ Julian Togelius, Artificial General Intelligence, The MIT Press Essential\n\n⁴⁶ Li, AI Superpowers, 173.\n\n⁴⁷ Mark Coeckelbergh, AI Ethics, The MIT Press Essential Knowledge Series (The MIT press, 2020), 137.\n\n⁴⁸ Coeckelbergh, AI Ethics, 141.\n\n⁴⁹ Mollick, Co-Intelligence, 152.\n\n⁵⁰ Mollick, Co-Intelligence, 147.\n\n⁵¹ Mollick, Co-Intelligence, 131.\n\n⁵² Amy Webb, The Big Nine: How the Tech Titans and Their Thinking Machines Could Warp Humanity, First trade paperback edition (PublicAffairs, 2020), 145–146."
+}

@@ -1,0 +1,17 @@
+{
+  "source": "kniha",
+  "page": 74,
+  "image": "IMG_20260902_200749.jpg",
+  "image_sha256": "baae8908b6b0516668dc6decc105155c56ef2fd76b3769d60342231c194b23e3",
+  "backend": "fabric",
+  "model": "fabric/model",
+  "prompt_version": "fabric-service",
+  "confidence": null,
+  "quality": "full",
+  "warnings": [
+    "page 1: rotated 90 degrees clockwise to read it"
+  ],
+  "seconds": 17.83,
+  "created": "2026-11-11T22:04:52+00:00",
+  "text": "v Boha samotného.¹³ Descartes tak zakořenil představu, že ro-\nrum je Bohem nám daný klič ke zjištění pravdy o světě a o nás\n\nsamotných.\n\nTímto myšlenkovým směrem jsme pokračovali dál v touze po-\nmat, uchopit a ovládnout náš okolní i vnitřní svět. I když jsme\nale zrodem moderní vědy „zabili Boha\", nepřestali jsme se po-\nod zvířecí říše, učinit z nás tvory úplně jiné, vyšší kategorie.\nDescartova definice člověka existencí jeho intelektu nás ukáza-\nla jako zvířatům nadřazené tvory, kteří jsou díky matematizaci\n\nschopni popsat a ovládnout realitu.\n\nVývoj AI je vyvrcholením této snahy. Byť jsme s osvícenstvím\nodvrhli náboženské pojetí sebe samých jako Božích synů a dcer,\n„v hloubi duše\" jsme se za ně nepřestali považovat. V předcho-\nzích kapitolách jsme ostatně již mohli sledovat nepovedené sna-\nhy o odtržení moderního západního myšlení od náboženských\nmýtů.\n\nPřes descartovskou matematizaci prostoru jsme se dostali až\nk vývoji AI. Byť můžeme být patřičně hrdí na svůj intelekt, že\njsme něco tak geniálního dokázali stvořit, je dobré mít na pa-\nměti, že intelekt není nutně to jediné, co nás definuje. Descarto-\nvo vnímání člověka bylo příliš úzce pojaté a až příliš vyhraněné\nvůči zvířecí říši. Naše schopnost přemýšlení, náš intelekt mu\nposloužily pro jednoduchou definici člověka a jeho identity. Proč\nbychom však měli na zvířata nahlížet jako na nižší a podřadné\ntvory jen kvůli tomu, že nevykazují stejný typ a úroveň intelek-\ntu? Kde se bere naše arogance? Nepomohlo by nám více pokory,\na to i při vývoji AI? Vždyť pokud se budeme definovat descar-\ntovsky striktně jako pouze přemýšlející tvorové, kým jsme v éře\numělé inteligence, která již dokáže překonat značnou část našich\nintelektuálních schopností?"
+}

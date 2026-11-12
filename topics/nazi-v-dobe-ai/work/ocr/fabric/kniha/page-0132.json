@@ -1,0 +1,17 @@
+{
+  "source": "kniha",
+  "page": 132,
+  "image": "IMG_20260902_222315.jpg",
+  "image_sha256": "882903ce3867e20eee2c33da4d932c89062d169d68de0cac6479e69e1805287f",
+  "backend": "fabric",
+  "model": "fabric/model",
+  "prompt_version": "fabric-service",
+  "confidence": null,
+  "quality": "full",
+  "warnings": [
+    "page 1: rotated 90 degrees clockwise to read it"
+  ],
+  "seconds": 11.97,
+  "created": "2026-11-11T22:12:00+00:00",
+  "text": "Svou knihu uzavírá rozhovorem s jistou Cassandrou, kde uvádí, že již roku 2029 bude AI ve všech mentálních dovednostech lepší než člověk. V jeden moment jeho fiktivní Cassandra (zřejmě me- tafora na Cassandru z řecké mytologie, věštkyni boha Apollóna) poznamenává, že lidé potřebují mít pocit hlubšího smyslu, když je AI předčí ve všech intelektuálních oblastech. A ptá se, co zby- de člověku, aby svůj smysl neztratil. Kurzweil jí odpovídá: „Právě proto chceme splynout s inteligencí, kterou vytváříme. AI se stane naší součástí, a proto to budeme my, kdo ty věci bude dělat.“⁵⁵ Dále pokračuje: „Rozšíření našeho neokortexu do cloudu bude klíčové pro to, aby si lidé udrželi smysl života. Stejně jako před stovkami tisíc let růst neokortexu povýšil naše primátní předky od pouhého instinktu přežití k filozofickému uvažování, tak i vylepšení lidé budou mít ještě větší kapacitu pro empatii a etiku.“⁵⁶ Při četbě těchto slov čtenáře napadne, že by bylo vhodné pokusit se optimi- stickou domněnku přímé korelace rozšíření našeho neokortexu s vyšší mírou empatie a etiky alespoň něčím doložit.\n\nKurzweilův náhled na člověka jako tvora, který se neustále snaží „rozšířit svůj fyzický a mentální dosah za současné limi- ty“, spojený s vírou, že lidé by v budoucnu byli lepší po morální stránce, se stejně jako predikce transhumanistů a posthumani- stů podobá náhledu Nietzscheho na člověka a možného nadčlo- věka. Anglicky překládaného termínem *superman*. Podle Nietz- scheho je člověk mostem, který musí být překonán: „Hlásám vám nadčlověka. Člověk je cosi, co má býti překonáno. Co jste vyko- nali, aby byl překonán? Všechny bytosti dosud vytvořily něco nad sebe samy: a vy chcete býti odlivem tohoto velkého příli- vu a radéji snad se vrátit k zvířeti, než abyste překonali člově- ka? Čím je opice člověku? Posměchem nebo bolestným studem. A stejně má i člověk býti nadčlověku: posměchem nebo bolest- ným studem.“⁵⁷"
+}

@@ -1,0 +1,17 @@
+{
+  "source": "kniha",
+  "page": 116,
+  "image": "IMG_20260902_222156.jpg",
+  "image_sha256": "53cb4ec988d382aefdcc22b3932f136c3c2cfae498fb1b42f925957dd359878d",
+  "backend": "fabric",
+  "model": "fabric/model",
+  "prompt_version": "fabric-service",
+  "confidence": null,
+  "quality": "full",
+  "warnings": [
+    "page 1: rotated 90 degrees clockwise to read it"
+  ],
+  "seconds": 13.22,
+  "created": "2026-11-11T22:10:01+00:00",
+  "text": "vyžádala celkově 150 000 až 250 000 mrtvých Japonců (přesná čísla jsou obtížně zjistitelná kvůli masivní destrukci infrastrukture a obrovskému chaosu po útocích, navíc mnoho dalších lidí zemřelo v pozdějších letech na dlouhodobé následky radiace). Varianta invaze by podle odhadů způsobila smrt mnohem většího počtu vojáků. Z hlediska utilitarismu se tedy Truman rozhodl správně, pokud jeho volba skutečně způsobila méně úmrtí. Z jiného úhlu pohledu je však svržení jaderných bomb na civilisty pochopitelně velmi kontroverzní rozhodnutí a pro mnohé morálně zcela neobhajitelné.\n\nS tím vyvstává problém utilitarismu – totiž jak si můžeme být jisti, že některá rozhodnutí skutečně přinesou štěstí. Představme si jednoduchý příklad. Student vysoké školy obdrží za odpracovanou brigádu finanční částku a chce ji použít k tomu, aby učinil své spolužáky šťastnějšími. Volí mezi dvěma možnostmi, a to koupit jim pivo, nebo svou oblíbenou knihu Ztracený ráj od Johna Miltona. Student uvažuje tak, že pivo jim může přinést radost, ale nejspíš jen krátkodobou – druhý den je možná bude bolet hlava, budou mít horší náladu a zábavu u piva si nejspíš ani nebudou pamatovat. Miltonův epos je náročný, zpočátku nemusí nikoho nadchnout a pro některé může být jeho čtení až utrpením. Časem je ale může obohatit a přinášet jim užitek dlouhodobě. Která volba přináší víc štěstí? A jak to můžeme objektivně určit?\n\nMill se pokusil na taková dilemata odpovědět tím, že navrhli zřídit speciální výbory s několika členy, kteří by ochutnali obě potěšení, a to, na čem by se většina členů shodla, by pak mělo být zvoleno. Ale je to skutečně správné řešení? Co když jsou všichni členové našeho výboru intelektuálové, kteří nemají rádi pivo? Jak mohou skutečně reprezentovat vkus všech lidí ve třídě? A i kdyby byli fanoušky piva a neměli rádi knihu, jakým"
+}

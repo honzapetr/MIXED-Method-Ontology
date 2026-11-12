@@ -1,0 +1,17 @@
+{
+  "source": "kniha",
+  "page": 151,
+  "image": "IMG_20260902_222845.jpg",
+  "image_sha256": "79251832187387059fa5c0da6d4363f311fc2a7900b2b09347ab4d2578f738ed",
+  "backend": "fabric",
+  "model": "fabric/model",
+  "prompt_version": "fabric-service",
+  "confidence": null,
+  "quality": "full",
+  "warnings": [
+    "page 1: rotated 90 degrees clockwise to read it"
+  ],
+  "seconds": 17.06,
+  "created": "2026-11-11T22:14:05+00:00",
+  "text": "s sebou ale nese riziko, že si podvědomě zvykneme pohlížet i na\nhledi jako na pouhé prostředky k dosažení svých cílů. Může se\nstát, že od nich začneme vyžadovat stejnou rychlost, efektivitu\na ochotu sloužit našim potřebám, jakou nám poskytuje AI. Ne-\njenže je AI náš dokonalý asistent, ale k tomu nám pochlebuje\na utvrzuje nás v našich názorech a soudech, čímž se pro nás\nstává ještě lákavější alternativou k lidské interakci. Druhý člověk\ncoby svébytná bytost, která má hodnotu sama o sobě, ne jenom\njako poskytovatel našich přání, se tak vytrácí.\n\nMustafa Suleyman předpovídá, že nastávající doba definova-\nná stále širším využitím AI změní svět také v tom, že lidé již\nnebudou primárními hybateli světového dění. Budeme podle něj\nžít v epoše, kdy většina našich denních interakcí nebude s ostat-\nními lidmi, ale s AI, a mnozí se kompletně ztratí ve virtuálních\nsvětech.²⁴ Bude nám stále více hrozit, že budeme přistupovat\nk druhým právě jen jako k prostředkům k dosažení svých cílů.\nA právě proti tomuto brojil Immanuel Kant, který ve druhé for-\nmulaci svého kategorického imperativu uvádí: „Jednej tak, abys\npoužíval lidství jak ve své osobě, tak i v osobě každého druhého\nvždy zároveň jako účel a nikdy pouze jako prostředek.“²⁵ Nebo\nstručně: Nechovej se k lidem pouze jako k prostředku k dosažení\nsvých cílů.\n\nŽidovský filozof Emmanuel Lévinas přišel s konceptem tvá-\nře Druhého (jejž označuje velkým písmenem, aby vyjádřil jeho\njedinečnou hodnotu jako člověka), která nás definuje a zároveň\nnám ukládá morální odpovědnost za Druhého: „Setkání s tváří\nje záležitostí veskrze etickou. Když totiž vidíte nos, oči, bradu\na můžete je popsat, obracíte se ke Druhému jako k předmětu.\nS Druhým se však nejlépe setkáme tehdy, když barvu očí ani\nnepostřehneme... Především je tu sama přítomnost tváře, její\npřímé, bezbranné vystavení. Nejvíc nahá, nejvíc obnažená je"
+}

@@ -1,0 +1,17 @@
+{
+  "source": "kniha",
+  "page": 118,
+  "image": "IMG_20260902_222204.jpg",
+  "image_sha256": "ef97a224eb0f011138bfd19fc91eecc39f13cb8279a80122f2ed6063efc63409",
+  "backend": "fabric",
+  "model": "fabric/model",
+  "prompt_version": "fabric-service",
+  "confidence": null,
+  "quality": "full",
+  "warnings": [
+    "page 1: rotated 270 degrees clockwise to read it"
+  ],
+  "seconds": 12.06,
+  "created": "2026-11-11T22:10:13+00:00",
+  "text": "průzkumy veřejného mínění, sociologické průzkumy a další em.\npirická měření, ale lze množství štěstí a utrpení přesně měřit\na porovnávat?\n\nZákladní předpoklad utilitarismu je, že utrpení je špatné\nale normálním protipólem štěstí. A úkolem psychoterapie není\ndostat pacienta do nereálného stavu neustálého pocitu štěstí, ale\npomoci mu získat trpělivost a schopnost snášet i stavy utrpení.\nPodle Junga život požaduje pro svou úplnost nalezení rovnová-\nhy mezi radostí a smutkem. Za stavem neuróz spatřoval čas-\nto přirozené a nezbytné utrpení, se kterým se pacient odmítal\nvyrovnat a nést jej.¹⁶ Svatý Augustin v jednom ze svých kázání\npod tlakem promění bud v sedlinu, která skončí v kanálu, nebo\nv čistý olej, který přetrvá. Svět je plný utrpení a tlaků, které nás\nale některá tato utrpení zocelí naši identitu a dodají jí novou\ndrtí - Jung uvádí třeba válku, touhu, chudobu nebo chamtivost,\nho tlaku a stejného mlácení, které mlátilo ty druhé.¹⁷ Utrpení\nse ani v budoucnosti jistě zcela nezbavíme. A je také zřejmé,\nže v našich životech má důležitou roli, byť méně zjevnou a hůř\npochopitelnou.\n\nOd AI si slubujeme více času pro sebe, méně práce a více fi-\nstva, které stále způsobují velkou míru utrpení. Nespočet knih\nje věnován tématu, jak nám AI pomůže konat dobro, přinášet\nposledních století a vznik moderní vědy jsou do značné míry for-\nmovány - kromě mýtů, jimiž jsme se zabývali v první kapitole -\nv jejím duchu a je touto teorií také obhajován."
+}

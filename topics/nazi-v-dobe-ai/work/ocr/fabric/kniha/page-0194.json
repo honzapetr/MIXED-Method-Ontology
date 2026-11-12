@@ -1,0 +1,17 @@
+{
+  "source": "kniha",
+  "page": 194,
+  "image": "IMG_20260902_223329.jpg",
+  "image_sha256": "ab3ff62f402f3bc290be2867b33b63620e3066f7282c745a7b85851b18666db8",
+  "backend": "fabric",
+  "model": "fabric/model",
+  "prompt_version": "fabric-service",
+  "confidence": null,
+  "quality": "full",
+  "warnings": [
+    "page 1: rotated 90 degrees clockwise to read it"
+  ],
+  "seconds": 11.61,
+  "created": "2026-11-11T22:19:23+00:00",
+  "text": "⁹ Russell, Power, 14.\n\n¹⁰ Robert J. Myers, \"Introducing Ethics and International Affairs 1 (březen 1987): v-vii, https://doi.org/10.1111j.1747-7093.1987.tb00509.x, vi.\n\n¹¹ Charles W. Kegley, \"The New Global Order: The Power of Principle in a Pluralistic World\", Ethics & International Affairs 6 (březen 1992): 21-40, https://doi.org/10.1111j.1747-7093.1992.tb00540.x, 23.\n\n¹² Aris Roussinos, \"How Realists Sacrificed Their Morality\", UnHerd, 22. Ieden 2024, https://unherd.com/2024/01/how-realists-sacrificed-their-morality/.\n\n¹³ Andrew Linklater, The Problem of Harm in World Politics: Theoretical Investigations (Cambridge University Press, 2011), 258.\n\n¹⁴ Rutger Bregman, Humankind: A Hopeful History, přel. Elizabeth Manton a Erica Moore (Bloomsbury Publishing, 2021), 134.\n\n¹⁵ Mustafa Suleyman a Michael Bhaskar, The Coming Wave: Technology, Power, and the Twenty-First Century's Greatest Dilemma, International edition (Crown, 2023), 271.\n\n¹⁶ Suleyman a Bhaskar, The Coming Wave, 267.\n\n¹⁷ Amy Webb, The Big Nine: How the Tech Titans and Their Thinking Machines Could Warp Humanity, First trade paperback edition (PublicAffairs, 2020), 237.\n\n¹⁸ Donald W. White, The American Century, The Rise and Decline of the United States as a World Power (Yale University Press, 1996), 193-194.\n\n¹⁹ Allen Dulles a Michael Wala, The Marshall plan (Berg, 1993), 27-31.\n\n²⁰ J.B. De Long a B. Eichengreen, The Marshall Plan: History's Most Successful Structural Adjustment Program, Discussion Paper No. 634 (CEPR, 1992), 195.\n\n²¹ De Long a Eichengreen, The Marshall Plan: History's Most Successful Structural Adjustment Program, 2.\n\n²² Constantine Christopher Menges a Program on Transitions to Democracy (George Washington University), ed., The Marshall Plan from those who made it succeed (Program on Transitions to Democracy: University Press of America, 1999), 9.\n\n²³ Menges a Program on Transitions to Democracy (George Washington University), The Marshall Plan from those who made it succeed, 13.\n\n²⁴ White, The American Century, The Rise and Decline of the United States as a World Power, 195."
+}
