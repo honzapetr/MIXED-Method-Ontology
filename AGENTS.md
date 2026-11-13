@@ -34,6 +34,8 @@ you claim a task is done, and quote its result.
 5. `docs/progress.md` – append a short entry after every task: what changed, what is left, what the next session
    must know.
 6. `docs/adr/` – one file per significant decision (context, decision, consequences).
+7. `docs/development.md` – the working rules while the environment is built: building the environment and the
+   concrete analysis are two lines kept apart, and what goes where. Follow it in every session.
 
 ## Rules
 
@@ -81,10 +83,13 @@ prompts for the lab live in `.agents/roles/`. Copies for Claude Code in `.claude
 * **Talk to the owner in Czech**; code, comments, commits and docs stay in English.
 * **Layout:** `code/mmo/` (the program, CLI `mmo`: `core/` topics and sources, `ingest/` bringing new sources in),
   `topics/<slug>/` (research topics, the only place for research data: sources, their text, segments, graph),
-  `methods/*.yaml` (method modules), `ontology/` (LinkML schema and mapping to standards), `docs/` (project memory).
-  Details: `docs/spec.md`.
+  `methods/<id>/` (one folder per method: research design, procedure, rules for agents, applications, sources,
+  `method.yaml`), `ontology/` (LinkML schema and mapping to standards), `docs/` (project memory and, in
+  `docs/environment/`, how the environment works). Details: `docs/development.md`, `docs/spec.md`.
+* **Methods: precision before economy.** Describe each method completely in its own terms, even where it repeats
+  another; never merge, shorten or "deduplicate" method texts, codes or memos on your own (`methods/README.md`).
 * **Source preparation** (OCR of page photos, reading order, transcription) is a tool of the project, used when a
-  new source needs it (`docs/source-preparation.md`). The analysis reads `sources/<id>/text.md` and its segments,
+  new source needs it (`docs/environment/source-preparation.md`). The analysis reads `sources/<id>/text.md` and its segments,
   not `ingest/`.
 * **CLI:** `uv run mmo --help` – `topic new`, `source add`, `source check`, `source finalize`, `segment`; tools for
   bringing sources in: `ingest`, `ocr ...`.

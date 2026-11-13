@@ -1,0 +1,31 @@
+# Method module template - copy the folder to methods/<id>/ (methods/README.md). Not a method: tests skip _template.
+id: _template
+name: <name of the method>
+status: draft
+references:
+  - <main works; full list in sources.md>
+summary: >-
+  <one paragraph: what the method does>
+research_design:
+  # short form; the full text is research-design.md
+  purpose: <what a study with this method is for>
+  questions: <how research questions arise and change>
+  prior_theory: <role of existing theory>
+  reasoning: <inductive, deductive, abductive, hermeneutic ...>
+  theory_output: <what the method produces>
+code_types: [<type>]
+relation_types:
+  - id: <relation>
+    description: <meaning>
+phases:
+  - id: <phase>
+    goal: <goal>
+    input: <input>
+    output: [<output>]
+    memos: [<memo type>]
+    model_role: <what the model does>
+    human_gate: <what the researcher decides>
+practices:
+  - <method-wide practice>
+conclusions: >-
+  <how the method reaches its conclusions>

@@ -116,7 +116,7 @@ classes:
 
   Method:
     is_a: NamedThing
-    description: A method module (methods/*.yaml) - phases, code types, relation types, outputs.
+    description: A method (methods/<id>/method.yaml) - phases, code types, relation types, outputs.
     slots: [phases, relation_types]
 
   AnalyticalStep:

@@ -34,7 +34,7 @@ The goal is the infrastructure, not the analysis of one particular book.
 - The environment for qualitative analysis with AI (current focus; how it works is defined with the owner).
 
 **Tools:** source preparation turns new material into citable text for the analysis (OCR of page photos, reading
-order, segments with exact positions; `docs/source-preparation.md`).
+order, segments with exact positions; `docs/environment/source-preparation.md`).
 
 ## Out of scope (for now)
 

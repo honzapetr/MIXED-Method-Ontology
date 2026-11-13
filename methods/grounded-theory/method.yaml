@@ -1,12 +1,14 @@
 # Method module - DRAFT. Read by agents to plan and run an analysis; validated by tests/test_methods.py.
+# The full description is in the Markdown files of this folder; this file is the part agents and tests read.
 id: grounded-theory
 name: Grounded theory
+status: draft
 references:
   - Glaser & Strauss (1967); Strauss & Corbin (1990); Charmaz (2006/2014) - versions differ, the topic says which.
 summary: >-
   Builds a theory from the data by coding, constant comparison and memoing until the categories are saturated.
 research_design:
-  # how this method links purpose, questions and theory (docs/research-design.md)
+  # short form; the full text is research-design.md
   purpose: understand a process or social phenomenon in an area of interest
   questions: >-
     Start broad ("what is going on here?"; Charmaz: an initial question); narrowed during coding and theoretical
@@ -35,6 +37,7 @@ phases:
     goal: Break the data into segments and name what happens in them.
     input: segments
     output: [codes, memos]
+    memos: [analytic]
     model_role: propose codes per segment with a quote and a short definition
     human_gate: confirm, merge or reject codes; write memos on surprises
   - id: axial-coding
@@ -42,12 +45,14 @@ phases:
     input: confirmed codes
     output: [categories, relations, memos]
     allowed_relations: [causal_condition, context, intervening_condition, strategy, consequence, property_of]
+    memos: [analytic, theoretical]
     model_role: propose categories and relations, each with evidence segments and confidence
     human_gate: confirm relations; choose which categories to follow
   - id: selective-coding
     goal: Choose the core category and integrate the categories into a theory.
     input: confirmed categories and relations
     output: [core_category, storyline_memo]
+    memos: [theoretical]
     model_role: propose candidate core categories with arguments for and against
     human_gate: choose the core category; approve the storyline
 practices:

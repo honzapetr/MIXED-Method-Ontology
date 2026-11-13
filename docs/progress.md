@@ -177,3 +177,18 @@
   `mmo source add --role context --about kniha` (annotation, 3 reviews, debate report, launch announcement,
   catalogue record), each with URL and access date; pages not saved or read yet.
 - First memo in the proposed format (`docs/research-design.md`, section Memos): `topics/nazi-v-ai-dobe/memos/`.
+
+## T9 – 2026-11-14
+- Done: methods as folders (ADR 0008): `methods/skad/` (new, the method of the first study), `grounded-theory/`,
+  `thematic-analysis/`, each with `method.yaml` (now with `status` and `memos` per phase), `research-design.md`,
+  `procedure.md`, `agent-rules.md`, `applications.md`, `sources.md`; `methods/_template/`; `methods/foundations.md`
+  (shared overview). `docs/research-design.md` removed after its content went to `methods/foundations.md`, the
+  method folders, `docs/spec.md` (Research design in a topic, planned) and `docs/environment/memos.md`.
+  `docs/source-preparation.md` -> `docs/environment/`. New `docs/development.md` (two lines, what goes where),
+  `docs/README.md`, `docs/owner-notes.md` (owner's notes, Czech; first note on programming habits vs. precision of
+  methods). AGENTS.md (owner approved): work item 7, layout, precision rule, link. Skill `ingest-sources`: link.
+  `tests/test_ontology_and_methods.py` split into `test_ontology.py` and `test_methods.py` (folders, documents,
+  status, memo types). `topics/nazi-v-ai-dobe/topic.yaml`: `methods: [skad]`.
+- Verified: `uv run pytest`, `ruff check`, `ruff format --check`, `python tools/agents_sync.py --check`.
+- Next: read the SKAD volume (OAPEN) and correct `methods/skad/` where the summaries were wrong; framing of the
+  study (purpose, questions) with the owner, going through SKAD phase 1.

@@ -13,14 +13,14 @@
 | Source | A book, interview, field note, document or dataset, with metadata and provenance. |
 | Page | One scanned image of a source, with its OCR results per backend. |
 | Segment | A span of source text with an exact position (source, page, paragraph, character offsets). |
-| Method | A declarative description of an analytical method (`methods/*.yaml`): phases, code types, relation types, outputs. |
+| Method | An analytical method, one folder `methods/<id>/`: research design, procedure, rules for agents, applications, sources, and `method.yaml` (phases, code types, relation types, outputs) for agents and tests. |
 | Analysis run **(planned)** | Method × questions × selected segments → proposals in the graph. |
 | Proposal **(planned)** | A code, category, theme, relation or memo with status `proposed` / `confirmed` / `rejected`, author and provenance. |
 
 ## Repository layout
 
 `code/mmo/` the program (ADR 0007: `core/` topic and sources, later graph and analysis; `ingest/` OCR, page
-numbers, reading order, segments) · `topics/` research data, the only data folder · `methods/` method modules ·
+numbers, reading order, segments) · `topics/` research data, the only data folder · `methods/` method folders ·
 `ontology/` schema and mapping · `docs/` project memory · `tests/` · `tools/`.
 
 ## Topic folder
@@ -30,7 +30,7 @@ writes is kept apart from what the machine produces.
 
 ```
 topics/<slug>/
-  topic.yaml                  # title, questions, goals, sources: [<id>, ...]
+  topic.yaml                  # title, questions, goals, methods: [<method id>], sources: [<id>, ...]
   memos/                      # topic memos, research journal (written by the researcher)
   graph/                      # (planned) sorted Turtle per named graph
   sources/<id>/
@@ -76,7 +76,7 @@ Page images stay out of git; `ingest/files.yaml` lists each file with its SHA-25
 ## Source preparation
 
 New material becomes text the analysis can read: `mmo source add` and `mmo ingest` (OCR of page images, reading
-order, final `text.md`, segments; text files skip OCR). How it works, the commands and the OCR backends: `docs/source-preparation.md`.
+order, final `text.md`, segments; text files skip OCR). How it works, the commands and the OCR backends: `docs/environment/source-preparation.md`.
 
 ## Homelab
 
@@ -104,6 +104,27 @@ mapping is relied on.
 - Git gives versions: `main` = confirmed state of the topic, a branch = another angle, another method or a new batch
   of material before review; merge = accept. PROV-O records why something changed.
 - Every model call stores the model, prompt version and input segments.
+
+## Research design in a topic (planned)
+
+How methods link purpose, questions and theory: `methods/foundations.md` and `research-design.md` of each method.
+In a topic this means (proposal, T8):
+
+1. **The purpose is recorded, not implied.** A topic states why it exists (problem, motive, for whom) and the
+   researcher's position. Every question traces back to it.
+2. **Questions are living objects.** Each research question has a type (qualitative, quantitative, mixed), an
+   origin (from the purpose, from the framework, from a surprise in the analysis), a status (initial, refined,
+   dropped, answered) and a history - which memo or finding changed it (Maxwell's "design in use").
+3. **The conceptual framework is explicit:** sensitising concepts, prior theories, assumptions. The method says how
+   the framework may be used.
+4. **Theory is built from propositions.** A proposition connects confirmed concepts and relations, answers one or
+   more questions, has evidence and counter-evidence (segments) and a memo on how it was reached.
+5. **Working with theory afterwards:** test it against new sources (confirms / extends / contradicts), compare it
+   with prior theories, derive new questions - including quantitative ones (the mixed-methods link).
+6. **Ontology:** today it has `ResearchQuestion` and `Goal`; it would need the purpose and position of the topic,
+   a conceptual framework with sensitising concepts, and `Theory` / `Proposition` linked to questions and evidence.
+
+Memos are part of every method; format and use: `docs/environment/memos.md`.
 
 ## Human steering (planned)
 

@@ -17,7 +17,7 @@ the lab.
 | :--- | :--- |
 | `code/mmo/` | the program and its command `mmo`: `core/` (topics, sources), `ingest/` (bringing sources in: OCR, reading order, segments) |
 | `topics/<slug>/` | research topics - the only place for research data: sources, their text and segments, graph |
-| `methods/` | method modules (grounded theory, thematic analysis, ...) |
+| `methods/` | one folder per method: research design, procedure, rules for agents, applications, sources (SKAD, grounded theory, thematic analysis) |
 | `ontology/` | LinkML schema and mapping to standards |
 | `docs/` | brief, spec, plan, answers, progress, ADRs |
 
@@ -41,6 +41,6 @@ uv run mmo segment my-topic my-book --variant <variant>
 ```
 
 Source preparation (OCR of page photos, reading order, single steps, the homelab OCR service):
-[`docs/source-preparation.md`](docs/source-preparation.md).
+[`docs/environment/source-preparation.md`](docs/environment/source-preparation.md).
 
 `uv run python -m mmo` starts the health endpoint used by the lab preview (`/healthz`).

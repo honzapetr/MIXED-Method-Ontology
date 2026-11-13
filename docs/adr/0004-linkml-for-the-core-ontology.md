@@ -15,5 +15,5 @@ separate export, because QDA tools do not read LinkML or RDF.
 
 ## Consequences
 
-Until generation is wired in, `tests/test_ontology_and_methods.py` checks the schema's internal consistency.
+Until generation is wired in, `tests/test_ontology.py` checks the schema's internal consistency.
 Standard versions must be verified before the mapping is relied on.

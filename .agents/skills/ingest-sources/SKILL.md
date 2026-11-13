@@ -40,5 +40,5 @@ page images; they are git-ignored.
 7. **Spot-check** 3 random segments in `segments/<variant>.jsonl` against the originals (scan, page, quote) and
    record the result, the variant and its model in `docs/progress.md`.
 
-Settings come from `.env` or the OCR client's config file (`docs/source-preparation.md`, section OCR through the homelab). Never read
+Settings come from `.env` or the OCR client's config file (`docs/environment/source-preparation.md`, section OCR through the homelab). Never read
 or print `.env`.

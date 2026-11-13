@@ -70,3 +70,13 @@
 - **Notes and impressions are part of the methodology:** an impression about a source is a note to that source
   and one of the first analytic steps; the infrastructure must make such notes functional (proposal in
   `docs/research-design.md`, section Memos).
+
+## 2026-11-14 – methods and the development rules
+- **A method is a folder** with its own research design, procedure, rules for agents, connected applications and
+  sources; the description must be holistic and exact for each method, even where it repeats another.
+- **SKAD** is the analysis we do; it is added as a method.
+- **`docs/`** separates how the environment is built from how it works; the working rules of development (what goes
+  where: new method, information for development, concrete analyses and data sources) are written down.
+- **AGENTS.md** may be changed for the new layout (approved).
+- **Connected applications:** ATLAS.ti and QualCoder for now; more when the study shows the need.
+- **Owner's notes:** a file in `docs/` for the owner's own notes while building (`docs/owner-notes.md`).

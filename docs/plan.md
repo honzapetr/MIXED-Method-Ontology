@@ -23,7 +23,7 @@
 - Paths: `AGENTS.md`, `README.md`, `docs/`, `.agents/skills/ingest-sources/`, `.claude/skills/ingest-sources/`
 - Depends on: T2g
 
-### T8 – Design of the analysis environment (in progress)
+### T8 – Design of the analysis environment (done)
 - Goal: record how methods link purpose, research questions and theory, and the layers of the environment (approach
   as analytic moves, connections, theme map, theory), by walking one study: SKAD on `nazi-v-ai-dobe`.
 - Acceptance criteria: `docs/research-design.md` with sources; `research_design` in every method module, checked by
@@ -31,6 +31,20 @@
 - Verify: `uv run pytest tests/test_ontology_and_methods.py`
 - Paths: `docs/`, `methods/`, `tests/test_ontology_and_methods.py`
 - Depends on: T7
+
+### T9 – Method folders and the development rules (done)
+- Goal: each method in its own folder with its research design, procedure, rules for agents, applications and
+  sources; SKAD added; `docs/` separates how the environment is built from how it works (owner 2026-11-14).
+- Acceptance criteria: `methods/<id>/` for SKAD, GT and TA with all six files and `methods/_template/`;
+  `methods/foundations.md`; `docs/research-design.md` split without loss into `methods/` (method content),
+  `docs/spec.md` (planned research design in a topic) and `docs/environment/memos.md`; `docs/development.md`,
+  `docs/README.md`, `docs/owner-notes.md`; source preparation moved to `docs/environment/`; links updated, including
+  `AGENTS.md` and the `ingest-sources` skill (**protected paths, owner approved**); ADR 0008; topic records its method.
+- Verify: `uv run pytest && python tools/agents_sync.py --check`
+- Paths: `methods/`, `docs/`, `tests/test_methods.py`, `tests/test_ontology.py`, `AGENTS.md`, `README.md`,
+  `ontology/schema/mmo.yaml`, `.agents/skills/ingest-sources/`, `.claude/skills/ingest-sources/`,
+  `topics/nazi-v-ai-dobe/topic.yaml`
+- Depends on: T8
 
 ## Analysis
 
