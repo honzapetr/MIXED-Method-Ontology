@@ -209,8 +209,9 @@ def cmd_ocr_book(args: argparse.Namespace) -> int:
     """The whole text of one variant in reading order, as one Markdown file."""
     source = load_topic(args).source(args.source)
     records = load_variant(source, args.variant)
-    write_text(source, args.variant, records, order_of(source, records, args.variant))
-    print(f"{len(records)} pages in reading order written to {source.text_file(args.variant)}")
+    order = order_of(source, records, args.variant)
+    write_text(source, args.variant, records, order)
+    print(f"{len(order.pages)} pages in reading order written to {source.text_file(args.variant)}")
     return 0
 
 

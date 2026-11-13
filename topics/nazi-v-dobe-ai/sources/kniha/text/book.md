@@ -133,16 +133,6 @@ S Thúkydidem se objevil nový, střízlivější pohled na historii. Už to neb
 
 28
 
-<!-- page 29 (manual) · scan 12 · IMG_20260902_195748.jpg -->
-
-NAZÍ V AI DOBĚ
-
-Až starověcí Hebrejci začali vnímat dějiny jinak. Už to pro ně nebyl nekonečný kruh opakování, ale smysluplný proces, který někam směřuje. Tuhle důležitou změnu v chápání času a dějin u Hebrejců dobře popisuje rumunský religionista Mircea Eliade ve své knize Mýtus o věčném návratu. Eliade vysvětluje, že právě v hebrejské tradici se stalo, že lidé přestali vnímat dějiny jako neustálé opakování starých vzorců a začali je chápat jako jedinečný příběh, který má svůj začátek, směr a konec. Jak píše, „poprvé se hlásá a šíří myšlenka, že historické události mají hodnotu samy o sobě… Židé jako první chápali smysl dějin jako epifanii Boha.“³⁶ Podle Hebrejců se dějiny staly příběhem o spáse – hrou mezi člověkem a Bohem, kde každý čin má svou váhu a každá událost směřuje k naplnění Božího plánu. A tímto naplněním měl být příchod mesiášské éry, tedy času míru, spravedlnosti a konečného usmíření, kdy dějiny dosáhnou svého cíle.
-
-Představa, že v budoucnu přijde Mesiáš, král, který obnoví „staré dobré časy“ a naplní Boží plán pro vyvolený národ v jeho obnovené zemi, dala dějinám směr. Pozůstatky cyklického vnímání času sice najdeme ve Starém zákoně, například v knize Kazatel: „Co bylo, bude zase, a co se dálo, bude se dít zas. Nic nového pod sluncem není.“³⁷ Nicméně právě očekávání Mesiáše ze strany biblických osobností a proroků, jako byli Eliáš, Jeremiáš a mnozí další, vedlo k lineárnímu historickému myšlení, a tím i k ideji smyslu v dějinách.
-
-Dějiny tak najednou neměly jen svůj začátek v ráji, ale i svůj konec v příchodu Mesiáše. Začalo dávat smysl zaznamenávat historii jako důležité body na cestě ke spáse. Jak říká Carl Gustav Jung, biblickému Bohu na osudu člověka záleží. Na rozdíl od jiných bohů, jako byl řecký Zeus, který jednal jen podle instinktu, se Bůh Starého zákona hluboce zajímá o lidské dějiny a osudy.³⁸ Jahve, na rozdíl od Dia, měl o lidi skutečný zájem a byli pro něj nesmí[?]
-
 <!-- page 29 (printed) · scan 13 · IMG_20260902_195753.jpg -->
 
 NAZÍ V AI DOBĚ
@@ -168,22 +158,6 @@ Zajímavé je, že zavedení lineárního myšlení dávnými Hebrejci bylo při
 30
 
 <!-- page 31 (printed) · scan 15 · IMG_20260902_195802.jpg -->
-
-NAZÍ V AI DOBĚ
-
-odchylkou od původního plánu, jež způsobil prohřešek Adama a Evy. Hebrejské myšlení se upínalo k budoucnosti, avšak toužilo de facto po minulosti. Možná proto také židovský Kristus zdůrazňoval, že Království Boží, tedy místo naplnění a hojnosti, není v budoucnosti ani v minulosti, ale „teď mezi námi“. Svým způsobem tak židovský Mesiáš vnášel do židovského myšlení důraz na přítomnost a její naplnění, tak příznačné pro myšlení pohanských národů, které nehledaly smysl v minulosti ani v budoucnosti, ale v plném prožití přítomného okamžiku neustále se opakujícího a časově krátkého ročního cyklu.
-
-## JÁCHYME, HOĎ TO DO STROJE
-
-Nové mýty vždycky vyrůstají ze starých, přičemž ty staré v nich pořád žijí, i když to na první pohled není tak jasné. Když přišel Ježíš Kristus a vzniklo křesťanství, mýty ze Starého zákona se rozvinuly do mýtů Nového zákona. První křesťané uvěřili, že se v Ježíši naplnila všechna očekávání o Mesiáši. Původní hřích Adama a Evy, kteří neposlechli Boha a byli za to vyhnáni z ráje, byl Ježíšovou obětí odčiněn. Lidé byli zachráněni od hříchu a ráj se obnovil: jeho království je tady a teď, pro každého a kdekoli.
-
-Díky Ježíši a příchodu Ducha svatého, který měl žít v srdcích lidí a spojovat je s Bohem, mohl mít každý – Žid i ten, kdo Židem nebyl – přímý vztah s Bohem, stejně jako kdysi Adam a Eva. Jak postřehl Jung, tohle znamenalo obrovskou změnu v postavení člověka – byl povýšen na Božího syna, skoro na úroveň Boha. Přebývání Ducha svatého v lidském srdci představuje vtělení Boha, tedy trvalou přítomnost božství v člověku.⁴¹
-
-Tohle bylo ve starověkém světě něco naprosto nevídaného. Přímý přístup k bohům, nemluvě o nejvyšším Bohu Stvořiteli, měli jen faraoni a nejvyšší náboženští či političtí vůdci. Ježíš
-
-31
-
-<!-- page 31 (printed) · scan 16 · IMG_20260902_195822.jpg -->
 
 NAZÍ V AI DOBĚ
 
@@ -281,7 +255,7 @@ Boží prozřetelnost je podle Vica přítomná v každé události, ale spíše
 
 <!-- page 38 (printed) · scan 23 · IMG_20260902_195908.jpg -->
 
-TANEC SLUNCÍ
+TANEC SLUNCI
 
 jež by dějiny vedla konkrétním směrem. Na rozdíl od dřívějšího křesťanského myšlení není Bůh strůjcem velkého plánu spásy.
 
@@ -1039,7 +1013,7 @@ NAZÍ V AI DOBĚ
 
 MĚSTO NA AI PAHORKU
 
-36 Ethan Mollick, Co-Intelligence: Living and Working with AI (W H Allen, 2024), [?]
+36 Ethan Mollick, Co-Intelligence: Living and Working with AI (W H Allen, 2024), 31
 
 37 Catherine Clifford, „Elon Musk: ‚Mark My Words — A.I. Is Far More Dangerous than Nukes‘“, CNBC, 13. březen 2018, https://www.cnbc.com/2018/03/13/elon-musk-at-sxsw-a-i-is-more-dangerous-than-nuclear-weapons.html.
 
@@ -1493,7 +1467,7 @@ NAZÍ V AI DOBĚ
 
 Orchestr přírody, napadlo mě, a já seděl uprostřed té krásy v první řadě. V tu chvíli jsem se cítil „doma". Nic mi nechybělo. Vnímal jsem sám sebe jako čiré sklo, naplněné nic. Naprosto prázdný, přitom naprosto plný. Obdarovaný, aniž bych daroval. Víc sám sebou než kdy předtím. V té bohaté nahotě své identity uprostřed pralesa na opačném konci světa jsem se skutečně našel.
 
-Po návratu do pražských ulic mě pohltil pocit neustálého stresujícího spěchu. Lidé se mi zdáli být zaměřeni jen na svůj vzhled a image na veřejnosti, na další položky v životopisech a na nákup ně[?] symbolů společenského postavení. Připadalo mi to všechno jak prázdné... Byl jsem zpět mezi lidmi a měl se cítit doma. Tady, kde jsem se narodil, ne někde v pralese na konci světa. Cítil jsem se ale jako cizinec mezi cizinci.
+Po návratu do pražských ulic mě pohltil pocit neustálého stresujícího spěchu. Lidé se mi zdáli být zaměřeni jen na svůj vzhled a image na veřejnosti, na další položky v životopisech a na nákup symbolů společenského postavení. Připadalo mi to všechno nějak prázdné… Byl jsem zpět mezi lidmi a měl se cítit doma. Tady, kde jsem se narodil, ne někde v pralese na konci světa. Cítil jsem se ale jako cizinec mezi cizinci.
 
 Naše civilizace, i když tak technicky vyspělá, mi připadala odcizená. V tu chvíli se mi zdálo, jako by lidstvo odpradávna hrálo velkolepou hru na schovávanou. V hloubi duše známe svou nahotu, ale pořád ji skrýváme. Společenský status považujeme za záruku štěstí. Od „bohatých a úspěšných" očekáváme, že budou šťastní, vyžadujeme to po nich – vždyť mají přece tak krásné „šaty". Nemohou se tedy cítit tak nazí jako já. Přitom se cítí nejspíš stejně existenčně nazí. Před naší nahotou není úniku.
 
@@ -1911,29 +1885,13 @@ John Stuart Mill ve své slavné knize O utilitarismu (On Utilitarianism, 1861) 
 
 134
 
-<!-- page 134 (manual) · scan 128 · IMG_20260902_222258.jpg -->
-
-STÁLE NEJSME BOHY
-
-## MUŠKA JENOM ZLATÁ
-
-Utilitarismus patří mezi nejvlivnější teorie morální filozofie. Dodnes má silný vliv, neboť je založen výhradně na racionalitě, a proto oslovuje lidi napříč kulturami. Jeho kořeny sahají ke starořeckému hédonismu, z něhož utilitaristé převzali důraz na hledání potěšení a vyhýbání se bolesti. Mezi zakladatele moderní utilitaristické teorie patří tři myslitelé: David Hume, Jeremy Bentham a John Stuart Mill.
-
-Utilitarističtí myslitelé přistupovali k morálce z racionálního hlediska. Víme, že existují morální standardy, které společnost dodržuje a předává svým členům. Proč jsou ale některé činy považovány za špatné, zatímco jiné za dobré? Vezměme si příklady jako krádež, lhaní, vraždu, pomluvy nebo nevěru. Co mají společného? Všechny způsobují druhým bolest a utrpení.
-
-A to platí napříč kulturami. Když vás někdo okrade, zraní [?] vás to, ať jste Číňan, Eskymák, nebo Američan. Naopak dárky, pochvala nebo pomoc všude přinášejí radost a štěstí. Společnosti oceňují chování, které přináší štěstí, a odsuzují to, co způsobuje bolest. Z této úvahy je odvozen základní princip: eticky špatné je to, co vede k utrpení; eticky dobré to, co vede ke štěstí. Klíčové přitom je, že se utilitarismus nezaměřuje na úmysl jednajícího, ale na výsledek jeho jednání. Co nakonec rozhoduje, je poměr štěstí a bolesti, které čin přinesl, nikoliv motivace, která za ním stála. Jelikož ale čekání na výsledek některých rozhodnutí může trvat příliš dlouho, britský matematik a filozof Bertrand Russell navrhuje rychlejší odsouzení či pochvalu některých činů.¹²
-
-John Stuart Mill ve své slavné knize O utilitarismu (On Utilitarianism, 1861) předkládá tzv. princip největšího štěstí: „Činy jsou správné úměrně tomu, jak přispívají ke štěstí; špatné úměrně tomu, jak přispívají k opaku štěstí. Štěstím se rozumí potěšení a nepřítomnost bolesti; neštěstím pak bolest a ztráta potěšení.“¹³
-
-134
-
 <!-- page 135 (printed) · scan 115 · IMG_20260902_222150.jpg -->
 
 NAZÍ V AI DOBĚ
 
-z toho plyne základní utilitaristická logika, kdy morální je to, co přináší co největší štěstí co největšímu počtu lidí a zároveň způsobuje co nejméně bolesti.
+Z toho plyne základní utilitaristická logika, kdy morální je to, co přináší co největší štěstí co největšímu počtu lidí a zároveň způsobuje co nejméně bolesti.
 
-Mill se bránil tvrzení, že utilitarismus je bezbožná doktrína [?] (je pravda, že není založen na náboženských přesvědčeních, ale vychází z čistého rozumu), když prohlásil, že pokud považujeme Boha za dobrého, pak Bůh musí být také utilitaristou. Neboť jak by jinak dobrý a milující Bůh mohl chtít, aby jeho stvoření trpělo? Pokud je Bůh dobrý, pak musí toužit po největším štěstí a co nejmenším utrpení pro všechny, argumentuje. Mill také nachází „úplného ducha etiky užitku" v Ježíšově učení. Poukazuje na Ježíšova slova „čiňte jiným, co byste chtěli, aby činili vám" a „miluj bližního svého jako sebe sama". Mill uvádí, že tato slova „představují ideální dokonalost utilitaristické morálky".¹⁴
+Mill se bránil tvrzení, že utilitarismus je bezbožná doktrína (je pravda, že není založen na náboženských přesvědčeních, ale vychází z čistého rozumu), když prohlásil, že pokud považujeme Boha za dobrého, pak Bůh musí být také utilitaristou. Neboť jak by jinak dobrý a milující Bůh mohl chtít, aby jeho stvoření trpělo? Pokud je Bůh dobrý, pak musí toužit po největším štěstí a co nejmenším utrpení pro všechny, argumentuje. Mill také nachází „úplného ducha etiky užitku" v Ježíšově učení. Poukazuje na Ježíšova slova „čiňte jiným, co byste chtěli, aby činili vám" a „miluj bližního svého jako sebe sama". Mill uvádí, že tato slova „představují ideální dokonalost utilitaristické morálky".¹⁴
 
 Utilitarismus je univerzální teorie. Říká nám, co je správné a co špatné, v pojmech srozumitelných napříč různými kulturami, a také nám radí, jak se zachovat tváří v tvář etickým dilematům. Je nestranný, což znamená, že „princip největšího štěstí" nedává přednost žádným konkrétním jednotlivcům ani třeba našim příbuzným. V každé situaci musí být zvolena možnost, která vytvoří více štěstí pro všechny, bez ohledu na to, zda s nimi máme nějaké zvláštní spojení, nebo nikoliv. Je to zároveň praktická teorie, kterou může kdokoli aplikovat v jakékoli životní situaci – v práci, ve škole, v domácnosti či v armádě. Mnozí velcí vůdci se při obtížných rozhodnutích řídili principy utilitarismu.
 
@@ -2111,6 +2069,14 @@ Mantra Silicon Valley „Pohybujte se rychle a rozbíjejte věci", proslavená M
 
 147
 
+<!-- page 148 (printed) · scan 128 · IMG_20260902_222258.jpg -->
+
+STÁLE NEJSME BOHY
+inovace, ale ne pro hlubší reflexi nad morálními dopady rychlého jednání. Britská matematička Hannah Fry poukazuje ve své knize Hello World na nespočet případů, kdy algoritmy selhaly a vytvořily nespravedlivé výstupy. Přesto věří, že by nás tato skutečnost neměla odvádět od snahy učinit je co nejpřesnějšími a co nejméně zaujatými. Podle ní jsou „nejlepší ty algoritmy, které v každé fázi berou v úvahu člověka. Ty, které si uvědomují lidský zvyk přílišné důvěřivosti ve výstup stroje a zároveň přiznávají své vlastní vady a s hrdostí přijímají svou nejistotu.“³⁹ Fry přitom upozorňuje na fakt, že algoritmy nejsou dokonalé, stejně jako my lidé, a to může mít za následek snížení autority, jaká se jim připisuje.⁴⁰ Tento bod je důležité si uvědomit. Máme tendenci považovat se tváří v tvář AI za nedokonalé a jí přičítat až přílišnou dokonalost. Byť je ale AI v mnohém geniální, stále je to jen lidský výtvor. A proto je i ona nedokonalá a nahá.
+
+Prizmatem nedokonalosti bychom ji proto měli vnímat a přistupovat k jejímu vývoji jako k něčemu, co je třeba zdokonalovat také v oblasti hodnotových soudů. Náš morální vývoj a vývoj AI jsou spojené nádoby. Navzájem se zrcadlíme, ovlivňujeme a můžeme se také v oblasti etiky navzájem vychovávat. V roce 1952 se v BBC setkalo několik hostů, včetně jednoho ze zakladatelů počítačových věd, slavného Alana Turinga, aby diskutovali na téma: „Lze o automatických počítacích strojích říci, že myslí?“ Diskuse se nejprve zabývala tématem, jak by se stroj mohl učit a jak by ho mohli učit lidé. „Je pravda, že když se dítě učí, jeho rodiče a učitelé opakovaně zasahují, aby mu zabránili v tom či onom, případně ho k tomu či onomu povzbudili,“ řekl Turing v diskusi. „A nebude tomu jinak, když se člověk snaží učit stroj. Provedl jsem několik experimentů s učením stroje při provádění nějaké jednoduché operace a bylo potřeba velmi mnoho takových zásahů, než jsem vůbec dosáhl nějakých výsledků. Jinými slovy,
+148
+
 <!-- page 149 (printed) · scan 129 · IMG_20260902_222301.jpg -->
 
 NAZÍ V AI DOBĚ
@@ -2137,7 +2103,7 @@ Navíc jako lidstvo nemáme určený jednotný pohled na etiku. Nick Bostrom sic
 
 Další otázkou je, proč by superinteligence vůbec měla chtít napodobovat lidskou morálku, i kdyby se v ní dokázala orientovat lépe než lidé. Transhumanisté argumentují, že superinteligentní AI může mít lepší morálku než lidé, protože bude inteligentnější než my.⁴⁸ Domnívají se, že bychom s pomocí AI měli vytvořit nový typ lidské bytosti, která bude vylepšená díky vědě a technologiím.⁴⁹ Transhumanisté jako Bostrom věří, že takový nový typ člověka by byl chytřejší, odolnější vůči nemocem a žil by déle, nebo byl dokonce nesmrtelný.
 
-Posthumanisté jdou ještě dál. Podle nich bychom se neměli soustředit jen na lidi, ale měli bychom si uvědomit, že nelidské bytosti jsou také důležité. Posthumanističtí myslitelé jako Donna Haraway vidí budoucnost, kde žijeme bok po boku se stroji, nikoli jako hrozbu, nebo se s nimi dokonce spojíme, ale jako příležitost smazat hranice mezi lidmi a stroji.⁵⁰ Posthumanismus nás také
+Posthumanisté jdou ještě dál. Podle nich bychom se neměli soustředit jen na lidi, ale měli bychom si uvědomit, že nelidské bytosti jsou také důležité. Posthumanističtí myslitelé jako Donna Haraway vidí budoucnost, kde žijeme bok po boku se stroji, nebo se s nimi dokonce spojíme, nikoli jako hrozbu, ale jako příležitost smazat hranice mezi lidmi a stroji.⁵⁰ Posthumanismus nás také
 
 150
 
@@ -2993,7 +2959,7 @@ Je důležité zdůraznit, že ani realismus nevzývá představu, že člověk 
 
 NAZÍ V AI DOBĚ
 
-[?] jen úzce chápaným národním zájmem a etika by měla být jeho pouhou podmnožinou.²¹ Další výrazný představitel realismu E. H. Carr argumentoval, že ignorovat prvek morálky v jakémkoliv světovém řádu je „nerealistický druh Realismu“.²² Už i dávní Řekové včetně Thúkydida vnímali, že etika do oblasti mezinárodních vztahů patří a nevylučovali z nich altruistické pohnutky.²³
+vedené jen úzce chápaným národním zájmem a etika by měla být jeho pouhou podmnožinou.²¹ Další výrazný představitel realismu E. H. Carr argumentoval, že ignorovat prvek morálky v jakémkoliv světovém řádu je „nerealistický druh Realismu“.²² Už i dávní Řekové včetně Thúkydida vnímali, že etika do oblasti mezinárodních vztahů patří a nevylučovali z nich altruistické pohnutky.²³
 
 Mezinárodní politika není zlá, respektive není pouze zlá, takto jednostranně na realitu světa a také na lidskou přirozenost nelze nahlížet. Není možné přehlížet naši světlou stránku, snahu pomáhat, a to i lidem mimo náš okruh příbuzných, přátel či spoluobčanů. Kniha Humankind přesvědčivě ukazuje, že máme přirozenou tendenci spíše ke spolupráci než ke konfliktu a že lidská přirozenost je převážně dobrá.²⁴
 
@@ -3570,7 +3536,7 @@ Mandaville, Peter a Williams, Andrew, Meaning and International Relations, roč.
 
 Marek, Václav a Zachová, Jana, Moudrost věků: lexikon latinských výroků, přísloví a rčení, 4., rozš. a přeprac. vyd., v nakl. Leda vyd. 1, with Eva Kuťáková (Leda, 2002)
 
-Mark Zuckerberg – AI Will Write Most Meta Code in 18 Months, řídil Dwarkesh Patel, 2025, 01:15:50, https://www.youtube.com/watch?v=rYXeQbTuV[?]0 Greg
+Mark Zuckerberg – AI Will Write Most Meta Code in 18 Months, řídil Dwarkesh Patel, 2025, 01:15:50, https://www.youtube.com/watch?v=rYXeQbTuVl0 Greg
 
 Marston, „Metaphor, Morality and Myth: A Critical Discourse Analysis of Public Housing Policy in Queensland", Critical Social Policy 20, č. 3 (2000): 349–73, https://doi.org/10.1177/026101830002000305
 

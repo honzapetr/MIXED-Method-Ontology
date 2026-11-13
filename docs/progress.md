@@ -117,3 +117,12 @@
   Pages to look at: 86 (footnote numbers 17-37 filled in from the sequence), 115, 117, 130, 131 (passages the
   model was unsure of), 23 (header "TANEC SLUNCÍ"). `fabric` orders were not rebuilt. One-off scripts kept in
   `scratch/T2f/` (`prep.py` images, `numbers.py` edge vs text numbers, `model-test/compare.py`).
+- Follow-up (same day, owner's answers): pages 1-14, 17-19, 219 and the notes/sources pages 56, 84, 105-106, 124,
+  160, 196 are lost; page 235 ends the book (recorded in `source.yaml`). Page 148 was there all along: in the model
+  test the images of scans 114 and 128 were swapped by mistake and the test output was taken over, so `sonnet`
+  scan 128 carried the text of page 134 - removed; the wrong `printed_pages` entry for it too. New `retakes` in
+  `source.yaml` (second photo -> photo kept), left out of order, text and segments: pages 29 and 31. Variant
+  `opus-check` (`claude-opus-5-5`, `PROMPT-check-v1.md`): page 148 transcribed, 7 scans corrected after checking
+  crops of the photos (23, 66, 90, 115, 130, 181, 206); 86, 117, 131 confirmed. `book` = `opus-check` + `claude` +
+  `sonnet`: 211 pages, 4 `[?]` left (a word under a finger on page 21, two blurred words on page 88, two cut-off
+  page numbers whose value the order knows). Scripts: `scratch/T2g/` (`crops.py`, `fix.py`).

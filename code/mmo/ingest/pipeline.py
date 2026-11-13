@@ -47,7 +47,9 @@ def order_of(source: Source, records: list[dict], variant: str | None = None) ->
     """Reading order: text files in file-name order; page images by hand-set, edge-read or in-text page numbers."""
     if variant == TEXT_VARIANT:
         return ReadingOrder(pages=[PlacedPage(r["scan"], str(r.get("image") or ""), None, HOW_TEXT) for r in records])
-    return reading_order(records, source.manual_page_numbers(), load_page_numbers(source.numbers_file))
+    retakes = source.retakes()  # second photos of a page: left out of the order, so out of the text and segments
+    kept = [r for r in records if str(r.get("image") or "") not in retakes]
+    return reading_order(kept, source.manual_page_numbers(), load_page_numbers(source.numbers_file))
 
 
 def write_text(source: Source, variant: str, records: list[dict], order: ReadingOrder) -> None:

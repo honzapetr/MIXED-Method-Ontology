@@ -35,6 +35,7 @@ SOURCE_FIELDS = (
     "attributes",
     "questions",
     "printed_pages",
+    "retakes",
     "note",
 )
 NOTES_TEMPLATE = """# {title}
@@ -153,6 +154,10 @@ class Source:
     def manual_page_numbers(self) -> dict[str, int]:
         """`printed_pages` of `source.yaml`: image file name -> printed page number, set by hand where OCR failed."""
         return {str(name): int(number) for name, number in (self.metadata().get("printed_pages") or {}).items()}
+
+    def retakes(self) -> dict[str, str]:
+        """`retakes` of `source.yaml`: image file name of a second photo of a page -> the photo kept for that page."""
+        return {str(name): str(kept) for name, kept in (self.metadata().get("retakes") or {}).items()}
 
     # --- original files
 

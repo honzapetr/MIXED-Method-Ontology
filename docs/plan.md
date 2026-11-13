@@ -115,7 +115,9 @@
   - a combined variant of the whole book from `claude` and `sonnet` (`mmo ocr merge`, variant `book`), its reading
     order and text built; photo rotation as seen by the model recorded; in the reading order the number a
     transcription of the whole page carries goes before the number read from the page edges;
-  - the pages missing from the book, the duplicates and the pages without a number listed for the owner.
+  - the pages missing from the book, the duplicates and the pages without a number listed for the owner;
+  - retaken photos listed in `retakes` of `source.yaml` are left out of the order, the text and the segments; the
+    places the model was unsure of checked against crops of the photos (variant `opus-check`, owner's request).
 - Verify: `uv run pytest && uv run mmo ocr order nazi-v-dobe-ai kniha --variant book`
 - Paths: `code/mmo/`, `tests/`, `topics/nazi-v-dobe-ai/sources/kniha/ingest/`,
   `topics/nazi-v-dobe-ai/sources/kniha/text/`, `docs/`

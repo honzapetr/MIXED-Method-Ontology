@@ -63,6 +63,7 @@ printed page number. Results are stored by scan; the reading order maps scans to
 | `attributes` | free key-value pairs (document variables / cases in QDA terms) |
 | `questions` | ids of the topic's research questions the source serves |
 | `printed_pages` | hand fixes `{<file>: <page>}` where reading the page number failed |
+| `retakes` | `{<second photo>: <photo kept>}`: a page photographed twice; the second photo is left out of the reading order, the text and the segments |
 | `note` | one line; longer context goes to `notes.md` |
 
 Page images stay out of git; `ingest/files.yaml` lists each file with its SHA-256 so results stay traceable.
@@ -85,8 +86,9 @@ Page images stay out of git; `ingest/files.yaml` lists each file with its SHA-25
 3. **Order** – `mmo ocr numbers` reads the printed page number from the top and bottom edge of every image (the
    strips go to the fabric service's Extract: OCR models leave headers and footers out of the page text, Tesseract
    cannot read a lone number from a photo); results in `ingest/page-numbers.json` of the source, resumable. `mmo ocr order` takes
-   that number, else a line that is only a number among the first or last three lines of the OCR text, and sorts the
-   pages by it. A page without a number between two pages two apart gets
+   that number, else a line that is only a number among the first or last three lines of the OCR text (for an
+   imported transcription of the whole page the other way round: its own number first), and sorts the pages by it.
+   Photos listed in `retakes` are left out. A page without a number between two pages two apart gets
    the number between them (`inferred`); a number set by hand in `source.yaml` (`printed_pages: {<image>: <page>}`)
    wins (`manual`); other pages stay `unknown` and follow the page photographed before them. The report lists missing
    pages, numbers found twice (a retaken photo or a misread number) and unknown pages. `mmo ocr book` writes the whole

@@ -123,3 +123,12 @@ def test_order_and_book_commands(tmp_path: Path, capsys) -> None:
     first = json.loads(lines[0])
     assert first["id"] == "book:s2:1", "segments follow the reading order, not the scan order"
     assert first["scan"] == 2 and first["page"] == 1, "a segment knows its printed page for quoting"
+
+    retake = "id: book\ntitle: Kniha\nprinted_pages:\n  IMG_003.jpg: 3\nretakes:\n  IMG_002.jpg: IMG_004.jpg\n"
+    (source / "source.yaml").write_text(retake, encoding="utf-8")
+    assert main(["--topics", str(tmp_path), "ocr", "book", "t1", "book", "--variant", "fabric"]) == 0
+    book = (topic / "sources" / "book" / "text" / "fabric.md").read_text(encoding="utf-8")
+    assert "Začátek odstavce" not in book and "scan 2 " not in book, "a retake is left out of the text"
+    assert main(["--topics", str(tmp_path), "segment", "t1", "book", "--variant", "fabric"]) == 0
+    lines = (topic / "sources" / "book" / "segments" / "fabric.jsonl").read_text(encoding="utf-8").splitlines()
+    assert all(json.loads(line)["scan"] != 2 for line in lines), "and out of the segments"
