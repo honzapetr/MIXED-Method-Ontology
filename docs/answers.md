@@ -55,3 +55,6 @@
   the environment, not left out.
 - **First method:** the most suitable one for the purpose; the owner has always liked discourse analysis. The
   variant is still to be chosen.
+- **Research questions belong with theory:** questions must be tied to why the research exists and what the
+  researcher wants to find out; the environment follows how the methodologies let questions and theories arise
+  (background: `docs/research-design.md`).
