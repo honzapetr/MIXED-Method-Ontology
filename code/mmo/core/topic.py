@@ -1,9 +1,9 @@
 """Topics and their sources on disk (layout: docs/spec.md, section Topic folder; ADR 0006).
 
 Everything about one source lives in `sources/<id>/`: what the researcher writes (`source.yaml`, `notes.md`), the
-original files (`files/`), the readable text (`text/`), segments, ground truth, and what the machine produces
-(`ingest/`). A file's `scan` number is its position in file-name order - the identity of an image; `page` is the
-printed page number.
+original files (`files/`), the final text for the analysis (`text.md`), segments, ground truth, and what the machine
+produces (`ingest/`, including the text of every working variant). A file's `scan` number is its position in
+file-name order - the identity of an image; `page` is the printed page number.
 """
 
 from __future__ import annotations
@@ -36,6 +36,7 @@ SOURCE_FIELDS = (
     "questions",
     "printed_pages",
     "retakes",
+    "text",
     "note",
 )
 NOTES_TEMPLATE = """# {title}
@@ -137,7 +138,13 @@ class Source:
         return self.ingest_dir / "order" / f"{variant_name(variant)}.yaml"
 
     def text_file(self, variant: str) -> Path:
-        return self.root / "text" / f"{variant_name(variant)}.md"
+        """Text of one working variant in reading order (machine output, not for the analysis)."""
+        return self.ingest_dir / "text" / f"{variant_name(variant)}.md"
+
+    @property
+    def final_text_file(self) -> Path:
+        """The text the analysis reads: built from the variant chosen in `text` of `source.yaml`."""
+        return self.root / "text.md"
 
     def segments_file(self, variant: str) -> Path:
         return self.root / "segments" / f"{variant_name(variant)}.jsonl"
@@ -158,6 +165,11 @@ class Source:
     def retakes(self) -> dict[str, str]:
         """`retakes` of `source.yaml`: image file name of a second photo of a page -> the photo kept for that page."""
         return {str(name): str(kept) for name, kept in (self.metadata().get("retakes") or {}).items()}
+
+    def final_variant(self) -> str | None:
+        """`text: {variant: ...}` of `source.yaml`: the OCR variant chosen by the researcher as the final text."""
+        chosen = (self.metadata().get("text") or {}).get("variant")
+        return variant_name(str(chosen)) if chosen else None
 
     # --- original files
 

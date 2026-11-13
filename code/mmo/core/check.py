@@ -48,6 +48,17 @@ def check_source(source: Source) -> list[str]:
         found.append(f"files: no originals in {source.files_dir}")
     elif not source.ocr_variants():
         found.append(f"ingest: not run yet - mmo ingest {source.topic.slug} {source.id}")
+    if source.ocr_variants():
+        chosen = (meta.get("text") or {}).get("variant")
+        if not chosen:
+            found.append(
+                f"final text: choose the variant for the analysis (text: {{variant: <variant>}} in source.yaml), "
+                f"then mmo source finalize {source.topic.slug} {source.id}"
+            )
+        elif chosen not in source.ocr_variants():
+            found.append(f"final text: variant {chosen!r} of source.yaml has no OCR results")
+        elif not source.final_text_file.is_file():
+            found.append(f"final text: not built yet - mmo source finalize {source.topic.slug} {source.id}")
     for variant in source.ocr_variants():
         order = read_yaml(source.order_file(variant))
         summary = order.get("summary") or {}

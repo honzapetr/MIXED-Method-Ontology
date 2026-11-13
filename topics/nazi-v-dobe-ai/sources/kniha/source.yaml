@@ -14,3 +14,6 @@ retakes:
   # a second photo of a page -> the photo kept; left out of the reading order, the text and the segments (owner 2026-11-13)
   IMG_20260902_195748.jpg: IMG_20260902_195753.jpg # page 29, its last line cut off
   IMG_20260902_195822.jpg: IMG_20260902_195802.jpg # page 31, same text
+text:
+  # the OCR variant the analysis reads; `mmo source finalize` builds text.md from it (owner 2026-11-13)
+  variant: book

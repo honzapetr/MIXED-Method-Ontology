@@ -44,7 +44,8 @@ uv run mmo ocr run my-topic my-book --backend fabric --workers 2   # the homelab
 uv run mmo ocr compare my-topic my-book          # add sources/my-book/ground-truth/scan-0001.txt for real CER
 uv run mmo ocr numbers my-topic my-book                  # printed page numbers from the page edges
 uv run mmo ocr order my-topic my-book --variant fabric   # reading order by printed page numbers
-uv run mmo ocr book my-topic my-book --variant fabric    # whole text in reading order -> text/fabric.md
+uv run mmo ocr book my-topic my-book --variant fabric    # whole text in reading order -> ingest/text/fabric.md
+uv run mmo source finalize my-topic my-book   # text.md for the analysis, from `text: {variant: ...}` in source.yaml
 uv run mmo segment my-topic my-book --variant tesseract
 ```
 
@@ -64,7 +65,8 @@ LAN or VPN.
 | page text | `uv run mmo ocr run <topic> <source> --backend fabric --workers 2` | `sources/<source>/ingest/ocr/fabric/scan-NNNN.json` |
 | page numbers | `uv run mmo ocr numbers <topic> <source>` | `sources/<source>/ingest/page-numbers.json` |
 | reading order | `uv run mmo ocr order <topic> <source> --variant fabric` | `sources/<source>/ingest/order/fabric.yaml` + a report of gaps, duplicates and pages without a number |
-| whole text | `uv run mmo ocr book <topic> <source> --variant fabric` | `sources/<source>/text/fabric.md` in reading order |
+| whole text | `uv run mmo ocr book <topic> <source> --variant fabric` | `sources/<source>/ingest/text/fabric.md` in reading order |
+| final text | `uv run mmo source finalize <topic> <source>` | `sources/<source>/text.md`, the text the analysis reads, from the variant chosen in `source.yaml` (`text: {variant: ...}`) |
 
 Every step saves page by page; a rerun reads only what is missing, so an interrupted run is simply started again.
 Fix page numbers by hand with `printed_pages: {<image>: <page>}` in `source.yaml`, then run `mmo ingest` again.

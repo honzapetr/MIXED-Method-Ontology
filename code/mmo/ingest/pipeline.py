@@ -7,6 +7,7 @@ interrupted run is simply started again. Text files (`.txt`, `.md`) are taken as
 from __future__ import annotations
 
 import json
+from collections import Counter
 from collections.abc import Callable
 from dataclasses import dataclass, field
 from datetime import UTC, datetime
@@ -26,6 +27,7 @@ from mmo.ingest.page_numbers import PageNumberReader, load_page_numbers, read_pa
 from mmo.ingest.segment import segment_records, write_jsonl
 
 TEXT_VARIANT = "original"
+UNCLEAR = "[?]"  # a word the reader could not read
 
 
 @dataclass
@@ -56,6 +58,61 @@ def write_text(source: Source, variant: str, records: list[dict], order: Reading
     target = source.text_file(variant)
     target.parent.mkdir(parents=True, exist_ok=True)
     target.write_text(book_markdown(records, order, source.title), encoding="utf-8")
+
+
+def compact_ranges(numbers: list[int]) -> str:
+    """[3, 4, 5, 9] -> "3-5, 9"."""
+    spans: list[list[int]] = []
+    for n in numbers:
+        if spans and n == spans[-1][1] + 1:
+            spans[-1][1] = n
+        else:
+            spans.append([n, n])
+    return ", ".join(str(a) if a == b else f"{a}-{b}" for a, b in spans)
+
+
+def final_text_markdown(source: Source, variant: str, records: list[dict], order: ReadingOrder) -> str:
+    """The final text: a header saying what it is and what it lacks, then the variant's text in reading order."""
+    by_scan = {record["scan"]: record for record in records}
+    placed = [by_scan[page.scan] for page in order.pages]
+    printed = [page.printed for page in order.pages if page.printed is not None]
+    models = Counter(str(record.get("model") or record.get("backend") or "unknown") for record in placed)
+    header = {
+        "source": source.id,
+        "title": source.title,
+        "status": "final - the text for the analysis",
+        "variant": variant,
+        "built": datetime.now(UTC).date().isoformat(),
+        "pages": len(order.pages),
+    }
+    if printed:
+        header["printed_pages"] = f"{min(printed)}-{max(printed)}"
+        before = [f"1-{min(printed) - 1}"] if min(printed) > 1 else []
+        missing = before + ([compact_ranges(order.gaps)] if order.gaps else [])
+        header["missing_pages"] = ", ".join(missing) or "none"
+    header["pages_without_number"] = [f"scan {page.scan} {page.image}" for page in order.unknown]
+    header["unclear_words"] = sum(record["text"].count(UNCLEAR) for record in placed)
+    header["read_by"] = dict(sorted(models.items()))
+    lines = ["---"] + [f"{key}: {json.dumps(value, ensure_ascii=False)}" for key, value in header.items()] + ["---"]
+    note = (
+        f"> Final text of `{source.id}` for the analysis. Do not edit by hand: built by `mmo source finalize` from "
+        f"the OCR variant `{variant}` (`text` in `source.yaml`). Each page sits under a comment with its printed page, "
+        f"scan and image, so every quote can be traced to the photo. `{UNCLEAR}` marks a word nobody could read."
+    )
+    return "\n".join(lines) + "\n\n" + note + "\n\n" + book_markdown(records, order, source.title)
+
+
+def write_final_text(source: Source) -> tuple[str, ReadingOrder]:
+    """Write `text.md` from the variant named in `text` of `source.yaml`."""
+    variant = source.final_variant()
+    if variant is None:
+        raise ValueError(
+            f"choose the final variant first: add `text: {{variant: <variant>}}` to {source.metadata_file}"
+        )
+    records = load_variant(source, variant)
+    order = order_of(source, records, variant)
+    source.final_text_file.write_text(final_text_markdown(source, variant, records, order), encoding="utf-8")
+    return variant, order
 
 
 def write_segments(source: Source, variant: str, records: list[dict], order: ReadingOrder) -> int:

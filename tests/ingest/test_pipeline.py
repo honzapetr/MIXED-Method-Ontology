@@ -152,6 +152,8 @@ def test_check_lists_what_is_missing(tmp_path: Path) -> None:
     findings = check_source(source)
     assert findings == [
         "questions: not in topic.yaml: q9",
+        "final text: choose the variant for the analysis (text: {variant: <variant>} in source.yaml), "
+        "then mmo source finalize t1 kniha",
         f"reading order (fake): 1 pages without a number, 0 numbers twice - see {source.order_file('fake')}",
     ]
 
@@ -172,3 +174,46 @@ def test_cli_add_ingest_check(tmp_path: Path, capsys) -> None:
     assert main([*topics, "source", "check", "t1"]) == 0
     out = capsys.readouterr().out
     assert "kniha (primary):" in out and "recenze (context):" in out and "files: no originals" in out
+
+
+def test_finalize_writes_the_text_for_the_analysis(tmp_path: Path, capsys: pytest.CaptureFixture[str]) -> None:
+    topic = topic_with_book(tmp_path)
+    source = topic.source("kniha")
+    ingest_source(source, FakeBackend(), "fake", numbers=FakeNumbers(), log=lambda _: None)
+    assert source.text_file("fake") == source.ingest_dir / "text" / "fake.md", "working variants stay in ingest/"
+    assert any("final text: choose the variant" in f for f in check_source(source))
+    assert main(["--topics", str(tmp_path), "source", "finalize", "t1", "kniha"]) == 1
+    assert "choose the final variant" in capsys.readouterr().err
+
+    meta = source.metadata() | {"text": {"variant": "fake"}}
+    source.metadata_file.write_text(yaml.safe_dump(meta, allow_unicode=True), encoding="utf-8")
+    assert any("final text: not built yet" in f for f in check_source(source))
+    assert main(["--topics", str(tmp_path), "source", "finalize", "t1", "kniha"]) == 0
+    assert "3 pages of variant fake" in capsys.readouterr().out
+
+    text = source.final_text_file.read_text(encoding="utf-8")
+    assert source.final_text_file == source.root / "text.md"
+    header = yaml.safe_load(text.split("---")[1])
+    assert header["variant"] == "fake" and header["pages"] == 3
+    assert header["printed_pages"] == "11-12" and header["missing_pages"] == "1-10"
+    assert header["pages_without_number"] == ["scan 3 IMG_3.png"]
+    assert header["read_by"] == {"fake-1": 3} and header["unclear_words"] == 0
+    assert text.index("Začátek knihy") < text.index("Obrázek.") < text.index("Konec odstavce."), "reading order"
+    assert "<!-- page 11 (printed) · scan 2 · IMG_2.png -->" in text
+    assert not any(f.startswith("final text") for f in check_source(source))
+
+
+def test_images_for_a_vision_model(tmp_path: Path, capsys: pytest.CaptureFixture[str]) -> None:
+    topic = topic_with_book(tmp_path)
+    source = topic.source("kniha")
+    ingest_source(source, FakeBackend(), "fake", log=lambda _: None)
+    out = tmp_path / "img"
+    assert main(["--topics", str(tmp_path), "ocr", "images", "t1", "kniha", "--out", str(out), "--size", "200"]) == 0
+    assert sorted(p.name for p in out.iterdir()) == ["scan-0001.jpg", "scan-0002.jpg", "scan-0003.jpg"]
+    with Image.open(out / "scan-0001.jpg") as image:
+        assert image.mode == "L" and max(image.size) == 200
+    assert "3 images" in capsys.readouterr().out
+
+    again = tmp_path / "img2"
+    main(["--topics", str(tmp_path), "ocr", "images", "t1", "kniha", "--out", str(again), "--missing-from", "fake"])
+    assert not list(again.iterdir()), "every scan already has a reading in fake"

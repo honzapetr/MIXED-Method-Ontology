@@ -14,10 +14,20 @@ from mmo.core.migrate import migrate_topic, needs_migration
 from mmo.core.topic import ROLES, SOURCE_KINDS, Topic, sha256_file
 from mmo.ingest.clean import clean_record, import_record, merge_variants
 from mmo.ingest.compare import cer
+from mmo.ingest.images import prepare_images
 from mmo.ingest.ocr import BACKENDS, load_pages, make_backend, run_ocr, scan_file
 from mmo.ingest.order import write_order
 from mmo.ingest.page_numbers import read_page_numbers
-from mmo.ingest.pipeline import TEXT_VARIANT, ingest_source, load_variant, order_of, write_segments, write_text
+from mmo.ingest.pipeline import (
+    TEXT_VARIANT,
+    compact_ranges,
+    ingest_source,
+    load_variant,
+    order_of,
+    write_final_text,
+    write_segments,
+    write_text,
+)
 
 
 def parse_scans(value: str | None) -> set[int] | None:
@@ -91,6 +101,18 @@ def cmd_source_check(args: argparse.Namespace) -> int:
             print(f"  - {finding}")
     if not sources:
         print(f"no sources yet: mmo source add {topic.slug} <id> --kind ...")
+    return 0
+
+
+def cmd_source_finalize(args: argparse.Namespace) -> int:
+    """`text.md`, the text the analysis reads, from the variant chosen in `source.yaml`."""
+    source = load_topic(args).source(args.source)
+    variant, order = write_final_text(source)
+    print(f"{len(order.pages)} pages of variant {variant} -> {source.final_text_file}")
+    if order.gaps:
+        print(f"missing pages: {compact_ranges(order.gaps)}")
+    for page in order.unknown:
+        print(f"no page number: scan {page.scan} {page.image}")
     return 0
 
 
@@ -267,6 +289,15 @@ def cmd_ocr_import(args: argparse.Namespace) -> int:
     return 0 if count else 1
 
 
+def cmd_ocr_images(args: argparse.Namespace) -> int:
+    """Page images for a vision model; `--missing-from` skips scans that these variants already have."""
+    source = load_topic(args).source(args.source)
+    skip = {record["scan"] for name in args.missing_from for record in load_pages(source.ocr_dir(name))}
+    written = prepare_images(source, args.out, parse_scans(args.scans), skip, args.size)
+    print(f"{len(written)} images -> {args.out}" + (f": scans {compact_ranges(written)}" if written else ""))
+    return 0
+
+
 def cmd_ocr_merge(args: argparse.Namespace) -> int:
     """Several variants into one: each scan from the first variant listed that has it (provenance kept per page)."""
     source = load_topic(args).source(args.source)
@@ -282,17 +313,6 @@ def cmd_ocr_merge(args: argparse.Namespace) -> int:
     if missing:
         print(f"scans in no variant: {compact_ranges(missing)}")
     return 0
-
-
-def compact_ranges(numbers: list[int]) -> str:
-    """[3, 4, 5, 9] -> "3-5, 9"."""
-    ranges: list[list[int]] = []
-    for n in numbers:
-        if ranges and n == ranges[-1][1] + 1:
-            ranges[-1][1] = n
-        else:
-            ranges.append([n, n])
-    return ", ".join(str(a) if a == b else f"{a}-{b}" for a, b in ranges)
 
 
 def cmd_segment(args: argparse.Namespace) -> int:
@@ -348,6 +368,12 @@ def build_parser() -> argparse.ArgumentParser:
     check.add_argument("topic")
     check.add_argument("source", nargs="?", help="one source (default: all)")
     check.set_defaults(func=cmd_source_check)
+    finalize = source.add_parser(
+        "finalize", help="write text.md, the text for the analysis, from the variant chosen in source.yaml (text)"
+    )
+    finalize.add_argument("topic")
+    finalize.add_argument("source")
+    finalize.set_defaults(func=cmd_source_finalize)
 
     ingest = sub.add_parser("ingest", help=f"all ingest steps for a source (text files: variant {TEXT_VARIANT})")
     ingest.add_argument("topic")
@@ -383,7 +409,7 @@ def build_parser() -> argparse.ArgumentParser:
     numbers.add_argument("source")
     numbers.add_argument("--workers", type=int, default=2, help="images read at the same time")
     numbers.set_defaults(func=cmd_ocr_numbers)
-    book = ocr.add_parser("book", help="the whole text of one variant in reading order, into text/<variant>.md")
+    book = ocr.add_parser("book", help="the whole text of one variant in reading order, into ingest/text/<variant>.md")
     book.add_argument("topic")
     book.add_argument("source")
     book.add_argument("--variant", default="tesseract", help=variant_help)
@@ -403,6 +429,14 @@ def build_parser() -> argparse.ArgumentParser:
     imp.add_argument("--prompt-version", required=True, help="version of the instructions used")
     imp.set_defaults(func=cmd_ocr_import)
 
+    images = ocr.add_parser("images", help="page images for a vision model: upright, grayscale, scan-NNNN.jpg")
+    images.add_argument("topic")
+    images.add_argument("source")
+    images.add_argument("--out", type=Path, required=True, help="folder for the images (e.g. scratch/T<n>/img)")
+    images.add_argument("--scans", help="only these scans, e.g. 1-3,7")
+    images.add_argument("--missing-from", nargs="*", default=[], help="skip scans these variants already have")
+    images.add_argument("--size", type=int, default=1600, help="long side in pixels (default 1600)")
+    images.set_defaults(func=cmd_ocr_images)
     merge = ocr.add_parser("merge", help="several variants into one, each scan from the first variant that has it")
     merge.add_argument("topic")
     merge.add_argument("source")

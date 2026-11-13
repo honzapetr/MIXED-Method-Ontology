@@ -115,7 +115,7 @@ def test_order_and_book_commands(tmp_path: Path, capsys) -> None:
     source = topic / "sources" / "book"
     (source / "source.yaml").write_text("id: book\ntitle: Kniha\nprinted_pages:\n  IMG_003.jpg: 3\n", encoding="utf-8")
     assert main(["--topics", str(tmp_path), "ocr", "book", "t1", "book", "--variant", "fabric"]) == 0
-    book = (topic / "sources" / "book" / "text" / "fabric.md").read_text(encoding="utf-8")
+    book = (topic / "sources" / "book" / "ingest" / "text" / "fabric.md").read_text(encoding="utf-8")
     assert book.startswith("# Kniha") and "page 3 (manual)" in book
 
     assert main(["--topics", str(tmp_path), "segment", "t1", "book", "--variant", "fabric"]) == 0
@@ -127,7 +127,7 @@ def test_order_and_book_commands(tmp_path: Path, capsys) -> None:
     retake = "id: book\ntitle: Kniha\nprinted_pages:\n  IMG_003.jpg: 3\nretakes:\n  IMG_002.jpg: IMG_004.jpg\n"
     (source / "source.yaml").write_text(retake, encoding="utf-8")
     assert main(["--topics", str(tmp_path), "ocr", "book", "t1", "book", "--variant", "fabric"]) == 0
-    book = (topic / "sources" / "book" / "text" / "fabric.md").read_text(encoding="utf-8")
+    book = (topic / "sources" / "book" / "ingest" / "text" / "fabric.md").read_text(encoding="utf-8")
     assert "Začátek odstavce" not in book and "scan 2 " not in book, "a retake is left out of the text"
     assert main(["--topics", str(tmp_path), "segment", "t1", "book", "--variant", "fabric"]) == 0
     lines = (topic / "sources" / "book" / "segments" / "fabric.jsonl").read_text(encoding="utf-8").splitlines()

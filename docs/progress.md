@@ -126,3 +126,18 @@
   crops of the photos (23, 66, 90, 115, 130, 181, 206); 86, 117, 131 confirmed. `book` = `opus-check` + `claude` +
   `sonnet`: 211 pages, 4 `[?]` left (a word under a finger on page 21, two blurred words on page 88, two cut-off
   page numbers whose value the order knows). Scripts: `scratch/T2g/` (`crops.py`, `fix.py`).
+
+## T2g – 2026-11-13
+- Owner's decision: the analysis starts with the incomplete text; OCR is a side task and must not mix with it. One
+  final text per source, a separate skill for finishing the transcription.
+- Done: `sources/<id>/text.md` is the final text, built by `mmo source finalize` from the variant named in
+  `text: {variant: ...}` of `source.yaml`, with a header of what it lacks. Working variant texts moved to
+  `ingest/text/` (`git mv`). `mmo source check` reports a missing choice or an unbuilt `text.md`. `mmo ocr images`
+  replaces `scratch/T2f/prep.py`. New skill `transcribe-pages` (+ `read-v1.md`, the tested Sonnet instructions);
+  `ingest-sources` points to the new paths and to it.
+- `kniha/text.md`: variant `book`, 211 pages (printed 15-235), missing 1-14, 17-19, 56, 84, 105-106, 124, 160, 196,
+  219; scan 213 (cover) without a number at the end; 6 `[?]` marks in 4 places; read by Opus 45 pages, Sonnet 166.
+- Next: the analysis role should read `text.md` (and later segments of the final variant), not `ingest/`. Segments
+  of `book` are not built yet: running headers and page numbers are still in the page text (T3). The cover (scan
+  213) stays in `text.md` until the owner says otherwise.
+

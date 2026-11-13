@@ -6,7 +6,9 @@ description: Add a new source to a topic (primary material or supplementary cont
 
 Layout and fields: `docs/spec.md`, section Topic folder (ADR 0006). Everything about a source is in
 `topics/<slug>/sources/<id>/`: the researcher writes `source.yaml`, `notes.md` and puts originals into `files/`; the
-machine writes `ingest/`, `text/` and `segments/`. Never commit page images; they are git-ignored.
+machine writes `ingest/` (including the text of every variant, `ingest/text/`), `segments/` and `text.md`, the final
+text the analysis reads (`mmo source finalize`, from the variant chosen in `text` of `source.yaml`). Never commit
+page images; they are git-ignored.
 
 1. **Create the source** (skip if it exists), then ask the owner to put the originals into `files/`:
    - primary material: `uv run mmo source add <slug> <id> --kind book --title "..." --language ces`
@@ -19,7 +21,7 @@ machine writes `ingest/`, `text/` and `segments/`. Never commit page images; the
    - **Page photos / scans:** the homelab OCR service is the default:
      `uv run mmo ingest <slug> <id> --backend fabric --workers 2` (reachable only from the owner's LAN or VPN; if
      it fails elsewhere, report `blocked`). It reads the text, the printed page numbers from the page edges, sorts
-     the pages, writes `text/fabric.md` and the segments. To compare variants first, OCR a sample:
+     the pages, writes `ingest/text/fabric.md` and the segments. To compare variants first, OCR a sample:
      `uv run mmo ocr run <slug> <id> --backend tesseract --scans 1-10` and the same with `--backend fabric`, ask the
      owner to correct 2-3 scans into `ground-truth/scan-NNNN.txt`, then `uv run mmo ocr compare <slug> <id>`.
    - **Other formats** (PDF with a text layer, EPUB, DOCX, audio, CSV): not supported yet - propose a task for
@@ -32,7 +34,10 @@ machine writes `ingest/`, `text/` and `segments/`. Never commit page images; the
 5. **Metadata:** `uv run mmo source check <slug> <id>` lists what the source lacks (citation, attributes,
    research questions, `about`, the memo in `notes.md`). Ask the owner for it - it is research knowledge, do not
    invent it.
-6. **Spot-check** 3 random segments in `segments/<variant>.jsonl` against the originals (scan, page, quote) and
+6. **Final text:** when a variant is good enough, the owner chooses it (`text: {variant: <variant>}` in
+   `source.yaml`) and `uv run mmo source finalize <slug> <id>` writes `text.md`. Reading photos with a Claude model,
+   or adding pages later: skill `transcribe-pages`.
+7. **Spot-check** 3 random segments in `segments/<variant>.jsonl` against the originals (scan, page, quote) and
    record the result, the variant and its model in `docs/progress.md`.
 
 Settings come from `.env` or the OCR client's config file (`README.md`, section OCR through the homelab). Never read

@@ -37,7 +37,7 @@ topics/<slug>/
     source.yaml               # RESEARCHER: metadata, attributes, links, page-number fixes
     notes.md                  # RESEARCHER: context memo - why the source is here, how it came about
     files/                    # original files (page images git-ignored)
-    text/<variant>.md         # READ: whole text of one variant in reading order
+    text.md                   # FINAL: the text the analysis reads (from the variant chosen in source.yaml)
     segments/<variant>.jsonl  # segments of one variant
     ground-truth/scan-NNNN.txt  # optional hand-corrected scans for OCR evaluation
     ingest/                   # MACHINE: never edited by hand
@@ -45,6 +45,7 @@ topics/<slug>/
       ocr/<variant>/scan-NNNN.json
       page-numbers.json       #   printed page numbers read from the page edges
       order/<variant>.yaml    #   reading order report: gaps, duplicates, pages without a number
+      text/<variant>.md       #   whole text of one working variant in reading order
 ```
 
 **Scan and page.** `scan` is the position of a file in file-name order - the identity of an image. `page` is the
@@ -64,6 +65,7 @@ printed page number. Results are stored by scan; the reading order maps scans to
 | `questions` | ids of the topic's research questions the source serves |
 | `printed_pages` | hand fixes `{<file>: <page>}` where reading the page number failed |
 | `retakes` | `{<second photo>: <photo kept>}`: a page photographed twice; the second photo is left out of the reading order, the text and the segments |
+| `text` | `{variant: <variant>}`: the OCR variant chosen as the final text; `mmo source finalize` builds `text.md` from it |
 | `note` | one line; longer context goes to `notes.md` |
 
 Page images stay out of git; `ingest/files.yaml` lists each file with its SHA-256 so results stay traceable.
@@ -93,6 +95,12 @@ Page images stay out of git; `ingest/files.yaml` lists each file with its SHA-25
    wins (`manual`); other pages stay `unknown` and follow the page photographed before them. The report lists missing
    pages, numbers found twice (a retaken photo or a misread number) and unknown pages. `mmo ocr book` writes the whole
    text in that order, each page under a comment with its printed number, scan number and image.
+   **Final text.** The researcher names the variant that is good enough in `source.yaml` (`text: {variant: ...}`);
+   `mmo source finalize` writes `text.md` next to `source.yaml`: a header (variant, date, pages, printed range,
+   missing pages including those before the first one, pages without a number, count of `[?]`, which models read
+   the pages) and the variant's text in reading order with the same page comments. It is the only text the analysis
+   reads; working variants stay in `ingest/`. Pages read later with a Claude model go through `mmo ocr images`,
+   `mmo ocr import`, `mmo ocr merge` and `mmo source finalize` again (skill `transcribe-pages`).
 4. **Compare** – `mmo ocr compare` reports the character error rate (CER) of each backend against ground truth when
    it exists, otherwise between two backends.
 5. **Segment** – `mmo segment` joins the text of one backend's pages in reading order, repairs words hyphenated across line ends and
