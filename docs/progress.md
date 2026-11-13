@@ -149,8 +149,9 @@
 - Done: OCR detail moved from `docs/spec.md` (Ingest pipeline, OCR backends) and `README.md` (single steps, OCR
   through the homelab) to `docs/source-preparation.md`, unchanged; spec and README point there. Brief scope: the
   analysis environment is the current focus, source preparation listed under tools. AGENTS.md (owner approved): source preparation
-  described as a tool, CLI line without `ocr`, "Nothing is final yet" without OCR. Plan: analysis tasks
-  first, OCR tasks in a section of their own (T2 dropped, T3 on demand). Skill `ingest-sources` links the new doc.
+  described as a tool, CLI line without `ocr`, "Nothing is final yet" without OCR. Plan: only the building of
+  the analysis environment; OCR tasks T2-T3 removed (their record is here), a concrete analysis lives in its topic.
+  T3 (running headers out of the segments of `kniha`) comes back as a new task when the analysis needs segments. Skill `ingest-sources` links the new doc.
   No code or data removed.
 - Next: define with the owner how the qualitative analysis with AI works (approaches, connections, theme maps)
   before T4-T6 are specified; research questions of `nazi-v-dobe-ai` are still empty.
