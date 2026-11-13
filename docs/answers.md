@@ -36,3 +36,12 @@
 - **Code layout:** `src/` is confusing here (it reads as research sources). The program moves to `code/mmo/`,
   split into `core/` (project core) and `ingest/` (bringing new data in); command `mmo` unchanged. The empty
   `data/` folder was removed - research data lives only in `topics/`.
+
+## 2026-11-13 – what the project is about
+
+- **The project is the analysis.** OCR was only needed to get the text of the first book; it is a tool for bringing
+  in new information (more texts will come), not a goal. Keep the OCR tools, but instructions, docs and plans must
+  not be built around OCR. The next focus is the environment for qualitative analysis with AI: how to do
+  qualitative analysis with AI by specific approaches, how to find connections in a text and map themes.
+- An agent's proposal to treat the analysis as an experiment comparing variants against a benchmark was rejected:
+  it came from the OCR work, not from the owner. The way the analysis works is defined with the owner.

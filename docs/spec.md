@@ -73,48 +73,11 @@ Page images stay out of git; `ingest/files.yaml` lists each file with its SHA-25
 **Supplementary information** (reviews, interviews with the author, context documents) is a source of its own with
 `role: context` and `about`, ingested and segmented the same way, so statements drawn from it are traceable too.
 
-## Ingest pipeline
+## Source preparation (supporting tool)
 
-1. **Add and inspect** – `mmo source add` creates the source (`--role context --about <id>` for supplementary
-   material); the agent lists its files and proposes a parsing plan (skill `ingest-sources`). `mmo ingest` then
-   runs steps 2, 3 and 5 for it in one go (resumable) and ends with what to review; text files (`.txt`, `.md`)
-   skip OCR and become the variant `original`, in file-name order. `mmo source check` lists what a source
-   still lacks: citation, attributes, questions, `about`, the memo, unreviewed reading-order problems.
-2. **OCR** – `mmo ocr run` sends every page image to one backend and stores one JSON per page:
-   `scan`, `image`, `image_sha256`, `backend`, `model`, `prompt_version`, `text`, `confidence` (if known),
-   `quality` and `warnings` (if the backend reports them), `seconds`, `created`. Results of different backends live
-   side by side, so variants can be compared. `scan` (formerly `page`) is the **scan number** (file-name order), the identity of an
-   image; `--workers N` reads N pages at once, and a failed page does not stop the others (a rerun retries it).
-3. **Order** – `mmo ocr numbers` reads the printed page number from the top and bottom edge of every image (the
-   strips go to the fabric service's Extract: OCR models leave headers and footers out of the page text, Tesseract
-   cannot read a lone number from a photo); results in `ingest/page-numbers.json` of the source, resumable. `mmo ocr order` takes
-   that number, else a line that is only a number among the first or last three lines of the OCR text (for an
-   imported transcription of the whole page the other way round: its own number first), and sorts the pages by it.
-   Photos listed in `retakes` are left out. A page without a number between two pages two apart gets
-   the number between them (`inferred`); a number set by hand in `source.yaml` (`printed_pages: {<image>: <page>}`)
-   wins (`manual`); other pages stay `unknown` and follow the page photographed before them. The report lists missing
-   pages, numbers found twice (a retaken photo or a misread number) and unknown pages. `mmo ocr book` writes the whole
-   text in that order, each page under a comment with its printed number, scan number and image.
-   **Final text.** The researcher names the variant that is good enough in `source.yaml` (`text: {variant: ...}`);
-   `mmo source finalize` writes `text.md` next to `source.yaml`: a header (variant, date, pages, printed range,
-   missing pages including those before the first one, pages without a number, count of `[?]`, which models read
-   the pages) and the variant's text in reading order with the same page comments. It is the only text the analysis
-   reads; working variants stay in `ingest/`. Pages read later with a Claude model go through `mmo ocr images`,
-   `mmo ocr import`, `mmo ocr merge` and `mmo source finalize` again (skill `transcribe-pages`).
-4. **Compare** – `mmo ocr compare` reports the character error rate (CER) of each backend against ground truth when
-   it exists, otherwise between two backends.
-5. **Segment** – `mmo segment` joins the text of one backend's pages in reading order, repairs words hyphenated across line ends and
-   splits paragraphs into segments with ids `<source>:s<scan>:<n>` and character offsets into the scan's text.
-
-### OCR backends
-
-| Backend | How | Notes |
-| :--- | :--- | :--- |
-| `tesseract` | local `tesseract` binary, language `ces` by default | free, offline baseline; needs `tesseract-ocr-ces` |
-| `openai` | OpenAI-compatible `chat/completions` with the image as a data URL | the homelab LiteLLM gateway, Ollama or vLLM; Claude can sit behind the same gateway |
-| `fabric` | the homelab AI Fabric's OCR service through its client library `fabric-ocr` (ADR 0005) | the service turns photos upright, reads them with its OCR model (started on demand) and falls back to Tesseract (`quality: basic`); `--mode fast` = CPU only; 2 pages at once |
-
-Backends are registered in `code/mmo/ingest/ocr/`; a new one implements `OcrBackend.recognize()`.
+New material becomes text the analysis can read: `mmo source add` and `mmo ingest` (OCR of page images, reading
+order, final `text.md`, segments; text files skip OCR). It is a tool for bringing in sources, not a goal of the
+project. How it works, the commands and the OCR backends: `docs/source-preparation.md`.
 
 ## Homelab
 
@@ -151,4 +114,5 @@ codebook (deductive mode). Gates between method phases: the next phase starts fr
 
 ## Out of scope now
 
-Analysis engine, graph store, exports, MCP server, UI – see `docs/plan.md`.
+Exports, MCP server, UI – see `docs/plan.md`. The analysis environment is the current focus; how it works is
+defined with the owner before it is specified here.

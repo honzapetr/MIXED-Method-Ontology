@@ -79,17 +79,21 @@ prompts for the lab live in `.agents/roles/`. Copies for Claude Code in `.claude
 ## Project specifics
 
 * **Talk to the owner in Czech**; code, comments, commits and docs stay in English.
-* **Layout:** `code/mmo/` (the program, CLI `mmo`: `core/` topics and sources, `ingest/` bringing new data in),
-  `topics/<slug>/` (research topics, the only place for research data: sources, OCR results, segments, graph),
+* **Layout:** `code/mmo/` (the program, CLI `mmo`: `core/` topics and sources, `ingest/` bringing new sources in),
+  `topics/<slug>/` (research topics, the only place for research data: sources, their text, segments, graph),
   `methods/*.yaml` (method modules), `ontology/` (LinkML schema and mapping to standards), `docs/` (project memory).
   Details: `docs/spec.md`.
-* **CLI:** `uv run mmo --help` – `topic new`, `source scan`, `ocr run`, `ocr compare`, `segment`.
+* **The project is the analysis.** Bringing sources in (OCR of page photos, reading order, transcription) is a
+  supporting tool used when a new source needs it, never a goal or the main line of work: do not plan, propose or
+  report around it. The analysis reads `sources/<id>/text.md` and its segments, not `ingest/`
+  (`docs/source-preparation.md`).
+* **CLI:** `uv run mmo --help` – `topic new`, `source add`, `source check`, `source finalize`, `segment`; tools for
+  bringing sources in: `ingest`, `ocr ...`.
 * **Traceability is the core rule:** never write analytical output that cannot be traced to a segment (source, page,
   offsets, quote) and to the step that produced it (model, prompt version, time).
-* **Sources:** page images and other source files are git-ignored (size, copyright); commit only manifests, OCR text
-  and segments.
+* **Sources:** page images and other source files are git-ignored (size, copyright); commit only manifests, the
+  text and segments.
 * **Models:** local first, through the OpenAI-compatible gateway configured in `.env`. Homelab services are
   reachable only from the owner's LAN or VPN – if a call fails from elsewhere, report it as `blocked`, do not work
   around it. A cloud model needs the owner's approval.
-* **Nothing is final yet:** OCR, models and analysis are being tested in variants. Keep every variant's output side
-  by side instead of overwriting.
+* **Nothing is final yet:** keep every variant's output side by side instead of overwriting.

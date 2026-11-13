@@ -141,3 +141,16 @@
   of `book` are not built yet: running headers and page numbers are still in the page text (T3). The cover (scan
   213) stays in `text.md` until the owner says otherwise.
 
+
+## T7 – 2026-11-13
+- Owner: the project is the analysis; OCR is a supporting tool and must not shape the instructions or the plan.
+  Agents had read OCR as the main line because the brief's first-phase scope named it and most of the plan and
+  progress were OCR tasks.
+- Done: OCR detail moved from `docs/spec.md` (Ingest pipeline, OCR backends) and `README.md` (single steps, OCR
+  through the homelab) to `docs/source-preparation.md`, unchanged; spec and README point there. Brief scope: the
+  analysis environment is the current focus, bringing sources in is a tool. AGENTS.md (owner approved): a rule that
+  the project is the analysis, CLI line without `ocr`, "Nothing is final yet" without OCR. Plan: analysis tasks
+  first, OCR tasks in a section of their own (T2 dropped, T3 on demand). Skill `ingest-sources` links the new doc.
+  No code or data removed.
+- Next: define with the owner how the qualitative analysis with AI works (approaches, connections, theme maps)
+  before T4-T6 are specified; research questions of `nazi-v-dobe-ai` are still empty.
