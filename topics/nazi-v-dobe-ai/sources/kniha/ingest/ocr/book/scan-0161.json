@@ -1,0 +1,17 @@
+{
+  "source": "kniha",
+  "scan": 161,
+  "image": "IMG_20260902_223021.jpg",
+  "image_sha256": "53610c6b8806676dc569889f4fa457aa7f160d88f4e2f285c96c219f990ecdbc",
+  "backend": "import",
+  "model": "claude-sonnet-5-5",
+  "prompt_version": "read-v1",
+  "confidence": null,
+  "quality": null,
+  "warnings": [],
+  "seconds": null,
+  "created": "2026-11-13T14:41:40+00:00",
+  "rotation": "0",
+  "text": "LIDSKÉ, PŘÍLIŠ KRÁSNĚ LIDSKÉ\n\nprožívanou realitu do „oblaků AI“ může být paradoxně spíše útěkem od oblaků.\n\n## DOKONALÁ NEDOKONALOST\n\nDoba, ve které žijeme, se díky AI stává v jistém pohledu stále dokonalejší. Firemní procesy jsou optimalizovány, generované obrázky stále lepší. Rychlý rozvoj schopností AI v těchto směrech je obdivuhodný, protože nám v mnoha ohledech usnadňuje práci. Zároveň však o to více vyniká naše lidská pomalost a nedokonalost. Stále se zdáme být málo efektivní a i naše největší intelektuální a kreativní výkony jsou v porovnání s výkonem AI často nedostačující. A zarážející tempo zdokonalování AI jen zdůrazňuje, jak se nám v honbě za dokonalostí stále více vzdaluje.\n\nGilbert Keith Chesterton napsal jako první větu úvodu své knihy Věčný člověk, že existují „dva způsoby, jak se dostat domů; jeden je zůstat v něm, druhý je obejít celý svět, dokud se nevrátíme na stejné místo“.⁶⁴ Chesterton často argumentoval, že pravé porozumění svému vlastnímu domovu či identitě přichází teprve poté, co se od nich člověk vzdálí a získá nový náhled. Jakmile člověk cestuje, objevuje vše, co není jeho domov a čím je jeho domov skutečně výjimečným, a nalézá ho tak všude po cestě. To se nám může příhodit, když sledujeme stále větší dokonalost AI. Možná právě naše nedokonalost, naše lidská nahota nás mohou definovat lépe. Této nahoty bychom se tedy neměli bát ani se za ni stydět.\n\nLeonard Cohen popisuje lidský úděl ve své písni The Goal: „Už skoro žiji, už skoro jsem doma, nemám koho následovat ani co učit, jen to, že cíl nám vždycky uniká.“ Jako lidé jsme nedokonalí. Často nedosahujeme vytyčených cílů, jsme pomalí, neefektivní, podléháme výkyvům nálad a občas řekneme nebo uděláme něco, čeho pak litujeme. Ale právě to nás činí lidmi.\n\n182\n",
+  "merged_from": "sonnet"
+}

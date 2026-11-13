@@ -1,0 +1,17 @@
+{
+  "source": "kniha",
+  "scan": 150,
+  "image": "IMG_20260902_222830.jpg",
+  "image_sha256": "4c6e570d721f4583345e59dc515c99c38c27cda589b08508e7237efd59438a54",
+  "backend": "import",
+  "model": "claude-sonnet-5-5",
+  "prompt_version": "read-v1",
+  "confidence": null,
+  "quality": null,
+  "warnings": [],
+  "seconds": null,
+  "created": "2026-11-13T14:41:38+00:00",
+  "rotation": "0",
+  "text": "NAZÍ V AI DOBĚ\n\nrychle dodat, co chceme, tedy že budeme od lidí očekávat totéž, co od AI, a komunikace s lidmi nás bude čím dál více frustrovat, je reálné a již vědecky prokázané. Studie publikovaná v roce 2025 ukázala, že komunikace s AI chatboty vede ke změně našeho přístupu k sociální interakci s lidmi. Od těchto interakcí začínáme očekávat větší efektivitu a zároveň se stávají méně osobními.²¹\n\nJako „nadlidské“ popisují lídři v oblasti AI jako Joshua Bengio, Yanna LeCun, Geoffrey Hinton a Sam Altman ty AI systémy, které jsou lepší než my v počítání, predikci, modelování, produktivitě a řešení problémů.²² Jsou však jen tohle obdivuhodné vlastnosti? Jak se ptá filozofka Vallor, proč tak málo představ o všeobecné umělé inteligenci zobrazuje nadlidskou inteligenci jako tu, která se dokáže více smát než my, která neplní žádný úkol, ale hraje si, objevuje a dělá hlouposti? Většina inteligentních bytostí často dělá právě to.²³\n\nPokud budeme počítání, predikce, modelování, produkci a řešení problémů obdivovat a preferovat v souvislosti s používáním AI stále více, jaké to bude mít dopady nejen na naši identitu a pocit smyslu, ale i na oblast mezilidských vztahů? Preference tohoto matematizovaného pojetí světa vypovídá o naší postupující „robotizaci“. Naše identita však může být mnohem bohatší. Můžeme více rozvíjet svou schopnost navazovat přátelství, být empatičtí, soucitní, milující. Nemusíme se čím dál víc podobat našemu strojovému stvoření. Stejně tak můžeme ještě změnit podobu AI, aby více reflektovala širokou pestrost a krásu naší lidskosti.\n\n## NAHOTA DRUHÉHO\n\nDnes už se nemusíme zdržovat zdlouhavým vyhledáváním a porovnáváním informací – AI nám poskytne přesnou odpověď hned. Dostáváme, co chceme, a to téměř okamžitě. Tento komfort\n\n171\n",
+  "merged_from": "sonnet"
+}

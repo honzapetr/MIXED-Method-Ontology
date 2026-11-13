@@ -1,0 +1,17 @@
+{
+  "source": "kniha",
+  "scan": 192,
+  "image": "IMG_20260902_223320.jpg",
+  "image_sha256": "83f84009c12a2b8c3f961a4a7d93346453ac6b116af59a9680c4a16f702d58aa",
+  "backend": "import",
+  "model": "claude-sonnet-5-5",
+  "prompt_version": "read-v1",
+  "confidence": null,
+  "quality": null,
+  "warnings": [],
+  "seconds": null,
+  "created": "2026-11-13T14:41:45+00:00",
+  "rotation": "0",
+  "text": "SPOLEČNÝ TANEC\n\nPražský rabi Löw, ten, který podle legendy stvořil Golema, psal o bodě Emca. Tedy středním bodu (toto hebrejské slovo znamená střed), který spojuje všechny protipóly. Tento bod je pro něj vyjádřením Boha. Díky tomuto bodu, který zároveň znamená prázdnotu, se vše udržuje v rovnováze. Emca je pro něj Vším: „Neboť Vše je centrální těžiště, jež zahrnuje části, v nichž se setkávají všechny složky... V centru je Vše.\"⁵⁹ Emca není tedy pouze kompromis obou protipólů – protipóly z něj vyvěrají.\n\nPři naší snaze proměňovat svět se můžeme rabim Löwem a jeho pojetím bodu Emca inspirovat. Vyvarovat se extrémů, tedy jak rezignovaného přijímání světa takového, jaký je, tak urputné snahy vnutit mu vlastní ideální představu. Naše myšlení je často zvyklé uvažovat pouze v rovině buď-anebo. Dějiny západního myšlení tuto tendenci potvrzují. Možná je načase pokusit se toto černobílé vnímání překonat a usilovat o zdánlivě nemožné, o překonání protikladů, o dosažení bodu Emca.\n\nSpolečný tanec nás všech, podobný tomu, který tančili indiáni na začátku této knihy, je zatím jen sen. Ale stojí za to pokusit se jej proměnit ve skutečnost.\n\n214\n",
+  "merged_from": "sonnet"
+}

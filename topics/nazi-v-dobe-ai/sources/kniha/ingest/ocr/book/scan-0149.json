@@ -1,0 +1,17 @@
+{
+  "source": "kniha",
+  "scan": 149,
+  "image": "IMG_20260902_222824.jpg",
+  "image_sha256": "11d7607df0dc197f4b32d039882c2bf006cd61b5d997823ae61a128cc55684df",
+  "backend": "import",
+  "model": "claude-sonnet-5-5",
+  "prompt_version": "read-v1",
+  "confidence": null,
+  "quality": null,
+  "warnings": [],
+  "seconds": null,
+  "created": "2026-11-13T14:41:38+00:00",
+  "rotation": "0",
+  "text": "LIDSKÉ, PŘÍLIŠ KRÁSNĚ LIDSKÉ\n\nsvou enormní efektivitou a rychlostí. Tím, že ji používáme, se nám nejen stále víc přibližuje, ale také my se začínáme podobat jí. Proces aproximace probíhá oboustranně.\n\nKai-Fu Lee popisuje, jak se v důsledku dennodenní práce s AI algoritmy stávalo jeho uvažování a rozhodování stále více „algoritmickým“. Popisuje tento pozvolný proces: „Celou svou vědeckou kariéru jsem strávil budováním stále výkonnějších algoritmů umělé inteligence. Přitom jsem začal vnímat svůj vlastní život jako jakýsi optimalizační algoritmus s jasným cílem: maximalizovat osobní vliv a minimalizovat cokoli, co k tomuto cíli nepřispívá. Snažil jsem se kvantifikovat vše ve svém životě, vyvažovat tyto ‚vstupy‘ a dolaďovat algoritmus… Rok co rok jsem ignoroval příležitosti trávit čas a sdílet lásku s lidmi, kteří mi byli nejbližší. Má rodina mi dávala jen vřelost a lásku, a já jsem na to reagoval na základě chladných kalkulací. V podstatě, okouzlen svou snahou vytvořit stroje, které myslí jako lidé, jsem se sám stal člověkem, který myslí jako stroj.“¹⁷\n\nKe všemu v životě začal přistupovat jako k minimalizačním funkcím, přičemž se pokoušel dosáhnout kýženého výsledku v co nejkratším možném čase: „Vždy jsem hlavní algoritmus silně vážil ve prospěch svých vlastních kariérních cílů, abych maximalizoval čas v práci, osobní vliv a status ve své profesi.“¹⁸ Kai-Fu Lee se ptá: „Proč jsem ignoroval tu samotnou podstatu, která mne činí člověkem?“¹⁹ Reflektuje své setkání s duchovním mistrem poté, co zjistil, že má rakovinu. Mistr mu řekl: Kai-Fu, lidé tak nemají přemýšlet. To neustálé kalkulování, ta neustálá kvantifikace úplně všeho požírá to, co máme skutečně v sobě a co mezi námi jako lidmi existuje. Dusí to tu jednu věc, která nám dává opravdový život: lásku.“²⁰\n\nToto nebezpečí, že mezilidské vztahy budeme stále více vnímat jako algoritmus, jehož prostřednictvím nám má ten druhý pouze\n\n170\n",
+  "merged_from": "sonnet"
+}

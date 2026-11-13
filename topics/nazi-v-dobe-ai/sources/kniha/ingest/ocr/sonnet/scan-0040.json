@@ -1,0 +1,16 @@
+{
+  "source": "kniha",
+  "scan": 40,
+  "image": "IMG_20260902_200517.jpg",
+  "image_sha256": "98c59199d7ada3369c264fe62876d1ae7279e4c5951d00346f60b11d4deb917f",
+  "backend": "import",
+  "model": "claude-sonnet-5-5",
+  "prompt_version": "read-v1",
+  "confidence": null,
+  "quality": null,
+  "warnings": [],
+  "seconds": null,
+  "created": "2026-11-13T14:41:20+00:00",
+  "rotation": "0",
+  "text": "NAZÍ V AI DOBĚ\n\n⁸⁵ Babík, Statecraft and Salvation, 29.\n\n⁸⁶ ed. Brian Porter, The Aberystwyth Papers: International Politics, 1919–1969, roč. 1972 (Oxford University Press, b.r.), 34.\n\n⁸⁷ Babík, Statecraft and Salvation, 15–16.\n\n⁸⁸ Babík, Statecraft and Salvation, 16.\n\n⁸⁹ Babík, Statecraft and Salvation, 17.\n\n⁹⁰ Jogn G Ruggie, Winning the Peace: America and World Order in the New Era, roč. 1995 (Columbia University Press, b.r.), 2.\n\n⁹¹ Hannah Arendt, The Origins of Totalitarianism, Penguin Modern Classics (Penguin Classics, 2017), 352, 458.\n\n⁹² Jung et al., Essays on Contemporary Events 1936–1946, 43.\n\n⁹³ Jung et al., Essays on Contemporary Events 1936–1946, 95.\n\n⁹⁴ Mandaville a Williams, Meaning and International Relations, roč. 2003, 55.\n\n55\n"
+}

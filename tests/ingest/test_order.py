@@ -65,6 +65,15 @@ def test_an_unknown_page_follows_the_page_photographed_before_it() -> None:
     assert [p.scan for p in order.unknown] == [2]
 
 
+def test_edge_numbers_go_first_except_for_imported_whole_page_transcriptions() -> None:
+    edges = {"IMG_001.jpg": 19, "IMG_002.jpg": 40}
+    ocr = [record(1, "a\n\n137"), record(2, "b")]
+    assert [p.printed for p in reading_order(ocr, read=edges).pages] == [19, 40]
+    imported = [r | {"backend": "import"} for r in ocr]
+    order = reading_order(imported, read=edges)
+    assert [(p.scan, p.printed) for p in order.pages] == [(2, 40), (1, 137)], "own number first, edge as fallback"
+
+
 def test_retaken_pages_are_reported_and_manual_numbers_win() -> None:
     records = [record(1, "a\n\n8"), record(2, "a again\n\n8"), record(3, "no number")]
     order = reading_order(records, manual={"IMG_003.jpg": 9})

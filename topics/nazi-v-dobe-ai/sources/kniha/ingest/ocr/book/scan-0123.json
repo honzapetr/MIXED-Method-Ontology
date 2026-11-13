@@ -1,0 +1,17 @@
+{
+  "source": "kniha",
+  "scan": 123,
+  "image": "IMG_20260902_222226.jpg",
+  "image_sha256": "5924c2229caac4f9f8514a063983235de444585bd6199e5b185508e6e655faac",
+  "backend": "import",
+  "model": "claude-sonnet-5-5",
+  "prompt_version": "read-v1",
+  "confidence": null,
+  "quality": null,
+  "warnings": [],
+  "seconds": null,
+  "created": "2026-11-13T14:41:33+00:00",
+  "rotation": "0",
+  "text": "NAZÍ V AI DOBĚ\n\nvšechny vztahy a vazby, v nichž se vyskytujeme. Přístup, který zdůrazňuje péči o nám blízké, má silnou oporu v tom, jak reagujeme na situace, kdy jsou naši milovaní v ohrožení. Představa, že bychom měli nechat zemřít otce kvůli vzdálenějšímu, byť potenciálně prospěšnějšímu vědci, se většině z nás příčí. Naše emoce a touha chránit ty, na kterých nám záleží, jsou hluboce lidské.\n\nAni etika péče ale není bez kritiky. Zatímco utilitarismus bere až příliš velký ohled na dobro většiny lidí na úkor menšiny či speciálních vztahů mezi lidmi, etika péče bere až příliš velký ohled na dobro pro ty, se kterými máme nejužší vztahy – a zcela zanedbává ostatní.\n\n## ČTYŘI TEORIE, ŽÁDNÁ JISTOTA\n\nPřestože se Aristotelův přístup k etice, utilitarismus, Kantův kategorický imperativ a etika péče řadí k nejvlivnějším morálním teoriím, žádná z nich nám nedává jednoznačný návod, jak se za všech okolností rozhodovat správně. Aristotelova etika nehodnotí naše jednotlivé činy, stejně jako neposkytuje návod, jak k etickým dilematům přistupovat. Pro něj je klíčové rozvíjet u lidí ctnosti, které tvoří morální charakter, a pak spoléhat na to, že i naše rozhodování bude vycházet z našich ctností. Jako návod nám má sloužit snaha vyvarovat se extrémů a volit pragmaticky střední cestu. Utilitarismus se snaží měřit štěstí a utrpení a rozhodovat tak, aby výsledkem bylo co největší blaho pro co nejvíce lidí. Je racionální a praktický, ale často přehlíží lidskou důstojnost, práva menšin a hluboké emocionální vazby. Pokud má být morálně správné to, co přinese největší užitek většině, co pak s jednotlivcem, který se do tohoto výpočtu „nehodí\"? Kantova etika naopak staví na rozumu a vnitřní morální povinnosti. Nezajímá se o výsledky jednání, nýbrž o principy, které\n\n143\n",
+  "merged_from": "sonnet"
+}

@@ -5,13 +5,14 @@ from __future__ import annotations
 import argparse
 import json
 import sys
+from collections import Counter
 from pathlib import Path
 
 from mmo.config import Settings
 from mmo.core.check import check_source
 from mmo.core.migrate import migrate_topic, needs_migration
 from mmo.core.topic import ROLES, SOURCE_KINDS, Topic, sha256_file
-from mmo.ingest.clean import clean_record, import_record
+from mmo.ingest.clean import clean_record, import_record, merge_variants
 from mmo.ingest.compare import cer
 from mmo.ingest.ocr import BACKENDS, load_pages, make_backend, run_ocr, scan_file
 from mmo.ingest.order import write_order
@@ -265,6 +266,23 @@ def cmd_ocr_import(args: argparse.Namespace) -> int:
     return 0 if count else 1
 
 
+def cmd_ocr_merge(args: argparse.Namespace) -> int:
+    """Several variants into one: each scan from the first variant listed that has it (provenance kept per page)."""
+    source = load_topic(args).source(args.source)
+    merged = merge_variants({name: load_variant(source, name) for name in args.variants})
+    out_dir = source.ocr_dir(args.into)
+    out_dir.mkdir(parents=True, exist_ok=True)
+    for record in merged:
+        path = scan_file(out_dir, record["scan"])
+        path.write_text(json.dumps(record, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    taken = Counter(record["merged_from"] for record in merged)
+    missing = sorted({page.scan for page in source.pages()} - {record["scan"] for record in merged})
+    print(f"{len(merged)} scans -> {out_dir} ({', '.join(f'{taken[v]} from {v}' for v in args.variants)})")
+    if missing:
+        print(f"scans in no variant: {compact_ranges(missing)}")
+    return 0
+
+
 def compact_ranges(numbers: list[int]) -> str:
     """[3, 4, 5, 9] -> "3-5, 9"."""
     ranges: list[list[int]] = []
@@ -383,6 +401,13 @@ def build_parser() -> argparse.ArgumentParser:
     imp.add_argument("--model", required=True, help="who or what transcribed it, e.g. a model id or 'manual'")
     imp.add_argument("--prompt-version", required=True, help="version of the instructions used")
     imp.set_defaults(func=cmd_ocr_import)
+
+    merge = ocr.add_parser("merge", help="several variants into one, each scan from the first variant that has it")
+    merge.add_argument("topic")
+    merge.add_argument("source")
+    merge.add_argument("--variants", nargs="+", required=True, help="variants in order of preference")
+    merge.add_argument("--into", required=True, help="new variant folder under ingest/ocr")
+    merge.set_defaults(func=cmd_ocr_merge)
 
     seg = sub.add_parser("segment", help="split OCR text of one variant into segments")
     seg.add_argument("topic")

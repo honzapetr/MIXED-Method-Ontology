@@ -1,0 +1,16 @@
+{
+  "source": "kniha",
+  "scan": 100,
+  "image": "IMG_20260902_222039.jpg",
+  "image_sha256": "9b665466d642e48449336cc5943aed75b01603f614ea415c5dab48800058dd28",
+  "backend": "import",
+  "model": "claude-sonnet-5-5",
+  "prompt_version": "read-v1",
+  "confidence": null,
+  "quality": null,
+  "warnings": [],
+  "seconds": null,
+  "created": "2026-11-13T14:41:29+00:00",
+  "rotation": "0",
+  "text": "NAZÍ V AI DOBĚ\n\nevoluce a my je dnes provádíme zcela automaticky. Zatímco vyšší kognitivní funkce jsou poháněné neokortexem, který se vyvíjel až později jako evolučně nejmladší část mozkové kůry.²⁹ Naše dosažená úroveň vzdělání, stejně jako naše zkušenosti budou mít v AI době stále menší hodnotu a budou méně ceněné.³⁰\n\nObecně platí, že nové technologie vytvářejí prostor pro vznik nových pracovních pozic a nových firem. Ještě před více než půlstoletím neexistovalo globální průmyslové odvětví zaměřené na software. Tato oblast však dnes představuje byznys v hodnotě několika set miliard dolarů a zaměstnává desítky milionů vývojářů.³¹ To můžeme určitě očekávat i v oblasti AI, stejně jako zvýšení počtu pracovních pozic v jistých profesích. Například vývojářů může být v budoucnu paradoxně spíše víc, protože díky AI bude programování mnohem jednodušší. K něčemu podobnému došlo po vynálezu online tabulek. Významně se totiž díky tomu rozšířil počet lidí, kteří v rámci své pracovní pozice provádějí finanční analýzy.³²\n\nTurbulence, které očekáváme na pracovním trhu kvůli adopci AI, jsou často dávány do kontextu s hnutím luddistů na konci 18. století. V roce 1785 vynalezl Edmund Cartwright nový způsob, jak mechanizovat tkaní – pomocí tzv. tkalcovského stavu. Jedno dítě tak dokázalo ovládat stroj, což dříve vyžadovalo úsilí tří až čtyř dospělých osob. Mechanizace způsobila, že platy tkalců klesly na polovinu, i když ceny základních potravin stoupaly. Naštvaní tkalci pod vedením mytické postavy Neda Ludda zorganizovali povstání, které pak bylo násilně potlačeno.³³ Nakonec se však nové realitě přizpůsobili, a jejich počet dokonce vzrostl – v USA jích v roce 1900 bylo čtyřikrát víc než v roce 1830.³⁴\n\nObdobné nepokoje nás ve spojitosti s AI nejspíš nečekají, obzvlášť pokud změny na pracovním trhu nebudou příliš drastické a rychlé. Lze předpokládat, že nahrazení části lidské činnosti AI systémy bude nejspíše postupné.³⁵ Nicméně stejně jako můžeme\n119\n"
+}

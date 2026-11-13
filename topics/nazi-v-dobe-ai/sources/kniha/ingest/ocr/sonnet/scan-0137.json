@@ -1,0 +1,16 @@
+{
+  "source": "kniha",
+  "scan": 137,
+  "image": "IMG_20260902_222335.jpg",
+  "image_sha256": "1a2a9f8de463927f314df035a7c1c21d470cedbc8cc8a287ff6a040c01ba3d58",
+  "backend": "import",
+  "model": "claude-sonnet-5-5",
+  "prompt_version": "read-v1",
+  "confidence": null,
+  "quality": null,
+  "warnings": [],
+  "seconds": null,
+  "created": "2026-11-13T14:41:36+00:00",
+  "rotation": "0",
+  "text": "NAZÍ V AI DOBĚ\n\n22 Mark Coeckelbergh, AI Ethics, The MIT Press Essential Knowledge Series (The MIT press, 2020), 7.\n\n23 „1,675 Children Removed from Parents' Custody in Benefits Scandal | NL Times\", 11. květen 2022, https://nltimes.nl/2022/05/11/1675-children-removed-parents-custody-benefits-scandal.\n\n24 Juliette Powell a Art Kleiner, AI Dilemma: 7 Principles for Responsible Technology (Berrett-Koehler, 2023), 79.\n\n25 Ethan Mollick, Co-Intelligence: Living and Working with AI (W H Allen, 2024), 211.\n\n26 Vallor, The AI Mirror, 57.\n\n27 Mark Coeckelbergh, The Political Philosophy of AI: An Introduction (polity, 2022), 49.\n\n28 „Understanding the Impact of Human-AI Interaction on Discrimination – European Commission\", 6. červen 2025, https://policy-lab.ec.europa.eu/news/understanding-impact-human-ai-interaction-discrimination-2025-01-10_en.\n\n29 Alexia Gaudeul et al., ed., The Impact of Human Oversight on Discrimination in AI-Supported Decision-Making: A Large Case Study on Human Oversight of AI-Based Decision Support Systems in Lending and Hiring Scenarios (Publications Office, 2024), 5.\n\n30 Vallor, The AI Mirror, 44.\n\n31 Vallor, The AI Mirror, 45.\n\n32 Stephen Cave a Kanta Dihal, „The Whiteness of AI\", Philosophy & Technology 33, č. 4 (2020): 685–703, https://doi.org/10.1007/s13347-020-00415-6, 699.\n\n33 Jochen Hartmann et al., „The political ideology of conversational AI: Converging evidence on ChatGPT's pro-environmental, left-libertarian orientation\", arXiv:2301.01768, preprint, arXiv, 5. leden 2023, https://doi.org/10.48550/arXiv.2301.01768, 5.\n\n34 Uwe Messer, „How Do People React to Political Bias in Generative Artificial Intelligence (AI)?\", Computers in Human Behavior: Artificial Humans 3 (březen 2025): 100108, https://doi.org/10.1016/j.chbah.2024.100108, 1.\n\n35 „Comparing Google Bard with OpenAI's ChatGPT on Political Bias, Facts, and Morality\", Brookings, b.r., viděno 3. července 2025, https://www.brookings.edu/articles/comparing-google-bard-with-openais-chatgpt-on-political-bias-facts-and-morality/.\n\n36 „The Politics of AI: ChatGPT and Political Bias\", Brookings, b.r., viděno 3. červenec 2025, https://www.brookings.edu/articles/the-politics-of-ai-chatgpt-and-political-bias/.\n\n157\n"
+}

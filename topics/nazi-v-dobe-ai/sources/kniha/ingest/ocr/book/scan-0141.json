@@ -1,0 +1,17 @@
+{
+  "source": "kniha",
+  "scan": 141,
+  "image": "IMG_20260902_222355.jpg",
+  "image_sha256": "947913ff2e7de4659b3f9d6452e9d2b37aa4673e507cc2562694ace454908288",
+  "backend": "import",
+  "model": "claude-sonnet-5-5",
+  "prompt_version": "read-v1",
+  "confidence": null,
+  "quality": null,
+  "warnings": [],
+  "seconds": null,
+  "created": "2026-11-13T14:41:37+00:00",
+  "rotation": "0",
+  "text": "LIDSKÉ, PŘÍLIŠ KRÁSNĚ LIDSKÉ\n\nOD RANÉHO DĚTSTVÍ mě fascinoval transcendent, tedy to, co nás přesahuje a zároveň nás od dávných věků přitahuje. Rád jsem lezl na kopce, protože pocit nadhledu mi dodával klid. Komplikované existenční otázky, pro které jsem hledal řešení, se pohledem na náš malý, mravenčí svět stávaly pouhým vánkem, který mne lehce pohladil po tváři a pak se rozplynul v modři nebe. Toužil jsem vědět a poznat víc, a to ve všech oblastech lidského poznání, včetně víry a náboženství. Během dospívání jsem prošel různými křesťanskými denominacemi, od liberálních až po konzervativní, od charismatických přes protestantní až po katolické. Studium filozofie a religionistiky můj zájem ještě prohloubilo.\n\nNení to dlouho, co jsem si našel trochu času na četbu autorů, z nichž jsem pak čerpal při psaní této knihy. Jel jsem na odlehlé místo blízko zámku Loučeň, aby mne při psaní nic nerušilo. Rád jsem se procházel v tamním Labyrintáriu a jeho dvanácti labyrintech. Některé světové labyrinty jsou staré tisíce let a nalézáme je napříč různými kulturami, včetně té keltské, původních obyvatel severní Afriky či Indie. Krétský labyrint s Minotaurem je známý všem.\n\nProcházel jsem labyrinty a přemýšlel nad tím, co vlastně čekáme, že v nich nalezneme. Co dál mi zbývá poznat, existuje ještě něco hlubšího k nalezení uprostřed labyrintu mého života? Niterné pokusy nevšedních myslitelů, kteří se nebáli jít do temna svého labyrintu, popisovaly jejich cestu obdobně – jako nejasnou a osamocenou. Německý teolog a filozof Meister Eckart psal o „oblaku nevědění“, Svatý Jan od Kříže o „temné noci duše“ a Carl Gustav Jung o „nevědomí“. Naznačovali, že temnými uličkami labyrintu se dostaneme k zářícímu pokladu. Že se přes „Nic“ dostaneme k „Něčemu“. Po „pustém“, nebezpečném bloudění v labyrintu své duše se podle nich dostaneme do středu labyrintu, kde najdeme „něco úžasného“ – světlo, harmonii, Boha, vysvobození.\n\n162\n",
+  "merged_from": "sonnet"
+}

@@ -1,0 +1,17 @@
+{
+  "source": "kniha",
+  "scan": 20,
+  "image": "IMG_20260902_195850.jpg",
+  "image_sha256": "532c60c36564b1870fa7d82a0084a19a3876f737daed3646b2014c39479b2457",
+  "backend": "import",
+  "model": "claude-sonnet-5-5",
+  "prompt_version": "read-v1",
+  "confidence": null,
+  "quality": null,
+  "warnings": [],
+  "seconds": null,
+  "created": "2026-11-13T14:41:17+00:00",
+  "rotation": "0",
+  "text": "NAZÍ V AI DOBĚ\n\na klerikální hierarchií nebude potřeba. Jáchym nevyzýval k revoluci, ale věřil, že se objeví mesiášský vůdce, aby uskutečnil duchovní evoluci a nastolil epochu Ducha svatého. Tím, že zavedl epochu Ducha svatého s posledním pokrokem směřujícím k naplnění dějin spásy, zpochybnil celý časový řád, v nějž křesťanství věřilo od dob Augustinových spisů.\n\nAugustin věřil v pokrok k dokonalosti, ale chápal ho hlavně jako morální a duchovní proces. Jáchym však věřil, že pokrok je historický, což byl úplně jiný pohled na svět a jeho budoucnost. Boží naděje, stejně jako naděje věřících, se podle něj měly promítat do samotných dějin, přičemž budoucnost světa je rozvíjením Boží skutečné přítomnosti v čase. Historik a politolog Milan Babík to shrnul tak, že pro Augustina se svět pohybuje ke spáse jen v nitru věřícího, zatímco pro Jáchyma je tento pohyb skutečný a probíhá v hmotném světě.⁴⁹\n\nPro Jáchyma bylo všechno v neustálém pohybu. Všechno se může měnit, růst a vyvíjet. Každá nová doba, kterou ve své vizi popsal, znamenala pokrok k větší svobodě, poznání a štěstí. A s tímto vývojem se měl člověk stále více přibližovat k přímému spojení s Bohem.\n\nMyšlenka o neustálém zlepšování se později stala základem mnoha filozofických směrů – ať už šlo o Augusta Comta, George Wilhelma Friedricha Hegela, Karla Marxe nebo i některé diktátory 20. století. Všichni tito myslitelé a vůdci, i když často bez duchovního rozměru, vycházeli ze stejného předpokladu: že dějiny mají směr, že vedou dopředu a že lidstvo postupně směřuje k lepší budoucnosti. Jak poznamenal filozof Karl Löwith: „Třetí uspořádání jáchymovců se znovu objevilo jako třetí internacionála a třetí říše, založené vůdcem (dux) nebo Vůdcem (Führer), který byl prohlašován za spasitele a miliony ho zdravily výkřikem ‚Heil!‘. Zdrojem všech těchto hrozivých pokusů naplnit\n\n35\n",
+  "merged_from": "sonnet"
+}

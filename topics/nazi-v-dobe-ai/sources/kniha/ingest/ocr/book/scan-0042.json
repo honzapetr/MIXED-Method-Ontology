@@ -1,0 +1,16 @@
+{
+  "source": "kniha",
+  "scan": 42,
+  "image": "IMG_20260902_200529.jpg",
+  "image_sha256": "53fa0729c1e8d7c89def236d42a1b749165e5ef285d9a85c3d7a1cbed670ed6d",
+  "backend": "import",
+  "model": "claude-opus-5-5",
+  "prompt_version": "reread-v1",
+  "confidence": null,
+  "quality": null,
+  "warnings": [],
+  "seconds": null,
+  "created": "2026-11-12T22:58:42+00:00",
+  "text": "MĚSTO NA AI PAHORKU\nMÝTY HRAJÍ v mezinárodní politice rozmanitou roli a jednou z klíčových je takzvaná určující funkce. V tomto případě mocní využívají mýty jako nástroj k udržení stávající hierarchie. Tyto příběhy nejsou náhodné, ale záměrně vytvářené, aby formovaly a posilovaly společenský řád.¹ Mýty lze chápat jako vnucení jednoho výkladu světa všem ostatním.² To, jakým způsobem jednotlivé kultury mytologizují svá témata a činí je přirozenými, se však liší.³\n\nPříkladem mýtu s hojným užitím určující funkce je mýtus americké výjimečnosti (American exceptionalism), hluboce zakořeněná víra ve „vyvolenost“ amerického národa a jeho morální poslání. Tento mýtus se dnes výrazně prolíná s vírou v umělou inteligenci (AI) jako nástroj spásy. Spojením tohoto mýtu s dříve zmíněnými idejemi pokroku, mesiášského očekávání a víry v sílu rozumu se otevírá cesta k porozumění tomu, proč je právě ve Spojených státech vývoj umělé inteligence stále častěji prezentován jako americká technologie – určená k potvrzení americké výjimečnosti a ke spáse světa, jejíž globální dominance je vnímána jako historií předurčený a morálně ospravedlnitelný imperativ.\n\nAmerický prezident Barack Obama ve své autobiografii s názvem Země zaslíbená (A Promised Land) píše: „Má matka a prarodiče nikdy nebyli ve svém vlastenectví okázalí... Přesto byla hrdost na to, že jsou Američané, představa, že Amerika je největší země na světě, vždy samozřejmostí. Ale myšlenky Ameriky, příslibu Ameriky – toho jsem se držel s urputností, která překvapovala i mě samotného.“⁴ Jak je možné, že něco tak abstraktního jako přesvědčení o výjimečném osudu Ameriky mohlo být pro něj tak samozřejmé a nezpochybnitelné? Odkud se tento „příslib Ameriky“ vlastně vzal a proč se ho už malý Barack Obama tak silně držel?\n58\n",
+  "merged_from": "claude"
+}

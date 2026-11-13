@@ -1,0 +1,17 @@
+{
+  "source": "kniha",
+  "scan": 31,
+  "image": "IMG_20260902_200421.jpg",
+  "image_sha256": "9dc4dc4e568ce0144dce81996e6b4f1c37a994aeab40239ac81a55d3e47b53a9",
+  "backend": "import",
+  "model": "claude-sonnet-5-5",
+  "prompt_version": "read-v1",
+  "confidence": null,
+  "quality": null,
+  "warnings": [],
+  "seconds": null,
+  "created": "2026-11-13T14:41:18+00:00",
+  "rotation": "0",
+  "text": "TANEC SLUNCI\n\neschatologicky jako konečný stupeň vývoje, v němž se člověk slije se svým výtvorem a dosáhne božství.\n\nNaše víra v technologický ráj je ale jen jiným jazykem vyjádřený prastarý sen o návratu do ztraceného Edenu. Naše dlouhodobá snaha o dosažení budoucího ideálu nás vede kupředu, a zároveň zpět. Z cyklického pojetí času jsme unikli do lineárního, ale toužíme v něm po budoucnosti, která nás vrací na úplný rajský počátek. Tímto paradoxně žijeme stále v cyklickém času a z přímky se opět stává kruh. Cyklíme se jako bájný had Uroboros, jeden z nejrozšířenějších symbolů napříč kulturami, který pojídá svůj ocas.\n\nV tomto zacyklení se odhaluje naše existenciální „nahota\" – zdá se, že máme potřebu hledat smysl v době jiné, než ve které se zrovna nacházíme. Nebo spíše nalézat smysl v usilování o budoucnost, která by nám vrátila pohádkovou minulost. Zdá se, že máme tendenci vnímat přítomnost i v naší „vyspělé AI době\" jako cosi smysl postrádající, příliš prosté, příliš nahé. A od budoucího vývoje AI očekávat stejné zázraky, které by nás vysvobodily z našeho domněle bezútěšného stavu bytí, stejně jako dávní Hebrejové od svého Mesiáše.\n\n## NÁSTUP TEROR„ISMŮ\"\n\nSpolečnost se přestala vnímat jako zdroj identity, řádu a smyslu a začala být chápána čistě jako nástroj k uspokojení individuálních potřeb a tužeb. Její funkce se omezila na instrumentální roli ve službách lidského štěstí.⁷⁷ Do tohoto prázdného prostoru pak vstoupila ideologie. Ta měla nově spojit politiku, společnost a kulturu do jednotného rámce. Osvícenští revolucionáři přišli s vlastními recepty, jak by měl být vztah těchto tří oblastí nově uspořádán.⁷⁸ Věřili, že nás rozum zbaví utrpení,\n",
+  "merged_from": "sonnet"
+}

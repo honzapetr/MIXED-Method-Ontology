@@ -1,0 +1,17 @@
+{
+  "source": "kniha",
+  "scan": 168,
+  "image": "IMG_20260902_223058.jpg",
+  "image_sha256": "cbfbcaec44656892ad716aaf7028383990d8a954ea8e287d74872dfa99f93029",
+  "backend": "import",
+  "model": "claude-sonnet-5-5",
+  "prompt_version": "read-v1",
+  "confidence": null,
+  "quality": null,
+  "warnings": [],
+  "seconds": null,
+  "created": "2026-11-13T14:41:41+00:00",
+  "rotation": "0",
+  "text": "NAZÍ V AI DOBĚ\n\nmůže pomoci pohlížet na tuto novou technologii s patřičným nadhledem.\n\nJako typický puberťák jsem vnímal mnoho věcí až příliš existenciálně silně (a ano, byl jsem trochu zvláštní případ, který v šestnácti letech četl „veselá“ díla Camuse, Nietzscheho, Kierkegaarda či Sartra, zatímco spolužáci si barvili vlasy namodro a užívali si objevu svého pohlavního ústrojí). Pomáhalo mi představovat si při tom své předky a různé historické postavy, jak se na mě odkudsi z oblaků dívají a náramně se baví tím, jak vážně svou situaci prožívám. To mi umožnilo zbavit se tíhy a jít dál. O několik let později, už během studia na vysoké škole, jsem opět naplno pocítil, jak ohromný dar smích je.\n\nByl jsem tehdy nešťastně zamilován. Dívka, o kterou jsem stál, mé city neopětovala. Tušil jsem, že to nedopadne – ačkoliv jsme byli dobří kamarádi a vídali se téměř denně, věděl jsem, že se mnou nemá romantické úmysly a že jsem to neměl ani zkoušet. Ale zkusil jsem... a bolelo to. V pochmurné a duchem nepřítomné náladě jsem kráčel ulicemi Prahy, až jsem došel na Petřín. Jako bych cestou vzhůru očekával, že tam na kopci naleznu nějakou zázračnou úlevu od svého mladického utrpení.\n\nAsi v polovině cesty na kopec mi vytanula na mysli slova mého oblíbeného Nietzscheho z Tak pravil Zarathustra: „A když jsem viděl svého ďábla, shledal jsem ho vážným, důkladným, hlubokým, slavnostním: byl to duch tíže – jím padají všechny věci. Nikoli hněvem, leč smíchem se zabíjí. Vzhůru, zabme ducha tíže!“⁷⁷\n\nNapadlo mě, že bych se mohl své situaci zasmát, přestat ji brát tak vážně. Ale nešlo to. Realita je prostě taková, jaká je, a když se člověk cítí mizerně, prostě se cítí mizerně... Šel jsem tedy dál, ponořený do své chmurné nálady. A znovu: „Zkus se od srdce zasmát své situaci, vždyť není tak vážná,“ ozvalo se ve mně.\n\n189\n",
+  "merged_from": "sonnet"
+}

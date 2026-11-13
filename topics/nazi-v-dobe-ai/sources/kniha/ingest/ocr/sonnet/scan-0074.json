@@ -1,0 +1,16 @@
+{
+  "source": "kniha",
+  "scan": 74,
+  "image": "IMG_20260902_200749.jpg",
+  "image_sha256": "baae8908b6b0516668dc6decc105155c56ef2fd76b3769d60342231c194b23e3",
+  "backend": "import",
+  "model": "claude-sonnet-5-5",
+  "prompt_version": "read-v1",
+  "confidence": null,
+  "quality": null,
+  "warnings": [],
+  "seconds": null,
+  "created": "2026-11-13T14:41:23+00:00",
+  "rotation": "0",
+  "text": "NAZÍ V AI DOBĚ\n\nu Boha samotného.¹³ Descartes tak zakořenil představu, že rozum je Bohem nám daný klíč ke zjištění pravdy o světě a o nás samotných.\n\nTímto myšlenkovým směrem jsme pokračovali dál v touze poznat, uchopit a ovládnout náš okolní i vnitřní svět. I když jsme ale zrodem moderní vědy „zabili Boha\", nepřestali jsme se považovat za „Boží obrazy\". Vyšší intelekt nás měl zcela oddělovat od zvířecí říše, učinit z nás tvory úplně jiné, vyšší kategorie. Descartova definice člověka existencí jeho intelektu nás ukázala jako zvířatům nadřazené tvory, kteří jsou díky matematizaci schopni popsat a ovládnout realitu.\n\nVývoj AI je vyvrcholením této snahy. Byť jsme s osvícenstvím odvrhli náboženské pojetí sebe samých jako Božích synů a dcer, „v hloubi duše\" jsme se za ně nepřestali považovat. V předchozích kapitolách jsme ostatně již mohli sledovat nepovedené snahy o odtržení moderního západního myšlení od náboženských mýtů.\n\nPřes descartovskou matematizaci prostoru jsme se dostali až k vývoji AI. Byť můžeme být patřičně hrdí na svůj intelekt, že jsme něco tak geniálního dokázali stvořit, je dobré mít na paměti, že intelekt není nutně to jediné, co nás definuje. Descartovo vnímání člověka bylo příliš úzce pojaté a až příliš vyhraněné vůči zvířecí říši. Naše schopnost přemýšlení, náš intelekt mu posloužily pro jednoduchou definici člověka a jeho identity. Proč bychom však měli na zvířata nahlížet jako na nižší a podřadné tvory jen kvůli tomu, že nevykazují stejný typ a úroveň intelektu? Kde se bere naše arogance? Nepomohlo by nám více pokory, a to i při vývoji AI? Vždyť pokud se budeme definovat descartovsky striktně jako pouze přemýšlející tvorové, kým jsme v éře umělé inteligence, která již dokáže překonat značnou část našich intelektuálních schopností?\n\n91\n"
+}

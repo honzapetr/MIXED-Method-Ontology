@@ -79,7 +79,10 @@ def _numbered(records: list[dict], manual: Mapping[str, int], read: Mapping[str,
         if image in manual:
             placed.append(PlacedPage(record["scan"], image, int(manual[image]), HOW_MANUAL))
             continue
-        number = read.get(image) or printed_page_number(record["text"])
+        in_text = printed_page_number(record["text"])
+        # a transcription of the whole page (backend `import`) carries its own number, more reliable than the edges
+        own_first = record.get("backend") == "import"
+        number = (in_text or read.get(image)) if own_first else (read.get(image) or in_text)
         placed.append(PlacedPage(record["scan"], image, number, HOW_UNKNOWN if number is None else HOW_PRINTED))
     for before, page, after in zip(placed, placed[1:], placed[2:], strict=False):
         if before.printed is None or after.printed != before.printed + 2 or page.how == HOW_MANUAL:
@@ -97,7 +100,8 @@ def reading_order(
     """Sort OCR records (one per image) by printed page.
 
     `manual` = image file name -> page number set by the owner; `read` = numbers read from the page edges
-    (`mmo ocr numbers`), used before the number found in the OCR text.
+    (`mmo ocr numbers`), used before the number found in the OCR text - except for imported transcriptions of the
+    whole page, whose own number goes first.
     """
     placed = _numbered(sorted(records, key=lambda r: r["scan"]), manual or {}, read or {})
     keys: dict[int, tuple[float, int]] = {}

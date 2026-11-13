@@ -3,3 +3,9 @@ title: Nazí v době AI
 kind: book
 language: ces
 note: Phone photos of the printed book, one page per photo, taken out of order (2026-09-02).
+printed_pages:
+  # set from the text (T2f): the photo shows no number or a wrong one was taken from the neighbours
+  IMG_20260902_195457.jpg: 16 # end of the introduction, continues page 15
+  IMG_20260902_195748.jpg: 29 # retake of page 29 (same text as IMG_20260902_195753.jpg)
+  IMG_20260902_200532.jpg: 59 # continues page 58, continued by page 60
+  IMG_20260902_222258.jpg: 134 # retake of page 134 (same text as IMG_20260902_222147.jpg), not page 148

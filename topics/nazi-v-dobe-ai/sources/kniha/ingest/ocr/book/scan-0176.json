@@ -1,0 +1,17 @@
+{
+  "source": "kniha",
+  "scan": 176,
+  "image": "IMG_20260902_223148.jpg",
+  "image_sha256": "557b1d1373203c0237f639a4a3360ef9c392bed5accbc63d11d70e67103be3d6",
+  "backend": "import",
+  "model": "claude-sonnet-5-5",
+  "prompt_version": "read-v1",
+  "confidence": null,
+  "quality": null,
+  "warnings": [],
+  "seconds": null,
+  "created": "2026-11-13T14:41:43+00:00",
+  "rotation": "0",
+  "text": "SPOLEČNÝ TANEC\n\nOD PŘÍCHODU NOVÉHO TISÍCILETÍ žijeme v chaotickém světě.¹ „Nikdy předtím se složky světového řádu, jejich schopnost vzájemně působit a jejich cíle neměnily tak rychle, tak hluboce a tak globálně,“ konstatoval již roku 2002 americký politolog Joseph Nye.² Nalézt solidní řešení pro výzvy tohoto století a tisíciletí bude na tomto tekutém písku těžké.\n\nAčkoliv AI samotná je jednou z největších výzev, zároveň nám s řešením ostatních může pomoci. Jak napsal Alfred North Whitehead v poslední kapitole své knihy Věda a moderní svět: „Údělem budoucnosti je být nebezpečná; a mezi přednosti vědy patří, že nám dává k jejímu řešení výbavu.“³ V roce 2023 v otevřeném dopise Future of Life Institute vyzvali signatáři k pozastavení vývoje AI alespoň na šest měsíců. Jako odůvodnění uvedli, že je třeba se nejdříve ujistit, že dopady vývoje AI „budou pozitivní a jejich rizika budou zvládnutelná“.⁴ Výzvy nebylo vyslyšeno a zastavit vývoj AI možná není ani žádoucí. Nové technologie jako AI jsou užitečné a nezbytné pro to, abychom nadcházející výzvy včetně těch ze strany AI dokázali konstruktivně řešit.\n\nPřevratné změny spojené s AI, které zažíváme jako jednotlivci i jako lidstvo, budou s největší pravděpodobností v brzké budoucnosti jen přibývat. Podobu „AI revoluce“ můžeme pozorovat podle Kai-Fu Leea ve čtyřech vlnách. První vlna je internetová AI, druhá byznysová AI, třetí percepční AI a čtvrtá autonomní AI.⁵ S tím, že jsme již svědky dvou těchto AI vln, tedy internetové a byznysové. Příkladem internetové, při níž AI zefektivňuje vyhledávání informací, spotřebu obsahu a digitální komunikaci, jsou třeba vyhledávací algoritmy Google nebo doporučovací systémy na platformách Netflixu či YouTube. Byznysová vlna přináší transformaci procesů v organizacích a firmách.\n\nTřetí vlna bude rozšiřovat naše vnímání reality digitalizace světa kolem nás pomocí chytrých zařízení a senzorů. Svět, který\n\n198\n",
+  "merged_from": "sonnet"
+}

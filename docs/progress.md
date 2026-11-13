@@ -96,3 +96,24 @@
 - Left: running headers ("NAZÍ V AI DOBĚ", chapter titles) and page numbers are still in the text (needed for the
   order; dropping them from segments is T3). Closing quotes: `"` on scans 96, 122, 125, `“` elsewhere in `claude`.
   The 13 pages without a number and 6 duplicates of the reading order are unchanged (owner review).
+
+## T2f – 2026-11-13
+- Model test (7 scans, 5 with an Opus reading as reference, `scratch/T2f/model-test/`): character error rate
+  `claude-haiku-5-5` 0.68 % (left out a phrase, replaced words silently), `claude-sonnet-5-5` 0.04 %. Owner chose
+  Sonnet and approved the cloud model for the whole book. About 7 000 tokens per scan in batches of 10.
+- Done: variant `sonnet` (176 scans, `claude-sonnet-5-5`, prompt `ingest/ocr/sonnet/PROMPT-read-v1.md`);
+  `mmo ocr import` stores a first line `ROTATION: …` in `rotation` (16 photos sideways, 1 upside down);
+  `mmo ocr merge` (variant `book` = `claude` 37 + `sonnet` 176, `merged_from` per page); in the reading order the
+  number of an imported whole-page transcription goes before the edge number of `fabric` (10 edge numbers were
+  wrong, e.g. 19 for 137); `printed_pages` in `source.yaml` for 4 photos (retakes of 29 and 134, pages 16 and 59).
+  `text/book.md` built (441 kB, 11 `[?]`).
+- Verified: `uv run pytest` (70 passed), `ruff check`, `ruff format --check`, `mmo ocr order … --variant book`
+  (201 printed, 5 inferred, 2 corrected, 4 manual, 1 unknown = the cover).
+- Missing from the photos: pages 1-14 (front matter and the start of the introduction: page 15 begins mid-sentence),
+  148 (text breaks mid-sentence), 219 (notes/bibliography), anything after 235 (the bibliography goes on); 17-19,
+  56, 84, 105-106, 124, 160, 196 fall between the end of a chapter's notes and a new chapter - probably blank or
+  title pages, owner to check. Asked the owner for photos.
+- Left: retakes (pages 29, 31, 134 twice) are both in `book` and its text - the analysis should use one of each.
+  Pages to look at: 86 (footnote numbers 17-37 filled in from the sequence), 115, 117, 130, 131 (passages the
+  model was unsure of), 23 (header "TANEC SLUNCÍ"). `fabric` orders were not rebuilt. One-off scripts kept in
+  `scratch/T2f/` (`prep.py` images, `numbers.py` edge vs text numbers, `model-test/compare.py`).

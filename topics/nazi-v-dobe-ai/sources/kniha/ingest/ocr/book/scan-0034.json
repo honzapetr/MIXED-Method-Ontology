@@ -1,0 +1,17 @@
+{
+  "source": "kniha",
+  "scan": 34,
+  "image": "IMG_20260902_200436.jpg",
+  "image_sha256": "2fba40a2c311f75ba2daca6e053b17a4c5d2ed7703f0296a3bcb149c7e732b46",
+  "backend": "import",
+  "model": "claude-sonnet-5-5",
+  "prompt_version": "read-v1",
+  "confidence": null,
+  "quality": null,
+  "warnings": [],
+  "seconds": null,
+  "created": "2026-11-13T14:41:18+00:00",
+  "rotation": "0",
+  "text": "NAZÍ V AI DOBĚ\n\n„sekularizační teorie\", vnímala totalitarismus jako moderní, chudou náhradu za ztracené křesťanství.⁹¹\n\nJung se stavěl skepticky k myšlence, že by stát mohl lidstvu přinést spásu – a případ nacistického Německa tuto jeho skepsi jen potvrdil. Kdybychom stát personifikovali, výsledkem by podle něj nebyla ušlechtilá bytost, ale „jedinec – nebo spíše monstrum – intelektuálně i morálně stojící hluboko pod úrovní většiny jednotlivců, protože reprezentuje masovou psychologii umocněnou na entou\".⁹² Ačkoli si dnes rádi myslíme, že žijeme v sekularizované společnosti, Jung byl přesvědčen, že ideologie, jejichž sílu zažil během svého života, mají nad lidskou myslí stejnou moc jako dřívější bohové či náboženství. V roce 1927 napsal: „Starodávná náboženství... nespadla z nebe, ale zrodila se z lidské duše, která přebývá i v nás právě teď. Všechny tyto věci, ve své prapůvodní podobě, v nás žijí dál a kdykoli mohou propuknout s ničivou silou – v podobě masových sugescí, proti nimž je jedinec bezmocný. Naši hrozivé bohové si pouze změnili jména: dnes se rýmují na *-ismus*.\"⁹³\n\nLiberalismus, anarchismus, kapitalismus, socialismus, komunismus, nacionalismus a další ideologie měly poskytovat rámce smyslu, které by přeměnily svět podle svých představ, ale nakonec se uhnízdily v rámci národních států a přizpůsobily jejich specifikům.⁹⁴ Stejně jako náboženské systémy našich předků, ideologie se snaží nalézt pro lidi smysl působení v tomto světě a zároveň regulují společenské chování. Ideologie již dávno nemají tu sílu, kterou třímaly v devatenáctém a dvacátém století. Nahradila je do značné míry politika identity, populismus a plnění konkrétních zájmů lidí bez jakéhokoli ideologického podtextu.\n\nJsme svědky toho, jak postmoderní politika ztrácí schopnost poskytnout komplexní smysl pro své voliče a dokáže uspokojovat\n\n49\n",
+  "merged_from": "sonnet"
+}

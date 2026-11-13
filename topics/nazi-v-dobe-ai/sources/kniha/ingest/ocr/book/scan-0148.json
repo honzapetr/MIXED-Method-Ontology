@@ -1,0 +1,17 @@
+{
+  "source": "kniha",
+  "scan": 148,
+  "image": "IMG_20260902_222809.jpg",
+  "image_sha256": "1a612f65fc860b5307acb0ec1db0f63df6ec7f997eaec9688a5f39de48dbdea7",
+  "backend": "import",
+  "model": "claude-sonnet-5-5",
+  "prompt_version": "read-v1",
+  "confidence": null,
+  "quality": null,
+  "warnings": [],
+  "seconds": null,
+  "created": "2026-11-13T14:41:38+00:00",
+  "rotation": "0",
+  "text": "NAZÍ V AI DOBĚ\n\nAť se nám to líbí, nebo ne, míra využívání AI při tvorbě kreativních konceptů a umění bude v budoucnu pravděpodobně narůstat. AI se v této oblasti rychle zdokonaluje a proces lidské kreativní tvorby je časově náročný a často úporný, až bolestivý. Pokud nás v kreativní tvorbě láká efektivita a rychlost, kterou AI nabízí, její využití AI je v kreativním průmyslu nasnadě. Otázka tak zní: Má smysl věnovat hodiny či dny úsilí něčemu, co AI zvládne během sekundy, zvláště když je její výsledek obdobně působivý, ne-li dokonalejší? Proč si při kreativní tvorbě „lámat hlavu“ vlastní hlavou?\n\nTřeba proto, že i když může být výsledek kreativní tvorby od AI „lepší“ po vizuální stránce než ten lidský, nic, respektive nikoho, nevyjadřuje. Nebude to naše tvorba a nebudeme při ní prožívat ten jedinečný proces, kdy se pomocí exprese vyjadřujeme, kdy ze skrytých hlubin svého nitra přinášíme na denní světlo něco vlastního, a tedy jedinečného. Jak trefně poznamenává Shannon Valor, vyjádřit se znamená mít v sobě něco, co potřebuje vyjít ven, a dokud budeme rozpoznávat a oceňovat rozdíl mezi mechanickým tvořením a sebevyjádřením, AI pro lidskou kreativitu a rozvoj nebude představovat žádnou hrozbu.¹⁵ AI nám může pomoci kreativitu podnítit,¹⁶ ale neměla by ji zcela nahrazovat. S narůstajícím využíváním AI v oblasti kreativního průmyslu a dalších tvůrčích oblastech můžeme očekávat, že zvýšená nabídka „umělých“ výtvorů generovaných AI bude způsobovat o to vyšší poptávku po autentických lidských uměleckých výtvorech, které budou o to víc ceněné.\n\n## KDYŽ SE STVOŘENÍ STÁVÁ PÁNEM\n\nS používáním AI v každodenním životě, ať už v práci, nebo jinde, si na ni stále více zvykáme. Umělá inteligence je lákavá\n\n169\n",
+  "merged_from": "sonnet"
+}

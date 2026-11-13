@@ -1,0 +1,17 @@
+{
+  "source": "kniha",
+  "scan": 51,
+  "image": "IMG_20260902_200611.jpg",
+  "image_sha256": "b8e84e17105b66a112fb11031dfad27bfef5991e9e0215e01062c0d34f6b1f31",
+  "backend": "import",
+  "model": "claude-sonnet-5-5",
+  "prompt_version": "read-v1",
+  "confidence": null,
+  "quality": null,
+  "warnings": [],
+  "seconds": null,
+  "created": "2026-11-13T14:41:20+00:00",
+  "rotation": "0",
+  "text": "NAZÍ V AI DOBĚ\n\na minulou nadřazenost. V projevu u Mount Rushmore v roce 2020 popsal Ameriku jako „nejspravedlivější a nejvýjimečnější národ, jaký kdy na Zemi existoval“.³¹ A ve svém inauguračním proslovu v lednu 2025 Trump prohlásil: „Každý národ nám bude závidět... A naší nejvyšší prioritou bude vytvořit národ, který je hrdý, prosperující a svobodný. Amerika bude brzy větší, silnější a daleko výjimečnější než kdykoli dřív... Zemí se šíří vlna změn, sluneční svit zaplavuje celý svět a Amerika má šanci chopit se této příležitosti jako nikdy předtím... Budeme statečně stát, hrdě žít, odvážně snít a nic nám nebude stát v cestě, protože jsme Američané. Budoucnost je naše a naše zlatá éra právě začala.“³²\n\n## EU BEZ MÝTU\n\nNa rozdíl od USA s jejich mýtem o „městě na hoře“ trpí EU absencí vlastního silného mýtu. Odtržený smysl pro identitu občanů členských států EU a převládající lpění na národní identitě jsou do značné míry způsobeny právě nedostatkem takového mýtu. Jistě, existovaly snahy o vytvoření symbolů podporujících identitu, jako byl pokus o vytvoření zakládajícího mýtu o počátcích evropské integrace, vytvoření vlastní hymny, vlajky nebo společné měny. Ale příběh evropské integrace, který v roce 1950 spojil bývalé nepřátele Německo a Francii k podpisu Schumanovy deklarace, jež založila Evropské společenství uhlí a oceli, nezafungoval. Stejně tak nezafungovalo ani podepsání Římských smluv v roce 1957, které založily Evropská společenství, ani Maastrichtské smlouvy, jež v roce 1992 přeměnily společenství na Evropskou unii. Žádný z těchto aktů nebyl zasazen do silného příběhu, který by vytvořil pocit jedinečné a smysluplné mise, která by Evropany strhla.\n\n67\n",
+  "merged_from": "sonnet"
+}

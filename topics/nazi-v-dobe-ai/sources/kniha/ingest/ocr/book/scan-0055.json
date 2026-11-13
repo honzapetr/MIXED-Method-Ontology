@@ -1,0 +1,17 @@
+{
+  "source": "kniha",
+  "scan": 55,
+  "image": "IMG_20260902_200630.jpg",
+  "image_sha256": "106bceecabd935b7d9a60921df32e6d0fdd6e37495b83dd1f698e0802e981d05",
+  "backend": "import",
+  "model": "claude-sonnet-5-5",
+  "prompt_version": "read-v1",
+  "confidence": null,
+  "quality": null,
+  "warnings": [],
+  "seconds": null,
+  "created": "2026-11-13T14:41:21+00:00",
+  "rotation": "0",
+  "text": "NAZÍ V AI DOBĚ\n\npaliva“ a v němž mají nejen technologickou převahu, ale i morální právo být lídrem.⁴⁰ Ostatní hráči, zejména Čína, jsou často líčeni jako morálně pochybní a technologicky bezohlední, což posiluje obraz USA jako ochránce lidstva, „vyvoleného národa“ s právem a povinností vést vývoj AI. Umělá inteligence se tak stává nejen technologickým projektem, ale i projektem civilizační nadvlády. Marc Andreessen třeba tvrdí, že „USA by měly zaujmout vůči Číně stejnou strategii, jakou zaujal Ronald Reagan vůči Sovětskému svazu: ‚My zvítězíme, vy prohrajete.‘“⁴¹\n\nAni americká administrativa se netají svou ambicí. Trump v lednu 2025 ve svém prezidentském nařízení nazvaném Odstraňování překážek bránících americkému vedení v oblasti umělé inteligence (Removing barriers to American leadership in artificial intelligence) zmínil nutnost zachování pozice globálního lídra v oblasti AI. Politika USA musí „udržet a posílit globální dominanci Ameriky v oblasti umělé inteligence“.⁴²\n\nČást technologických elit a konzervativních politiků v USA, včetně okruhu Donalda Trumpa⁴³, čerpá inspiraci z názorů Curtise Yarvina, amerického politického teoretika, který založil hnutí Temné osvícenství (Dark Enlightenment) či neoreakcionářské hnutí (NRx). Toto hnutí, oblíbené mezi mnoha tech miliardáři, odmítá ideály osvícenství jako rovnost a demokracii a prosazuje hierarchii, řád a tradiční hodnoty. Yarvinova kritika demokracie a výzvy k centralizované moci rezonují například s viceprezidentem USA J. D. Vancem a dlouhodobě jej podporuje i miliardář Peter Thiel.⁴⁴ Yarvin považuje liberální demokracii za neefektivní a zkorumpovanou, tvrdí, že vede k byrokracii, stagnaci a úpadku a maskuje vládu nevolených elit. Navrhuje nahradit ji „neokameralistickým“ systémem – státem řízeným, jako se řídí firma, s „CEO monarchou“ v čele, což by podle něj vedlo k větší efektivitě a odpovědnosti.\n\n71\n",
+  "merged_from": "sonnet"
+}

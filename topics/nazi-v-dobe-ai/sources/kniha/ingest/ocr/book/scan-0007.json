@@ -1,0 +1,17 @@
+{
+  "source": "kniha",
+  "scan": 7,
+  "image": "IMG_20260902_195634.jpg",
+  "image_sha256": "2b247d1fe4bd04b3f3fb40a378f9f3c50c94a63a1b46cd00bee09170f9f74ff1",
+  "backend": "import",
+  "model": "claude-sonnet-5-5",
+  "prompt_version": "read-v1",
+  "confidence": null,
+  "quality": null,
+  "warnings": [],
+  "seconds": null,
+  "created": "2026-11-13T14:41:15+00:00",
+  "rotation": "0",
+  "text": "TANEC SLUNCI\ntaké proto, abychom se zastavili a chopili se uzdy AI ještě dříve, než nad ní začneme ztrácet kontrolu. V této a druhé kapitole se podíváme na myšlení mytické (tedy v kategorii myšlení divokého), ve třetí pak na myšlení racionální (domestikované).\n\n## PŘÍBĚHY, KTERÉ NÁS FORMUJÍ\n\nKdyž jsme kdysi vymysleli řeč, nebyl to jen způsob, jak si povídat. Vytvořili jsme tím nový svět, svět symbolů a příběhů. V nich jsme poprvé začali hledat smysl. A možná jsme si ty příběhy a mýty začali vyprávět i proto, abychom se díky nim cítili jistěji v chaotickém světě kolem nás. Byl to pokus pochopit něco, co nám unikalo. Tvorba mýtů pramenila ze snahy pochopit svět – a tím se ho symbolicky zmocnit (v češtině ostatně slovo pochopit vychází ze spojení po-chopit, něčeho se chopit, zmocnit). Tvorba mýtů tedy možná pramení ze stejného zdroje jako domestikované myšlení, jehož plodem je pak věda a rozum: z hluboké lidské potřeby necítit se bezbranně, naze, ale „obléknout se“ do určitého řádu a smyslu.\n\nNietzsche měl pravdu, když tvrdil, že svět se netočí kolem hlučných událostí, ale kolem hodnot, které nám dávají smysl. Jejich „gravitační síla“ působí tiše, avšak mocně. Čím více oslovují naši představivost a zároveň nabízejí srozumitelné vysvětlení světa a našeho místa v něm, tím větší mají sílu pro společné jednání.\n\nVíra ve společný příběh, který nám dává smysl, může být mimořádně silným motorem naší aktivity. Jako pro zmíněný indiánský kmen Pueblo. Dával jim sílu dělat maximum pro zachování kmene a pokračování rituálu do daleké budoucnosti. Francouzský historik Charles-Olivier Carbonell k tomu uvádí: „Vědomí identity skupin se nejlépe projevuje v jejich schopnosti\n24\n",
+  "merged_from": "sonnet"
+}

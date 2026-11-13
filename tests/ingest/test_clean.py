@@ -6,7 +6,7 @@ from PIL import Image
 from mmo.cli import main
 from mmo.core.check import check_source
 from mmo.core.topic import Topic, sha256_file
-from mmo.ingest.clean import clean_record, clean_text
+from mmo.ingest.clean import clean_record, clean_text, import_record, merge_variants
 from mmo.ingest.ocr import load_pages
 
 LOOP = "Občané Unie by šli jen stěží do války pod evropskou vlajkou."
@@ -111,3 +111,36 @@ def test_cli_import_clean_and_check(tmp_path: Path, capsys) -> None:
     assert cleaned[2]["text"] == "Strana přečtená znovu.\n\n12\n"
     assert [r["text"] for r in load_pages(raw_dir)] == list(texts.values()), "raw variant untouched"
     assert any(f.startswith("stuck OCR (fabric-clean): scans 3 ") for f in check_source(source))
+
+
+def test_import_takes_the_rotation_line_out_of_the_text(tmp_path: Path) -> None:
+    rec = import_record("kniha", 4, tmp_path / "IMG_4.jpg", "abc", "ROTATION: 90cw\nStrana.\n\n54", "m", "p")
+    assert rec["rotation"] == "90cw" and rec["text"] == "Strana.\n\n54\n"
+    plain = import_record("kniha", 5, tmp_path / "IMG_5.jpg", "abc", "ROTATION nic\nStrana.", "m", "p")
+    assert plain["rotation"] is None and plain["text"] == "ROTATION nic\nStrana.\n"
+
+
+def test_merge_takes_each_scan_from_the_first_variant_that_has_it() -> None:
+    first = [{"scan": 2, "model": "opus", "text": "B"}]
+    second = [{"scan": 1, "model": "sonnet", "text": "a"}, {"scan": 2, "model": "sonnet", "text": "b"}]
+    merged = merge_variants({"claude": first, "sonnet": second})
+    taken = [(r["scan"], r["model"], r["merged_from"]) for r in merged]
+    assert taken == [(1, "sonnet", "sonnet"), (2, "opus", "claude")]
+
+
+def test_cli_merge(tmp_path: Path, capsys) -> None:
+    topic = Topic.create(tmp_path, "t1", "T")
+    source = topic.add_source("kniha", "book", title="Kniha", language="ces")
+    for scan in (1, 2, 3):
+        Image.new("RGB", (300 + scan, 400), "white").save(source.files_dir / f"IMG_{scan}.png")
+    for variant, scans in {"claude": [2], "sonnet": [1, 2]}.items():
+        folder = source.ocr_dir(variant)
+        folder.mkdir(parents=True)
+        for scan in scans:
+            rec = {"scan": scan, "image": f"IMG_{scan}.png", "model": variant, "text": f"{variant} {scan}\n"}
+            (folder / f"scan-{scan:04d}.json").write_text(json.dumps(rec), encoding="utf-8")
+    args = ["--topics", str(tmp_path), "ocr", "merge", "t1", "kniha", "--variants", "claude", "sonnet"]
+    assert main([*args, "--into", "book"]) == 0
+    out = capsys.readouterr().out
+    assert "1 from claude, 1 from sonnet" in out and "scans in no variant: 3" in out
+    assert [r["text"] for r in load_pages(source.ocr_dir("book"))] == ["sonnet 1\n", "claude 2\n"]

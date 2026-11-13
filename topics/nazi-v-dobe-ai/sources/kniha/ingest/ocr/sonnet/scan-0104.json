@@ -1,0 +1,16 @@
+{
+  "source": "kniha",
+  "scan": 104,
+  "image": "IMG_20260902_222057.jpg",
+  "image_sha256": "5e4375761c2face2e0d1e56d015705aba66119b97bc086d74ba4f3dc0991dca4",
+  "backend": "import",
+  "model": "claude-sonnet-5-5",
+  "prompt_version": "read-v1",
+  "confidence": null,
+  "quality": null,
+  "warnings": [],
+  "seconds": null,
+  "created": "2026-11-13T14:41:29+00:00",
+  "rotation": "0",
+  "text": "NAZÍ V AI DOBĚ\n\n21 Kissinger et al., The Age of AI, 70.\n\n22 Kissinger et al., The Age of AI, 4.\n\n23 Kai-Fu Li, AI Superpowers: China, Silicon Valley, and the New World Order (Houghton Mifflin Harcourt, 2021), 158.\n\n24 Li, AI Superpowers, 199.\n\n25 Li, AI Superpowers, 160.\n\n26 Shannon Vallor, The AI Mirror: How to Reclaim Our Humanity in an Age of Machine Thinking (Oxford University press, 2024), 85.\n\n27 Ethan Mollick, Co-Intelligence: Living and Working with AI (W H Allen, 2024), 123.\n\n28 Mollick, Co-Intelligence, 124.\n\n29 Ray Kurzweil, The Singularity Is Nearer: When We Merge with AI (The Bodley Head, 2024), 101.\n\n30 Mollick, Co-Intelligence, 188.\n\n31 John Browne, Make, Think, Imagine: The Future of Civilisation (Bloomsbury Publishing, 2020), 30.\n\n32 Nigel Toon, How AI Thinks: How We Built It, How It Can Help Us, and How We Can Control It (Torva, 2024), 218.\n\n33 Mustafa Suleyman a Michael Bhaskar, The Coming Wave: Technology, Power, and the Twenty-First Century's Greatest Dilemma, International edition (Crown, 2023), 282.\n\n34 Browne, Make, Think, Imagine, 29.\n\n35 Julian Togelius, Artificial General Intelligence, The MIT Press Essential Knowledge Series (The MIT Press, 2024), 169.\n\n36 Li, AI Superpowers, 173.\n\n37 Mark Coeckelbergh, AI Ethics, The MIT Press Essential Knowledge Series (The MIT press, 2020), 137.\n\n38 Coeckelbergh, AI Ethics, 141.\n\n39 Mollick, Co-Intelligence, 152.\n\n40 Mollick, Co-Intelligence, 147.\n\n41 Mollick, Co-Intelligence, 131.\n\n42 Amy Webb, The Big Nine: How the Tech Titans and Their Thinking Machines Could Warp Humanity, First trade paperback edition (PublicAffairs, 2020), 145–146.\n123\n"
+}

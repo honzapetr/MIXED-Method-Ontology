@@ -17,6 +17,7 @@ SEPARATOR = re.compile(r"^\s*(-{3,}|\*{3,}|_{3,})\s*$")
 NUMBER_ONLY = re.compile(r"^\s*\d+\s*$")
 # A phrase of at least 30 characters repeated right after itself (OCR loop inside one line).
 REPEATED_PHRASE = re.compile(r"(.{30,}?)(?:\s*\1)+")
+ROTATION_LINE = re.compile(r"^\s*ROTATION:\s*(0|90cw|90ccw|180)\s*$")
 
 NUMBER_RUN = 3  # this many number-only lines in a row are a counting loop, not page numbers
 REPEATED_LINE_MIN = 20  # shorter lines may repeat legitimately ("a", "Ibid.")
@@ -116,7 +117,16 @@ def clean_record(record: dict, variant: str, fallback: dict | None = None, fallb
 def import_record(
     source_id: str, scan: int, image: Path, image_sha256: str, text: str, model: str, prompt: str
 ) -> dict:
-    """An OCR record for a transcription made outside the OCR backends (by hand or by a model in a chat)."""
+    """An OCR record for a transcription made outside the OCR backends (by hand or by a model in a chat).
+
+    A first line `ROTATION: 0|90cw|90ccw|180` (how the photo is turned, as the transcriber saw it) is stored in
+    `rotation` and left out of the text.
+    """
+    rotation = None
+    first, _, rest = text.partition("\n")
+    match = ROTATION_LINE.match(first)
+    if match:
+        rotation, text = match.group(1), rest.lstrip("\n")
     return {
         "source": source_id,
         "scan": scan,
@@ -130,5 +140,19 @@ def import_record(
         "warnings": [],
         "seconds": None,
         "created": datetime.now(UTC).isoformat(timespec="seconds"),
+        "rotation": rotation,
         "text": text if text.endswith("\n") else text + "\n",
     }
+
+
+def merge_variants(variants: dict[str, list[dict]]) -> list[dict]:
+    """One record per scan, from the first variant (in the given order) that has it; `merged_from` names it.
+
+    The records are copied unchanged otherwise, so each page keeps its own model, prompt version and time.
+    """
+    merged: dict[int, dict] = {}
+    for name, records in variants.items():
+        for record in records:
+            if record["scan"] not in merged:
+                merged[record["scan"]] = record | {"merged_from": name}
+    return [merged[scan] for scan in sorted(merged)]

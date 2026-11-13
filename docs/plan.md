@@ -105,6 +105,22 @@
   `topics/nazi-v-dobe-ai/sources/kniha/text/`, `README.md`, `docs/`
 - Depends on: T2d.
 
+### T2f – Reading the book with a cloud model
+- Goal: a reliable text of `kniha` for the analysis without more local OCR tuning (owner's request 2026-11-13).
+- Acceptance criteria:
+  - a model comparison on scans with an Opus reading (`claude`) picks the smallest model that reads well enough;
+    result recorded in the progress entry (owner chose Claude Sonnet 5.5 and approved the cloud model);
+  - every scan without a `claude` reading transcribed with the same instructions as `claude`, stored with
+    `mmo ocr import` as the variant `sonnet` (model, prompt version, image hash, time); the prompt saved next to it;
+  - a combined variant of the whole book from `claude` and `sonnet` (`mmo ocr merge`, variant `book`), its reading
+    order and text built; photo rotation as seen by the model recorded; in the reading order the number a
+    transcription of the whole page carries goes before the number read from the page edges;
+  - the pages missing from the book, the duplicates and the pages without a number listed for the owner.
+- Verify: `uv run pytest && uv run mmo ocr order nazi-v-dobe-ai kniha --variant book`
+- Paths: `code/mmo/`, `tests/`, `topics/nazi-v-dobe-ai/sources/kniha/ingest/`,
+  `topics/nazi-v-dobe-ai/sources/kniha/text/`, `docs/`
+- Depends on: T2e.
+
 ### T3 – Image preprocessing and page layout
 - Goal: improve OCR input and drop running headers / page numbers from segments.
 - Acceptance criteria: optional deskew/contrast step; header and page-number lines detected and stored apart from

@@ -1,0 +1,16 @@
+{
+  "source": "kniha",
+  "scan": 43,
+  "image": "IMG_20260902_200532.jpg",
+  "image_sha256": "9e0a4bd48da1181fc02b91274ee934dd192f6b9098ae1575bdd5efacd4cbd4aa",
+  "backend": "import",
+  "model": "claude-sonnet-5-5",
+  "prompt_version": "read-v1",
+  "confidence": null,
+  "quality": null,
+  "warnings": [],
+  "seconds": null,
+  "created": "2026-11-13T14:41:20+00:00",
+  "rotation": "0",
+  "text": "NAZÍ V AI DOBĚ\n\nKdyž první generace evropských osadníků připlula do Severní Ameriky, její členové neměli mnoho společného. Lišili se etnickým původem, jazykem i politickým a náboženským přesvědčením. Do Ameriky je zavedly různé motivace. V roce 1630 však John Winthrop, první guvernér kolonie Massachusetts, pronesl projev, který budoucí podobu Ameriky zásadně ovlivnil. Toto kázání, později známé jako Město na pahorku (City Upon a Hill), přednesené v kostele Holyrood v Southamptonu těsně před vyplutím první vlny osadníků na lodi Arbella, v kolonistech hluboce rezonovalo. Jejich cesta do Ameriky neměla být náhodná – vedl je sám Bůh jako svůj nový vyvolený lid do zaslíbené země. Každý osadník měl sehrát klíčovou roli v Božím plánu na záchranu lidstva.⁵\n\nPodle starozákonního příběhu chtěl původně hebrejský kmenový Bůh získat výsadní postavení mezi ostatními bohy a stát se jediným bohem světa. Vybral si k tomu Hebrejce, kteří mu měli být naprosto věrní.⁶ Na oplátku jim slíbil takové požehnání, že by jim ostatní národy záviděly a začaly uctívat pouze jeho. Tím by se celé lidstvo sjednotilo pod Bohem Abraháma, Izáka a Jákoba a nastal by rajský stav. Takový byl „byznys plán“ pro expanzi božského impéria. Aby dosáhl úspěchu, vyžadoval hebrejský Bůh od svého vyvoleného lidu dvě věci: výhradní uctívání pouze jeho – bez jakéhokoliv flirtování s jinými bohy – a přísné dodržování všech jeho přikázání a zákonů.\n\nZdálo se však, že tento úkol byl pro jeho lid příliš obtížný, protože hebrejští proroci si opakovaně stěžovali na neustálé uctívání cizích bohů a porušování Božích nařízení. Boží plán získat nové následovníky tedy neprobíhal podle představ a víra v něj zůstala až do vzniku křesťanství omezena převážně na území historického Izraele. S nástupem křesťanství se objevily snahy nahradit Židy křesťany jako novým Božím vyvoleným lidem. John Winthrop ve svém kázání představil další podobnou\n"
+}

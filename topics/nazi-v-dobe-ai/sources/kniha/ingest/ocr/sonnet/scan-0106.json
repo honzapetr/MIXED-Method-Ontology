@@ -1,0 +1,16 @@
+{
+  "source": "kniha",
+  "scan": 106,
+  "image": "IMG_20260902_222110.jpg",
+  "image_sha256": "9908692ee27c7ed9657c65e2d63e26a34f301d17721a1a1c0ebc1abfc877efb0",
+  "backend": "import",
+  "model": "claude-sonnet-5-5",
+  "prompt_version": "read-v1",
+  "confidence": null,
+  "quality": null,
+  "warnings": [],
+  "seconds": null,
+  "created": "2026-11-13T14:41:30+00:00",
+  "rotation": "0",
+  "text": "STÁLE NEJSME BOHY\n\nLIDÉ SE PO TISÍCILETÍ SNAŽILI přijít na to, co je dobré a co zlé. Biblický příběh o vyhnání z ráje a uvědomění si nahoty Adama a Evy se odehrál poté, co pojedli ze Stromu poznání dobra a zla – jediného stromu, z něhož jim bylo zakázáno jíst. Satan v příběhu pokoušel Evu slovy: „Bůh však ví, že v den, kdy z něho pojíte, otevřou se vám oči a budete jako Bůh znát dobré i zlé.\"¹ Schopnost rozeznat dobro a zlo byla tedy vnímána jako výsada vyhrazená pouze bohům. Od té doby jako by lidstvo nikdy nepřestalo toužit po stejném ovoci. Po tisíce let se snažíme poznat hranici mezi dobrem a zlem, a tím se stát bohy. Byli jsme v této snaze úspěšní? A pomůže nám v tom AI?\n\n## MEZI NEBEM A AI\n\nSlovo „etika\" pochází z řeckého éthos, což znamená „způsob života\" nebo „společenské zvyklosti\". Etika je disciplína, která zkoumá morální normy jednotlivce či společnosti. Slovo „morálka\" má svůj původ v latinském mores, tedy „mravy\" nebo „společenské hodnoty\". Morálku lze definovat jako soubor norem, které určují, co je považováno za správné a špatné, dobré a zlé – buď jednotlivcem, nebo společností jako celkem.\n\nOdkud se ale bere to, co považujeme za dobré a správné? V židovsko-křesťanské tradici má tato otázka poměrně jasnou odpověď: morální normy jsou darem od Boha. Mojžíš je přijal na hoře Sinaj v podobě Desatera přikázání a v tu chvíli se staly základními pravidly správného lidského jednání. Mnohá náboženství sdílejí tuto představu, tedy že morálka není lidským výtvorem, ale je něčím posvátným, pocházejícím z vyšší, božské sféry. Ve starověkých civilizacích, jako byl Egypt, byli vládci považováni za vtělené bohy, kteří určovali zákony a hodnoty pro celý národ.\n126\n"
+}

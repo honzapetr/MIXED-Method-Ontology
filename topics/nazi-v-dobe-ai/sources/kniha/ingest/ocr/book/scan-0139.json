@@ -1,0 +1,17 @@
+{
+  "source": "kniha",
+  "scan": 139,
+  "image": "IMG_20260902_222343.jpg",
+  "image_sha256": "a9ac536e52ab1a8f16c641b105d9ee3f83ff023eacbcf46d6bcd4edba222140c",
+  "backend": "import",
+  "model": "claude-sonnet-5-5",
+  "prompt_version": "read-v1",
+  "confidence": null,
+  "quality": null,
+  "warnings": [],
+  "seconds": null,
+  "created": "2026-11-13T14:41:37+00:00",
+  "rotation": "90ccw",
+  "text": "NAZÍ V AI DOBĚ\n\n59 Nietzsche et al., Tak pravil Zarathustra, 11.\n\n60 Becca Caddy published, „Altman Says Gen Z Uses ChatGPT for Life Decisions, Here's Why That's Both Smart and Risky\", TechRadar, 2. červen 2025, https://www.techradar.com/computing/artificial-intelligence/altman-says-gen-z-uses-chatgpt-for-life-decisions-heres-why-thats-both-smart-and-risky.\n\n61 Vallor, The AI Mirror, 109.\n\n62 Vallor, The AI Mirror, 53.\n\n63 Friedrich Nietzsche et al., Tak pravil Zarathustra, 180.\n\n64 Friedrich Nietzsche et al., Tak pravil Zarathustra, 22.\n\n159\n",
+  "merged_from": "sonnet"
+}
