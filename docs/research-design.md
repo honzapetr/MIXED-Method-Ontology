@@ -87,6 +87,40 @@ sequential). A theoretical framework may shape the whole design.
 6. **Ontology:** today it has `ResearchQuestion` and `Goal`; it would need a purpose and position of the topic, a
    conceptual framework with sensitising concepts, and `Theory` / `Proposition` linked to questions and evidence.
 
+## Per method, in short
+
+The same summary is in each method module under `research_design` (`methods/*.yaml`), so agents read it with the
+method. SKAD is the method of the first study (`nazi-v-dobe-ai`); its module is written in the next step.
+
+| Method | Purpose | Questions arise | Prior theory | Reasoning | Theory output |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| GT (Charmaz) | understand a process in an area of interest | broad initial question, refined during coding | sensitising concepts, lightly | inductive, abductive moments | substantive theory around a core category |
+| Reflexive TA | interpret patterns of meaning | broad, may change during analysis | declared framework (orientation, epistemology) | inductive or theory-led | defined themes, not necessarily a theory |
+| SKAD | reconstruct how a discourse makes knowledge | about phenomenon, speakers, interpretive schemes, classifications, phenomenon and narrative structure, effects | heuristic frame (Berger & Luckmann, Foucault) | hermeneutic, non-deductive, GT coding | reconstruction of discourses, middle-range account |
+| CDA (Fairclough) | critique of a social wrong | from the social wrong, its obstacles and ways past | critical social theory, explicit | explanatory critique | explanation of how semiosis sustains the wrong |
+| Mixed methods | integrate strands | separate qual, quant and mixed questions | may shape the whole design | depends on the strand | integrated inferences (meta-inferences) |
+
+## Sources consulted (T8, 2026-11-13)
+
+Found by web search and used for this document:
+
+- Maxwell, Qualitative Research Design (SAGE):
+  <https://www.sagepub.com/en-us/nam/qualitative-research-design/book234502>
+- Maxwell, Designing a Qualitative Study (chapter):
+  <https://study.sagepub.com/sites/default/files/sk_book_chapter_designing_a_qualitative_study.pdf>
+- Keller, Hornidge & Schünemann (eds.), The Sociology of Knowledge Approach to Discourse (OAPEN, open access):
+  <https://library.oapen.org/bitstream/20.500.12657/57263/1/9781351690614.pdf>
+- Keller, The Sociology of Knowledge Approach to Discourse (chapter, Taylor & Francis):
+  <https://www.taylorfrancis.com/chapters/oa-edit/10.4324/9781315170008-2/sociology-knowledge-approach-discourse-reiner-keller>
+- Fairclough, Critical Discourse Analysis: <https://www.perlego.com/book/2192459/critical-discourse-analysis-the-critical-study-of-language-pdf>
+- Timmermans & Tavory (2012), Theory Construction in Qualitative Research:
+  <https://www.mackenzie.br/fileadmin/user_upload/Timmermans___Tavory__2012__Theory_Construction_in_Qualitative_Research_From_Grounded_Theory.pdf>
+- Creswell & Plano Clark, Designing and Conducting Mixed Methods Research (SAGE):
+  <https://us.sagepub.com/en-us/cab/designing-and-conducting-mixed-methods-research/book269004>
+
+Not read in full yet; to read first for the SKAD module: the OAPEN volume (open access) and Keller (2011) in
+*Human Studies*.
+
 ## References
 
 - Blumer, H. (1954). What is wrong with social theory? *American Sociological Review* 19(1).

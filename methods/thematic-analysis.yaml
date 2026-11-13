@@ -5,6 +5,15 @@ references:
   - Braun & Clarke (2006, 2019, 2022)
 summary: >-
   Develops themes - patterns of shared meaning organised around a central concept - through six recursive phases.
+research_design:
+  # how this method links purpose, questions and theory (docs/research-design.md)
+  purpose: interpret patterns of shared meaning in the data
+  questions: broad at the start and allowed to change during analysis
+  prior_theory: >-
+    A declared framework - inductive or theory-led orientation, semantic or latent focus, epistemology; written
+    down in a reflexivity memo.
+  reasoning: inductive or deductive (theory-led), always interpretive
+  theory_output: a small set of defined themes; a theory is not required
 code_types: [semantic, latent]
 relation_types:
   - id: subtheme_of

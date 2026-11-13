@@ -155,3 +155,16 @@
   No code or data removed.
 - Next: define with the owner how the qualitative analysis with AI works (approaches, connections, theme maps)
   before T4-T6 are specified; research questions of `nazi-v-dobe-ai` are still empty.
+
+## T8 – 2026-11-13 (in progress)
+- Owner: the environment is built by walking one study (SKAD on `nazi-v-dobe-ai`); we record and set up, we do not
+  analyse yet. Theory and research questions are part of the process and tie back to the purpose of the study.
+- Done: `docs/research-design.md` - how methods link purpose, questions and theory (Maxwell, GT, reflexive TA,
+  SKAD, CDA, mixed methods), proposal for the environment, sources with links. `research_design` block in
+  `methods/grounded-theory.yaml` and `methods/thematic-analysis.yaml`, required by `tests/test_ontology_and_methods.py`.
+  Answers in `docs/answers.md`. Active GitHub account switched to `honzapetr` (owner's request); git user is still
+  `Jan-dolphin`.
+- Verified: `uv run pytest` (72 passed), `ruff check`, `ruff format --check`.
+- Next: SKAD method module (`methods/skad.yaml`) after reading the OAPEN volume; purpose of the study with the owner
+  while going through SKAD; AI role scenarios to test. The book's type and author were not found on the web under
+  the title "Nazí v době AI" (one search).

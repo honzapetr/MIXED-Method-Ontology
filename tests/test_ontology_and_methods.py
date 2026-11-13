@@ -36,6 +36,8 @@ def test_method_module(path: Path) -> None:
     assert method["id"] == path.stem
     for key in ("name", "summary", "phases", "relation_types", "conclusions"):
         assert method.get(key), f"{path.name}: missing {key}"
+    for key in ("purpose", "questions", "prior_theory", "reasoning", "theory_output"):
+        assert method.get("research_design", {}).get(key), f"{path.name}: missing research_design.{key}"
     relation_ids = {r["id"] for r in method["relation_types"]}
     phase_ids = [p["id"] for p in method["phases"]]
     assert len(phase_ids) == len(set(phase_ids))

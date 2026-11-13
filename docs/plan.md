@@ -23,6 +23,15 @@
 - Paths: `AGENTS.md`, `README.md`, `docs/`, `.agents/skills/ingest-sources/`, `.claude/skills/ingest-sources/`
 - Depends on: T2g
 
+### T8 – Design of the analysis environment (in progress)
+- Goal: record how methods link purpose, research questions and theory, and the layers of the environment (approach
+  as analytic moves, connections, theme map, theory), by walking one study: SKAD on `nazi-v-dobe-ai`.
+- Acceptance criteria: `docs/research-design.md` with sources; `research_design` in every method module, checked by
+  the method test; owner's answers in `docs/answers.md`; no analysis output yet.
+- Verify: `uv run pytest tests/test_ontology_and_methods.py`
+- Paths: `docs/`, `methods/`, `tests/test_ontology_and_methods.py`
+- Depends on: T7
+
 ## Analysis
 
 ### T4 – Graph store and topic versioning

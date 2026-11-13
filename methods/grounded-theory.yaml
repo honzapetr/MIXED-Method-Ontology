@@ -5,6 +5,17 @@ references:
   - Glaser & Strauss (1967); Strauss & Corbin (1990); Charmaz (2006/2014) - versions differ, the topic says which.
 summary: >-
   Builds a theory from the data by coding, constant comparison and memoing until the categories are saturated.
+research_design:
+  # how this method links purpose, questions and theory (docs/research-design.md)
+  purpose: understand a process or social phenomenon in an area of interest
+  questions: >-
+    Start broad ("what is going on here?"; Charmaz: an initial question); narrowed during coding and theoretical
+    sampling; new questions come from surprises in the data.
+  prior_theory: >-
+    Sensitising concepts as points of departure only; classic GT keeps the literature away until late, Charmaz
+    allows it lightly.
+  reasoning: inductive with abductive moments (Timmermans & Tavory 2012)
+  theory_output: substantive theory around a core category; formal theory after comparison across areas
 code_types: [open, in_vivo, process, axial, selective]
 relation_types:
   - id: causal_condition

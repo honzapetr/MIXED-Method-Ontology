@@ -58,3 +58,7 @@
 - **Research questions belong with theory:** questions must be tied to why the research exists and what the
   researcher wants to find out; the environment follows how the methodologies let questions and theories arise
   (background: `docs/research-design.md`).
+- **How we work now (owner):** we are building the analysis environment, not analysing yet. One study is walked
+  through to set the environment up, and what is learned along the way is recorded for the next steps.
+- **The study:** SKAD on `nazi-v-dobe-ai`. The purpose of the study is specified later, while going through SKAD.
+- **Role of AI:** not decided; scenarios have to be tested.
