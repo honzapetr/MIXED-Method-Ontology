@@ -45,3 +45,13 @@
   qualitative analysis with AI by specific approaches, how to find connections in a text and map themes.
 - An agent's proposal to treat the analysis as an experiment comparing variants against a benchmark was rejected:
   it came from the OCR work, not from the owner. The way the analysis works is defined with the owner.
+
+## 2026-11-13 – the analysis environment
+- **Layers (approved):** (1) an approach as a sequence of analytic moves, each saying what the model does and what
+  the researcher does; (2) finding connections in the text in several ways side by side (co-occurrence, semantic
+  closeness, tensions, argument structure, typed relations of the method); (3) the theme map as a view of the graph,
+  every element with its evidence quotes and status.
+- **Theory is part of the process:** how a theory is built and how one works with it afterwards must be a layer of
+  the environment, not left out.
+- **First method:** the most suitable one for the purpose; the owner has always liked discourse analysis. The
+  variant is still to be chosen.
