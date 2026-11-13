@@ -1,6 +1,6 @@
 ---
 source: "kniha"
-title: "Nazí v době AI"
+title: "Nazí v AI době"
 status: "final - the text for the analysis"
 variant: "book"
 built: "2026-11-13"
@@ -14,7 +14,7 @@ read_by: {"claude-opus-5-5": 45, "claude-sonnet-5-5": 166}
 
 > Final text of `kniha` for the analysis. Do not edit by hand: built by `mmo source finalize` from the OCR variant `book` (`text` in `source.yaml`). Each page sits under a comment with its printed page, scan and image, so every quote can be traced to the photo. `[?]` marks a word nobody could read.
 
-# Nazí v době AI
+# Nazí v AI době
 
 <!-- page 15 (printed) · scan 1 · IMG_20260902_195453.jpg -->
 

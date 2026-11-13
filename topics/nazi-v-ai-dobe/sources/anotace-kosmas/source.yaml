@@ -1,0 +1,14 @@
+id: anotace-kosmas
+title: Anotace knihy (Kosmas)
+kind: web
+role: context
+about:
+- kniha
+language: ces
+citation:
+  publisher: Kosmas
+  url: https://www.kosmas.cz/knihy/558975/nazi-v-ai-dobe/
+  accessed: '2026-11-13'
+attributes: {}
+questions: []
+note: Publisher's annotation of the book. Candidate found by web search (T8); page not saved or read yet.

@@ -62,3 +62,11 @@
   through to set the environment up, and what is learned along the way is recorded for the next steps.
 - **The study:** SKAD on `nazi-v-dobe-ai`. The purpose of the study is specified later, while going through SKAD.
 - **Role of AI:** not decided; scenarios have to be tested.
+- **Two lines (owner):** building the environment and the concrete analysis with its sources are kept apart.
+  Information about sources has its place in the topic.
+- **Topic renamed** to the printed title of the book: "Nazí v AI době", slug `nazi-v-ai-dobe`.
+- **Web material about the book** (annotation, reviews, debate, announcement, catalogue) goes in as context
+  sources of the topic.
+- **Notes and impressions are part of the methodology:** an impression about a source is a note to that source
+  and one of the first analytic steps; the infrastructure must make such notes functional (proposal in
+  `docs/research-design.md`, section Memos).

@@ -87,10 +87,45 @@ sequential). A theoretical framework may shape the whole design.
 6. **Ontology:** today it has `ResearchQuestion` and `Goal`; it would need a purpose and position of the topic, a
    conceptual framework with sensitising concepts, and `Theory` / `Proposition` linked to questions and evidence.
 
+## Memos are part of the method (proposal)
+
+Notes and impressions are not side remarks: every approach treats them as analytic work. GT memoing in every phase,
+familiarisation notes and the reflexivity journal in TA, SKAD's interpretive memos while reconstructing a
+discourse. A first impression already frames the analysis, so it must be visible, typed and traceable like any
+other step - and kept apart from findings.
+
+**Two lines.** The environment (`docs/`, `methods/`, `ontology/`, `code/`) defines what a memo is and how it is
+used. The concrete analysis keeps its memos in its topic: `topics/<slug>/memos/` for the topic, and
+`sources/<id>/notes.md` for the researcher's context memo of one source.
+
+**A memo is a Markdown file with a YAML header:**
+
+| Field | Meaning |
+| :--- | :--- |
+| `id` | `<date>-<short-name>`, the file name |
+| `type` | `context` (why a source is here), `first-impression`, `familiarisation`, `reflexive` (the researcher's position), `analytic` (about codes, categories, relations), `theoretical` (towards propositions), `methodological` (a decision about the procedure), `steering` (instructions for the next step of a model) |
+| `author` | a person or a model id |
+| `created` | date |
+| `status` | `draft` (person) or `proposed` / `confirmed` / `rejected` (model memos are always proposed first) |
+| `about` | what the memo is about: the topic, source ids, segment ids, concept ids, question ids |
+| `basis` | what it rests on: segments, sources, or `how` it came about (e.g. only web summaries) - an impression says so |
+| `method`, `phase` | the method and phase it belongs to |
+| `supersedes` | an earlier memo it revises |
+
+**What makes it work:**
+- agents read memos as context: steering memos are passed to the next step, first impressions become checks to
+  run against the text (confirmed, revised or dropped with a reason);
+- every memo is listed by what it is about, so a source, a question or a concept shows its memos;
+- in the graph a memo is a `Memo` (PROV-O: who, when, from what), linked to its `about` and `basis`;
+- `mmo source check` (later `mmo memo check`) reports a memo pointing to an unknown source or segment;
+- the method module says which memo types each phase expects.
+
+Example: `topics/nazi-v-ai-dobe/memos/2026-11-13-author-positions.md`.
+
 ## Per method, in short
 
 The same summary is in each method module under `research_design` (`methods/*.yaml`), so agents read it with the
-method. SKAD is the method of the first study (`nazi-v-dobe-ai`); its module is written in the next step.
+method. SKAD is the method of the first study (`nazi-v-ai-dobe`); its module is written in the next step.
 
 | Method | Purpose | Questions arise | Prior theory | Reasoning | Theory output |
 | :--- | :--- | :--- | :--- | :--- | :--- |

@@ -25,7 +25,7 @@
 
 ### T8 – Design of the analysis environment (in progress)
 - Goal: record how methods link purpose, research questions and theory, and the layers of the environment (approach
-  as analytic moves, connections, theme map, theory), by walking one study: SKAD on `nazi-v-dobe-ai`.
+  as analytic moves, connections, theme map, theory), by walking one study: SKAD on `nazi-v-ai-dobe`.
 - Acceptance criteria: `docs/research-design.md` with sources; `research_design` in every method module, checked by
   the method test; owner's answers in `docs/answers.md`; no analysis output yet.
 - Verify: `uv run pytest tests/test_ontology_and_methods.py`

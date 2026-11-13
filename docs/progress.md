@@ -167,16 +167,13 @@
 - Verified: `uv run pytest` (72 passed), `ruff check`, `ruff format --check`.
 - Next: SKAD method module (`methods/skad.yaml`) after reading the OAPEN volume; purpose of the study with the owner
   while going through SKAD; AI role scenarios to test.
-- Book found on the web (owner asked): Lukáš Sedláček, *Nazí v AI době: Identita člověka a hledání smyslu tváří v
-  tvář umělé inteligenci*, Muza books 2025, 236 pp., ISBN 978-80-530-6104-9; recorded as `citation` in
-  `kniha/source.yaml`. The printed title is "Nazí v AI době"; the topic is called "Nazí v době AI" (owner to decide
-  whether to rename). Author: founder of Týden inovací (an AI and innovation event). Genre by annotation and
-  reviews: a philosophical essay on human identity and meaning facing AI (history of ideas, myths, stories;
-  explicitly not a how-to). Candidate context sources for the SKAD corpus (`role: context`, owner to choose):
-  reviews iLiteratura <https://www.iliteratura.cz/clanek/47947-sedlacek-lukas-nazi-v-ai-dobe>, Flowee
-  <https://www.flowee.cz/civilizace/15968-recenze-kniha-nazi-v-ai-dobe-popisuje-co-delat-kdyz-stroje-mysli-a-lide-ztraceji-jistotu>,
-  Trénink paměti <https://www.treninkpameti.com/news/bratri-sedlackovi-umi/>; debate at Svět knihy, NN Magazine
-  <https://www.nnmagazine.cz/svleka-nas-ai-do-naha-na-svete-knih-jsme-debatovali-o-umele-a-lidske-inteligenci/>;
-  launch announcement Feedit
-  <https://feedit.cz/2025/10/01/zakladatel-nejvetsi-akce-v-oblasti-ai-ve-stredni-evrope-lukas-sedlacek-v-rijnu-vydava-knihu-nazi-v-ai-dobe-prijdte-na-krest/>;
-  catalogue Databáze knih <https://www.databazeknih.cz/knihy/nazi-v-ai-dobe-581380>. None read in full yet.
+- Two lines kept apart (owner): building the environment (`docs/`, `methods/`, `ontology/`, `code/`) and the
+  concrete analysis with its sources (`topics/<slug>/`). Information about the book and its context sources lives
+  in the topic, not here.
+- Topic renamed to the printed title: `nazi-v-dobe-ai` -> `nazi-v-ai-dobe`, "Nazí v AI době" (owner); `text.md`
+  rebuilt (only the title changed). Older entries above keep the old name. Scripts in `scratch/T2f`, `scratch/T2g`
+  still point to the old path.
+- Book found on the web: `citation` and `attributes` in `kniha/source.yaml`; 7 context sources added with
+  `mmo source add --role context --about kniha` (annotation, 3 reviews, debate report, launch announcement,
+  catalogue record), each with URL and access date; pages not saved or read yet.
+- First memo in the proposed format (`docs/research-design.md`, section Memos): `topics/nazi-v-ai-dobe/memos/`.

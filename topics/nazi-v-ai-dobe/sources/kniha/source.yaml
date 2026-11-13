@@ -1,9 +1,9 @@
 id: kniha
-title: Nazí v době AI
+title: Nazí v AI době
 kind: book
 language: ces
 citation:
-  # found on the web (T8, 2026-11-13); the printed title is "Nazí v AI době", the topic title differs
+  # found on the web (T8, 2026-11-13)
   authors: [Lukáš Sedláček]
   year: 2025
   title: 'Nazí v AI době: Identita člověka a hledání smyslu tváří v tvář umělé inteligenci'
@@ -11,6 +11,10 @@ citation:
   isbn: 978-80-530-6104-9
   url: https://www.kosmas.cz/knihy/558975/nazi-v-ai-dobe/
   accessed: '2026-11-13'
+attributes:
+  # from the publisher's annotation and the launch announcement (context sources anotace-kosmas, oznameni-feedit)
+  genre: essay
+  author_role: founder of Týden inovací, an AI and innovation event in Central Europe
 note: >-
   Phone photos of the printed book, one page per photo, taken out of order (2026-09-02). Page 235 ends the book.
   Not photographed (lost, owner 2026-11-13): 1-14 (front matter and the start of the introduction), 17-19, and the
