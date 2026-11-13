@@ -1,8 +1,7 @@
-# Source preparation (supporting tools)
+# Source preparation
 
-> A tool, not a goal of the project. It brings new material into a topic as text the analysis can read: OCR of
-> page photos, reading order, final text, segments. Use it when a source needs it; the project is about the
-> analysis (`docs/brief.md`).
+> A tool of the project: it brings new material into a topic as text the analysis can read - OCR of page photos,
+> reading order, final text, segments.
 
 ## Pipeline
 

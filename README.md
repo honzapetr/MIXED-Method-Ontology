@@ -4,9 +4,8 @@ Infrastructure for qualitative and mixed-methods research: sources of a research
 categories, themes and relations in a versioned knowledge graph. The model proposes, the researcher decides, and
 every statement leads back to an exact place in a source.
 
-Status: early. The project is about the analysis; the first source (a book) is ready as text. The environment for
-qualitative analysis is next; the ontology and method modules are drafts (`docs/plan.md`). Bringing new sources in
-(OCR of page photos and similar) is a supporting tool.
+Status: early. The first source (a book) is ready as text. The environment for qualitative analysis is next; the
+ontology and method modules are drafts (`docs/plan.md`).
 
 Agents follow [`AGENTS.md`](AGENTS.md); the project's memory is in [`docs/`](docs/) (brief, spec, plan, answers,
 progress, ADRs). The repository follows the Project Lab template, so it works with Claude Code, Antigravity CLI and
@@ -41,7 +40,7 @@ uv run mmo source finalize my-topic my-book   # text.md for the analysis, from `
 uv run mmo segment my-topic my-book --variant <variant>
 ```
 
-Bringing in page photos (OCR, reading order, single steps, the homelab OCR service) is a supporting tool:
+Source preparation (OCR of page photos, reading order, single steps, the homelab OCR service):
 [`docs/source-preparation.md`](docs/source-preparation.md).
 
 `uv run python -m mmo` starts the health endpoint used by the lab preview (`/healthz`).

@@ -1,9 +1,9 @@
 # Plan
 
 > Tasks `T<n>` with goal, acceptance criteria, verify command, paths and dependencies (`write-plan` skill).
-> The project is the analysis. The next tasks build the environment for qualitative analysis; how it works is
+> The next tasks build the environment for qualitative analysis; how it works is
 > defined with the owner first, so T4-T6 are direction, not decided. Tools for bringing sources in (OCR and
-> similar) are at the end: they are done for the first book and are touched only when a new source needs them.
+> similar) are at the end, used when a new source needs them.
 
 ### T1 – Repository, ingest scripts and drafts (done)
 - Goal: agent-ready repository with OCR and segmentation scripts and the first ontology and method drafts.
@@ -13,11 +13,11 @@
 - Paths: everything (initial commit).
 
 ### T7 – Instructions centred on the analysis (done)
-- Goal: instructions, docs and plan say that the project is the analysis and that OCR is a supporting tool (owner's
+- Goal: instructions, docs and plan describe source preparation (OCR) as a tool of the project (owner's
   answer 2026-11-13).
 - Acceptance criteria: OCR detail moved from `docs/spec.md` and `README.md` to `docs/source-preparation.md` (nothing
   lost); brief scope and AGENTS.md (**protected path, changed by this task with the owner's approval**) no longer
-  present OCR as a goal; the plan lists source tools apart; no code or data removed; links updated.
+  frame the project around OCR; the plan lists source tools apart; no code or data removed; links updated.
 - Verify: `uv run pytest && python tools/agents_sync.py --check`
 - Paths: `AGENTS.md`, `README.md`, `docs/`, `.agents/skills/ingest-sources/`, `.claude/skills/ingest-sources/`
 - Depends on: T2g
@@ -52,7 +52,7 @@ Later: exports (SKOS, `.qdpx` tested in ATLAS.ti and QualCoder, report), queryin
 with a change overview, quantitative link (DDI-CDI), read-only MCP server, UI.
 
 
-## Tools for bringing sources in (supporting, not a goal)
+## Tools: source preparation
 
 Used for the first book (`kniha`, final text in `sources/kniha/text.md`). How they work: `docs/source-preparation.md`.
 

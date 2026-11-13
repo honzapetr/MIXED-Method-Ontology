@@ -33,9 +33,8 @@ The goal is the infrastructure, not the analysis of one particular book.
 - Draft of the core ontology (LinkML) and of the first method definitions (grounded theory, thematic analysis).
 - The environment for qualitative analysis with AI (current focus; how it works is defined with the owner).
 
-**Bringing sources in is a tool, not a goal.** Sources must become citable text before the analysis (OCR of page
-photos, reading order, segments with exact positions). The tools for it exist and are used when a new source needs
-them (`docs/source-preparation.md`); improving them is not a goal of the project.
+**Tools:** source preparation turns new material into citable text for the analysis (OCR of page photos, reading
+order, segments with exact positions; `docs/source-preparation.md`).
 
 ## Out of scope (for now)
 

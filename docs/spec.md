@@ -73,11 +73,10 @@ Page images stay out of git; `ingest/files.yaml` lists each file with its SHA-25
 **Supplementary information** (reviews, interviews with the author, context documents) is a source of its own with
 `role: context` and `about`, ingested and segmented the same way, so statements drawn from it are traceable too.
 
-## Source preparation (supporting tool)
+## Source preparation
 
 New material becomes text the analysis can read: `mmo source add` and `mmo ingest` (OCR of page images, reading
-order, final `text.md`, segments; text files skip OCR). It is a tool for bringing in sources, not a goal of the
-project. How it works, the commands and the OCR backends: `docs/source-preparation.md`.
+order, final `text.md`, segments; text files skip OCR). How it works, the commands and the OCR backends: `docs/source-preparation.md`.
 
 ## Homelab
 

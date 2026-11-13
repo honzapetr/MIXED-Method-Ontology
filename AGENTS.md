@@ -83,10 +83,9 @@ prompts for the lab live in `.agents/roles/`. Copies for Claude Code in `.claude
   `topics/<slug>/` (research topics, the only place for research data: sources, their text, segments, graph),
   `methods/*.yaml` (method modules), `ontology/` (LinkML schema and mapping to standards), `docs/` (project memory).
   Details: `docs/spec.md`.
-* **The project is the analysis.** Bringing sources in (OCR of page photos, reading order, transcription) is a
-  supporting tool used when a new source needs it, never a goal or the main line of work: do not plan, propose or
-  report around it. The analysis reads `sources/<id>/text.md` and its segments, not `ingest/`
-  (`docs/source-preparation.md`).
+* **Source preparation** (OCR of page photos, reading order, transcription) is a tool of the project, used when a
+  new source needs it (`docs/source-preparation.md`). The analysis reads `sources/<id>/text.md` and its segments,
+  not `ingest/`.
 * **CLI:** `uv run mmo --help` – `topic new`, `source add`, `source check`, `source finalize`, `segment`; tools for
   bringing sources in: `ingest`, `ocr ...`.
 * **Traceability is the core rule:** never write analytical output that cannot be traced to a segment (source, page,

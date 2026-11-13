@@ -143,13 +143,13 @@
 
 
 ## T7 – 2026-11-13
-- Owner: the project is the analysis; OCR is a supporting tool and must not shape the instructions or the plan.
+- Owner: OCR is a tool of the project, like any other; the instructions and the plan must not be built around it.
   Agents had read OCR as the main line because the brief's first-phase scope named it and most of the plan and
   progress were OCR tasks.
 - Done: OCR detail moved from `docs/spec.md` (Ingest pipeline, OCR backends) and `README.md` (single steps, OCR
   through the homelab) to `docs/source-preparation.md`, unchanged; spec and README point there. Brief scope: the
-  analysis environment is the current focus, bringing sources in is a tool. AGENTS.md (owner approved): a rule that
-  the project is the analysis, CLI line without `ocr`, "Nothing is final yet" without OCR. Plan: analysis tasks
+  analysis environment is the current focus, source preparation listed under tools. AGENTS.md (owner approved): source preparation
+  described as a tool, CLI line without `ocr`, "Nothing is final yet" without OCR. Plan: analysis tasks
   first, OCR tasks in a section of their own (T2 dropped, T3 on demand). Skill `ingest-sources` links the new doc.
   No code or data removed.
 - Next: define with the owner how the qualitative analysis with AI works (approaches, connections, theme maps)
