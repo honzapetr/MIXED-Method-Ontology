@@ -24,3 +24,6 @@
 - 2026-11-14 – acted before approval (T10): asked to research reflexivity, the model started writing files before
   the owner had seen the findings; the owner asked to see them first. Shows a pull towards finishing a task in one
   go. For research content: report findings first, write after approval.
+- 2026-11-14 – background knowledge (T11 preparation): in the findings on separating the environment from a study,
+  the claim that QDA applications keep the program apart from the project file came from general knowledge, not
+  from a source found; it was marked so to the owner and in ADR 0010.

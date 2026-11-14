@@ -205,3 +205,11 @@
 - Verified: `uv run pytest`, `ruff check`, `ruff format --check`, `python tools/agents_sync.py --check`.
 - Next: the owner writes their researcher profile and positionality memo; then the SKAD volume (OAPEN) and framing.
   Sources marked "general knowledge" in `methods/reflexivity.md` (incl. Finlay's five variants) are to be checked.
+
+## T11 preparation – 2026-11-14
+- Owner: the builder and analyst roles mix in one folder, and trying the analysis changes the environment. Approved
+  preparing the split into two repositories (environment, study); both stay on Google Drive; analyst profiles and
+  GitHub for the study later.
+- Done: answer in `docs/answers.md`; ADR 0010 (proposed) with the sources found; T11 (`mmo study init`, simulated
+  test study, sandbox) and T12 (move `nazi-v-ai-dobe` out) in `docs/plan.md`; journal note in the model's profile.
+- Next: the owner confirms T11-T12, then T11 on branch `task/T11-study-split`.

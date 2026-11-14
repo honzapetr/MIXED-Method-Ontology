@@ -60,6 +60,30 @@
 - Paths: `methods/`, `docs/`, `tests/test_methods.py`, `AGENTS.md`, `topics/nazi-v-ai-dobe/memos/`
 - Depends on: T9
 
+### T11 – Study as a repository of its own: `mmo study init` and a test study
+- Goal: the environment can create and serve a study that lives in its own git repository next to it, so the
+  builder and the analyst roles are separated by folder (ADR 0010, owner 2026-11-14).
+- Acceptance criteria: `mmo study init <path> --method <id> --title ...` creates a study folder with its own git,
+  `pyproject.toml` (`mmo` as an editable path dependency), `study.yaml` (title, purpose, questions, goals, method,
+  environment commit), `sources/`, `memos/`, `feedback.md`, `.gitignore` for page images, and `AGENTS.md`/`CLAUDE.md`
+  for the analyst built from `methods/<id>/agent-rules.md`; the other `mmo` commands work on a study folder;
+  a simulated study in `tests/fixtures/` used by the tests; `studie/piskoviste/` created and tried by hand (not in
+  git of the environment); `docs/environment/` describes how to start a study; ADR 0010 accepted.
+- Verify: `uv run pytest && uv run ruff check . && uv run ruff format --check .`
+- Paths: `code/mmo/`, `tests/`, `docs/`
+- Depends on: T10
+
+### T12 – Move `nazi-v-ai-dobe` out of the environment
+- Goal: the real study lives in `studie/nazi-v-ai-dobe/` and the environment holds no study.
+- Acceptance criteria: study repository made with `mmo study init`, its content and history since the rename taken
+  over (`git subtree split`), git-ignored page images copied and checked against the hashes in `ingest/files.yaml`;
+  `mmo source check` passes there; `topics/nazi-v-ai-dobe/` removed from the environment, `sample-masaryk-suicide`
+  moved to the fixtures or removed (owner decides); references to `topics/` updated in `AGENTS.md`, `README.md`,
+  `docs/`, `methods/` and the skills (**protected paths, need the owner's approval**).
+- Verify: `uv run pytest && python tools/agents_sync.py --check`, and in the study `uv run mmo source check`
+- Paths: `topics/`, `AGENTS.md`, `README.md`, `docs/`, `methods/`, `.agents/skills/`, `.claude/skills/`, `.gitignore`
+- Depends on: T11
+
 ## Analysis
 
 ### T4 – Graph store and topic versioning

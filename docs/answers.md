@@ -86,3 +86,12 @@
   researcher (the owner) works with reflexivity as well. Kept in both lines: the environment and the study.
 - **Research findings first:** the owner wants to see and approve findings before they are written into the
   project.
+
+## 2026-11-14 – the environment and the study apart
+- **Two repositories (approved for preparation):** the environment (program, methods, ontology, tests) and each
+  study are kept in separate git repositories, so the agent's role (builder or analyst) follows the folder it is
+  started in, and trying the analysis does not change the environment. Background found by the model: research
+  compendium (Turing Way; Marwick, Boettiger & Mullen 2018), Claude Code loads instructions and memory per folder
+  and per git repository, uv path dependencies (ADR 0010).
+- **Location:** both stay on Google Drive (`2026/MIXED-Method-Ontology/`); not moved elsewhere.
+- **Later:** where analyst profiles live, and a GitHub repository for the study.
