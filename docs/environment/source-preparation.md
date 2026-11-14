@@ -85,8 +85,8 @@ How it works: section Pipeline above; the first book: `docs/progress.md` (T2a).
 
 **Setup on the owner's Windows computer:**
 
-1. **uv 0.13 or newer** - older uv (0.6.8 was installed) cannot resolve the relative flat index `./vendor/wheels` and
-   `uv sync` fails. Run `uv self update`, or call `uvx --from uv==0.13.5 uv ...`.
+1. **uv** - since T11 the vendored wheel is pinned by its file path, which uv 0.6.8 resolves too; `uv lock` after a
+   new wheel still needs uv 0.13 or newer (`vendor/wheels/README.md`).
 2. **Keep the virtual environment off Google Drive** - creating `.venv` on `G:` is very slow. Set
    `UV_PROJECT_ENVIRONMENT` to a folder on `C:` (e.g. `C:/Users/<you>/.venvs/mmo`).
 3. **Address and token** come from `~/.config/fabric-ocr/env` (`FABRIC_OCR_URL`, `FABRIC_OCR_TOKEN`; the owner's is

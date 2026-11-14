@@ -19,15 +19,10 @@ dev = [
     "ruff>=0.8",
 ]
 
-# Clients of the homelab AI Fabric come only from vendor/wheels (ADR 0005), never from PyPI.
-[[tool.uv.index]]
-name = "fabric-vendor"
-url = "./vendor/wheels"
-format = "flat"
-explicit = true
-
+# Clients of the homelab AI Fabric come only from vendor/wheels (ADR 0005), never from PyPI. Pinned by file path,
+# so a study that uses this project as a path dependency resolves it too (ADR 0010).
 [tool.uv.sources]
-fabric-ocr = { index = "fabric-vendor" }
+fabric-ocr = { path = "vendor/wheels/fabric_ocr-0.2.0-py3-none-any.whl" }
 
 [build-system]
 requires = ["hatchling>=1.25"]

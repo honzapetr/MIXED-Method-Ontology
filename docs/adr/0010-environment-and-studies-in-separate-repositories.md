@@ -1,6 +1,6 @@
 # 10. The environment and the studies in separate repositories
 
-- Status: proposed (2026-11-14; the owner approved preparing it, the move waits for T11-T12)
+- Status: accepted (2026-11-14, owner: T11 started; the real study moves in T12)
 
 ## Context
 
@@ -35,10 +35,14 @@ What the sources say:
 - **Feedback:** what a study teaches about the environment is written in the study's `feedback.md` and taken over
   by the builder in a task of the environment (the two lines of `docs/development.md`, now in two repositories).
 - Both stay on Google Drive (owner).
+- **uv:** a relative flat index of a path dependency is resolved against the folder uv runs in, not against the
+  dependency (tried in T11 with uv 0.6.8 and 0.13.8). The vendored `fabric-ocr` wheel is therefore pinned by its
+  file path (`tool.uv.sources`), which uv resolves against the environment; it still never comes from PyPI
+  (ADR 0005).
 
 ## Consequences
 
-- `mmo` works on a study folder, not on `topics/` inside the environment.
+- `mmo` works on a study folder as well as on `topics/` inside the environment (`docs/environment/studies.md`).
 - The real study moves out with its history since the rename (`git subtree split`); older history stays in this
   repository. Git-ignored page images are moved by hand.
 - `AGENTS.md`, `README.md`, `docs/development.md`, `docs/spec.md` and the skills that point to `topics/` change

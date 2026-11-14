@@ -95,3 +95,8 @@
   and per git repository, uv path dependencies (ADR 0010).
 - **Location:** both stay on Google Drive (`2026/MIXED-Method-Ontology/`); not moved elsewhere.
 - **Later:** where analyst profiles live, and a GitHub repository for the study.
+- **T11 started** (owner). The sample topic `sample-masaryk-suicide` is deleted in T12, not moved to the fixtures.
+
+## 2026-11-15 – the vendored wheel
+- **`fabric-ocr` pinned by file path** instead of the flat index `fabric-vendor` (approved): a study using the
+  environment as a path dependency could not install it otherwise (ADR 0005 amendment, ADR 0010).

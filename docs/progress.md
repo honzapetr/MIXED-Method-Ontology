@@ -213,3 +213,23 @@
 - Done: answer in `docs/answers.md`; ADR 0010 (proposed) with the sources found; T11 (`mmo study init`, simulated
   test study, sandbox) and T12 (move `nazi-v-ai-dobe` out) in `docs/plan.md`; journal note in the model's profile.
 - Next: the owner confirms T11-T12, then T11 on branch `task/T11-study-split`.
+
+## T11 – 2026-11-15
+- Done: `mmo study init <path> --title --method` (`code/mmo/core/study.py`) creates a study next to the
+  environment: topic files with `purpose`, `methods` and `environment` (relative path, commit, uncommitted
+  changes), `AGENTS.md` for the analyst, `CLAUDE.md` importing it and the method's `agent-rules.md`, `feedback.md`,
+  `pyproject.toml` (`mmo` as an editable path dependency, not a package), `.gitignore`, `git init`. It refuses a
+  non-empty folder, a folder inside the environment and an unknown method. Every `mmo` topic argument also takes a
+  path to a study or, inside a study, its own name (`.` works). Simulated study `tests/fixtures/mini-studie/`
+  (invented material), `tests/core/test_study.py`. `docs/environment/studies.md`; ADR 0010 accepted.
+- Found: uv resolves a relative flat index against the folder it runs in, also for a path dependency and for
+  `uv run --project` (uv 0.6.8 and 0.13.8), so a study could not install `fabric-ocr`. Owner approved pinning the
+  wheel by file path (`pyproject.toml`, `uv.lock`, `vendor/wheels/README.md`, ADR 0005 amendment); the lock no
+  longer holds an absolute `file:///G:/...` path. uv 0.6.8 now syncs the environment as well.
+- Sandbox `../studie/piskoviste/` made with `mmo study init`, synced and tried (source add, ingest, check); not in
+  git of the environment, nothing committed in it.
+- Verified: `uv run pytest` (86 passed), `ruff check`, `ruff format --check`.
+- Next: T12 – move `nazi-v-ai-dobe` out with `mmo study init` and `git subtree split`, delete
+  `sample-masaryk-suicide`, update references to `topics/` (protected paths need approval). A study's `.venv` is on
+  Google Drive (slow to create); `UV_PROJECT_ENVIRONMENT` must not be one folder shared by the environment and a
+  study. `scratch/T11/` (copy used to test the wheel pin) can be deleted.

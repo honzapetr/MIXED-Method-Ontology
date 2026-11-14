@@ -36,13 +36,16 @@ wheels = [
 [[package]]
 name = "fabric-ocr"
 version = "0.2.0"
-source = { registry = "vendor/wheels" }
+source = { path = "vendor/wheels/fabric_ocr-0.2.0-py3-none-any.whl" }
 dependencies = [
     { name = "httpx" },
 ]
 wheels = [
-    { path = "fabric_ocr-0.2.0-py3-none-any.whl" },
+    { filename = "fabric_ocr-0.2.0-py3-none-any.whl", hash = "sha256:01f4a8d324acc6b0941602d202fa851660b01490d8bb5047a03a4f1ce13ffd32" },
 ]
+
+[package.metadata]
+requires-dist = [{ name = "httpx", specifier = ">=0.28" }]
 
 [[package]]
 name = "h11"
@@ -117,7 +120,7 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "fabric-ocr", specifier = ">=0.2.0", index = "file:///G:/M%C5%AFj%20disk/2026/MIXED-Method-Ontology/MIXED-Method-Ontology/vendor/wheels" },
+    { name = "fabric-ocr", path = "vendor/wheels/fabric_ocr-0.2.0-py3-none-any.whl" },
     { name = "pillow", specifier = ">=11.0" },
     { name = "pyyaml", specifier = ">=6.0" },
 ]

@@ -1,0 +1,15 @@
+id: projev
+title: Speech of the mayor at the opening of the bridge (fictional)
+kind: document
+role: primary
+language: eng
+citation:
+  authors:
+  - Fictional Mayor
+  year: 2026
+  title: Speech at the opening of the bridge
+attributes:
+  genre: speech
+  setting: opening ceremony
+questions:
+- q1

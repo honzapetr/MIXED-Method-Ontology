@@ -22,3 +22,10 @@ address and token come from `.env` (`FABRIC_OCR_URL`, `FABRIC_OCR_TOKEN`) or the
 One more dependency (`fabric-ocr`, which brings `httpx`). A newer client is a manual update of the wheel, the version
 and the lock (`vendor/wheels/README.md`). The service owns the prompt and the model, so a result records
 `fabric/<route>` rather than a model name; comparing it with other variants goes through `mmo ocr compare` as before.
+
+## Amendment (2026-11-15, T11)
+
+The wheel is now pinned by its file path in `tool.uv.sources`, not by the flat index `fabric-vendor`: uv resolves a
+relative index against the folder it runs in, so a study that uses this project as a path dependency could not
+install it (ADR 0010). The wheel is still vendored and never comes from PyPI; this differs from how the Project Lab
+pins Fabric clients. Owner approved 2026-11-15.

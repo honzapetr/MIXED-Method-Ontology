@@ -1,0 +1,16 @@
+id: ohlas
+title: Newspaper reaction to the opening of the bridge (fictional)
+kind: article
+role: context
+about:
+- projev
+language: eng
+citation:
+  authors:
+  - Fictional Reporter
+  year: 2026
+  title: A bridge, and who paid for it
+attributes:
+  genre: news report
+questions:
+- q1

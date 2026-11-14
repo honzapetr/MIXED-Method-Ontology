@@ -20,6 +20,7 @@ methods in `methods/` (`development.md`).
 
 | File | Content | Status |
 | :--- | :--- | :--- |
+| `environment/studies.md` | studies in repositories of their own: `mmo study init`, the sandbox, the test study | built |
 | `environment/source-preparation.md` | bringing new material in: OCR of page photos, reading order, final text, segments | built |
 | `environment/memos.md` | memos: where they live, format, how agents use them | proposal |
 | `environment/analysts/` | researchers and models as analysts: profiles, journals, when to write a reflexive note | proposal |

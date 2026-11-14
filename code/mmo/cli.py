@@ -11,6 +11,7 @@ from pathlib import Path
 from mmo.config import Settings
 from mmo.core.check import check_source
 from mmo.core.migrate import migrate_topic, needs_migration
+from mmo.core.study import init_study
 from mmo.core.topic import ROLES, SOURCE_KINDS, Topic, sha256_file
 from mmo.ingest.clean import clean_record, import_record, merge_variants
 from mmo.ingest.compare import cer
@@ -49,8 +50,22 @@ def ocr_backend_dir(backend: str, model: str | None) -> str:
     return f"{backend}-{safe}"
 
 
+def topic_root(args: argparse.Namespace) -> Path:
+    """A topic by slug under --topics, a study folder by path, or the study we are in by its name (ADR 0010)."""
+    by_slug = args.topics / args.topic
+    if (by_slug / "topic.yaml").is_file():
+        return by_slug
+    by_path = Path(args.topic)
+    if (by_path / "topic.yaml").is_file():
+        return by_path.resolve()
+    here = Path.cwd()
+    if here.name == args.topic and (here / "topic.yaml").is_file():
+        return here
+    return by_slug
+
+
 def load_topic(args: argparse.Namespace) -> Topic:
-    topic = Topic.load(args.topics / args.topic)
+    topic = Topic.load(topic_root(args))
     if needs_migration(topic):
         raise RuntimeError(f"{topic.root} is in the old layout; run: mmo topic migrate {args.topic}")
     return topic
@@ -62,8 +77,15 @@ def cmd_topic_new(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_study_init(args: argparse.Namespace) -> int:
+    topic = init_study(args.path, args.title, args.method, git=not args.no_git)
+    print(f"created study {topic.root} (method {args.method})")
+    print(f"next: cd {topic.root}; uv sync; uv run mmo source check .")
+    return 0
+
+
 def cmd_topic_migrate(args: argparse.Namespace) -> int:
-    topic = Topic.load(args.topics / args.topic)
+    topic = Topic.load(topic_root(args))
     if not needs_migration(topic):
         print(f"{topic.root}: already in the source-centric layout")
         return 0
@@ -79,7 +101,7 @@ def cmd_source_add(args: argparse.Namespace) -> int:
     )
     print(f"created {source.root}")
     print(f"next: put the original files into {source.files_dir}, fill in {source.metadata_file} and")
-    print(f"{source.notes_file}, then run: mmo ingest {topic.slug} {source.id}")
+    print(f"{source.notes_file}, then run: mmo ingest {args.topic} {source.id}")
     return 0
 
 
@@ -100,7 +122,7 @@ def cmd_source_check(args: argparse.Namespace) -> int:
         for finding in findings:
             print(f"  - {finding}")
     if not sources:
-        print(f"no sources yet: mmo source add {topic.slug} <id> --kind ...")
+        print(f"no sources yet: mmo source add {args.topic} <id> --kind ...")
     return 0
 
 
@@ -338,6 +360,16 @@ def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="mmo", description=__doc__)
     parser.add_argument("--topics", type=Path, default=Path("topics"), help="folder with topics (default: topics)")
     sub = parser.add_subparsers(dest="command", required=True)
+
+    study = sub.add_parser("study", help="studies in repositories of their own").add_subparsers(
+        dest="action", required=True
+    )
+    init = study.add_parser("init", help="create a study next to the environment: topic, analyst instructions, git")
+    init.add_argument("path", type=Path, help="new or empty folder outside the environment, e.g. ../studie/<slug>")
+    init.add_argument("--title", required=True)
+    init.add_argument("--method", required=True, help="id of a method folder of the environment, e.g. skad")
+    init.add_argument("--no-git", action="store_true", help="do not run git init")
+    init.set_defaults(func=cmd_study_init)
 
     topic = sub.add_parser("topic", help="topics").add_subparsers(dest="action", required=True)
     new = topic.add_parser("new", help="create a topic folder")
