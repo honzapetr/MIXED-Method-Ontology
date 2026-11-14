@@ -46,6 +46,20 @@
   `topics/nazi-v-ai-dobe/topic.yaml`
 - Depends on: T8
 
+### T10 – Reflexivity of researchers and models (done)
+- Goal: reflexive techniques of qualitative research recorded for the methods, and applied to both analysts: the
+  human researcher and every model, which writes notes about itself and writes them whenever a reason arises
+  (owner 2026-11-14).
+- Acceptance criteria: `methods/reflexivity.md` with sources; `reflexivity.md` in every method folder and the
+  template, required by `tests/test_methods.py`; agent rules of each method require a profile, a positionality memo
+  and notes on triggers; `docs/environment/analysts/` with README (roles, where notes go, triggers, gate questions),
+  templates for a model and a researcher, the profile of `claude-opus-5-5`; `AGENTS.md` rule (**protected path,
+  owner asked for the instructions**); ADR 0009; in the study the model's positionality memo and a question
+  skeleton for the researcher's memo.
+- Verify: `uv run pytest && python tools/agents_sync.py --check`
+- Paths: `methods/`, `docs/`, `tests/test_methods.py`, `AGENTS.md`, `topics/nazi-v-ai-dobe/memos/`
+- Depends on: T9
+
 ## Analysis
 
 ### T4 – Graph store and topic versioning

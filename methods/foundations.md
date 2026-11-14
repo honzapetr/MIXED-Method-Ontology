@@ -45,7 +45,7 @@ Notes and impressions are not side remarks: every approach treats them as part o
 every phase, familiarisation notes and the reflexivity journal in TA, interpretive and context memos in SKAD. A
 first impression already frames the analysis, so it must be visible, typed and traceable like any other step, and
 kept apart from findings. Each method says which memos its phases expect (`memos` in `method.yaml`); the format is
-in `docs/environment/memos.md`.
+in `docs/environment/memos.md`. Reflexivity of the researcher and of the model: `methods/reflexivity.md`.
 
 ## Overview of methods
 

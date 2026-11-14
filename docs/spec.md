@@ -123,6 +123,10 @@ In a topic this means (proposal, T8):
    with prior theories, derive new questions - including quantitative ones (the mixed-methods link).
 6. **Ontology:** today it has `ResearchQuestion` and `Goal`; it would need the purpose and position of the topic,
    a conceptual framework with sensitising concepts, and `Theory` / `Proposition` linked to questions and evidence.
+7. **Reflexivity (T10):** every analyst of a topic – the researcher and each model – has a profile
+   (`docs/environment/analysts/`) and a positionality memo at framing, writes reflexive notes when a trigger occurs
+   and revisits the memo at synthesis (`methods/reflexivity.md`). The ontology would need `Analyst` (person or
+   model version, PROV-O agent) linked to its profile, memos and steps.
 
 Memos are part of every method; format and use: `docs/environment/memos.md`.
 

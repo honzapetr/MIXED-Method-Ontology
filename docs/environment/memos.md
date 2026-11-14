@@ -17,8 +17,8 @@ A Markdown file with a YAML header:
 | Field | Meaning |
 | :--- | :--- |
 | `id` | `<date>-<short-name>`, the file name |
-| `type` | `context` (why a source is here), `first-impression`, `familiarisation`, `reflexive` (the researcher's position), `analytic` (about codes, categories, relations), `theoretical` (towards propositions), `methodological` (a decision about the procedure), `steering` (instructions for the next step of a model) |
-| `author` | a person or a model id |
+| `type` | `context` (why a source is here), `first-impression`, `familiarisation`, `reflexive` (the position of the researcher or of a model, and notes written when a trigger occurs – `docs/environment/analysts/README.md`), `analytic` (about codes, categories, relations), `theoretical` (towards propositions), `methodological` (a decision about the procedure), `steering` (instructions for the next step of a model) |
+| `author` | a person or the exact model id (e.g. `claude-opus-5-5`); every author has a profile in `docs/environment/analysts/` |
 | `created` | date |
 | `status` | `draft` (person) or `proposed` / `confirmed` / `rejected` (model memos are always proposed first) |
 | `about` | what the memo is about: the topic, source ids, segment ids, concept ids, question ids |

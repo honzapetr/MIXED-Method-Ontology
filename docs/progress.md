@@ -192,3 +192,16 @@
 - Verified: `uv run pytest`, `ruff check`, `ruff format --check`, `python tools/agents_sync.py --check`.
 - Next: read the SKAD volume (OAPEN) and correct `methods/skad/` where the summaries were wrong; framing of the
   study (purpose, questions) with the owner, going through SKAD phase 1.
+
+## T10 – 2026-11-14
+- Done: `methods/reflexivity.md` (positionality vs. reflexivity, forms, techniques, the model as a positioned
+  analyst, differences by method, sources); `reflexivity.md` in `skad/`, `grounded-theory/`, `thematic-analysis/`
+  and `_template/`; agent rules of each method: profile first, positionality memo, notes on triggers; SKAD
+  procedure, framing: both analysts' positionality memos. `docs/environment/analysts/` (README with roles, where
+  notes go, triggers for model and researcher, gate questions; templates; profile and journal of
+  `claude-opus-5-5`). ADR 0009. AGENTS.md: reflexivity rule (owner asked for the instructions). Memos, development
+  rules, docs map, spec (point 7) updated. Study: `memos/2026-11-14-position-claude-opus-5-5.md` (proposed, with
+  expectations before reading) and `memos/2026-11-14-position-researcher.md` (questions only, for the owner).
+- Verified: `uv run pytest`, `ruff check`, `ruff format --check`, `python tools/agents_sync.py --check`.
+- Next: the owner writes their researcher profile and positionality memo; then the SKAD volume (OAPEN) and framing.
+  Sources marked "general knowledge" in `methods/reflexivity.md` (incl. Finlay's five variants) are to be checked.

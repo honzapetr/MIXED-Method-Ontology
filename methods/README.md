@@ -6,8 +6,8 @@ new method needs a new folder only; the core does not change.
 
 **Precision before economy.** Each method is described completely and in its own terms, even where the same
 information appears in another method. Do not merge, shorten or "deduplicate" method texts across folders
-(`docs/owner-notes.md`, 2026-11-14). `foundations.md` is a shared overview for comparison; it never replaces a
-method's own text.
+(`docs/owner-notes.md`, 2026-11-14). `foundations.md` and `reflexivity.md` are shared overviews for comparison;
+they never replace a method's own text.
 
 ## A method folder
 
@@ -19,6 +19,7 @@ method's own text.
 | `agent-rules.md` | rules for AI agents in this method: always, never, scenarios for the role of AI to test |
 | `applications.md` | connected applications (QDA tools, exports): use, exchange, status |
 | `sources.md` | literature with links and reading status (`found`, `summary`, `read`) |
+| `reflexivity.md` | what reflexivity means in this method, for the researcher and for the model: stance, what each analyst does by phase |
 
 A phase in `method.yaml` has `id`, `goal`, `input`, `output`, `memos` (memo types it expects,
 `docs/environment/memos.md`), optional `allowed_relations`, `model_role` and `human_gate`.
@@ -36,8 +37,8 @@ A phase in `method.yaml` has `id`, `goal`, `input`, `output`, `memos` (memo type
 ## Adding a method
 
 1. Copy `_template/` to `methods/<id>/` and set `id` to the folder name, `status: draft`.
-2. Write `sources.md` first, then `research-design.md`, `procedure.md`, `agent-rules.md`, `applications.md`, and
-   `method.yaml` last (it is the short form of the texts).
+2. Write `sources.md` first, then `research-design.md`, `procedure.md`, `agent-rules.md`, `applications.md`, `reflexivity.md`,
+   and `method.yaml` last (it is the short form of the texts).
 3. `uv run pytest tests/test_methods.py` checks the folder.
 
 Planned: CDA (Fairclough), Mayring's qualitative content analysis, ethnography, narrative analysis, mixed-methods

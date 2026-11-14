@@ -7,8 +7,10 @@ Phases are recursive: the corpus can grow after fine analysis, questions can cha
 later phase starts only from what the researcher has confirmed.
 
 ## 1. Framing
-- Researcher: writes the purpose, the first questions and a reflexive memo on their position.
-- Model: helps phrase discourse-related questions; lists sensitising concepts with their sources.
+- Researcher: writes the purpose, the first questions and a positionality memo (`reflexivity.md`); writes a
+  profile in `docs/environment/analysts/` if they have none.
+- Model: writes its positionality memo for the study (prior knowledge, expectations before reading, tendencies);
+  helps phrase discourse-related questions; lists sensitising concepts with their sources.
 - Gate: purpose, questions and frame decided by the researcher (`topic.yaml`, memos).
 
 ## 2. Corpus

@@ -80,3 +80,9 @@
 - **AGENTS.md** may be changed for the new layout (approved).
 - **Connected applications:** ATLAS.ti and QualCoder for now; more when the study shows the need.
 - **Owner's notes:** a file in `docs/` for the owner's own notes while building (`docs/owner-notes.md`).
+- **Reflexivity** (later the same day): self-reflective techniques (own background, bias) are part of qualitative
+  analysis and must be recorded in the documentation. They apply to the model too: every model writes notes about
+  itself, as `claude-opus-5-5` did, and has instructions to write notes as soon as there is a reason. The human
+  researcher (the owner) works with reflexivity as well. Kept in both lines: the environment and the study.
+- **Research findings first:** the owner wants to see and approve findings before they are written into the
+  project.

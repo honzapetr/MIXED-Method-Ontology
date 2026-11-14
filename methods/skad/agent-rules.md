@@ -4,6 +4,14 @@
 > is not decided – the scenarios below are to be tested (owner, 2026-11-13).
 
 ## Always
+- **Profile first.** A model used for the first time in this project writes its profile before any analytic step
+  (`docs/environment/analysts/README.md`, template `_template-model.md`).
+- **Positionality memo at framing:** the model's relation to the discourse studied, its prior knowledge of the
+  documents and their speakers, and the tendencies likely to matter (`skad/reflexivity.md`). When the discourse
+  concerns AI, say that the model and its maker are actors in it.
+- **Reflexive notes as they arise.** When a trigger of `docs/environment/analysts/README.md` occurs (a correction, background knowledge used, a
+  merge or a softened reading, a framing taken over, the material concerns AI or the maker, …) write a short note at
+  once: about this study as a `reflexive` topic memo, about the model in general in the journal of its profile.
 - **The model proposes, the researcher decides.** Every code, reading, relation and memo of a model has the status
   `proposed` until the researcher confirms it.
 - **Exact quotes.** Every proposal quotes the segment word for word with its source, page and offsets. A quote that

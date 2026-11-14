@@ -88,6 +88,11 @@ prompts for the lab live in `.agents/roles/`. Copies for Claude Code in `.claude
   `docs/environment/`, how the environment works). Details: `docs/development.md`, `docs/spec.md`.
 * **Methods: precision before economy.** Describe each method completely in its own terms, even where it repeats
   another; never merge, shorten or "deduplicate" method texts, codes or memos on your own (`methods/README.md`).
+* **Reflexivity: models are positioned analysts.** A model used for the first time writes its own profile in
+  `docs/environment/analysts/` before any analytic step, and writes a short reflexive note at once whenever a
+  trigger listed in `docs/environment/analysts/README.md` occurs (e.g. the owner corrects it, it used background
+  knowledge, it merged or softened something, the material concerns AI or its maker). The human researcher does
+  the same in their own profile and memos.
 * **Source preparation** (OCR of page photos, reading order, transcription) is a tool of the project, used when a
   new source needs it (`docs/environment/source-preparation.md`). The analysis reads `sources/<id>/text.md` and its segments,
   not `ingest/`.

@@ -35,6 +35,9 @@ Nothing about a concrete study goes to `docs/` or `methods/`; nothing about how 
 | A study: title, purpose, questions, goals, chosen method, sources | `topics/<slug>/topic.yaml` |
 | A source of the study and information about it | `topics/<slug>/sources/<id>/` (`source.yaml`, `notes.md`, `files/`, `text.md`) |
 | Supplementary material about a source (reviews, interviews, announcements) | a source of its own with `role: context` |
+| Reflexivity in general and per method | `methods/reflexivity.md`, `methods/<id>/reflexivity.md` |
+| Profiles and journals of analysts (researchers, models) | `docs/environment/analysts/<id>.md` – each written by the analyst |
+| The analysts' positions and reflexive notes in a study | `topics/<slug>/memos/` (`reflexive`) |
 | Notes, impressions and memos of the study | `topics/<slug>/memos/` (format `docs/environment/memos.md`) |
 | Results of the analysis | `topics/<slug>/` (runs and graph, planned) |
 | One-off scripts and temporary files | `scratch/T<n>/` (git-ignored) |

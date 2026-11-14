@@ -7,7 +7,7 @@ import yaml
 
 ROOT = Path(__file__).resolve().parent.parent
 METHODS_DIR = ROOT / "methods"
-DOCUMENTS = ("research-design.md", "procedure.md", "agent-rules.md", "applications.md", "sources.md")
+DOCUMENTS = ("research-design.md", "procedure.md", "agent-rules.md", "applications.md", "sources.md", "reflexivity.md")
 STATUSES = {"draft", "testing", "stable"}
 # memo types of docs/environment/memos.md
 MEMO_TYPES = {
