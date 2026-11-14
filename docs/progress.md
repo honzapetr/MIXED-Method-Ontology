@@ -233,3 +233,13 @@
   `sample-masaryk-suicide`, update references to `topics/` (protected paths need approval). A study's `.venv` is on
   Google Drive (slow to create); `UV_PROJECT_ENVIRONMENT` must not be one folder shared by the environment and a
   study. `scratch/T11/` (copy used to test the wheel pin) can be deleted.
+
+## T11 review – 2026-11-15 (owner's correction, session ended)
+- The owner wanted **workshop vs. research environment** (`docs/answers.md`, 2026-11-15), not environment vs. one
+  study. T11 built `mmo study init` (one study = one repository) and ADR 0010 on the wrong reading.
+- Keep from T11: simulated test study `tests/fixtures/mini-studie/`, the `fabric-ocr` wheel pinned by path, `mmo`
+  topic argument accepting a path. Review: `mmo study init`, `docs/environment/studies.md`, ADR 0010 (mark
+  superseded by a new ADR), sandbox `../studie/piskoviste/` (can be deleted).
+- Next session: get answers to the two open questions, then write a new ADR and plan the split (workshop /
+  research environment) with the owner; restate the structure in the owner's words before planning.
+- GitHub account for pushing not chosen yet; nothing pushed.

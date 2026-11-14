@@ -27,3 +27,8 @@
 - 2026-11-14 – background knowledge (T11 preparation): in the findings on separating the environment from a study,
   the claim that QDA applications keep the program apart from the project file came from general knowledge, not
   from a source found; it was marked so to the owner and in ADR 0010.
+- 2026-11-15 – correction by the owner (T11): the owner asked to separate the builder's workshop from the research
+  environment being built (an ecosystem of methods, approaches and many studies). The model read it as "environment
+  vs. one study", found sources that fit that reading and built T11 on it without restating its understanding
+  first. Shows fitting the request to a familiar software pattern (tool vs. project). Rule: restate the owner's
+  structure in their words and get a yes before planning a split.

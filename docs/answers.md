@@ -100,3 +100,15 @@
 ## 2026-11-15 – the vendored wheel
 - **`fabric-ocr` pinned by file path** instead of the flat index `fabric-vendor` (approved): a study using the
   environment as a path dependency could not install it otherwise (ADR 0005 amendment, ADR 0010).
+
+## 2026-11-15 – workshop and research environment (correction)
+- **Two repositories, meant this way (owner confirmed):** (1) the **workshop** – where the environment is built:
+  plan, progress, ADRs, development rules, owner's notes, builder roles (planner, coder, reviewer), tests and trial
+  copies; no research. (2) the **research environment** – the product, an ecosystem: all methods and approaches,
+  analysis tools, ontology, rules and profiles of analysts, and **many studies** (`nazi-v-ai-dobe` is only the
+  first). Opened in the environment, the agent is an analyst; opened in the workshop, a builder who changes the
+  environment only through planned tasks and tries things on a copy.
+- **T11 and ADR 0010 read the request wrongly** ("environment vs. one study"). Nothing reverted yet; to be reviewed.
+- **Still open:** where `mmo` with its tests lives (model's proposal: in the research environment, the workshop
+  holds plans, decisions and role setup); whether studies live inside the environment (`topics/`) or as folders
+  next to it.
