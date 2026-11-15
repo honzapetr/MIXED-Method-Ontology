@@ -101,8 +101,9 @@
   copied and checked against the hashes in `ingest/files.yaml`; `sample-masaryk-suicide` not copied (deleted, owner
   2026-11-14); new `AGENTS.md`/`CLAUDE.md` for the analyst only, `README.md`, `pyproject.toml` (`mmo` as an editable
   path dependency on `../MIXED-Method-Ontology-vyvoj`), `.gitignore`, `.env.example`, `.editorconfig`,
-  `.gitattributes`; `git init` and a first commit naming the workshop commit; the owner sees the analyst's
-  `AGENTS.md` before the commit.
+  `.gitattributes`, `.claude/settings.json`, `tools/agents_sync.py`; references to moved files point to their new
+  paths; `git init` and a first commit naming the workshop commit; the owner sees the analyst's `AGENTS.md` before
+  the commit.
 - Verify: in the research environment `uv sync && uv run mmo source check nazi-v-ai-dobe`; Claude Code started
   there shows only the analyst's instructions (`/memory`)
 - Paths: new repository `../MIXED-Method-Ontology/`

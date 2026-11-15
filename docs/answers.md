@@ -127,3 +127,11 @@
   the git history; the research environment with the analyst is the new `MIXED-Method-Ontology/` with a fresh git
   history (first commit names the workshop commit). GitHub account for sessions: `honzapetr`. ADR 0011.
 - **Order:** split the folders first; test environments and the rest after. The owner will correct the file layout.
+
+## 2026-11-15 – file layout of the split confirmed
+- **Layout of ADR 0011 confirmed** as proposed by the model (trees shown to the owner).
+- **Skills in the research environment:** `.agents/skills/` stays the source there too; `tools/agents_sync.py` is
+  copied so agents other than Claude Code keep the skills.
+- **`.claude/settings.json`** is copied (denies reading `.env` and pushing to `main`).
+- **Analyst profiles move whole**, journals included, also entries written during the builder's work.
+- **`scratch/T11/` never existed at the time of T13**; only the sandbox `../studie/` is to be deleted (T15).

@@ -1,6 +1,6 @@
 # 11. The workshop and the research environment
 
-- Status: accepted (2026-11-15, owner; the owner will correct the file layout); supersedes ADR 0010
+- Status: accepted (2026-11-15, owner; file layout confirmed by the owner the same day); supersedes ADR 0010
 
 ## Context
 
@@ -50,15 +50,22 @@ The split comes first; test environments and releasing `mmo` follow after it.
 | :--- | :--- |
 | `methods/` (all) | `methods/` |
 | `ontology/` (`mapping.md`, `schema/mmo.yaml`) | `ontology/` |
-| `docs/environment/analysts/` | `analysts/` |
+| `docs/environment/analysts/` | `analysts/` (profiles whole, journals included, also entries from the builder's work) |
 | `docs/environment/memos.md`, `docs/environment/source-preparation.md` | `docs/` |
 | `topics/README.md`, `topics/nazi-v-ai-dobe/` (with the git-ignored page images) | `topics/` |
 | `.agents/skills/` ingest-sources, transcribe-pages | `.agents/skills/` and copies in `.claude/skills/` |
 
+Copied (stays in the workshop too):
+
+| Today | Why |
+| :--- | :--- |
+| `tools/agents_sync.py` | generates `.claude/skills/` from `.agents/skills/` there as well, so agents other than Claude Code keep the skills |
+| `.claude/settings.json` | denies reading `.env` and pushing to `main` |
+| `.gitignore`, `.env.example`, `.editorconfig`, `.gitattributes` | |
+
 New in the research environment: `AGENTS.md` and `CLAUDE.md` for the analyst only, with no reference to the
 workshop; `README.md`; `pyproject.toml` with `mmo` as an editable path dependency on `../MIXED-Method-Ontology-vyvoj`
-(until `mmo` is released as a wheel); `.gitignore`, `.env.example`, `.editorconfig`, `.gitattributes` copied from
-the workshop.
+(until `mmo` is released as a wheel); `scratch/` (git-ignored).
 
 ### Deleted
 
