@@ -253,3 +253,7 @@
   `docs/answers.md`, T12-T16 in `docs/plan.md` (replacing the old T12).
 - Next: T13 (test environments, remove `mmo study init`) on branch `task/T13-test-environments`. Sandbox
   `../studie/piskoviste/` and `scratch/T11/` can be deleted in T13.
+- Owner changed the names: workshop `MIXED-Method-Ontology-vyvoj/` (renamed, keeps history), research environment
+  `MIXED-Method-Ontology/` (new). Split first: T13 rename, T14 create the research environment, T15 clean the
+  workshop; test environments and releasing `mmo` later. ADR 0011 rewritten with the file layout table; the owner
+  will correct it.

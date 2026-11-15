@@ -85,51 +85,46 @@
 - Paths: `docs/`
 - Depends on: T11
 
-### T13 – Test research environments
-- Goal: the workshop can make a clean test research environment in `zkusebna/<name>/` to try the environment
-  without touching `vyzkum/`.
-- Acceptance criteria: a tool in `tools/` copies the research environment without `topics/`, `.git`, `.venv`,
-  optionally adds `tests/fixtures/mini-studie/` or a copy of one study, writes `pyproject.toml` with `mmo` as an
-  editable path dependency on the workshop; makes no git; refuses a target with `AGENTS.md`, `CLAUDE.md` or `.git`
-  in a parent folder, and a non-empty target; tests in a temporary folder. `mmo study init`, `code/mmo/core/study.py`,
-  its tests and `docs/environment/studies.md` removed; the `mmo` topic argument keeps taking a path.
-- Verify: `uv run pytest && uv run ruff check . && uv run ruff format --check .`
-- Paths: `tools/`, `code/mmo/`, `tests/`, `docs/`
+### T13 – Rename today's repository to the workshop
+- Goal: today's repository becomes the workshop `MIXED-Method-Ontology-vyvoj/` with its history, so the name
+  `MIXED-Method-Ontology/` is free for the research environment (ADR 0011).
+- Acceptance criteria: the owner renames the folder with VS Code and Claude Code closed; Claude Code's memory folder
+  of the old path is moved to the new path's key; `uv sync`, `uv run pytest` pass in the renamed folder; no
+  `AGENTS.md` or `CLAUDE.md` in `2026/MIXED-Method-Ontology/`.
+- Verify: `uv sync && uv run pytest`
+- Paths: the folder itself, `~/.claude/projects/` (memory)
 - Depends on: T12
 
-### T14 – Releasing `mmo` to the research environment
-- Goal: the research environment uses a released `mmo`, never the workshop's working tree.
-- Acceptance criteria: a tool builds the `mmo` wheel and puts it with the `fabric-ocr` wheel into the target's
-  `vendor/wheels/`, pinned by path in the target's `pyproject.toml`; tested on a temporary target; the version of
-  `mmo` is visible in the target's lock.
-- Verify: `uv run pytest`, and in a test environment `uv sync && uv run mmo --help`
-- Paths: `tools/`, `pyproject.toml`, `tests/`, `docs/`
+### T14 – Create the research environment `MIXED-Method-Ontology/`
+- Goal: the research environment is a repository of its own with everything the analyst needs and the study.
+- Acceptance criteria: the folders that move (ADR 0011 table) copied; git-ignored page images of `nazi-v-ai-dobe`
+  copied and checked against the hashes in `ingest/files.yaml`; `sample-masaryk-suicide` not copied (deleted, owner
+  2026-11-14); new `AGENTS.md`/`CLAUDE.md` for the analyst only, `README.md`, `pyproject.toml` (`mmo` as an editable
+  path dependency on `../MIXED-Method-Ontology-vyvoj`), `.gitignore`, `.env.example`, `.editorconfig`,
+  `.gitattributes`; `git init` and a first commit naming the workshop commit; the owner sees the analyst's
+  `AGENTS.md` before the commit.
+- Verify: in the research environment `uv sync && uv run mmo source check nazi-v-ai-dobe`; Claude Code started
+  there shows only the analyst's instructions (`/memory`)
+- Paths: new repository `../MIXED-Method-Ontology/`
 - Depends on: T13
 
-### T15 – Create the research environment `vyzkum/`
-- Goal: the research environment is a repository of its own with everything the analyst needs and the studies; the
-  workshop holds no research.
-- Acceptance criteria: `vyzkum/` laid out as in ADR 0011 (`methods/`, `ontology/`, `analysts/`, `docs/`,
-  `topics/nazi-v-ai-dobe/`, analyst skills, self-contained `AGENTS.md`/`CLAUDE.md` for the analyst, released `mmo`),
-  fresh git whose first commit names the workshop commit; git-ignored page images copied and checked against the
-  hashes in `ingest/files.yaml`; `uv run mmo source check nazi-v-ai-dobe` passes there; `sample-masaryk-suicide`
-  deleted (owner 2026-11-14); the moved folders removed from the workshop; `AGENTS.md`, `CLAUDE.md`, `README.md`,
-  `docs/development.md`, `docs/spec.md` and the skills of the workshop updated (**protected paths, need the owner's
-  approval**); the parent folder holds no `AGENTS.md` or `CLAUDE.md`.
-- Verify: in the workshop `uv run pytest && python tools/agents_sync.py --check`; in `vyzkum/` `uv sync && uv run
-  mmo source check nazi-v-ai-dobe`
-- Paths: `methods/`, `ontology/`, `topics/`, `docs/`, `AGENTS.md`, `CLAUDE.md`, `README.md`, `.agents/`, `.claude/`,
-  `.gitignore`; new repository `../vyzkum/`
+### T15 – Clean the workshop
+- Goal: the workshop holds no research and instructs only the builder.
+- Acceptance criteria: `methods/`, `ontology/`, `topics/`, `docs/environment/` and the analyst skills removed;
+  `mmo study init` (`code/mmo/core/study.py`, `tests/core/test_study.py`) and `docs/environment/studies.md` removed,
+  the `mmo` topic argument keeps taking a path; `tests/test_methods.py`, `tests/test_ontology.py` read
+  `../MIXED-Method-Ontology/`; `AGENTS.md`, `CLAUDE.md`, `README.md`, `docs/development.md`, `docs/spec.md`,
+  `docs/README.md` rewritten for the builder (**protected paths, need the owner's approval**); sandbox `../studie/`
+  deleted.
+- Verify: `uv run pytest && uv run ruff check . && uv run ruff format --check . && python tools/agents_sync.py --check`
+- Paths: `methods/`, `ontology/`, `topics/`, `docs/`, `code/mmo/`, `tests/`, `AGENTS.md`, `CLAUDE.md`, `README.md`,
+  `.agents/`, `.claude/`
 - Depends on: T14
 
-### T16 – Trial in a test environment
-- Goal: the analyst role is clean in a test environment.
-- Acceptance criteria: a test environment made from `vyzkum/` with the simulated study; Claude Code started there
-  loads only the analyst's instructions (checked with `/memory`) and takes `mini-studie` through `source check`,
-  `ingest` and `segment`; findings reported to the owner; the test environment deleted afterwards.
-- Verify: report to the owner
-- Paths: `../zkusebna/`, `docs/progress.md`
-- Depends on: T15
+### Later (after the split)
+- Test research environments in `zkusebna/` (a workshop tool; no git; refuses a target with `AGENTS.md`,
+  `CLAUDE.md` or `.git` above it), with a trial that the analyst role is clean there.
+- Releasing `mmo` as a wheel into the research environment instead of the path dependency.
 
 ## Analysis
 

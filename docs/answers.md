@@ -123,6 +123,7 @@
 - **Methods and ontology belong to the research environment**, because the analyst needs them for analyses. The
   analyst works only on research; what to change in the analyst's role, the methods or the procedures the owner
   agrees with the builder in the workshop. The model is not to design the process now, only the layout of files.
-- **Names:** the workshop keeps the folder `MIXED-Method-Ontology/`; the research environment is `vyzkum/`; it
-  starts with a fresh git history (first commit names the workshop commit). GitHub account for sessions:
-  `honzapetr`. ADR 0011.
+- **Names (changed by the owner the same day):** the workshop is renamed to `MIXED-Method-Ontology-vyvoj/` and keeps
+  the git history; the research environment with the analyst is the new `MIXED-Method-Ontology/` with a fresh git
+  history (first commit names the workshop commit). GitHub account for sessions: `honzapetr`. ADR 0011.
+- **Order:** split the folders first; test environments and the rest after. The owner will correct the file layout.
