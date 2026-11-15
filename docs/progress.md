@@ -243,3 +243,13 @@
 - Next session: get answers to the two open questions, then write a new ADR and plan the split (workshop /
   research environment) with the owner; restate the structure in the owner's words before planning.
 - GitHub account for pushing not chosen yet; nothing pushed.
+
+## T12 – 2026-11-15
+- Owner answered the open questions: `mmo` belongs to the workshop; studies live inside the research environment;
+  test environments stay, without git; roles must not stack through the folder tree; methods and ontology belong to
+  the research environment (the analyst needs them), changes to them are agreed with the builder in the workshop.
+  Workshop keeps the folder name, research environment `vyzkum/` with a fresh history; GitHub account `honzapetr`.
+- Done: ADR 0011 (layout of files of the workshop, `vyzkum/` and `zkusebna/`), ADR 0010 superseded, answer in
+  `docs/answers.md`, T12-T16 in `docs/plan.md` (replacing the old T12).
+- Next: T13 (test environments, remove `mmo study init`) on branch `task/T13-test-environments`. Sandbox
+  `../studie/piskoviste/` and `scratch/T11/` can be deleted in T13.

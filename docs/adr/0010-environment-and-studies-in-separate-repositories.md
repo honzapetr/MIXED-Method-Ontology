@@ -1,6 +1,6 @@
 # 10. The environment and the studies in separate repositories
 
-- Status: accepted (2026-11-14, owner: T11 started; the real study moves in T12)
+- Status: superseded by ADR 0011 (2026-11-15; read the owner's request wrongly). Was: accepted (2026-11-14)
 
 ## Context
 

@@ -74,16 +74,62 @@
   path, owner approved 2026-11-15)
 - Depends on: T10
 
-### T12 – Move `nazi-v-ai-dobe` out of the environment
-- Goal: the real study lives in `studie/nazi-v-ai-dobe/` and the environment holds no study.
-- Acceptance criteria: study repository made with `mmo study init`, its content and history since the rename taken
-  over (`git subtree split`), git-ignored page images copied and checked against the hashes in `ingest/files.yaml`;
-  `mmo source check` passes there; `topics/nazi-v-ai-dobe/` removed from the environment, `sample-masaryk-suicide`
-  deleted (owner 2026-11-14); references to `topics/` updated in `AGENTS.md`, `README.md`,
-  `docs/`, `methods/` and the skills (**protected paths, need the owner's approval**).
-- Verify: `uv run pytest && python tools/agents_sync.py --check`, and in the study `uv run mmo source check`
-- Paths: `topics/`, `AGENTS.md`, `README.md`, `docs/`, `methods/`, `.agents/skills/`, `.claude/skills/`, `.gitignore`
+> T11 was built on a wrong reading of the owner's request; ADR 0011 supersedes ADR 0010. T12-T16 replace the
+> earlier T12 ("move `nazi-v-ai-dobe` out").
+
+### T12 – Decision: workshop and research environment (done)
+- Goal: the split into the workshop and the research environment is recorded (owner 2026-11-15).
+- Acceptance criteria: ADR 0011 with the layout of files of both repositories and of the test environments; ADR
+  0010 marked superseded; the owner's answers in `docs/answers.md`; T13-T16 planned.
+- Verify: review by the owner
+- Paths: `docs/`
 - Depends on: T11
+
+### T13 – Test research environments
+- Goal: the workshop can make a clean test research environment in `zkusebna/<name>/` to try the environment
+  without touching `vyzkum/`.
+- Acceptance criteria: a tool in `tools/` copies the research environment without `topics/`, `.git`, `.venv`,
+  optionally adds `tests/fixtures/mini-studie/` or a copy of one study, writes `pyproject.toml` with `mmo` as an
+  editable path dependency on the workshop; makes no git; refuses a target with `AGENTS.md`, `CLAUDE.md` or `.git`
+  in a parent folder, and a non-empty target; tests in a temporary folder. `mmo study init`, `code/mmo/core/study.py`,
+  its tests and `docs/environment/studies.md` removed; the `mmo` topic argument keeps taking a path.
+- Verify: `uv run pytest && uv run ruff check . && uv run ruff format --check .`
+- Paths: `tools/`, `code/mmo/`, `tests/`, `docs/`
+- Depends on: T12
+
+### T14 – Releasing `mmo` to the research environment
+- Goal: the research environment uses a released `mmo`, never the workshop's working tree.
+- Acceptance criteria: a tool builds the `mmo` wheel and puts it with the `fabric-ocr` wheel into the target's
+  `vendor/wheels/`, pinned by path in the target's `pyproject.toml`; tested on a temporary target; the version of
+  `mmo` is visible in the target's lock.
+- Verify: `uv run pytest`, and in a test environment `uv sync && uv run mmo --help`
+- Paths: `tools/`, `pyproject.toml`, `tests/`, `docs/`
+- Depends on: T13
+
+### T15 – Create the research environment `vyzkum/`
+- Goal: the research environment is a repository of its own with everything the analyst needs and the studies; the
+  workshop holds no research.
+- Acceptance criteria: `vyzkum/` laid out as in ADR 0011 (`methods/`, `ontology/`, `analysts/`, `docs/`,
+  `topics/nazi-v-ai-dobe/`, analyst skills, self-contained `AGENTS.md`/`CLAUDE.md` for the analyst, released `mmo`),
+  fresh git whose first commit names the workshop commit; git-ignored page images copied and checked against the
+  hashes in `ingest/files.yaml`; `uv run mmo source check nazi-v-ai-dobe` passes there; `sample-masaryk-suicide`
+  deleted (owner 2026-11-14); the moved folders removed from the workshop; `AGENTS.md`, `CLAUDE.md`, `README.md`,
+  `docs/development.md`, `docs/spec.md` and the skills of the workshop updated (**protected paths, need the owner's
+  approval**); the parent folder holds no `AGENTS.md` or `CLAUDE.md`.
+- Verify: in the workshop `uv run pytest && python tools/agents_sync.py --check`; in `vyzkum/` `uv sync && uv run
+  mmo source check nazi-v-ai-dobe`
+- Paths: `methods/`, `ontology/`, `topics/`, `docs/`, `AGENTS.md`, `CLAUDE.md`, `README.md`, `.agents/`, `.claude/`,
+  `.gitignore`; new repository `../vyzkum/`
+- Depends on: T14
+
+### T16 – Trial in a test environment
+- Goal: the analyst role is clean in a test environment.
+- Acceptance criteria: a test environment made from `vyzkum/` with the simulated study; Claude Code started there
+  loads only the analyst's instructions (checked with `/memory`) and takes `mini-studie` through `source check`,
+  `ingest` and `segment`; findings reported to the owner; the test environment deleted afterwards.
+- Verify: report to the owner
+- Paths: `../zkusebna/`, `docs/progress.md`
+- Depends on: T15
 
 ## Analysis
 

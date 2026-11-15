@@ -112,3 +112,17 @@
 - **Still open:** where `mmo` with its tests lives (model's proposal: in the research environment, the workshop
   holds plans, decisions and role setup); whether studies live inside the environment (`topics/`) or as folders
   next to it.
+
+## 2026-11-15 – the two repositories decided
+- **`mmo` belongs to the workshop.** The workshop is developed like an ordinary application.
+- **Studies live inside the research environment** (`topics/`); they are part of the product.
+- **Test research environments stay** so the environment can be tried; they need no git. Versions are kept only in
+  the two repositories, the workshop and the research environment.
+- **Roles must not stack through the folder tree:** a test environment must be clean, with no `AGENTS.md` or
+  `CLAUDE.md` of another role above it.
+- **Methods and ontology belong to the research environment**, because the analyst needs them for analyses. The
+  analyst works only on research; what to change in the analyst's role, the methods or the procedures the owner
+  agrees with the builder in the workshop. The model is not to design the process now, only the layout of files.
+- **Names:** the workshop keeps the folder `MIXED-Method-Ontology/`; the research environment is `vyzkum/`; it
+  starts with a fresh git history (first commit names the workshop commit). GitHub account for sessions:
+  `honzapetr`. ADR 0011.
