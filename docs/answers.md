@@ -140,3 +140,13 @@
   be finished; roles and procedures of the analysis are developed in a new thread, step by step with the walk
   through the analysis. The walk continues where it stopped: the analysts' personal journals, own biases, what
   influences them.
+
+## 2026-11-15 – model profiles in the research environment
+- **Goal (owner):** information about the model as an analyst lives in the research environment, added in a
+  scalable way: a model starting in the analytic repository for the first time finds out what it is, looks up what
+  concerns it (training data, post-training, filters, measured biases), writes it into its own profile and then
+  works with it automatically. Opus 5.5 is the first case; the project is ready for other models.
+- **Local models:** the model leading the session writes their profile, marked so.
+- **One maker, several models:** each profile is complete on its own (precision before economy; documents change
+  between versions).
+- **Approval:** a profile is `proposed` until the owner confirms it; no analytic step before that.

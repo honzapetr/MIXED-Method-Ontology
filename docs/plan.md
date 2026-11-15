@@ -122,6 +122,21 @@
   `.agents/`, `.claude/`
 - Depends on: T14
 
+### T16 – Model profiles from sources (research environment)
+- Goal: a model working as an analyst knows what shapes its position and works with it; scalable to any model.
+- Acceptance criteria: in `../MIXED-Method-Ontology/`: skill `profile-model` (identify the model from the harness,
+  look for its profile, find sources, report to the owner, write with sources and certainty marks, status
+  `proposed`, owner confirms; a local model's profile written by the session model); `analysts/_template-model.md`
+  by the layers of `methods/reflexivity.md` §2 with "What follows for the analysis"; `AGENTS.md`: read your profile
+  at the start of every session, without one run the skill first; profile of `claude-opus-5-5` rewritten from its
+  system card and the maker's documents; `methods/reflexivity.md` §2 extended (filters, measured biases, hidden
+  system prompt). Each profile complete on its own (owner, 2026-11-15).
+- Verify: `python tools/agents_sync.py --check` in the research environment; the owner simulates the first start
+  in a test copy
+- Paths: `../MIXED-Method-Ontology/` (`.agents/skills/profile-model/`, `.claude/skills/`, `analysts/`, `AGENTS.md`,
+  `methods/reflexivity.md`)
+- Depends on: T14
+
 ### Later (after the split)
 - Test research environments in `zkusebna/` (a workshop tool; no git; refuses a target with `AGENTS.md`,
   `CLAUDE.md` or `.git` above it), with a trial that the analyst role is clean there.

@@ -287,3 +287,17 @@
 - Next: the walk through the analysis continues in the research environment, in a new thread: the analysts'
   personal journals and own biases (researcher profile, positionality memos of `nazi-v-ai-dobe`). T15 (clean the
   workshop) after that check; nothing pushed yet (account `honzapetr`).
+
+## T16 – 2026-11-15
+- Owner asked whether the text on what shapes the model covers filters and training; it covered training data and
+  post-training without sources, not filters or the hidden system prompt. Found: system card of Opus 5.5 (too large
+  for fetch; downloaded and read in the session scratchpad, not kept), constitution, maker's posts on political
+  bias and filters, Durmus et al. 2023, selective refusal bias. Owner chose the scalable way (`docs/answers.md`).
+- Done in the research environment, branch `task/T16-model-profiles` (commit there): skill `profile-model`,
+  template by layers with certainty marks and "What follows for the analysis", `AGENTS.md` (read your profile every
+  session; without one run the skill), `analysts/README.md`, profile `claude-opus-5-5` rewritten (status
+  `proposed`, journal kept, new entry), `methods/reflexivity.md` §2 and sources.
+- Verified: `agents_sync.py --check` in the research environment.
+- Next: the owner tests the first start in a test copy of the research environment: delete
+  `analysts/claude-opus-5-5.md` in the copy (or start another model) so the skill is triggered; then confirms the
+  profile. Branch to be merged into `main` there after the test. T15 still waits.
