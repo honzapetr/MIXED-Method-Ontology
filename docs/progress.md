@@ -257,3 +257,13 @@
   `MIXED-Method-Ontology/` (new). Split first: T13 rename, T14 create the research environment, T15 clean the
   workshop; test environments and releasing `mmo` later. ADR 0011 rewritten with the file layout table; the owner
   will correct it.
+
+## T13 – 2026-11-15
+- The owner made `2026/MIXED-Method-Ontology/MIXED-Method-Ontology-vyvoj/`; the whole repository (with `.git`,
+  git-ignored page images and `scratch/`) moved there from `MIXED-Method-Ontology/`; `.venv` and caches recreated,
+  not moved. Claude Code's memory moved to the new path's key; the old key keeps no memory, so the analyst in
+  `MIXED-Method-Ontology/` starts empty.
+- Verified in the new folder: `git status` clean, `git fsck` clean, `uv sync`, `uv run pytest` (86 passed).
+- Next: start Claude Code in `MIXED-Method-Ontology-vyvoj/`; the owner corrects the file layout in ADR 0011, then
+  T14 (create the research environment in `MIXED-Method-Ontology/`, which now holds only the old `.venv` and caches
+  to delete).

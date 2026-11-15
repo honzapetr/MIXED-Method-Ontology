@@ -85,7 +85,7 @@
 - Paths: `docs/`
 - Depends on: T11
 
-### T13 – Rename today's repository to the workshop
+### T13 – Rename today's repository to the workshop (done)
 - Goal: today's repository becomes the workshop `MIXED-Method-Ontology-vyvoj/` with its history, so the name
   `MIXED-Method-Ontology/` is free for the research environment (ADR 0011).
 - Acceptance criteria: the owner renames the folder with VS Code and Claude Code closed; Claude Code's memory folder
