@@ -311,4 +311,7 @@
   workshop path in `pyproject.toml`/`uv.lock` is rewritten so `uv sync` works; each copy is logged in
   `zkusebna/_log.tsv` (outside the copy, so the analyst does not see it).
 - Verify: `uv run pytest` 90 passed; ruff clean. Dry run on the real environment: 960 files (1173 with sources).
-- Next: the owner runs the first-start test with `--without-profile claude-opus-5-5`.
+- By default the copy holds only what the agent reads; dotfiles other than `.agents/` and `.claude/`, `pyproject.toml`,
+  `uv.lock` and `tools/` come with `--with-project-files` (owner: for testing the agent, versioning and setup are
+  not needed now).
+- Next: the owner runs the first-start test in `zkusebna/test2/` (`--without-profile claude-opus-5-5`).

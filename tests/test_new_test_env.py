@@ -34,6 +34,9 @@ def layout(tmp_path: Path) -> dict[str, Path]:
     _write(source / ".venv" / "lib.py")
     _write(source / "scratch" / "tmp.py")
     _write(source / "untracked.md")
+    _write(source / ".editorconfig")
+    _write(source / "tools" / "agents_sync.py")
+    _write(source / ".agents" / "skills" / "s" / "SKILL.md")
     subprocess.run(["git", "init", "-q", str(source)], check=True)
     subprocess.run(["git", "-C", str(source), "add", ".gitignore", "AGENTS.md", "analysts", "topics"], check=True)
     subprocess.run(
@@ -54,16 +57,22 @@ def test_copies_what_git_sees_without_secrets_or_environments(layout):
     assert (dest / "AGENTS.md").exists()
     assert (dest / "untracked.md").exists()
     assert (dest / "topics/t/sources/s/text.md").exists()
-    for left_out in (".env", ".venv", "scratch", ".git", "topics/t/sources/s/files/p001.jpg"):
-        assert not (dest / left_out).exists(), left_out
+    assert (dest / ".agents/skills/s/SKILL.md").exists()
+    left_out = (".env", ".venv", "scratch", ".git", "topics/t/sources/s/files/p001.jpg")
+    project = (".gitignore", ".editorconfig", "pyproject.toml", "uv.lock", "tools")
+    for path in left_out + project:
+        assert not (dest / path).exists(), path
     assert (layout["zkusebna"] / "_log.tsv").read_text(encoding="utf-8").count("\ttest1\t") == 1
 
 
-def test_rewrites_the_workshop_path(layout):
-    _run(layout, "probe")
+def test_project_files_and_the_workshop_path(layout):
+    _run(layout, "probe", "--with-project-files")
     dest = layout["zkusebna"] / "probe"
     assert '"../../ws"' in (dest / "pyproject.toml").read_text(encoding="utf-8")
     assert '"../../ws"' in (dest / "uv.lock").read_text(encoding="utf-8")
+    for path in (".gitignore", ".editorconfig", "tools/agents_sync.py"):
+        assert (dest / path).exists(), path
+    assert not (dest / ".env").exists()
 
 
 def test_options(layout):
