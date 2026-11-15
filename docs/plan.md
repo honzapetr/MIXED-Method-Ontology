@@ -137,9 +137,20 @@
   `methods/reflexivity.md`)
 - Depends on: T14
 
+### T17 – Test copies of the research environment in `zkusebna/` (done)
+- Goal: one command makes a clean test copy of the research environment, e.g. to simulate a model's first start
+  (owner 2026-11-15).
+- Acceptance criteria: `tools/new_test_env.py` copies what git sees (tracked and untracked-not-ignored), never
+  `.env`, `.venv/`, caches, `scratch/` or `.git/`; page images only with `--with-source-files`; `--without-profile`
+  leaves out a model profile; no git unless `--git`; rewrites the workshop path in `pyproject.toml` and `uv.lock`;
+  refuses an existing target and a target with `AGENTS.md`, `CLAUDE.md` or `.git` above it; logs each copy in
+  `zkusebna/_log.tsv`; tests.
+- Verify: `uv run pytest tests/test_new_test_env.py && uv run ruff check . && uv run ruff format --check .`
+- Paths: `tools/new_test_env.py`, `tests/test_new_test_env.py`, `docs/`
+- Depends on: T16
+
 ### Later (after the split)
-- Test research environments in `zkusebna/` (a workshop tool; no git; refuses a target with `AGENTS.md`,
-  `CLAUDE.md` or `.git` above it), with a trial that the analyst role is clean there.
+- A trial that the analyst role is clean in a test copy (`/memory`).
 - Releasing `mmo` as a wheel into the research environment instead of the path dependency.
 
 ## Analysis

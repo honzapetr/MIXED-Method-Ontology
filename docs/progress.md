@@ -301,3 +301,14 @@
 - Next: the owner tests the first start in a test copy of the research environment: delete
   `analysts/claude-opus-5-5.md` in the copy (or start another model) so the skill is triggered; then confirms the
   profile. Branch to be merged into `main` there after the test. T15 still waits.
+
+## 2026-11-15 – T17 test copies in `zkusebna/`
+
+- `tools/new_test_env.py` (standard library; run with `python` from the workshop) makes `../zkusebna/test<N>/` or a
+  named folder from `../MIXED-Method-Ontology/` as git sees it, including uncommitted changes; leaves out `.env`,
+  `.venv/`, caches, `scratch/`, `.git/` and page images (`--with-source-files` adds them). `--without-profile <id>`
+  simulates a model's first start; `--git` gives the copy its own repository; `--dry-run` lists the files. The
+  workshop path in `pyproject.toml`/`uv.lock` is rewritten so `uv sync` works; each copy is logged in
+  `zkusebna/_log.tsv` (outside the copy, so the analyst does not see it).
+- Verify: `uv run pytest` 90 passed; ruff clean. Dry run on the real environment: 960 files (1173 with sources).
+- Next: the owner runs the first-start test with `--without-profile claude-opus-5-5`.
