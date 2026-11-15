@@ -135,3 +135,8 @@
 - **`.claude/settings.json`** is copied (denies reading `.env` and pushing to `main`).
 - **Analyst profiles move whole**, journals included, also entries written during the builder's work.
 - **`scratch/T11/` never existed at the time of T13**; only the sandbox `../studie/` is to be deleted (T15).
+- **`.env` of the research environment starts new** (2026-11-15); the workshop's `.env` is not copied.
+- **References to workshop files rewritten in the research environment** (owner): the environment is not meant to
+  be finished; roles and procedures of the analysis are developed in a new thread, step by step with the walk
+  through the analysis. The walk continues where it stopped: the analysts' personal journals, own biases, what
+  influences them.

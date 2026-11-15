@@ -267,3 +267,23 @@
 - Next: start Claude Code in `MIXED-Method-Ontology-vyvoj/`; the owner corrects the file layout in ADR 0011, then
   T14 (create the research environment in `MIXED-Method-Ontology/`, which now holds only the old `.venv` and caches
   to delete).
+
+## T14 – 2026-11-15
+- Owner confirmed the file layout of ADR 0011 and the three open points (copy `tools/agents_sync.py` and
+  `.claude/settings.json`, analyst profiles move whole); recorded in ADR 0011, `docs/answers.md`, T14 criteria.
+- Correction of the T11 entries above: `scratch/T11/` did not exist; only the sandbox `../studie/` is to be deleted.
+- Done: research environment `../MIXED-Method-Ontology/` (git, branch `main`, first commit `baac630`, names
+  workshop commit `dfc4c6d`): `methods/`, `ontology/`, `analysts/`, `docs/` (memos, source preparation),
+  `topics/README.md` and `topics/nazi-v-ai-dobe/`, skills `ingest-sources` and `transcribe-pages` (+ generated
+  `.claude/skills/`), `tools/agents_sync.py`, `.claude/settings.json`; new `AGENTS.md` (analyst only, no reference
+  to the workshop), `CLAUDE.md`, `README.md`, `pyproject.toml` (editable path dependency on the workshop, lock with
+  a relative path). Paths of moved files rewritten; references to files that stay here (spec, plan, progress,
+  owner's notes, ADRs, tests, code) replaced; records of source preparation now go to a `methodological` memo of
+  the topic (provisional). Study memos and the model's journal left as they were (records). No `.env` there yet;
+  the owner starts a new one. The workshop still holds all of it until T15.
+- Verified: 213 page images match `ingest/files.yaml` (sha256); in the research environment `uv sync`,
+  `uv run mmo source check nazi-v-ai-dobe` (exit 0, same output as in the workshop), `agents_sync.py --check`.
+  Not yet: the owner starts Claude Code there and checks `/memory`.
+- Next: the walk through the analysis continues in the research environment, in a new thread: the analysts'
+  personal journals and own biases (researcher profile, positionality memos of `nazi-v-ai-dobe`). T15 (clean the
+  workshop) after that check; nothing pushed yet (account `honzapetr`).

@@ -95,7 +95,7 @@
 - Paths: the folder itself, `~/.claude/projects/` (memory)
 - Depends on: T12
 
-### T14 – Create the research environment `MIXED-Method-Ontology/`
+### T14 – Create the research environment `MIXED-Method-Ontology/` (done; `/memory` check by the owner)
 - Goal: the research environment is a repository of its own with everything the analyst needs and the study.
 - Acceptance criteria: the folders that move (ADR 0011 table) copied; git-ignored page images of `nazi-v-ai-dobe`
   copied and checked against the hashes in `ingest/files.yaml`; `sample-masaryk-suicide` not copied (deleted, owner
