@@ -315,3 +315,17 @@
   `uv.lock` and `tools/` come with `--with-project-files` (owner: for testing the agent, versioning and setup are
   not needed now).
 - Next: the owner runs the first-start test in `zkusebna/test2/` (`--without-profile claude-opus-5-5`).
+
+## 2026-11-15 – T18 the analyst's role (research environment)
+
+- Branch `task/T18-analyst-role` in `../MIXED-Method-Ontology/` (from `task/T16-model-profiles`), commit e810100 and a
+  fix. Skill `frame-role`: profile (by `Version`) × method (`methods/<id>/reflexivity.md`, agent rules) × topic →
+  role memo `topics/<slug>/memos/<date>-role-<model-id>.md`, written before the data are read, owner confirms;
+  framed again on a new profile version or a change of the method's reflexivity. `AGENTS.md`: three steps every
+  session (who am I, what do I work on, what is my role here) and "act from the role whenever you weigh
+  information". Profile template and `profile-model`: Role (first person, 5–8 sentences) and Version. Role written
+  in the profile of `claude-opus-5-5` (still `proposed`); `frame-role` requires a confirmed profile.
+- The positionality memo of `nazi-v-ai-dobe` (2026-11-14) stays as history; the role memo will supersede it.
+- First test (`zkusebna/test2/`, before T18): `profile-model` started on its own; the model also read the old
+  positionality memo of the study, so it did not start from nothing.
+- Next: the owner tests in a new copy; then confirms the Opus profile and the role for `nazi-v-ai-dobe` is framed.

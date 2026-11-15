@@ -149,6 +149,22 @@
 - Paths: `tools/new_test_env.py`, `tests/test_new_test_env.py`, `docs/`
 - Depends on: T16
 
+### T18 – The analyst's role: profile × method × topic (research environment) (done; owner tests)
+- Goal: the profile is the model's role as an analyst, and in each study it is joined with the method and the topic
+  into a role for that study, framed again when the profile or the method changes (owner 2026-11-15; one study,
+  one method).
+- Acceptance criteria: in `../MIXED-Method-Ontology/`: skill `frame-role` (role memo
+  `topics/<slug>/memos/<date>-role-<model-id>.md` before the data are read, with `profile_version`; owner confirms);
+  `AGENTS.md` sets the role in three steps every session (profile, study and method, role memo) and asks to act
+  from it whenever information is weighed; profile template and `profile-model` with a Role and a Version; Role in
+  the profile of `claude-opus-5-5`; `analysts/README.md`, `methods/reflexivity.md`, the agent rules of the methods
+  and `docs/memos.md` updated.
+- Verify: `python tools/agents_sync.py --check` in the research environment; the owner tests a first start in a test
+  copy
+- Paths: `../MIXED-Method-Ontology/` (`.agents/skills/`, `.claude/skills/`, `AGENTS.md`, `analysts/`, `methods/`,
+  `docs/memos.md`)
+- Depends on: T16
+
 ### Later (after the split)
 - A trial that the analyst role is clean in a test copy (`/memory`).
 - Releasing `mmo` as a wheel into the research environment instead of the path dependency.

@@ -150,3 +150,12 @@
 - **One maker, several models:** each profile is complete on its own (precision before economy; documents change
   between versions).
 - **Approval:** a profile is `proposed` until the owner confirms it; no analytic step before that.
+
+## 2026-11-15 – The analyst's role
+
+- The analyst's own position is not only a memo: the profile is the role of the analyst (the model working in the
+  research environment, not the builder in the workshop), and its position and biases are part of every judgement
+  of information.
+- At the start of an instance the role is set from the model and the method; a new study frames it again.
+- For now one study has one method.
+- Change the research environment now, then test again.
