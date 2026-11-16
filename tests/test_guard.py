@@ -152,6 +152,10 @@ def test_bash(root, tmp_path):
     assert bash("sed -i 's/Status: proposed/Status: confirmed/' analysts/m.md") == "ask"
     assert bash('echo "status: confirmed" >> topics/s/positions/m.md') == "ask"
     assert bash("curl -s https://example.org/a/b") is None
+    # shell devices and the temp folder are not paths of the environment (test7: `2>/dev/null` was denied)
+    assert bash("ls topics/ && ls topics/*/positions/ 2>/dev/null; ls analysts/") is None
+    assert bash("git status > /dev/null 2>&1") is None
+    assert bash("echo x > /tmp/probe.txt") is None
 
 
 def test_git_bash_drive_paths():

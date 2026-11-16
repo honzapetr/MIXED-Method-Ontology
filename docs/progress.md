@@ -381,3 +381,5 @@
 - Unknown until tested in a session: whether the harness passes the model id to SessionStart (if not, the hook
   lists the profiles and the model takes its id from the harness); whether an `ask` decision prompts in auto mode.
 - The research environment needs `uv sync` once to install `mmo-guard`.
+- Fix after the test in `zkusebna/test7/`: `2>/dev/null` was read as the path `G:\dev\null` and the whole command
+  denied; shell devices (`/dev/...`, `nul`) are skipped and Git Bash `/tmp` maps to the temp folder; test added.

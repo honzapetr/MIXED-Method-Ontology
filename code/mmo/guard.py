@@ -32,7 +32,7 @@ import yaml
 GATED_IN_SOURCE = {"text.md", "segments", "ingest", "files", "ground-truth"}
 CONTENT_SEARCH = {"grep", "egrep", "fgrep", "rg", "ag", "ack", "findstr", "select-string"}
 ALWAYS_RECURSIVE = {"rg", "ag", "ack"}
-DEV_PATHS = ("/dev/",)
+DEVICES = re.compile(r"(?i)^(/dev/\S+|/proc/\S+|nul|con|\\\\\.\\nul)$")  # shell devices, e.g. `2>/dev/null`
 CONFIRMED_ANYWHERE = re.compile(r"(?i)status:\s*confirmed")
 DRIVE_POSIX = re.compile(r"^/([a-zA-Z])(/|$)")
 DRIVE_WIN = re.compile(r"^[a-zA-Z]:[\\/]")
@@ -52,6 +52,8 @@ def to_path(token: str, cwd: Path) -> Path:
     text = token.strip().strip("'\"")
     if match := DRIVE_POSIX.match(text):
         text = f"{match.group(1).upper()}:/{text[match.end() :]}"
+    elif text == "/tmp" or text.startswith("/tmp/"):  # Git Bash maps /tmp to the user's temp folder
+        text = tempfile.gettempdir() + text[4:]
     if text.startswith("~"):
         text = str(Path.home()) + text[1:]
     path = Path(text)
@@ -74,8 +76,6 @@ def claude_project_dir(root: Path) -> Path:
 
 
 def allowed_outside(path: Path, root: Path) -> bool:
-    if path.as_posix().startswith(DEV_PATHS) or str(path).lower() in {"nul", "\\\\.\\nul"}:
-        return True
     return inside(path, Path(tempfile.gettempdir()).resolve()) or inside(path, claude_project_dir(root))
 
 
@@ -319,7 +319,7 @@ def check_bash(command: str, cwd: Path, root: Path, model_id: str | None) -> dic
             value = word.split("=", 1)[1] if word.startswith("-") and "=" in word else word
             if word.startswith("-") and "=" not in word:
                 continue
-            if not looks_like_path(value):
+            if not looks_like_path(value) or DEVICES.match(value):
                 continue
             if GLOB_CHARS.search(value):
                 matches = glob.glob(str(to_path(value, here)), recursive=True)
