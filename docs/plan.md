@@ -204,7 +204,7 @@
   `docs/memos.md`, `topics/`)
 - Depends on: T20
 
-### T22 – Guards for the analyst in Claude Code (research environment) (planned)
+### T22 – Guards for the analyst in Claude Code (research environment) (deferred: at the end of development)
 - Goal: the analyst gets what it needs at the start and cannot leave the environment, skip steps or confirm on the
   owner's behalf (owner 2026-11-16).
 - Acceptance criteria: a `SessionStart` hook loads only step 1 (the model's profile, its status and version); the
@@ -212,7 +212,13 @@
   outside the project root, denies reading `sources/*/text.md` and segments of a study until the profile is
   confirmed and the model's position matches the profile version and is confirmed, and asks the owner (permission
   prompt) when a profile or a position is set to `confirmed`; the logic is an `mmo` command with tests, so other
-  agents can run it too.
+  agents can run it too. The start hook first checks that the computer has what the environment needs (e.g. `uv`,
+  `git`, the program `mmo`) and says plainly what is missing.
+- Deferred (owner 2026-11-16): many test runs are still ahead; hooks come when development is done.
+- To decide then: what happens when a hook cannot run (Claude Code then lets the tool through, so the guard would
+  vanish silently); test copies need `--with-project-files` for `uv run mmo`; `mmo` released as a package instead of
+  the path to the workshop, so others can use it; the path guard only on file tools and Bash (each call starts
+  `uv run`).
 - Verify: to be set when planned
 - Depends on: T21
 
