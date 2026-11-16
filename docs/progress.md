@@ -365,3 +365,19 @@
   says an undefined study is a discussion with the researcher. `agents_sync --check` passes; no leftovers of
   "role memo", `frame-role` or "positionality memo".
 - Next: T22 (hooks); a new test copy with the profile.
+
+## 2026-11-16 – T22 guards for the analyst
+
+- Workshop: `mmo-guard` (`code/mmo/guard.py`, script in `pyproject.toml`): `session-start` gives only step 1 (model
+  id when the harness passes it, its profile with status and version, `Guards: on`); `pre-tool-use` denies paths
+  outside the environment (temp and the project's own `~/.claude/projects/<dir>` allowed), denies study data
+  (`sources/<id>/text.md`, `segments/`, `ingest/`, `files/`, `ground-truth/`, `work/`) and content searches over
+  them until a model has a confirmed profile and a confirmed position from the current profile version, and asks
+  the owner when a profile or a position becomes `confirmed`. Bash checks are heuristics on the command line.
+  `tools/new_test_env.py`: project files and `uv sync` by default. `uv run pytest` 101 passed; ruff clean.
+- Research environment, branch `task/T22-guards` (from T21): hooks in `.claude/settings.json`; `AGENTS.md` says
+  what `Guards: on` means and that without it no analytic step is done. Run end to end there: the book text denied
+  (profile proposed), `../zkusebna/test3` denied, the profile allowed; about 1 s per guarded call.
+- Unknown until tested in a session: whether the harness passes the model id to SessionStart (if not, the hook
+  lists the profiles and the model takes its id from the harness); whether an `ask` decision prompts in auto mode.
+- The research environment needs `uv sync` once to install `mmo-guard`.

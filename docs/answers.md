@@ -182,3 +182,6 @@
   owner (T22).
 - Hooks (T22) are used now. Only the check that the computer has what the environment needs (`uv`, `git`, the
   virtual environment, `mmo`), with a notice what to install, comes at the end of development (2026-11-16).
+- T22 decisions: when the hooks cannot run, the start says `Guards: NOT running` and the model does no analytic
+  step (later: the model offers to install the dependencies); test copies include the project files and run
+  `uv sync` by default.

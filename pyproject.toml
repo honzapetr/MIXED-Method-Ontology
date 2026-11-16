@@ -12,6 +12,7 @@ dependencies = [
 
 [project.scripts]
 mmo = "mmo.cli:main"
+mmo-guard = "mmo.guard:main"
 
 [dependency-groups]
 dev = [

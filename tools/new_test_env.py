@@ -1,10 +1,10 @@
 """Create a test copy of the research environment in `zkusebna/` (ADR 0011).
 
 Copies what git would see in the research environment (tracked files and untracked files that are not ignored), so
-`.venv/`, `.env`, caches, `scratch/` and `.git/` stay behind. By default the copy holds only what the agent reads
-(instructions, skills, methods, analysts, studies): the project files for git, uv and the editor (dotfiles other
-than `.agents/` and `.claude/`, `pyproject.toml`, `uv.lock`, `tools/`) are added with `--with-project-files`, and
-then the path dependency on the workshop is rewritten so `uv sync` works in the copy. Page images and other
+`.venv/`, `.env`, caches, `scratch/` and `.git/` stay behind. The copy includes the project files (dotfiles,
+`pyproject.toml`, `uv.lock`, `tools/`): the path dependency on the workshop is rewritten and `uv sync` is run in the
+copy, so `mmo` and the hooks of `.claude/settings.json` (`mmo-guard`) work there. `--without-project-files` leaves
+them out (then the hooks cannot run); `--no-sync` skips `uv sync`. Page images and other
 git-ignored source files are copied only with `--with-source-files`. The copy has no git unless `--git` is given.
 
 Usage (from the workshop):
@@ -56,7 +56,7 @@ def is_project_file(rel: str) -> bool:
     return (top.startswith(".") and top not in AGENT_DOTDIRS) or top in PROJECT_FILES
 
 
-def files_to_copy(source: Path, with_source_files: bool, with_project_files: bool = False) -> list[str]:
+def files_to_copy(source: Path, with_source_files: bool, with_project_files: bool = True) -> list[str]:
     """Paths relative to `source`, as git sees them: tracked plus untracked-not-ignored (plus ignored sources)."""
     files = set(git(source, "ls-files", "-z", "--cached", "--others", "--exclude-standard").split("\0"))
     if with_source_files:
@@ -118,10 +118,11 @@ def main(argv: list[str] | None = None) -> int:
     )
     parser.add_argument("--with-source-files", action="store_true", help="also copy git-ignored page images etc.")
     parser.add_argument(
-        "--with-project-files",
+        "--without-project-files",
         action="store_true",
-        help="also copy dotfiles, pyproject.toml, uv.lock and tools/ (needed for uv sync and mmo)",
+        help="leave out dotfiles, pyproject.toml, uv.lock and tools/ (then mmo and the hooks cannot run)",
     )
+    parser.add_argument("--no-sync", action="store_true", help="do not run uv sync in the copy")
     parser.add_argument("--git", action="store_true", help="git init and commit the copy")
     parser.add_argument("--dry-run", action="store_true", help="only list what would be copied")
     args = parser.parse_args(argv)
@@ -136,7 +137,7 @@ def main(argv: list[str] | None = None) -> int:
     if marker := marker_above(dest):
         parser.error(f"{marker} lies above the test folder; its instructions would apply there too")
 
-    files = files_to_copy(source, args.with_source_files, args.with_project_files)
+    files = files_to_copy(source, args.with_source_files, not args.without_project_files)
     for model_id in args.without_profile:
         profile = f"analysts/{model_id}.md"
         if profile not in files:
@@ -169,7 +170,7 @@ def main(argv: list[str] | None = None) -> int:
     options = " ".join(
         [f"--without-profile {m}" for m in args.without_profile]
         + (["--with-source-files"] if args.with_source_files else [])
-        + (["--with-project-files"] if args.with_project_files else [])
+        + (["--without-project-files"] if args.without_project_files else [])
         + (["--git"] if args.git else [])
     )
     state = "dirty" if dirty else "clean"
@@ -177,8 +178,10 @@ def main(argv: list[str] | None = None) -> int:
     with (zkusebna / LOG).open("a", encoding="utf-8", newline="\n") as log:
         log.write("\t".join(row) + "\n")
     print(f"done; recorded in {zkusebna / LOG}")
-    sync = " && uv sync" if args.with_project_files else ""
-    print(f'next: cd "{dest}"{sync}, then start Claude Code there')
+    if not args.without_project_files and not args.no_sync:
+        synced = subprocess.run(["uv", "sync", "-q"], cwd=dest).returncode == 0
+        print("uv sync in the copy: " + ("done" if synced else "FAILED - the hooks will report 'Guards: NOT running'"))
+    print(f'next: cd "{dest}", then start Claude Code there')
     return 0
 
 

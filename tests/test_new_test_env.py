@@ -48,7 +48,7 @@ def layout(tmp_path: Path) -> dict[str, Path]:
 
 def _run(layout: dict[str, Path], *extra: str) -> None:
     args = ["--source", str(layout["source"]), "--zkusebna", str(layout["zkusebna"])]
-    assert nte.main([*args, "--workshop", str(layout["workshop"]), *extra]) == 0
+    assert nte.main([*args, "--workshop", str(layout["workshop"]), "--no-sync", *extra]) == 0
 
 
 def test_copies_what_git_sees_without_secrets_or_environments(layout):
@@ -58,21 +58,27 @@ def test_copies_what_git_sees_without_secrets_or_environments(layout):
     assert (dest / "untracked.md").exists()
     assert (dest / "topics/t/sources/s/text.md").exists()
     assert (dest / ".agents/skills/s/SKILL.md").exists()
-    left_out = (".env", ".venv", "scratch", ".git", "topics/t/sources/s/files/p001.jpg")
-    project = (".gitignore", ".editorconfig", "pyproject.toml", "uv.lock", "tools")
-    for path in left_out + project:
+    for path in (".env", ".venv", "scratch", ".git", "topics/t/sources/s/files/p001.jpg"):
         assert not (dest / path).exists(), path
     assert (layout["zkusebna"] / "_log.tsv").read_text(encoding="utf-8").count("\ttest1\t") == 1
 
 
 def test_project_files_and_the_workshop_path(layout):
-    _run(layout, "probe", "--with-project-files")
+    _run(layout, "probe")
     dest = layout["zkusebna"] / "probe"
     assert '"../../ws"' in (dest / "pyproject.toml").read_text(encoding="utf-8")
     assert '"../../ws"' in (dest / "uv.lock").read_text(encoding="utf-8")
     for path in (".gitignore", ".editorconfig", "tools/agents_sync.py"):
         assert (dest / path).exists(), path
     assert not (dest / ".env").exists()
+
+
+def test_without_project_files(layout):
+    _run(layout, "bare", "--without-project-files")
+    dest = layout["zkusebna"] / "bare"
+    for path in (".gitignore", ".editorconfig", "pyproject.toml", "uv.lock", "tools"):
+        assert not (dest / path).exists(), path
+    assert (dest / "AGENTS.md").exists()
 
 
 def test_options(layout):
