@@ -180,5 +180,5 @@
   researcher's own position). A start hook loads only step 1 now and is extended once studies are defined.
 - Guards approved: stay inside the project, no reading of source text before the steps, confirmations through the
   owner (T22).
-- Hooks (T22) come at the end of development, not now; the start hook first checks the computer's environment
-  (2026-11-16).
+- Hooks (T22) are used now. Only the check that the computer has what the environment needs (`uv`, `git`, the
+  virtual environment, `mmo`), with a notice what to install, comes at the end of development (2026-11-16).
