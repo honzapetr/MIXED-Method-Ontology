@@ -354,3 +354,14 @@
   `agents_sync --check` passes.
 - Next: test copy with the Opus profile (still `proposed`) to try `frame-role`; the owner confirms the profile in
   the test.
+
+## 2026-11-16 – T21 positions apart from memos
+
+- Test in `zkusebna/test5/` (profile included): the model stayed in its folder and did the three steps; it still
+  saw the profile's journal of building the environment.
+- Research environment, branch `task/T21-positions` (from T20), commit 822b2f4: positions in
+  `topics/<slug>/positions/`; `frame-role` → `state-position`; profile Role → Position; Opus profile without task
+  references, journal empty, "Used for" research only; researcher's draft → `positions/owner.md`; `AGENTS.md` step 2
+  says an undefined study is a discussion with the researcher. `agents_sync --check` passes; no leftovers of
+  "role memo", `frame-role` or "positionality memo".
+- Next: T22 (hooks); a new test copy with the profile.

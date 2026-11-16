@@ -188,6 +188,34 @@
 - Paths: `../MIXED-Method-Ontology/` (`analysts/README.md`, `.agents/skills/profile-model/`, `.claude/skills/`)
 - Depends on: T19
 
+### T21 – Positions apart from memos; profile without build history (research environment) (done)
+- Goal: a memo is a note from research, not a position or a version; the analyst's own position and biases in a
+  study are a statement of their own; the profile's journal holds research only, the build history is in git
+  (owner 2026-11-16).
+- Acceptance criteria: in `../MIXED-Method-Ontology/`: positions in `topics/<slug>/positions/<analyst-id>.md`
+  (model: `profile_version`, `status`); skill `frame-role` renamed `state-position`; the profile section Role is
+  Position; the Opus profile has no workshop task references and an empty journal; the researcher's draft moved to
+  `positions/owner.md`; `AGENTS.md` step 2 is a discussion with the researcher where the study is not defined
+  (sources, method, topic, questions, the researcher's position); method rules, templates, `docs/memos.md`,
+  `analysts/README.md`, `topics/README.md` follow; `.claude/` synced.
+- Verify: `python tools/agents_sync.py --check` in the research environment; no `role memo`, `frame-role` or
+  `positionality memo` left there
+- Paths: `../MIXED-Method-Ontology/` (`AGENTS.md`, `.agents/skills/`, `.claude/skills/`, `analysts/`, `methods/`,
+  `docs/memos.md`, `topics/`)
+- Depends on: T20
+
+### T22 – Guards for the analyst in Claude Code (research environment) (planned)
+- Goal: the analyst gets what it needs at the start and cannot leave the environment, skip steps or confirm on the
+  owner's behalf (owner 2026-11-16).
+- Acceptance criteria: a `SessionStart` hook loads only step 1 (the model's profile, its status and version); the
+  study context is added to it once studies are defined with the researcher; a `PreToolUse` hook denies paths
+  outside the project root, denies reading `sources/*/text.md` and segments of a study until the profile is
+  confirmed and the model's position matches the profile version and is confirmed, and asks the owner (permission
+  prompt) when a profile or a position is set to `confirmed`; the logic is an `mmo` command with tests, so other
+  agents can run it too.
+- Verify: to be set when planned
+- Depends on: T21
+
 ### Later (after the split)
 - A trial that the analyst role is clean in a test copy (`/memory`).
 - Releasing `mmo` as a wheel into the research environment instead of the path dependency.

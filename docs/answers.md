@@ -167,3 +167,16 @@
   to the research environment and the workshop.
 - The positionality memo `2026-11-14-position-claude-opus-5-5` of `nazi-v-ai-dobe` is not needed; delete it (the
   role memo from `frame-role` takes its place).
+
+## 2026-11-16 – Memos, positions and the profile journal
+
+- A memo is a note written during the research ("what occurred to me"), not a version or a role. The analyst's own
+  position and biases in a study are a statement of their own: `topics/<slug>/positions/<analyst-id>.md`. Skill
+  `state-position`; the profile section Role is Position.
+- The profile journal is part of the research process; the history of building the environment is kept in git and
+  does not appear in profiles.
+- The session start is staged: (1) the model loads information about itself and secures its own position; (2) what
+  is studied and by which method is a discussion with the researcher (sources, methodology, topic, questions, the
+  researcher's own position). A start hook loads only step 1 now and is extended once studies are defined.
+- Guards approved: stay inside the project, no reading of source text before the steps, confirmations through the
+  owner (T22).
