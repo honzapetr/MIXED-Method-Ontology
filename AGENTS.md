@@ -7,8 +7,6 @@ others). Agent-specific files (`CLAUDE.md`, `.claude/`) only add to it.
 
 ## Before you start
 
-* **Interactive session on the owner's computer:** ask the owner which GitHub account to use for this session
-  (`honzapetr` or `Jan-dolphin`) and check it with `gh auth status`. Never switch accounts on your own.
 * Read `docs/brief.md`, `docs/spec.md`, `docs/plan.md` and the end of `docs/progress.md`. They are the memory of the
   project – do not rely on what you think was done before.
 * Find your task in `docs/plan.md` (ID `T<n>`). Work on that task only.
@@ -41,6 +39,13 @@ you claim a task is done, and quote its result.
 
 * **Git:** one branch per task, `task/T<n>-<short-name>`; Conventional Commits (`feat:`, `fix:`, `test:`, `docs:`,
   `refactor:`, `chore:`); small commits. **Never push to `main`** and never force-push.
+* **GitHub account:** local commits need none. Before the first operation in a session that talks to GitHub (push,
+  pull request, any `gh` command), run `gh auth status`, tell the owner which account is active and which others are
+  logged in, and wait for their confirmation. Never switch accounts or log in on your own. If `gh` cannot run, ask
+  the owner to run `gh auth status` and share the result. Headless runs in the lab use the account the lab gives
+  them.
+* **Git identity:** before the first commit in a session, check `git config user.name` and `git config user.email`
+  and ask the owner if they are unset or look unexpected.
 * **Scope:** change only what the task needs. If the task needs more, stop and ask.
 * **Tests:** new behaviour comes with tests; never delete or weaken a test to make it pass.
 * **Dependencies:** commit lock files (`uv.lock`, `package-lock.json`) together with the change that updates them.

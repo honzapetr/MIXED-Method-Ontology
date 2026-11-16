@@ -165,6 +165,19 @@
   `docs/memos.md`)
 - Depends on: T16
 
+### T19 – GitHub account asked when needed, not hard-coded (both repositories) (done)
+- Goal: the instructions name no GitHub accounts and work for any researcher; the old positionality memo of the
+  study goes (owner 2026-11-16).
+- Acceptance criteria: in `AGENTS.md` of the workshop and of `../MIXED-Method-Ontology/` the account question is
+  gone from "Before you start"; the Git rules say: no account for local commits, `gh auth status` shown to the owner
+  and confirmed before the first push, pull request or `gh` command, never switch accounts, ask the owner to run it
+  if `gh` fails; check `git config user.name/email` before the first commit. The memo
+  `topics/nazi-v-ai-dobe/memos/2026-11-14-position-claude-opus-5-5.md` is deleted.
+- Verify: `grep -rn "honzapetr\|Jan-dolphin" AGENTS.md ../MIXED-Method-Ontology/AGENTS.md` finds nothing; the owner
+  tests a first start in a new test copy
+- Paths: `AGENTS.md`, `docs/`, `../MIXED-Method-Ontology/` (`AGENTS.md`, `topics/nazi-v-ai-dobe/memos/`)
+- Depends on: T18
+
 ### Later (after the split)
 - A trial that the analyst role is clean in a test copy (`/memory`).
 - Releasing `mmo` as a wheel into the research environment instead of the path dependency.

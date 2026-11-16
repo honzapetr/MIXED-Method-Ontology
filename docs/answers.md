@@ -159,3 +159,11 @@
 - At the start of an instance the role is set from the model and the method; a new study frames it again.
 - For now one study has one method.
 - Change the research environment now, then test again.
+
+## 2026-11-16 – GitHub account and the old positionality memo
+
+- No GitHub account names in the instructions: the agent asks only before the first operation that talks to GitHub,
+  shows what `gh auth status` reports and waits for the owner's confirmation, so the rule works for anyone. Applies
+  to the research environment and the workshop.
+- The positionality memo `2026-11-14-position-claude-opus-5-5` of `nazi-v-ai-dobe` is not needed; delete it (the
+  role memo from `frame-role` takes its place).

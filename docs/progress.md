@@ -329,3 +329,15 @@
 - First test (`zkusebna/test2/`, before T18): `profile-model` started on its own; the model also read the old
   positionality memo of the study, so it did not start from nothing.
 - Next: the owner tests in a new copy; then confirms the Opus profile and the role for `nazi-v-ai-dobe` is framed.
+
+## 2026-11-16 – T19 GitHub account asked when needed
+
+- Test in `zkusebna/test3/` (T18): the first answer followed the three steps (model id from the harness, missing
+  profile → `profile-model` proposed, one study, role memo missing → `frame-role` after the profile, no analytic
+  step); it called the old positionality memo an inconsistency.
+- `AGENTS.md` (workshop and research environment): no account names; the account is checked with `gh auth status`
+  and confirmed by the owner only before the first push, pull request or `gh` command; git identity checked before
+  the first commit. Branches `task/T19-github-account` in both repositories (research one from T18).
+- The positionality memo `2026-11-14-position-claude-opus-5-5` of `nazi-v-ai-dobe` is deleted (owner); the role
+  memo from `frame-role` will be the model's only position in the study. The researcher's positionality memo stays.
+- Next: the owner tests in a new test copy; then T18 and T19 are merged in the research environment.
