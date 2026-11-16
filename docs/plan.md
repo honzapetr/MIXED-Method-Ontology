@@ -178,6 +178,16 @@
 - Paths: `AGENTS.md`, `docs/`, `../MIXED-Method-Ontology/` (`AGENTS.md`, `topics/nazi-v-ai-dobe/memos/`)
 - Depends on: T18
 
+### T20 – Analysts are the profile files, no hand-kept list (research environment) (done)
+- Goal: `analysts/README.md` does not list the profiles by hand; the list went stale in a test copy without the
+  profile and repeated the status the profile holds (owner 2026-11-16, test in `zkusebna/test4/`).
+- Acceptance criteria: in `../MIXED-Method-Ontology/` the table "Analysts" in `analysts/README.md` is replaced by the
+  rule that the analysts are the files `analysts/<id>.md` (not `_template-*`), status and version in each header;
+  `profile-model` no longer adds a row; `.claude/` copies synced.
+- Verify: `python tools/agents_sync.py --check` in the research environment
+- Paths: `../MIXED-Method-Ontology/` (`analysts/README.md`, `.agents/skills/profile-model/`, `.claude/skills/`)
+- Depends on: T19
+
 ### Later (after the split)
 - A trial that the analyst role is clean in a test copy (`/memory`).
 - Releasing `mmo` as a wheel into the research environment instead of the path dependency.

@@ -341,3 +341,16 @@
 - The positionality memo `2026-11-14-position-claude-opus-5-5` of `nazi-v-ai-dobe` is deleted (owner); the role
   memo from `frame-role` will be the model's only position in the study. The researcher's positionality memo stays.
 - Next: the owner tests in a new test copy; then T18 and T19 are merged in the research environment.
+
+## 2026-11-16 – T20 analysts are the profile files
+
+- Test in `zkusebna/test4/` (T19, without the Opus profile): no GitHub question at the start; `profile-model` ran,
+  looked the model up on the web (system card, constitution, one independent sycophancy test), reported findings and
+  asked for approval before writing, and for the owner's approval of a cloud model. Error: `analysts/README.md`
+  listed `claude-opus-5-5.md (proposed 2026-11-15)` although the copy had no profile; the model also looked into the
+  sibling copy `test3/` to find it (outside its folder).
+- Fix in `../MIXED-Method-Ontology/`, branch `task/T20-analysts-from-files` (from T19): the hand-kept table is gone;
+  the analysts are the files in `analysts/`, status and version in each profile; `profile-model` adds no row.
+  `agents_sync --check` passes.
+- Next: test copy with the Opus profile (still `proposed`) to try `frame-role`; the owner confirms the profile in
+  the test.
