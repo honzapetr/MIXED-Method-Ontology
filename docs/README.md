@@ -15,6 +15,7 @@ methods in `methods/` (`development.md`).
 | `progress.md` | a short entry after every task |
 | `adr/` | one file per significant decision |
 | `owner-notes.md` | the owner's own notes while building |
+| `test-copies.md` | test copies of the research environment in `zkusebna/`; carrying a study's work from copy to copy (`--carry`) |
 | `source-pipeline.md` | how every kind of source becomes `text.md`, segments and quotations: steps, formats, built and planned |
 
 ## How the environment works (manual)

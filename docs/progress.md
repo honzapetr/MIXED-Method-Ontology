@@ -441,3 +441,18 @@
   (`left_out`: 203 running heads, 200 page numbers; 1,240 segments, all exact slices; `mmo source check` reports
   nothing about the final text or segments). The previous `text.md` is kept in
   `scratch/T25/kniha-text-before-T25.md` (sources are out of git since T23).
+
+## 2026-11-17 – T25a Carrying the study work between test copies
+- Owner: the framing done in `zkusebna/test7` (questions, positions of the owner and the model, memos, confirmed
+  profile) should go on in the next copy on the new environment, and the work should keep growing copy by copy.
+- `tools/new_test_env.py --carry <copy> [--on-conflict copy|env]`: compares the earlier copy (blob ids, line ends
+  normalised) with the environment commit recorded for it in `_log.tsv`; carries the study state it created,
+  changed or deleted; lists environment files it changed (feedback, not carried); stops on conflicts; warns when a
+  position no longer matches the profile version; with `--git` a second commit "study work carried from …".
+  Tests: carrying, deleting, growing over three copies, conflicts both ways, version warning. 117 passed, ruff clean.
+- Made `zkusebna/test8` from the research environment `task/T25-page-furniture` 37c1bb2 with `--carry test7 --git`:
+  6 files carried (`topic.yaml`, both positions, two memos of 2026-11-17, the confirmed profile), no conflicts, no
+  environment changes in test7; the guard opens `nazi-v-ai-dobe` to `claude-opus-5-5`; `text.md` is the rebuilt one
+  (1,240 segments).
+- Docs: `docs/test-copies.md` (making copies, `--carry`, growing over time, from a test to the research).
+- Next: the owner continues the study in `test8`; T26 (quotations).

@@ -249,6 +249,19 @@
   `.agents/skills/ingest-sources/`, `.claude/skills/`, `methods/`, `ontology/`)
 - Depends on: T23
 
+### T25a – Carry the study work from one test copy to the next (done)
+- Goal: a study framed in a test copy goes on in the next copy on the current environment, and keeps growing over
+  further copies, without touching the research repository (owner 2026-11-17).
+- Acceptance criteria: `tools/new_test_env.py --carry <copy>` compares the earlier copy with the environment commit
+  recorded for it in `_log.tsv` and applies what it created, changed or deleted in the study state (`topics/`,
+  `analysts/`, without the environment's own files there and without what the machine rebuilds); environment files
+  changed in the copy are listed, not carried; a file changed on both sides stops the run until `--on-conflict
+  copy|env`; a position written from another profile version is reported; the log records `--carry`; carrying from
+  a carried copy carries everything it holds; documented in `docs/test-copies.md`.
+- Verify: `uv run pytest tests/test_new_test_env.py && uv run ruff check . && uv run ruff format --check .`
+- Paths: `tools/new_test_env.py`, `tests/test_new_test_env.py`, `docs/`
+- Depends on: T25
+
 ### Later (after the split)
 - Check of the computer's environment, at the end of development (owner 2026-11-16): the start hook first checks
   what the environment needs (`uv`, `git`, the virtual environment from `uv sync`, the program `mmo`) and tells the

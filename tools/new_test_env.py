@@ -7,9 +7,20 @@ copy, so `mmo` and the hooks of `.claude/settings.json` (`mmo-guard`) work there
 them out (then the hooks cannot run); `--no-sync` skips `uv sync`. Page images and other
 git-ignored source files are copied only with `--with-source-files`. The copy has no git unless `--git` is given.
 
+`--carry <copy>` carries the work of an earlier test copy into the new one, so a study can grow over several test
+copies: the files of the study state (`topics/`, `analysts/`, but not the environment's own files there and not
+what the machine rebuilds: `text.md`, `segments.jsonl`, `ingest/`, `files/`, `ground-truth/`, `work/`) that the
+earlier copy created, changed or deleted since it was made - compared with the commit of the research environment
+recorded for it in `_log.tsv` - are applied to the new copy. Everything else comes new from the research
+environment. A file changed both in the earlier copy and in the research environment is a conflict: nothing is
+created until `--on-conflict copy` or `--on-conflict env` says which side wins. Changes of the earlier copy outside
+the study state (instructions, methods, skills) are listed, never carried: they are feedback for the workshop.
+Carrying again from a copy that was itself carried carries everything it holds.
+
 Usage (from the workshop):
     python tools/new_test_env.py                       # zkusebna/test<N>, next free number
     python tools/new_test_env.py profile-start --without-profile claude-opus-5-5
+    python tools/new_test_env.py --carry test7 --git   # the study work of test7 on the current environment
     python tools/new_test_env.py --dry-run
 
 Standard library only.
@@ -19,6 +30,7 @@ from __future__ import annotations
 
 import argparse
 import datetime as dt
+import hashlib
 import os
 import re
 import shutil
@@ -34,6 +46,13 @@ SOURCE_FILES = re.compile(r"^topics/[^/]+/sources/")
 AGENT_DOTDIRS = {".agents", ".claude"}
 PROJECT_FILES = {"pyproject.toml", "uv.lock", "tools"}
 LOG = "_log.tsv"
+STUDY_AREAS = ("topics", "analysts")
+# the environment's own files inside the study areas: never carried
+ENVIRONMENT_IN_STUDY = re.compile(
+    r"^(topics/README\.md|topics/\.gitignore|analysts/README\.md|analysts/_template-[^/]*)$"
+)
+MACHINE_IN_SOURCE = {"text.md", "segments.jsonl", "ingest", "files", "ground-truth"}  # rebuilt, never carried
+NOT_IN_COPY = {".git", ".venv", "__pycache__", "scratch", ".pytest_cache", ".ruff_cache"}
 
 
 def git(source: Path, *args: str) -> str:
@@ -106,6 +125,120 @@ def rewrite_workshop_path(dest: Path, source: Path, workshop: Path) -> list[str]
     return changed
 
 
+# ---------------------------------------------------------------- carrying the work of an earlier copy
+
+
+def is_study_state(rel: str) -> bool:
+    """A file of the study state: under `topics/` or `analysts/`, not the environment's, not rebuilt by the machine."""
+    parts = PurePosixPath(rel).parts
+    if not parts or parts[0] not in STUDY_AREAS or ENVIRONMENT_IN_STUDY.match(rel):
+        return False
+    if parts[0] == "topics" and len(parts) >= 3 and parts[2] == "work":
+        return False
+    return not (len(parts) >= 5 and parts[0] == "topics" and parts[2] == "sources" and parts[4] in MACHINE_IN_SOURCE)
+
+
+def blob_id(data: bytes) -> str:
+    """Git's blob id of a file's content, to compare a file with a commit without reading the commit file by file.
+
+    Line ends of a text file are taken as `\\n`, as git stores them, so a CRLF checkout is not a change.
+    """
+    if b"\0" not in data:
+        data = data.replace(b"\r\n", b"\n")
+    return hashlib.sha1(b"blob %d\0" % len(data) + data).hexdigest()
+
+
+def files_in(copy: Path) -> dict[str, str]:
+    """Every file of a test copy (without git, environments, caches, scratch) -> its blob id."""
+    found = {}
+    for folder, dirs, names in os.walk(copy):
+        dirs[:] = [d for d in dirs if d not in NOT_IN_COPY]
+        for name in names:
+            path = Path(folder) / name
+            rel = path.relative_to(copy).as_posix()
+            if rel != LOG and not is_secret(rel):
+                found[rel] = blob_id(path.read_bytes())
+    return found
+
+
+def files_at(source: Path, commit: str) -> dict[str, str]:
+    """Every file of the research environment at `commit` -> its blob id."""
+    found = {}
+    for line in git(source, "ls-tree", "-r", "-z", commit).split("\0"):
+        if line:
+            meta, rel = line.split("\t", 1)
+            found[rel] = meta.split()[2]
+    return found
+
+
+def log_row(zkusebna: Path, name: str) -> list[str] | None:
+    """The row of `_log.tsv` for a test copy: time, name, branch, commit, clean/dirty, options."""
+    log = zkusebna / LOG
+    rows = [line.split("\t") for line in log.read_text(encoding="utf-8").splitlines()] if log.is_file() else []
+    found = [row for row in rows if len(row) > 3 and row[1] == name]
+    return found[-1] if found else None
+
+
+class Carry:
+    """What an earlier copy changed since it was made, sorted into what is carried and what is only reported."""
+
+    def __init__(self, source: Path, earlier: Path, base: str) -> None:
+        then, copy = files_at(source, base), files_in(earlier)
+        current = {rel: blob_id((source / rel).read_bytes()) for rel in files_to_copy(source, False)}
+        self.write: list[str] = []  # created or changed in the earlier copy: copied into the new one
+        self.delete: list[str] = []  # deleted in the earlier copy: deleted in the new one
+        self.conflicts: list[str] = []  # changed both in the earlier copy and in the research environment
+        self.feedback: list[str] = []  # environment files the earlier copy changed: reported, not carried
+        for rel in sorted(set(copy) | set(then)):
+            mine, old, now = copy.get(rel), then.get(rel), current.get(rel)
+            if mine in (old, now):
+                continue  # untouched in the copy, or the environment has the same already
+            if not is_study_state(rel):
+                if mine is not None and old is not None and not is_project_file(rel):
+                    self.feedback.append(rel)
+                continue
+            if now != old and not (old is None and now is None):
+                self.conflicts.append(rel)
+            elif mine is None:
+                self.delete.append(rel)
+            else:
+                self.write.append(rel)
+
+    def apply(self, earlier: Path, dest: Path, winner: str | None) -> list[str]:
+        """Change the new copy; on a conflict the copy or the environment wins as `winner` says."""
+        changed = []
+        for rel in self.write + (self.conflicts if winner == "copy" else []):
+            target = dest / rel
+            if (earlier / rel).is_file():
+                target.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copy2(earlier / rel, target)
+            elif target.exists():
+                target.unlink()
+            changed.append(rel)
+        for rel in self.delete:
+            if (dest / rel).exists():
+                (dest / rel).unlink()
+                changed.append(rel)
+        return changed
+
+
+def version_mismatches(dest: Path) -> list[str]:
+    """Positions written from another profile version than the analyst's profile in `dest` (the guard would close
+    the study's text to that model)."""
+    found = []
+    for position in sorted(dest.glob("topics/*/positions/*.md")):
+        text = position.read_text(encoding="utf-8")
+        wrote = re.search(r"(?m)^profile_version:\s*['\"]?([\w.-]+)", text)
+        profile = dest / "analysts" / position.name
+        if not wrote or not profile.is_file():
+            continue
+        current = re.search(r"(?m)^>?\s*Version:\s*([\w.-]+)", profile.read_text(encoding="utf-8"))
+        if current and current.group(1) != wrote.group(1):
+            rel = position.relative_to(dest).as_posix()
+            found.append(f"{rel}: profile_version {wrote.group(1)}, profile now {current.group(1)}")
+    return found
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     parser.add_argument("name", nargs="?", help="folder name in zkusebna/ (default: test<N>, next free number)")
@@ -128,6 +261,10 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--no-sync", action="store_true", help="do not run uv sync in the copy")
     parser.add_argument("--git", action="store_true", help="git init and commit the copy")
     parser.add_argument("--dry-run", action="store_true", help="only list what would be copied")
+    parser.add_argument("--carry", metavar="COPY", help="carry the study work of an earlier test copy in zkusebna/")
+    parser.add_argument(
+        "--on-conflict", choices=("copy", "env"), help="with --carry: which side wins a file changed on both sides"
+    )
     args = parser.parse_args(argv)
 
     source, zkusebna, workshop = args.source.resolve(), args.zkusebna.resolve(), args.workshop.resolve()
@@ -152,6 +289,34 @@ def main(argv: list[str] | None = None) -> int:
     dirty = bool(git(source, "status", "--porcelain").strip())
     print(f"{source} @ {branch} {commit}{' (uncommitted changes included)' if dirty else ''}")
     print(f"-> {dest}: {len(files)} files")
+
+    carry = None
+    if args.carry:
+        earlier = zkusebna / args.carry
+        row = log_row(zkusebna, args.carry)
+        if not earlier.is_dir() or row is None:
+            parser.error(f"no test copy {args.carry} recorded in {zkusebna / LOG}")
+        base = row[3]
+        if row[4] != "clean":
+            print(f"warning: {args.carry} was made with uncommitted changes; they count as its own work")
+        carry = Carry(source, earlier, base)
+        print(
+            f"carry from {args.carry} (made from {base}): "
+            f"{len(carry.write)} changed or new, {len(carry.delete)} deleted"
+        )
+        for rel in carry.write:
+            print(f"  carry   {rel}")
+        for rel in carry.delete:
+            print(f"  delete  {rel}")
+        for rel in carry.feedback:
+            print(f"  not carried (environment, changed in {args.carry}): {rel}")
+        for rel in carry.conflicts:
+            print(f"  CONFLICT (changed in {args.carry} and in the research environment): {rel}")
+        if carry.conflicts and not args.on_conflict:
+            print(
+                "nothing created: choose --on-conflict copy (keep the test's version) or env (keep the environment's)"
+            )
+            return 1
     if args.dry_run:
         print("\n".join(files))
         return 0
@@ -170,11 +335,23 @@ def main(argv: list[str] | None = None) -> int:
         message = f"chore: test copy of the research environment ({branch} {commit})"
         subprocess.run(["git", "-C", str(dest), "commit", "-q", "-m", message], check=True)
 
+    if carry is not None:
+        changed = carry.apply(zkusebna / args.carry, dest, args.on_conflict)
+        print(f"carried from {args.carry}: {len(changed)} files")
+        if args.git and changed:
+            subprocess.run(["git", "-C", str(dest), "add", "-A"], check=True)
+            message = f"chore: study work carried from {args.carry}"
+            subprocess.run(["git", "-C", str(dest), "commit", "-q", "-m", message], check=True)
+        for problem in version_mismatches(dest):
+            print(f"warning: {problem} - the guard keeps the study text closed to this model until it is stated again")
+
     options = " ".join(
         [f"--without-profile {m}" for m in args.without_profile]
         + (["--with-source-files"] if args.with_source_files else [])
         + (["--without-project-files"] if args.without_project_files else [])
         + (["--git"] if args.git else [])
+        + ([f"--carry {args.carry}"] if args.carry else [])
+        + ([f"--on-conflict {args.on_conflict}"] if args.on_conflict else [])
     )
     state = "dirty" if dirty else "clean"
     row = [dt.datetime.now().isoformat(timespec="seconds"), name, branch, commit, state, options]
