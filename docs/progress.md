@@ -383,3 +383,10 @@
 - The research environment needs `uv sync` once to install `mmo-guard`.
 - Fix after the test in `zkusebna/test7/`: `2>/dev/null` was read as the path `G:\dev\null` and the whole command
   denied; shell devices (`/dev/...`, `nul`) are skipped and Git Bash `/tmp` maps to the temp folder; test added.
+
+## 2026-11-17 – T23 Input documents of a study out of git
+- Research environment: `topics/.gitignore` lists `nazi-v-ai-dobe/sources/`; 895 files left the index (`git rm
+  --cached`) and stay on disk; `topic.yaml`, `positions/`, `memos/` stay in git; rule in `topics/README.md`. The
+  sources are still in the earlier commits (nothing pushed); they now need a backup of their own (the shared drive).
+- `tools/new_test_env.py` also copies untracked files under `topics/` ignored only by `topics/.gitignore`; the root
+  rules (scans) still apply; test added. 102 passed, ruff clean.

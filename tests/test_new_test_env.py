@@ -63,6 +63,20 @@ def test_copies_what_git_sees_without_secrets_or_environments(layout):
     assert (layout["zkusebna"] / "_log.tsv").read_text(encoding="utf-8").count("\ttest1\t") == 1
 
 
+def test_input_documents_kept_out_of_git_are_still_copied(layout):
+    source = layout["source"]
+    _write(source / "topics" / ".gitignore", "local/sources/\n")
+    _write(source / "topics" / "local" / "topic.yaml")
+    _write(source / "topics" / "local" / "sources" / "s" / "text.md")
+    _write(source / "topics" / "local" / "sources" / "s" / "files" / "p001.jpg")
+    _run(layout)
+    dest = layout["zkusebna"] / "test1"
+    assert (dest / "topics/local/topic.yaml").exists()
+    assert (dest / "topics/local/sources/s/text.md").exists()
+    assert not (dest / "topics/local/sources/s/files/p001.jpg").exists()  # the root rules still apply
+    assert not (dest / "scratch").exists()
+
+
 def test_project_files_and_the_workshop_path(layout):
     _run(layout, "probe")
     dest = layout["zkusebna"] / "probe"

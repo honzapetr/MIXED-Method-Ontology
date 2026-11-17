@@ -59,6 +59,9 @@ def is_project_file(rel: str) -> bool:
 def files_to_copy(source: Path, with_source_files: bool, with_project_files: bool = True) -> list[str]:
     """Paths relative to `source`, as git sees them: tracked plus untracked-not-ignored (plus ignored sources)."""
     files = set(git(source, "ls-files", "-z", "--cached", "--others", "--exclude-standard").split("\0"))
+    # Input documents kept out of git (`topics/.gitignore`) are still copied; only the root rules (scans) apply.
+    if (source / ".gitignore").is_file():
+        files |= set(git(source, "ls-files", "-z", "--others", "--exclude-from=.gitignore", "--", "topics").split("\0"))
     if with_source_files:
         ignored = git(source, "ls-files", "-z", "--others", "--ignored", "--exclude-standard").split("\0")
         files |= {f for f in ignored if SOURCE_FILES.match(f)}

@@ -223,6 +223,14 @@
   --check .`; the owner tests a session in a new test copy
 - Depends on: T21
 
+### T23 – Input documents of a study out of git (research environment) (done)
+- Goal: while the environment is versioned, the study's input documents are not (owner 2026-11-17).
+- Acceptance criteria: `topics/.gitignore` lists `nazi-v-ai-dobe/sources/`; the files leave the index and stay on
+  disk; `topic.yaml`, `positions/` and `memos/` stay in git; `topics/README.md` says how; test copies still get the
+  ignored sources (but not the scans).
+- Verify: `uv run pytest tests/test_new_test_env.py && uv run ruff check . && uv run ruff format --check .`
+- Depends on: T22
+
 ### Later (after the split)
 - Check of the computer's environment, at the end of development (owner 2026-11-16): the start hook first checks
   what the environment needs (`uv`, `git`, the virtual environment from `uv sync`, the program `mmo`) and tells the
