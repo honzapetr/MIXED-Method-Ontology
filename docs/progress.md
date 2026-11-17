@@ -437,3 +437,7 @@
 - Not done: `kniha/text.md` in the research environment not rebuilt - waits for the owner. Footnotes and the one
   reader's note `[note: …]` stay in the text.
 - Next: rebuild `kniha` (owner), then T26 (quotations).
+- 2026-11-17, owner approved: `kniha/text.md` rebuilt in the research environment with `mmo source finalize`
+  (`left_out`: 203 running heads, 200 page numbers; 1,240 segments, all exact slices; `mmo source check` reports
+  nothing about the final text or segments). The previous `text.md` is kept in
+  `scratch/T25/kniha-text-before-T25.md` (sources are out of git since T23).
