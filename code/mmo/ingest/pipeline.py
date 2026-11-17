@@ -15,6 +15,7 @@ from dataclasses import dataclass, field
 from datetime import UTC, datetime
 
 from mmo.core.topic import Source, sha256_file
+from mmo.ingest.furniture import PAGE_NUMBER, RUNNING_HEAD, Furniture, strip_furniture, write_furniture
 from mmo.ingest.ocr import OcrBackend, load_pages, run_ocr, scan_file
 from mmo.ingest.order import (
     HOW_TEXT,
@@ -71,10 +72,13 @@ def compact_ranges(numbers: list[int]) -> str:
     return ", ".join(str(a) if a == b else f"{a}-{b}" for a, b in spans)
 
 
-def final_text_markdown(source: Source, variant: str, records: list[dict], order: ReadingOrder) -> str:
+def final_text_markdown(
+    source: Source, variant: str, records: list[dict], order: ReadingOrder, removed: list[Furniture] | None = None
+) -> str:
     """The final text: a header saying what it is and what it lacks, then the variant's text in reading order.
 
     Words hyphenated across a line end are joined here, so the final text and its segments read as plain text.
+    `removed` is the page furniture already left out of `records` (counted in the header).
     """
     records = [{**record, "text": join_hyphenated(record["text"])} for record in records]
     by_scan = {record["scan"]: record for record in records}
@@ -96,6 +100,9 @@ def final_text_markdown(source: Source, variant: str, records: list[dict], order
         header["missing_pages"] = ", ".join(missing) or "none"
     header["pages_without_number"] = [f"scan {page.scan} {page.image}" for page in order.unknown]
     header["unclear_words"] = sum(record["text"].count(UNCLEAR) for record in placed)
+    if removed is not None:
+        kinds = Counter(f.kind for f in removed)
+        header["left_out"] = {"running_heads": kinds[RUNNING_HEAD], "page_numbers": kinds[PAGE_NUMBER]}
     header["read_by"] = dict(sorted(models.items()))
     lines = ["---"] + [f"{key}: {json.dumps(value, ensure_ascii=False)}" for key, value in header.items()] + ["---"]
     note = (
@@ -103,6 +110,11 @@ def final_text_markdown(source: Source, variant: str, records: list[dict], order
         f"the OCR variant `{variant}` (`text` in `source.yaml`). Each page sits under a comment with its printed page, "
         f"scan and image, so every quote can be traced to the photo. `{UNCLEAR}` marks a word nobody could read."
     )
+    if removed is not None:
+        note += (
+            f" Running heads and page numbers are left out (`left_out`); each is listed in "
+            f"`ingest/furniture/{variant}.yaml`."
+        )
     return "\n".join(lines) + "\n\n" + note + "\n\n" + book_markdown(records, order, source.title)
 
 
@@ -115,7 +127,9 @@ def write_final_text(source: Source) -> tuple[str, ReadingOrder, int]:
         )
     records = load_variant(source, variant)
     order = order_of(source, records, variant)
-    text = final_text_markdown(source, variant, records, order)
+    records, removed = strip_furniture(records, order)
+    write_furniture(removed, variant, source.furniture_file(variant))
+    text = final_text_markdown(source, variant, records, order, removed)
     source.final_text_file.write_text(text, encoding="utf-8", newline="\n")
     return variant, order, write_segments(source)
 

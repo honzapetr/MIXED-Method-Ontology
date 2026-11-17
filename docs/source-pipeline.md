@@ -33,7 +33,7 @@ files/  ── 2 convert ──▶  ingest/ocr/<variant>/  ── 5 ──▶  t
 | 1 | Add the source: metadata and context memo | `mmo source add` | built |
 | 2 | Convert each original into working records | `mmo ingest` (photos: `mmo ocr run`) | built for photos and text files; planned for PDF, web pages, DOCX/EPUB |
 | 3 | Reading order and printed page numbers | `mmo ocr numbers`, `mmo ocr order` | built (photos) |
-| 4 | Clean the working text | `mmo ocr clean`, `merge`; hyphenation at step 5 | built; page furniture planned |
+| 4 | Clean the working text | `mmo ocr clean`, `merge`; hyphenation and page furniture at step 5 | built |
 | 5 | Choose the variant, write the final text | `source.yaml` `text: {variant: …}`, `mmo source finalize` | built |
 | 6 | Cut the final text into segments | done by `finalize`; again with `mmo segment` | built |
 | 7 | Quotations: store and check what the analysis points to | `mmo quote …` | planned |
@@ -105,17 +105,33 @@ by hand in `source.yaml` wins; a missing number between two known ones is inferr
 missing pages, numbers found twice and pages without a number. Text files keep file-name order. A PDF has its own
 order; its printed numbers come from page labels.
 
-## Step 4 – Clean (built; page furniture planned)
+## Step 4 – Clean (built)
 
 - **OCR junk** – `mmo ocr clean` removes loops and junk by rules into `<variant>-clean` and lists stuck pages;
   `mmo ocr merge` combines variants page by page (e.g. a Claude reading where the OCR failed).
 - **Hyphenation** – a word split by a hyphen at a line end is joined when `text.md` is written (step 5); a hyphen
   before a capital stays (`Rakousko-Uhersko`). The working variant keeps what was read.
-- **Page furniture (planned)** – running heads (the book's title or the chapter's title at the top of a page) and
-  printed page numbers are not content. In the first book they are inside `text.md`: of its 1,581 segments 478 are
-  shorter than 40 characters, mostly running heads (`NAZÍ V AI DOBĚ` 89×, chapter titles) and lone page numbers, and
-  a running head is glued to the first paragraph of a page. A rule step will mark or remove them before `text.md` is
-  written; the page number stays in the location comment. Footnotes stay text but should become recognisable.
+- **Page furniture** (T25, `code/mmo/ingest/furniture.py`) – running heads (the book's title or the chapter's title at
+  the top of a page) and printed page numbers are not content. When `text.md` is written (step 5) they are left out
+  of each page of photos or scans; text files are not touched. Rules:
+  - *page number* – the first or the last non-empty line of the page is only a number equal to the page's printed
+    number in the reading order; a page with an unknown number keeps such a line, and so does a number that is not
+    the page's own (a footnote mark, a list);
+  - *running head* – the first non-empty line, not a Markdown heading, at most 80 characters, that opens at least 3
+    pages of the variant, or nearly the same as such a line (similarity ≥ 0.9, e.g. a misread `TANEC SLUNCÍ` for
+    `TANEC SLUNCI`). A chapter title occurs once (`KAPITOLA II.`, `## MĚSTO NA AI PAHORKU`) and stays.
+
+  The page number stays in the location comment. Every line left out is listed with its scan, page and kind in
+  `ingest/furniture/<variant>.yaml` for review, and counted in the header (`left_out`). The working variant keeps
+  everything.
+
+  On the first book (variant `book`): 203 running heads and 200 page numbers left out; segments went from 1,581 to
+  1,240, those shorter than 40 characters from 478 to 140 (what is left: section headings, footnotes, `[?]`), and
+  paragraphs that seemed to continue over a page break from 208 to 131 (a page number at the foot hid the sentence
+  end). The first page of the bibliography (219) is missing among the photos, so the bibliography has no heading.
+- **Still in the text:** footnotes are text like any other paragraph (`⁴⁰ Bible, Lukáš 17:21.`); a later rule may
+  mark them. A reader's note such as `[note: neighbouring page partly visible]` (once in `kniha`) stays and is not
+  content.
 
 ## Step 5 – The final text `text.md` (built)
 
@@ -143,6 +159,7 @@ printed_pages: "15-235"
 missing_pages: "1-14, 17-19, 56"
 pages_without_number: ["scan 213 IMG_….jpg"]
 unclear_words: 6
+left_out: {"running_heads": 203, "page_numbers": 200}
 read_by: {"claude-opus-5-5": 45, "claude-sonnet-5-5": 166}
 ---
 
@@ -164,7 +181,8 @@ Second paragraph …
 - **Header** (front matter, one JSON value per line): technical facts written by the program – `source`, `title`,
   `status`, `variant`, `built`, `pages` (units in the text), and for paged sources `printed_pages`,
   `missing_pages` (including those before the first one), `pages_without_number`; `unclear_words` (count of `[?]`);
-  `read_by` (pages per model or backend). Bibliographic facts are not here; they are in `source.yaml`.
+  `left_out` (running heads and page numbers left out, step 4); `read_by` (pages per model or backend).
+  Bibliographic facts are not here; they are in `source.yaml`.
 - **Note and title** – one quoted line saying what the file is, then `# <title>`. Text before the first location
   comment belongs to no place and is never segmented or quoted.
 - **Location comment** – one line `<!-- … -->` before the text of each unit; its parts are separated by ` · `:

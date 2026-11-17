@@ -137,6 +137,10 @@ class Source:
     def order_file(self, variant: str) -> Path:
         return self.ingest_dir / "order" / f"{variant_name(variant)}.yaml"
 
+    def furniture_file(self, variant: str) -> Path:
+        """Running heads and page numbers left out of `text.md` when it was written from this variant."""
+        return self.ingest_dir / "furniture" / f"{variant_name(variant)}.yaml"
+
     def text_file(self, variant: str) -> Path:
         """Text of one working variant in reading order (machine output, not for the analysis)."""
         return self.ingest_dir / "text" / f"{variant_name(variant)}.md"

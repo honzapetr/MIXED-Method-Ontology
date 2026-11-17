@@ -204,3 +204,11 @@
   the words are at that place and refuses a quotation that is not.
 - Rewrite or remove what describes the earlier solution (segments of OCR variants with offsets into a scan's text),
   and document the pipeline in detail (T24).
+
+## 2026-11-17 – Who drives the analysis
+
+- Both: an agent in a chat (Claude Code or another agent that can run commands) and `mmo` itself calling models
+  through the gateway. Both write the same proposals with quotations and pass the same checks of `mmo`; `mmo` is not
+  tied to one agent. The agent first for interpretive work in dialogue (SKAD fine analysis); `mmo` with local models
+  for repetitive work over many passages (T31).
+- Changes of T24 approved, including the protected paths (`AGENTS.md` of both repositories, skill `ingest-sources`).

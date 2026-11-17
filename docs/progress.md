@@ -416,3 +416,24 @@
   best after T25); the workshop's stale copies of `methods/` and `docs/environment/` are left for T15.
 - Next: owner's review of both branches; open decision on who drives the analysis (agent / `mmo` with the gateway /
   both); then T25 (page furniture) or T26 (quotations).
+
+## 2026-11-17 – T25 Page furniture out of the final text
+- Owner approved T24 (protected paths included) and decided that both an agent and `mmo` drive the analysis
+  (`docs/answers.md`).
+- Probe of the variant `book` of `kniha`: the running head is the first line of a page (103x the book's title on odd
+  pages, chapter titles on even pages), the printed number the last line (201 pages); the variant `fabric` hardly
+  has them (the OCR service leaves headers and footers out). Chapter openings start with `KAPITOLA II.` and a
+  `## …` heading, which occur once.
+- Built: `code/mmo/ingest/furniture.py` - a page number is a first or last line equal to the page's printed number;
+  a running head is a first line (not a heading, <= 80 characters) opening >= 3 pages, or nearly the same (>= 0.9,
+  `TANEC SLUNCÍ`). `finalize` leaves them out of photo pages only, writes `ingest/furniture/<variant>.yaml` and the
+  header field `left_out`; the note of `text.md` says so. Tests `tests/ingest/test_furniture.py` with samples from
+  `kniha`; pipeline tests updated (page numbers are no longer segments). 112 passed, ruff clean.
+- Tried on a copy (`scratch/T25/`): 203 running heads, 200 page numbers left out; segments 1,581 -> 1,240; shorter
+  than 40 characters 478 -> 140 (headings, footnotes, `[?]`); "continues" 208 -> 131. Bibliography page 219 missing
+  among the photos, so the bibliography has no heading.
+- Docs: `docs/source-pipeline.md` step 4 and header; research environment `docs/source-preparation.md` (branch
+  `task/T25-page-furniture`).
+- Not done: `kniha/text.md` in the research environment not rebuilt - waits for the owner. Footnotes and the one
+  reader's note `[note: …]` stay in the text.
+- Next: rebuild `kniha` (owner), then T26 (quotations).

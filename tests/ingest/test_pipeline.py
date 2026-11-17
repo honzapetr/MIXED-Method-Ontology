@@ -95,7 +95,9 @@ def test_ingest_runs_every_step_and_is_resumable(tmp_path: Path) -> None:
     source.metadata_file.write_text("id: kniha\ntitle: Kniha\ntext: {variant: fake}\n", encoding="utf-8")
     _variant, _order, count = write_final_text(source)
     first = json.loads(source.segments_file.read_text(encoding="utf-8").splitlines()[0])
-    assert first["id"] == "kniha:s2:1" and first["page"] == 11 and count == 5
+    assert first["id"] == "kniha:s2:1" and first["page"] == 11 and count == 3, "page numbers are not segments"
+    furniture = yaml.safe_load(source.furniture_file("fake").read_text(encoding="utf-8"))
+    assert furniture["summary"] == {"running head": 0, "page number": 2}
     text = source.final_text_file.read_text(encoding="utf-8")
     assert text[first["start"] : first["end"]] == first["text"], "offsets point into text.md"
 
@@ -210,12 +212,14 @@ def test_finalize_writes_the_text_for_the_analysis(tmp_path: Path, capsys: pytes
     assert header["printed_pages"] == "11-12" and header["missing_pages"] == "1-10"
     assert header["pages_without_number"] == ["scan 3 IMG_3.png"]
     assert header["read_by"] == {"fake-1": 3} and header["unclear_words"] == 0
+    assert header["left_out"] == {"running_heads": 0, "page_numbers": 2}
+    assert "\n12\n" not in text and "\n11\n" not in text, "page numbers only in the location comments"
     assert text.index("Začátek knihy") < text.index("Obrázek.") < text.index("Konec odstavce."), "reading order"
     assert "<!-- page 11 (printed) · scan 2 · IMG_2.png -->" in text
     assert not any(f.startswith(("final text", "segments")) for f in check_source(source))
 
     source.final_text_file.write_text(text.replace("Začátek knihy", "Začátek celé knihy"), encoding="utf-8")
-    assert any(f.startswith("segments: 5 no longer match text.md") for f in check_source(source)), "offsets shift"
+    assert any(f.startswith("segments: 3 no longer match text.md") for f in check_source(source)), "offsets shift"
     assert main(["--topics", str(tmp_path), "segment", "t1", "kniha"]) == 0
     assert not any(f.startswith("segments") for f in check_source(source))
     source.segments_file.unlink()

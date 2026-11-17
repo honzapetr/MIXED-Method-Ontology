@@ -260,11 +260,11 @@
 ## Analysis
 
 > Replaces T4-T6 of the first plan (written before the split, for paths that no longer exist). The analytic layer
-> is built by walking the study `nazi-v-ai-dobe` with SKAD: each task adds what the next phase needs. Open for the
-> owner: whether the analysis is driven by an agent (Claude Code) that calls `mmo` to store and check its output,
-> by `mmo` calling models through the gateway, or both over the same store (recommended: the agent first).
+> is built by walking the study `nazi-v-ai-dobe` with SKAD: each task adds what the next phase needs. Decided by the
+> owner (2026-11-17): both drive the analysis - an agent in a chat that calls `mmo` to store and check its output,
+> and `mmo` calling models through the gateway - over the same proposals and checks; the agent first.
 
-### T25 – Page furniture out of the final text
+### T25 – Page furniture out of the final text (done)
 - Goal: running heads and lone printed page numbers are not content; they no longer become segments or get glued to
   the first paragraph of a page (in `kniha` 478 of 1,581 segments are shorter than 40 characters, mostly these).
 - Acceptance criteria: a rule step before `text.md` is written recognises a line repeated at the top of many pages
@@ -272,7 +272,9 @@
   (the page number stays in the location comment); what was left out is listed per variant in `ingest/` so it can be
   reviewed; footnotes stay text; tests on samples from `kniha`; the owner decides before `kniha/text.md` is rebuilt.
 - Verify: `uv run pytest tests/ingest/ && uv run ruff check . && uv run ruff format --check .`
-- Paths: `code/mmo/ingest/`, `tests/ingest/`, `docs/source-pipeline.md`
+- Paths: `code/mmo/ingest/`, `tests/ingest/`, `docs/source-pipeline.md`; `../MIXED-Method-Ontology/docs/`
+- Built: `code/mmo/ingest/furniture.py`, list `ingest/furniture/<variant>.yaml`, header `left_out`; on a copy of
+  `kniha` 203 running heads and 200 page numbers left out, segments 1,581 -> 1,240.
 - Depends on: T24
 
 ### T26 – Quotations: find, check, find again
@@ -329,7 +331,7 @@
 
 ### T31 – Model backends for analysis steps (replaces T5)
 - Goal: an analysis step can run on a local model through the gateway with the same checks as an agent.
-- Acceptance criteria: decided by the owner first (see the note above); then: backend per step configured in the
+- Acceptance criteria: (both drivers decided, see the note above) backend per step configured in the
   topic; every call recorded (model, prompt version, input segments); proposals whose quotations fail T26 are
   refused.
 - Verify: `uv run pytest tests/test_llm.py`
