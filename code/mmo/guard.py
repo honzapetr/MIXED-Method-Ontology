@@ -6,7 +6,7 @@ Two hooks, both reading the hook's JSON from stdin:
   version, and the note `Guards: on`. Study context is not loaded here; a study is defined with the researcher first.
 * `mmo-guard pre-tool-use` - before a tool runs:
   - deny a path outside the project root (the system temp folder and this project's own Claude folder are allowed);
-  - deny reading a study's data (`sources/<id>/text.md`, `segments/`, `ingest/`, `files/`, `ground-truth/`, the
+  - deny reading a study's data (`sources/<id>/text.md`, `segments.jsonl`, `ingest/`, `files/`, `ground-truth/`, the
     study's `work/`) until a model has a confirmed profile and a confirmed position in that study written from the
     current profile version;
   - ask the owner (permission prompt) when a profile or a position is being set to `confirmed`.
@@ -29,7 +29,7 @@ from pathlib import Path
 
 import yaml
 
-GATED_IN_SOURCE = {"text.md", "segments", "ingest", "files", "ground-truth"}
+GATED_IN_SOURCE = {"text.md", "segments.jsonl", "ingest", "files", "ground-truth"}
 CONTENT_SEARCH = {"grep", "egrep", "fgrep", "rg", "ag", "ack", "findstr", "select-string"}
 ALWAYS_RECURSIVE = {"rg", "ag", "ack"}
 DEVICES = re.compile(r"(?i)^(/dev/\S+|/proc/\S+|nul|con|\\\\\.\\nul)$")  # shell devices, e.g. `2>/dev/null`

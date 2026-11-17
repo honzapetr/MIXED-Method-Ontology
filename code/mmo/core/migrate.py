@@ -5,7 +5,8 @@ work/numbers/<id>.json, work/order/<variant>/<id>.yaml, work/text/<variant>/<id>
 ground-truth/<id>/page-NNNN.txt.
 
 Files are moved, not copied. OCR records only get the key `page` renamed to `scan`; their text, hashes, timing and
-provenance stay as they were. Image hashes are taken from the old `source.yaml`, so the migration works where the
+provenance stay as they were. Old segments are removed, not moved: segments are cut from `text.md` now (ADR
+0012). Image hashes are taken from the old `source.yaml`, so the migration works where the
 images are not present (they are git-ignored). Running it again changes nothing.
 """
 
@@ -65,22 +66,10 @@ def _migrate_ocr_record(src: Path, dst_dir: Path, log: Callable[[str], None]) ->
     log(f"moved {src} -> {dst}")
 
 
-def _migrate_segments(src: Path, source: Source, log: Callable[[str], None]) -> None:
-    lines = [json.loads(line) for line in src.read_text(encoding="utf-8").splitlines() if line.strip()]
-    variant = str(lines[0].get("backend")) if lines else "unknown"
-    out = []
-    for segment in lines:
-        if "scan" not in segment:
-            segment = rename_key(segment, "page", "scan")
-            segment["id"] = f"{segment['source']}:s{segment['scan']}:{segment['index']}"
-        out.append(json.dumps(segment, ensure_ascii=False))
-    dst = source.segments_file(variant)
-    if dst.exists():
-        raise FileExistsError(f"both the old and the new file exist, resolve by hand: {src} -> {dst}")
-    dst.parent.mkdir(parents=True, exist_ok=True)
-    dst.write_text("\n".join(out) + "\n", encoding="utf-8")
+def _drop_old_segments(src: Path, source: Source, log: Callable[[str], None]) -> None:
+    """Old segments pointed into one scan's OCR text; segments are now cut from `text.md` (ADR 0012)."""
     src.unlink()
-    log(f"moved {src} -> {dst}")
+    log(f"removed {src}: old segments of an OCR variant; mmo source finalize cuts {source.segments_file}")
 
 
 def _migrate_source(topic: Topic, source: Source, log: Callable[[str], None]) -> None:
@@ -117,7 +106,7 @@ def _migrate_source(topic: Topic, source: Source, log: Callable[[str], None]) ->
                     _move(old, target(variant_dir.name), log)
     segments = work / "segments" / f"{source.id}.jsonl"
     if segments.is_file():
-        _migrate_segments(segments, source, log)
+        _drop_old_segments(segments, source, log)
     truth = topic.root / "ground-truth" / source.id
     if truth.is_dir():
         for page in sorted(truth.glob("page-*.txt")):

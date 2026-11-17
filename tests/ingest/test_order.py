@@ -118,17 +118,19 @@ def test_order_and_book_commands(tmp_path: Path, capsys) -> None:
     book = (topic / "sources" / "book" / "ingest" / "text" / "fabric.md").read_text(encoding="utf-8")
     assert book.startswith("# Kniha") and "page 3 (manual)" in book
 
-    assert main(["--topics", str(tmp_path), "segment", "t1", "book", "--variant", "fabric"]) == 0
-    lines = (topic / "sources" / "book" / "segments" / "fabric.jsonl").read_text(encoding="utf-8").splitlines()
+    final = "id: book\ntitle: Kniha\nprinted_pages:\n  IMG_003.jpg: 3\ntext: {variant: fabric}\n"
+    (source / "source.yaml").write_text(final, encoding="utf-8")
+    assert main(["--topics", str(tmp_path), "source", "finalize", "t1", "book"]) == 0
+    lines = (source / "segments.jsonl").read_text(encoding="utf-8").splitlines()
     first = json.loads(lines[0])
     assert first["id"] == "book:s2:1", "segments follow the reading order, not the scan order"
     assert first["scan"] == 2 and first["page"] == 1, "a segment knows its printed page for quoting"
 
-    retake = "id: book\ntitle: Kniha\nprinted_pages:\n  IMG_003.jpg: 3\nretakes:\n  IMG_002.jpg: IMG_004.jpg\n"
+    retake = final + "retakes:\n  IMG_002.jpg: IMG_004.jpg\n"
     (source / "source.yaml").write_text(retake, encoding="utf-8")
     assert main(["--topics", str(tmp_path), "ocr", "book", "t1", "book", "--variant", "fabric"]) == 0
     book = (topic / "sources" / "book" / "ingest" / "text" / "fabric.md").read_text(encoding="utf-8")
     assert "Začátek odstavce" not in book and "scan 2 " not in book, "a retake is left out of the text"
-    assert main(["--topics", str(tmp_path), "segment", "t1", "book", "--variant", "fabric"]) == 0
-    lines = (topic / "sources" / "book" / "segments" / "fabric.jsonl").read_text(encoding="utf-8").splitlines()
+    assert main(["--topics", str(tmp_path), "source", "finalize", "t1", "book"]) == 0
+    lines = (source / "segments.jsonl").read_text(encoding="utf-8").splitlines()
     assert all(json.loads(line)["scan"] != 2 for line in lines), "and out of the segments"

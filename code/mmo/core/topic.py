@@ -1,9 +1,9 @@
 """Topics and their sources on disk (layout: docs/spec.md, section Topic folder; ADR 0006).
 
 Everything about one source lives in `sources/<id>/`: what the researcher writes (`source.yaml`, `notes.md`), the
-original files (`files/`), the final text for the analysis (`text.md`), segments, ground truth, and what the machine
-produces (`ingest/`, including the text of every working variant). A file's `scan` number is its position in
-file-name order - the identity of an image; `page` is the printed page number.
+original files (`files/`), the final text for the analysis (`text.md`) and its segments (`segments.jsonl`), ground
+truth, and what the machine produces (`ingest/`, including the text of every working variant). A file's `scan` number
+is its position in file-name order - the identity of an image; `page` is the printed page number.
 """
 
 from __future__ import annotations
@@ -146,8 +146,10 @@ class Source:
         """The text the analysis reads: built from the variant chosen in `text` of `source.yaml`."""
         return self.root / "text.md"
 
-    def segments_file(self, variant: str) -> Path:
-        return self.root / "segments" / f"{variant_name(variant)}.jsonl"
+    @property
+    def segments_file(self) -> Path:
+        """Paragraphs of `text.md` with their offsets in it, cut by `mmo source finalize` / `mmo segment`."""
+        return self.root / "segments.jsonl"
 
     # --- what the researcher writes
 

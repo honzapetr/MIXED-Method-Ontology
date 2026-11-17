@@ -15,7 +15,7 @@ the lab.
 
 | Path | What |
 | :--- | :--- |
-| `code/mmo/` | the program and its command `mmo`: `core/` (topics, sources), `ingest/` (bringing sources in: OCR, reading order, segments) |
+| `code/mmo/` | the program and its command `mmo`: `core/` (topics, sources), `ingest/` (bringing sources in: OCR, reading order, final text, segments) |
 | `topics/<slug>/` | research topics - the only place for research data: sources, their text and segments, graph |
 | `methods/` | one folder per method: research design, procedure, rules for agents, applications, sources (SKAD, grounded theory, thematic analysis) |
 | `ontology/` | LinkML schema and mapping to standards |
@@ -30,16 +30,17 @@ cp .env.example .env            # fill in the gateway URL and key
 uv run mmo topic new my-topic --title "My topic"
 uv run mmo source add my-topic my-book --kind book --title "My book" --language ces
 # put page photos or text files into topics/my-topic/sources/my-book/files/
-uv run mmo ingest my-topic my-book --backend fabric      # everything: OCR, page numbers, order, text, segments
+uv run mmo ingest my-topic my-book --backend fabric      # OCR, page numbers, reading order, working text
 uv run mmo source check my-topic                         # what the sources still lack (citation, memo, ...)
 
 # supplementary information about a source is a source of its own
 uv run mmo source add my-topic review --kind article --role context --about my-book
 
-uv run mmo source finalize my-topic my-book   # text.md for the analysis, from `text: {variant: ...}` in source.yaml
-uv run mmo segment my-topic my-book --variant <variant>
+uv run mmo source finalize my-topic my-book   # text.md and its segments, from `text: {variant: ...}` in source.yaml
+uv run mmo segment my-topic my-book            # cut the segments of text.md again
 ```
 
+How every kind of source becomes `text.md`, segments and quotations: [`docs/source-pipeline.md`](docs/source-pipeline.md).
 Source preparation (OCR of page photos, reading order, single steps, the homelab OCR service):
 [`docs/environment/source-preparation.md`](docs/environment/source-preparation.md).
 

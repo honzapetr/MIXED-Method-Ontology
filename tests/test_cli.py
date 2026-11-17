@@ -38,9 +38,14 @@ def test_topic_compare_and_segment(tmp_path: Path, capsys) -> None:
     data = json.loads(report.read_text(encoding="utf-8"))
     assert data["a"]["mean_cer"] == 0.0 and data["b"]["reference"] == "ground-truth"
 
-    assert main(["--topics", str(tmp_path), "segment", "t1", "book", "--variant", "a"]) == 0
-    lines = (topic / "sources" / "book" / "segments" / "a.jsonl").read_text(encoding="utf-8").splitlines()
+    assert main(["--topics", str(tmp_path), "segment", "t1", "book"]) == 1, "no text.md yet"
+    assert "mmo source finalize t1 book" in capsys.readouterr().err
+    (topic / "sources" / "book" / "source.yaml").write_text("id: book\ntitle: Kniha\ntext: {variant: a}\n", "utf-8")
+    assert main(["--topics", str(tmp_path), "source", "finalize", "t1", "book"]) == 0
+    assert "1 segments" in capsys.readouterr().out
+    lines = (topic / "sources" / "book" / "segments.jsonl").read_text(encoding="utf-8").splitlines()
     assert json.loads(lines[0])["id"] == "book:s1:1"
+    assert main(["--topics", str(tmp_path), "segment", "t1", "book"]) == 0, "segments can be cut again"
 
 
 def test_errors_are_reported_not_raised(tmp_path: Path, capsys) -> None:

@@ -110,8 +110,8 @@ def test_commands_work_on_a_study_folder(study: Path, monkeypatch, capsys) -> No
 
     assert main(["ingest", ".", "projev"]) == 0
     assert main(["ingest", "mini-studie", "ohlas"]) == 0, "inside a study its name works as well as `.`"
-    segments = (study / "sources" / "projev" / "segments" / "original.jsonl").read_text(encoding="utf-8")
-    assert "the river divided us" in segments
+    text = (study / "sources" / "projev" / "ingest" / "text" / "original.md").read_text(encoding="utf-8")
+    assert "the river divided us" in text
     capsys.readouterr()
     assert main(["source", "check", ".", "ohlas"]) == 0
     assert "final text: choose the variant" in capsys.readouterr().out

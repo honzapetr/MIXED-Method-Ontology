@@ -2,7 +2,7 @@
 
 > Tasks `T<n>` with goal, acceptance criteria, verify command, paths and dependencies (`write-plan` skill).
 > The next tasks build the environment for qualitative analysis; how it works is
-> defined with the owner first, so T4-T6 are direction, not decided. The plan holds the building of the environment;
+> defined with the owner first, so the tasks under Analysis are direction, not decided. The plan holds the building of the environment;
 > a concrete analysis lives in its topic (`topics/<slug>/`: questions, goals, memos). Finished tasks on source
 > preparation (T2-T3) are recorded in `docs/progress.md`; the tool is described in `docs/source-preparation.md`.
 
@@ -231,6 +231,24 @@
 - Verify: `uv run pytest tests/test_new_test_env.py && uv run ruff check . && uv run ruff format --check .`
 - Depends on: T22
 
+### T24 – The final text as the contract; segments of text.md; quotations decided (both repositories) (done)
+- Goal: every source is brought into the same `text.md`; segments are cut from it; the analysis points to
+  quotations; what described the earlier solution (segments of OCR variants, offsets into a scan's text) is rewritten
+  or removed, and the pipeline is documented (owner 2026-11-17, `docs/answers.md`, ADR 0012).
+- Acceptance criteria: `mmo source finalize` writes `text.md` and `segments.jsonl` (paragraphs, offsets into
+  `text.md`, `text == text.md[start:end]`, page, `continues`); hyphenation joined in `text.md`; `mmo ingest` writes no
+  segments and asks to choose the variant; `mmo segment <topic> <source>` without a variant; `mmo source check`
+  reports missing or stale segments; `mmo topic migrate` drops old segments; the guard gates `segments.jsonl`;
+  `docs/source-pipeline.md` describes every step (built / planned), the `text.md` format and the planned quotations;
+  ADR 0012; spec, README, `AGENTS.md` traceability rule; in `../MIXED-Method-Ontology/`: `AGENTS.md`,
+  `docs/source-preparation.md`, `docs/memos.md`, skill `ingest-sources` (+ `.claude/` sync), method texts
+  (evidence segments -> quotations, grounded theory's own use of "segment" kept), ontology `Quotation`.
+- Verify: `uv run pytest && uv run ruff check . && uv run ruff format --check .`; in the research environment
+  `python tools/agents_sync.py --check`
+- Paths: `code/mmo/`, `tests/`, `docs/`, `README.md`, `AGENTS.md`; `../MIXED-Method-Ontology/` (`AGENTS.md`, `docs/`,
+  `.agents/skills/ingest-sources/`, `.claude/skills/`, `methods/`, `ontology/`)
+- Depends on: T23
+
 ### Later (after the split)
 - Check of the computer's environment, at the end of development (owner 2026-11-16): the start hook first checks
   what the environment needs (`uv`, `git`, the virtual environment from `uv sync`, the program `mmo`) and tells the
@@ -241,29 +259,85 @@
 
 ## Analysis
 
-### T4 – Graph store and topic versioning
-- Goal: segments and the topic in RDF (sorted Turtle files of record + Oxigraph index), versioned in git.
-- Acceptance criteria: ADR on the graph store; `mmo graph build` writes Turtle per named graph and rebuilds the index;
-  round-trip test; SPARQL query by segment id works.
+> Replaces T4-T6 of the first plan (written before the split, for paths that no longer exist). The analytic layer
+> is built by walking the study `nazi-v-ai-dobe` with SKAD: each task adds what the next phase needs. Open for the
+> owner: whether the analysis is driven by an agent (Claude Code) that calls `mmo` to store and check its output,
+> by `mmo` calling models through the gateway, or both over the same store (recommended: the agent first).
+
+### T25 – Page furniture out of the final text
+- Goal: running heads and lone printed page numbers are not content; they no longer become segments or get glued to
+  the first paragraph of a page (in `kniha` 478 of 1,581 segments are shorter than 40 characters, mostly these).
+- Acceptance criteria: a rule step before `text.md` is written recognises a line repeated at the top of many pages
+  (book or chapter title) and a line that is only the page's own printed number, and leaves them out of the text
+  (the page number stays in the location comment); what was left out is listed per variant in `ingest/` so it can be
+  reviewed; footnotes stay text; tests on samples from `kniha`; the owner decides before `kniha/text.md` is rebuilt.
+- Verify: `uv run pytest tests/ingest/ && uv run ruff check . && uv run ruff format --check .`
+- Paths: `code/mmo/ingest/`, `tests/ingest/`, `docs/source-pipeline.md`
+- Depends on: T24
+
+### T26 – Quotations: find, check, find again
+- Goal: what the analysis points to can be created only from words that are really in `text.md`.
+- Acceptance criteria: `mmo quote find <topic> <source> "<words>" [--page n | --segment id]` prints a quotation
+  (source, start, end, pages, scans, exact, which `text.md`) or refuses (not found, found more than once without a
+  hint); whitespace compared loosely, a location comment inside the span is skipped; `mmo quote check <topic>`
+  verifies every quotation in a study's analytic files and finds moved ones again after `text.md` was rebuilt,
+  reporting those whose words are gone; ontology `Quotation` used; format in `docs/source-pipeline.md`.
+- Verify: `uv run pytest tests/test_quote.py && uv run ruff check . && uv run ruff format --check .`
+- Paths: `code/mmo/analysis/`, `code/mmo/cli.py`, `tests/`, `docs/`, `../MIXED-Method-Ontology/ontology/`
+- Depends on: T24
+
+### T27 – PDF with a text layer into the final text
+- Goal: a new book or article as a PDF needs no OCR and no model.
+- Acceptance criteria: `mmo ingest` recognises a PDF with a text layer and writes one working record per PDF page
+  (variant `pdf`), printed page numbers from page labels or the page edge, reading order of the PDF; a PDF without a
+  text layer is rendered to images and goes the photo path; location comment `page <n> (<how>) · pdf <i> · <file>`;
+  library chosen in the task (ADR if it is a new dependency); tests on a small sample PDF; the owner provides a
+  real PDF to try.
+- Verify: `uv run pytest tests/ingest/ && uv run ruff check . && uv run ruff format --check .`
+- Paths: `code/mmo/ingest/`, `tests/ingest/`, `pyproject.toml`, `uv.lock`, `docs/`
+- Depends on: T25
+
+### T28 – Web pages into the final text
+- Goal: reviews, announcements and debates (context sources) come in the same way as a book.
+- Acceptance criteria: `mmo source fetch <topic> <source>` downloads the URL of `citation.url` into `files/` with the
+  date and SHA-256 (a page saved by hand works too); the main text is extracted into the variant `web` with the
+  article's headings; `citation.accessed` is set; location comment `web <file> · scan 1`; tests on a saved sample
+  page. The owner decides which of the study's context sources are fetched (SKAD phase Corpus).
+- Verify: `uv run pytest tests/ingest/ && uv run ruff check . && uv run ruff format --check .`
+- Paths: `code/mmo/ingest/`, `tests/ingest/`, `pyproject.toml`, `uv.lock`, `docs/`
+- Depends on: T24
+
+### T29 – Proposals and their review (first SKAD fine analysis)
+- Goal: readings and open codes of a passage are stored with quotations, status and provenance, and the researcher
+  confirms, edits or rejects them (replaces T6).
+- Acceptance criteria: a format for proposals in `topics/<slug>/` (status `proposed` / `confirmed` / `rejected`,
+  author, step: model, prompt version, time; quotations checked by T26); `mmo review` lists, confirms, edits, merges
+  or rejects with a reason; a phase gate passes only confirmed items; tried on passages of `kniha` chosen by the
+  owner in a test copy.
+- Verify: `uv run pytest tests/test_review.py && uv run ruff check . && uv run ruff format --check .`
+- Paths: `code/mmo/analysis/`, `tests/`, `docs/`, `../MIXED-Method-Ontology/methods/skad/`
+- Depends on: T26
+
+### T30 – Graph store and versioning (replaces T4)
+- Goal: confirmed codes, schemes, relations and their quotations in RDF (sorted Turtle per named graph + an Oxigraph
+  index), versioned in git.
+- Acceptance criteria: ADR on the graph store; `mmo graph build` writes Turtle and rebuilds the index; round trip
+  test; SPARQL query by quotation and by code works.
 - Verify: `uv run pytest tests/test_graph.py`
-- Paths: `src/mixed_method_ontology/graph/`, `ontology/`, `tests/`, `docs/adr/`
-- Depends on: T1
+- Paths: `code/mmo/graph/`, `tests/`, `docs/adr/`, `../MIXED-Method-Ontology/ontology/`
+- Depends on: T29
 
-### T5 – Model backends for analysis
-- Goal: one interface for LLM calls (gateway, local, optionally Claude) with structured output and quote checking.
-- Acceptance criteria: backend per analysis step configured in the topic; every call recorded (model, prompt
-  version, input segments); proposals with quotes that are not in the segment are rejected.
+### T31 – Model backends for analysis steps (replaces T5)
+- Goal: an analysis step can run on a local model through the gateway with the same checks as an agent.
+- Acceptance criteria: decided by the owner first (see the note above); then: backend per step configured in the
+  topic; every call recorded (model, prompt version, input segments); proposals whose quotations fail T26 are
+  refused.
 - Verify: `uv run pytest tests/test_llm.py`
-- Paths: `src/mixed_method_ontology/llm/`, `tests/`
-- Depends on: T4
+- Paths: `code/mmo/analysis/`, `tests/`
+- Depends on: T29
 
-### T6 – First analysis loop with review
-- Goal: open coding (GT) / coding (TA) proposals into the graph and their review in the CLI.
-- Acceptance criteria: proposals have status, author and provenance; `mmo review` confirms, edits, merges or rejects
-  with reason; steering memos are stored and passed to the next step.
-- Verify: `uv run pytest tests/test_review.py`
-- Paths: `src/mixed_method_ontology/`, `methods/`, `tests/`
-- Depends on: T5
+Open for discussion: a model proposing bibliographic fields of `source.yaml` (from the imprint or the annotation),
+confirmed by the researcher.
 
 Later: exports (SKOS, `.qdpx` tested in ATLAS.ti and QualCoder, report), querying a finished topic, adding material
 with a change overview, quantitative link (DDI-CDI), read-only MCP server, UI.

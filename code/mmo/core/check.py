@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from mmo.core.topic import NOTES_TEMPLATE, ROLE_CONTEXT, ROLES, SOURCE_KINDS, Source, read_yaml
 from mmo.ingest.ocr import load_pages
+from mmo.ingest.segment import read_segments, stale_segments
 
 
 def check_source(source: Source) -> list[str]:
@@ -59,6 +60,15 @@ def check_source(source: Source) -> list[str]:
             found.append(f"final text: variant {chosen!r} of source.yaml has no OCR results")
         elif not source.final_text_file.is_file():
             found.append(f"final text: not built yet - mmo source finalize {source.topic.slug} {source.id}")
+        elif not source.segments_file.is_file():
+            found.append(f"segments: not cut yet - mmo segment {source.topic.slug} {source.id}")
+        elif stale := stale_segments(
+            source.final_text_file.read_text(encoding="utf-8"), read_segments(source.segments_file)
+        ):
+            found.append(
+                f"segments: {len(stale)} no longer match text.md (it changed) - mmo segment {source.topic.slug} "
+                f"{source.id}"
+            )
     for variant in source.ocr_variants():
         order = read_yaml(source.order_file(variant))
         summary = order.get("summary") or {}

@@ -1,7 +1,9 @@
-"""The whole ingest of one source in one call (`mmo ingest`): files, OCR, page numbers, reading order, text, segments.
+"""Bringing one source to its final text (docs/source-pipeline.md, ADR 0012).
 
+`mmo ingest` runs the conversion in one call: files, OCR, page numbers, reading order, the text of the variant.
 Every step is resumable - OCR and page numbers read only what is missing, the rest is cheap to redo - so an
 interrupted run is simply started again. Text files (`.txt`, `.md`) are taken as they are, as the variant `original`.
+`mmo source finalize` then writes `text.md` from the variant the researcher chose and cuts it into segments.
 """
 
 from __future__ import annotations
@@ -19,12 +21,11 @@ from mmo.ingest.order import (
     PlacedPage,
     ReadingOrder,
     book_markdown,
-    ordered_records,
     reading_order,
     write_order,
 )
 from mmo.ingest.page_numbers import PageNumberReader, load_page_numbers, read_page_numbers
-from mmo.ingest.segment import segment_records, write_jsonl
+from mmo.ingest.segment import join_hyphenated, segment_text, write_jsonl
 
 TEXT_VARIANT = "original"
 UNCLEAR = "[?]"  # a word the reader could not read
@@ -34,7 +35,6 @@ UNCLEAR = "[?]"  # a word the reader could not read
 class IngestReport:
     source: str
     variants: list[str] = field(default_factory=list)
-    segments: dict[str, int] = field(default_factory=dict)
     review: list[str] = field(default_factory=list)  # what the researcher should look at
 
 
@@ -72,7 +72,11 @@ def compact_ranges(numbers: list[int]) -> str:
 
 
 def final_text_markdown(source: Source, variant: str, records: list[dict], order: ReadingOrder) -> str:
-    """The final text: a header saying what it is and what it lacks, then the variant's text in reading order."""
+    """The final text: a header saying what it is and what it lacks, then the variant's text in reading order.
+
+    Words hyphenated across a line end are joined here, so the final text and its segments read as plain text.
+    """
+    records = [{**record, "text": join_hyphenated(record["text"])} for record in records]
     by_scan = {record["scan"]: record for record in records}
     placed = [by_scan[page.scan] for page in order.pages]
     printed = [page.printed for page in order.pages if page.printed is not None]
@@ -102,8 +106,8 @@ def final_text_markdown(source: Source, variant: str, records: list[dict], order
     return "\n".join(lines) + "\n\n" + note + "\n\n" + book_markdown(records, order, source.title)
 
 
-def write_final_text(source: Source) -> tuple[str, ReadingOrder]:
-    """Write `text.md` from the variant named in `text` of `source.yaml`."""
+def write_final_text(source: Source) -> tuple[str, ReadingOrder, int]:
+    """Write `text.md` from the variant named in `text` of `source.yaml`, then its segments; return the count."""
     variant = source.final_variant()
     if variant is None:
         raise ValueError(
@@ -111,15 +115,20 @@ def write_final_text(source: Source) -> tuple[str, ReadingOrder]:
         )
     records = load_variant(source, variant)
     order = order_of(source, records, variant)
-    source.final_text_file.write_text(final_text_markdown(source, variant, records, order), encoding="utf-8")
-    return variant, order
+    text = final_text_markdown(source, variant, records, order)
+    source.final_text_file.write_text(text, encoding="utf-8", newline="\n")
+    return variant, order, write_segments(source)
 
 
-def write_segments(source: Source, variant: str, records: list[dict], order: ReadingOrder) -> int:
-    """Segments in reading order, so a paragraph that runs over a page break is followed by its continuation."""
-    printed = {page.scan: page.printed for page in order.pages}
-    segments = segment_records(ordered_records(records, order), printed)
-    write_jsonl(segments, source.segments_file(variant))
+def write_segments(source: Source) -> int:
+    """Cut `text.md` into segments (`segments.jsonl`); they follow its reading order."""
+    if not source.final_text_file.is_file():
+        raise FileNotFoundError(
+            f"no final text yet: {source.final_text_file} (mmo source finalize {source.topic.slug} {source.id})"
+        )
+    text = source.final_text_file.read_text(encoding="utf-8")
+    segments = segment_text(source.id, text)
+    write_jsonl(segments, source.segments_file)
     return len(segments)
 
 
@@ -181,7 +190,6 @@ def ingest_source(
         order = order_of(source, records, TEXT_VARIANT)
         write_text(source, TEXT_VARIANT, records, order)
         report.variants.append(TEXT_VARIANT)
-        report.segments[TEXT_VARIANT] = write_segments(source, TEXT_VARIANT, records, order)
 
     if source.images():
         if backend is None:
@@ -194,7 +202,6 @@ def ingest_source(
         write_order(order, variant, source.order_file(variant))
         write_text(source, variant, records, order)
         report.variants.append(variant)
-        report.segments[variant] = write_segments(source, variant, records, order)
         if order.gaps:
             report.review.append(f"{len(order.gaps)} printed pages missing between the first and the last")
         if order.duplicates:
@@ -207,4 +214,9 @@ def ingest_source(
             )
     for variant_name in report.variants:
         report.review.append(f"read {source.text_file(variant_name)} and compare a few pages with the originals")
+    if report.variants:
+        report.review.append(
+            "choose the variant for the analysis (text: {variant: <variant>} in source.yaml), then "
+            f"mmo source finalize {source.topic.slug} {source.id} - it writes text.md and its segments"
+        )
     return report

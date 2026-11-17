@@ -1,4 +1,4 @@
-"""`mmo` - command line of the project (topics, sources, OCR, segmentation)."""
+"""`mmo` - command line of the project (topics, sources, OCR, final text and its segments)."""
 
 from __future__ import annotations
 
@@ -129,8 +129,9 @@ def cmd_source_check(args: argparse.Namespace) -> int:
 def cmd_source_finalize(args: argparse.Namespace) -> int:
     """`text.md`, the text the analysis reads, from the variant chosen in `source.yaml`."""
     source = load_topic(args).source(args.source)
-    variant, order = write_final_text(source)
+    variant, order, count = write_final_text(source)
     print(f"{len(order.pages)} pages of variant {variant} -> {source.final_text_file}")
+    print(f"{count} segments -> {source.segments_file}")
     if order.gaps:
         print(f"missing pages: {compact_ranges(order.gaps)}")
     for page in order.unknown:
@@ -162,7 +163,7 @@ def cmd_ingest(args: argparse.Namespace) -> int:
         numbers = FabricPageNumbers(connect_client(settings.fabric_ocr_url, settings.fabric_ocr_token))
     report = ingest_source(source, backend, variant, numbers=numbers, workers=args.workers)
     for name in report.variants:
-        print(f"{name}: {report.segments[name]} segments -> {source.segments_file(name)}")
+        print(f"{name}: text -> {source.text_file(name)}")
     if report.review:
         print("to review:")
         for line in report.review:
@@ -338,10 +339,10 @@ def cmd_ocr_merge(args: argparse.Namespace) -> int:
 
 
 def cmd_segment(args: argparse.Namespace) -> int:
+    """Cut `text.md` into segments again (`mmo source finalize` does it too)."""
     source = load_topic(args).source(args.source)
-    records = load_variant(source, args.variant)
-    count = write_segments(source, args.variant, records, order_of(source, records, args.variant))
-    print(f"{count} segments from {len(records)} scans written to {source.segments_file(args.variant)}")
+    count = write_segments(source)
+    print(f"{count} segments of {source.final_text_file} -> {source.segments_file}")
     return 0
 
 
@@ -476,10 +477,9 @@ def build_parser() -> argparse.ArgumentParser:
     merge.add_argument("--into", required=True, help="new variant folder under ingest/ocr")
     merge.set_defaults(func=cmd_ocr_merge)
 
-    seg = sub.add_parser("segment", help="split OCR text of one variant into segments")
+    seg = sub.add_parser("segment", help="cut the final text text.md into segments (paragraphs) again")
     seg.add_argument("topic")
     seg.add_argument("source")
-    seg.add_argument("--variant", default="tesseract", help=variant_help)
     seg.set_defaults(func=cmd_segment)
     return parser
 

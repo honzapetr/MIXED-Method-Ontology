@@ -12,10 +12,12 @@
 | Goal | What the author and the agent want to find out next; changes over time, every change recorded. |
 | Source | A book, interview, field note, document or dataset, with metadata and provenance. |
 | Page | One scanned image of a source, with its OCR results per backend. |
-| Segment | A span of source text with an exact position (source, page, paragraph, character offsets). |
+| Final text | `text.md` of a source: the one text the analysis reads, the same form for every kind of original (ADR 0012). |
+| Segment | A paragraph of the final text with its place (source, scan, page) and character offsets in `text.md`; a rebuildable index for reading, batching and counting. |
+| Quotation **(planned)** | What the analysis points to: the exact words of a passage with source, pages and offsets in `text.md`; any length, may cross a page break; checked by the program. |
 | Method | An analytical method, one folder `methods/<id>/`: research design, procedure, rules for agents, applications, sources, and `method.yaml` (phases, code types, relation types, outputs) for agents and tests. |
 | Analysis run **(planned)** | Method × questions × selected segments → proposals in the graph. |
-| Proposal **(planned)** | A code, category, theme, relation or memo with status `proposed` / `confirmed` / `rejected`, author and provenance. |
+| Proposal **(planned)** | A code, category, theme, relation or memo with status `proposed` / `confirmed` / `rejected`, author, provenance and its quotations. |
 
 ## Repository layout
 
@@ -38,7 +40,7 @@ topics/<slug>/
     notes.md                  # RESEARCHER: context memo - why the source is here, how it came about
     files/                    # original files (page images git-ignored)
     text.md                   # FINAL: the text the analysis reads (from the variant chosen in source.yaml)
-    segments/<variant>.jsonl  # segments of one variant
+    segments.jsonl            # paragraphs of text.md with offsets in it (cut by mmo source finalize)
     ground-truth/scan-NNNN.txt  # optional hand-corrected scans for OCR evaluation
     ingest/                   # MACHINE: never edited by hand
       files.yaml              #   every original file: scan number, name, SHA-256
@@ -75,8 +77,10 @@ Page images stay out of git; `ingest/files.yaml` lists each file with its SHA-25
 
 ## Source preparation
 
-New material becomes text the analysis can read: `mmo source add` and `mmo ingest` (OCR of page images, reading
-order, final `text.md`, segments; text files skip OCR). How it works, the commands and the OCR backends: `docs/environment/source-preparation.md`.
+Every original (photos, PDF, web page, text file) becomes the same final `text.md`, its segments and, in the
+analysis, quotations: converted by the program without AI, OCR only where there is no text layer (ADR 0012). The
+whole pipeline – steps, formats, what is built and what is planned – is in `docs/source-pipeline.md`; the manual
+with the commands and OCR backends is `docs/source-preparation.md` of the research environment.
 
 ## Homelab
 
@@ -118,7 +122,7 @@ In a topic this means (proposal, T8):
 3. **The conceptual framework is explicit:** sensitising concepts, prior theories, assumptions. The method says how
    the framework may be used.
 4. **Theory is built from propositions.** A proposition connects confirmed concepts and relations, answers one or
-   more questions, has evidence and counter-evidence (segments) and a memo on how it was reached.
+   more questions, has evidence and counter-evidence (quotations) and a memo on how it was reached.
 5. **Working with theory afterwards:** test it against new sources (confirms / extends / contradicts), compare it
    with prior theories, derive new questions - including quantitative ones (the mixed-methods link).
 6. **Ontology:** today it has `ResearchQuestion` and `Goal`; it would need the purpose and position of the topic,

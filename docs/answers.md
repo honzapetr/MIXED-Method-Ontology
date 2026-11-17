@@ -185,3 +185,22 @@
 - T22 decisions: when the hooks cannot run, the start says `Guards: NOT running` and the model does no analytic
   step (later: the model offers to install the dependencies); test copies include the project files and run
   `uv sync` by default.
+
+## 2026-11-17 – The text for the analysis, segments and quotations
+
+- The OCR work on the first book was meant to get its text; the format of `text.md` grew out of it without being
+  decided as the input of the analysis. Now it is decided: `text.md` is the one format every source is brought into,
+  whatever its original (photos, PDF, web page, text file). The conversion is done by the program, without AI; OCR
+  only where there is no text layer.
+- The header of `text.md` is written by the program (technical facts: source, variant, pages, what is missing,
+  who or what read it). Bibliographic and research facts stay in `source.yaml`, written by the researcher; whether a
+  model may propose them (from the imprint, the annotation) is still to be discussed.
+- Segments are paragraphs of `text.md`, cut by the program after the text is final; not pages. A page is a place for
+  citing, not a unit of meaning; the page stays as a field of every segment.
+- What the analysis points to is a **quotation** (not "anchor"; the word collides with Mayring's anchor examples):
+  the exact words of a passage with its source, pages and character offsets in `text.md` (W3C Web Annotation
+  `TextQuoteSelector` + `TextPositionSelector`; ATLAS.ti "quotation"). A quotation may run over a page break and
+  across segments; one code, reading, memo or proposition carries a list of quotations. The program checks that
+  the words are at that place and refuses a quotation that is not.
+- Rewrite or remove what describes the earlier solution (segments of OCR variants with offsets into a scan's text),
+  and document the pipeline in detail (T24).

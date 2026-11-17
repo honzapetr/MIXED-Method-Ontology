@@ -70,8 +70,7 @@ def test_migration_moves_everything_into_the_source_folder(tmp_path: Path) -> No
     assert record.startswith('{\n  "source": "book",\n  "scan": 2,') and "„uvozovky“" in record
     assert source.numbers_file.is_file() and source.order_file("fabric").is_file()
     assert source.text_file("fabric").read_text(encoding="utf-8") == "# Kniha\n"
-    segment = json.loads(source.segments_file("fabric").read_text(encoding="utf-8"))
-    assert segment["id"] == "book:s1:1" and segment["scan"] == 1
+    assert not source.segments_file.exists(), "old segments are dropped: they are cut from text.md after finalize"
     assert (source.ground_truth_dir / "scan-0001.txt").read_text(encoding="utf-8") == "První strana."
     assert Topic.load(topic.root).data["sources"] == ["book"]
     assert not needs_migration(Topic.load(topic.root))

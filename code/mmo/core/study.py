@@ -68,7 +68,7 @@ its own repository and is not changed from here.
 | What | Where |
 | :--- | :--- |
 | The study: title, purpose, questions, goals, method, environment | `topic.yaml` |
-| Sources (`source.yaml`, `notes.md`, `files/`, `text.md`, segments) | `sources/<id>/` |
+| Sources (`source.yaml`, `notes.md`, `files/`, `text.md`, `segments.jsonl`) | `sources/<id>/` |
 | Memos: impressions, positions, reflexive and analytic notes | `memos/` |
 | What the study teaches about the environment | `feedback.md` |
 | One-off scripts and temporary files | `scratch/` (git-ignored) |
@@ -83,8 +83,8 @@ its own repository and is not changed from here.
 * **Follow the method's rules for agents** (`methods/{method}/agent-rules.md` in the environment) in every step.
 * **The model proposes, the researcher decides.** Nothing is confirmed, added to the corpus or changed in the
   questions without the researcher.
-* **Traceability:** every analytic statement leads to a segment (source, page, offsets, quote) and to the step that
-  made it (model, prompt version, time).
+* **Traceability:** every analytic statement leads to quotations (the exact words with source, pages and offsets in
+  `text.md`) and to the step that made it (model, prompt version, time).
 * **Reflexivity:** a model used for the first time writes its profile before any analytic step; reflexive notes are
   written at once when a trigger occurs.
 * **Do not change the environment from here.** When the study shows that the environment needs a change (a missing

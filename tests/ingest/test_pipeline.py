@@ -9,7 +9,7 @@ from mmo.cli import main
 from mmo.core.check import check_source
 from mmo.core.topic import Topic
 from mmo.ingest.ocr import OcrResult
-from mmo.ingest.pipeline import TEXT_VARIANT, ingest_source
+from mmo.ingest.pipeline import TEXT_VARIANT, ingest_source, write_final_text
 
 PAGES = {"IMG_1.png": "Konec odstavce.\n\n12", "IMG_2.png": "Začátek knihy,\n\n11", "IMG_3.png": "Obrázek."}
 
@@ -87,10 +87,17 @@ def test_ingest_runs_every_step_and_is_resumable(tmp_path: Path) -> None:
     order = yaml.safe_load(source.order_file("fake").read_text(encoding="utf-8"))
     assert [e["scan"] for e in order["order"]] == [2, 3, 1], "scan 3 has no number: it follows scan 2"
     assert source.text_file("fake").read_text(encoding="utf-8").startswith("# Kniha")
-    first = json.loads(source.segments_file("fake").read_text(encoding="utf-8").splitlines()[0])
-    assert first["id"] == "kniha:s2:1" and first["page"] == 11
-    assert report.variants == ["fake"] and report.segments["fake"] == 5
+    assert not source.segments_file.exists(), "segments are cut from text.md, after the researcher chose the variant"
+    assert report.variants == ["fake"]
     assert any("1 pages without a number" in line for line in report.review)
+    assert any("mmo source finalize t1 kniha" in line for line in report.review)
+
+    source.metadata_file.write_text("id: kniha\ntitle: Kniha\ntext: {variant: fake}\n", encoding="utf-8")
+    _variant, _order, count = write_final_text(source)
+    first = json.loads(source.segments_file.read_text(encoding="utf-8").splitlines()[0])
+    assert first["id"] == "kniha:s2:1" and first["page"] == 11 and count == 5
+    text = source.final_text_file.read_text(encoding="utf-8")
+    assert text[first["start"] : first["end"]] == first["text"], "offsets point into text.md"
 
     again = FakeBackend()
     ingest_source(source, again, "fake", numbers=FakeNumbers(), log=lambda _: None)
@@ -109,7 +116,11 @@ def test_text_files_are_taken_without_ocr(tmp_path: Path) -> None:
     text = source.text_file(TEXT_VARIANT).read_text(encoding="utf-8")
     assert text.index("Otázka") < text.index("Druhá část"), "text files keep their file-name order"
     assert "<!-- file part-1.txt · scan 1 -->" in text
-    segments = [json.loads(line) for line in source.segments_file(TEXT_VARIANT).read_text("utf-8").splitlines()]
+    source.metadata_file.write_text(
+        source.metadata_file.read_text(encoding="utf-8") + "text: {variant: original}\n", encoding="utf-8"
+    )
+    write_final_text(source)
+    segments = [json.loads(line) for line in source.segments_file.read_text("utf-8").splitlines()]
     assert [s["id"] for s in segments] == ["rozhovor:s1:1", "rozhovor:s1:2", "rozhovor:s2:1", "rozhovor:s2:2"]
     assert all(s["page"] is None for s in segments)
     record = json.loads((source.ocr_dir(TEXT_VARIANT) / "scan-0001.json").read_text(encoding="utf-8"))
@@ -170,7 +181,8 @@ def test_cli_add_ingest_check(tmp_path: Path, capsys) -> None:
     capsys.readouterr()
     assert main([*topics, "ingest", "t1", "recenze"]) == 0
     out = capsys.readouterr().out
-    assert "original: 1 segments" in out and "mmo source check t1 recenze" in out
+    assert "original: text ->" in out and "mmo source finalize t1 recenze" in out
+    assert "mmo source check t1 recenze" in out
     assert main([*topics, "source", "check", "t1"]) == 0
     out = capsys.readouterr().out
     assert "kniha (primary):" in out and "recenze (context):" in out and "files: no originals" in out
@@ -200,7 +212,28 @@ def test_finalize_writes_the_text_for_the_analysis(tmp_path: Path, capsys: pytes
     assert header["read_by"] == {"fake-1": 3} and header["unclear_words"] == 0
     assert text.index("Začátek knihy") < text.index("Obrázek.") < text.index("Konec odstavce."), "reading order"
     assert "<!-- page 11 (printed) · scan 2 · IMG_2.png -->" in text
-    assert not any(f.startswith("final text") for f in check_source(source))
+    assert not any(f.startswith(("final text", "segments")) for f in check_source(source))
+
+    source.final_text_file.write_text(text.replace("Začátek knihy", "Začátek celé knihy"), encoding="utf-8")
+    assert any(f.startswith("segments: 5 no longer match text.md") for f in check_source(source)), "offsets shift"
+    assert main(["--topics", str(tmp_path), "segment", "t1", "kniha"]) == 0
+    assert not any(f.startswith("segments") for f in check_source(source))
+    source.segments_file.unlink()
+    assert any(f.startswith("segments: not cut yet") for f in check_source(source))
+
+
+def test_final_text_joins_words_hyphenated_at_line_ends(tmp_path: Path) -> None:
+    topic = topic_with_book(tmp_path)
+    source = topic.source("kniha")
+    out = source.ocr_dir("typed")
+    out.mkdir(parents=True)
+    record = {"source": "kniha", "scan": 1, "image": "IMG_1.png", "backend": "typed", "text": "spo-\nlečenský\n\n11"}
+    (out / "scan-0001.json").write_text(json.dumps(record, ensure_ascii=False), encoding="utf-8")
+    source.metadata_file.write_text("id: kniha\ntitle: Kniha\ntext: {variant: typed}\n", encoding="utf-8")
+    write_final_text(source)
+    assert "společenský" in source.final_text_file.read_text(encoding="utf-8")
+    kept = json.loads((out / "scan-0001.json").read_text(encoding="utf-8"))
+    assert kept["text"].startswith("spo-\nlečenský"), "the working variant is left as it was read"
 
 
 def test_images_for_a_vision_model(tmp_path: Path, capsys: pytest.CaptureFixture[str]) -> None:

@@ -390,3 +390,29 @@
   sources are still in the earlier commits (nothing pushed); they now need a backup of their own (the shared drive).
 - `tools/new_test_env.py` also copies untracked files under `topics/` ignored only by `topics/.gitignore`; the root
   rules (scans) still apply; test added. 102 passed, ruff clean.
+
+## 2026-11-17 – T24 The final text as the contract; segments of text.md; quotations
+- Owner: the OCR work was meant to get the book's text, not to fix the input of the analysis; now decided
+  (`docs/answers.md`, ADR 0012): every source ends as the same `text.md` (converted by the program, no AI, OCR only
+  without a text layer); segments are paragraphs of `text.md`; the analysis points to quotations (exact words +
+  offsets in `text.md` + pages; not "anchor", which collides with Mayring).
+- Code: `segment.py` cuts `text.md` (location comments, paragraphs, offsets into `text.md`, `text` = exact slice,
+  `continues`); `mmo source finalize` writes `text.md` (hyphenation joined, `\n` line ends) and
+  `sources/<id>/segments.jsonl`; `mmo ingest` no longer segments and asks to choose the variant; `mmo segment` takes
+  no variant; `mmo source check` reports missing or stale segments; `mmo topic migrate` drops old segments; the guard
+  gates `segments.jsonl`. Tests rewritten for the new behaviour; 104 passed, ruff clean.
+- Docs: `docs/source-pipeline.md` (all steps built / planned, the `text.md` format, segments, planned quotations,
+  walk-throughs for photos, PDF and web pages); ADR 0012; spec, README, `AGENTS.md` (traceability to quotations);
+  plan: T24 and a new Analysis section T25-T31 replacing T4-T6.
+- Research environment, branch `task/T24-text-quotations`: `AGENTS.md`, `docs/source-preparation.md` (section on the
+  final text, segments and quotations), `docs/memos.md`, skill `ingest-sources` (+ `.claude/`), method texts
+  (evidence segments -> quotations in SKAD, GT, TA; GT's own "segments" and the units a model reads kept), ontology
+  `Quotation` (also copied to the workshop's copy, which the ontology test reads until T15).
+- Tried on a copy of `kniha/text.md` (not rebuilt): 1,581 segments over 211 pages, all exact slices; 208 continue
+  over a page break; 478 shorter than 40 characters - running heads (`NAZÍ V AI DOBĚ` 89x, chapter titles) and lone
+  page numbers, which also stand before the first paragraph of a page -> T25. Script kept:
+  `scratch/T24/try_segments.py <text.md>`.
+- Not done: `kniha/text.md` and its segments are not rebuilt in the research environment (the owner decides,
+  best after T25); the workshop's stale copies of `methods/` and `docs/environment/` are left for T15.
+- Next: owner's review of both branches; open decision on who drives the analysis (agent / `mmo` with the gateway /
+  both); then T25 (page furniture) or T26 (quotations).

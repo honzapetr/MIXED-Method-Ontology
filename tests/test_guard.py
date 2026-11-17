@@ -57,7 +57,7 @@ def root(tmp_path: Path, monkeypatch) -> Path:
     _write(study / "sources" / "k" / "source.yaml")
     _write(study / "sources" / "k" / "notes.md")
     _write(study / "sources" / "k" / "text.md", "the data")
-    _write(study / "sources" / "k" / "segments" / "book.jsonl")
+    _write(study / "sources" / "k" / "segments.jsonl")
     _write(study / "work" / "ocr.txt")
     return root.resolve()
 
@@ -107,7 +107,7 @@ def test_study_data_closed_until_profile_and_position_confirmed(root):
 
 
 def test_what_is_closed_and_what_stays_open(root):
-    for rel in ("sources/k/text.md", "sources/k/segments/book.jsonl", "work/ocr.txt"):
+    for rel in ("sources/k/text.md", "sources/k/segments.jsonl", "work/ocr.txt"):
         assert _decide(root, "Read", file_path=str(root / "topics" / "s" / rel)) == "deny", rel
     for rel in ("topic.yaml", "memos/2026-11-13-a.md", "sources/k/source.yaml", "sources/k/notes.md"):
         assert _decide(root, "Read", file_path=str(root / "topics" / "s" / rel)) is None, rel
