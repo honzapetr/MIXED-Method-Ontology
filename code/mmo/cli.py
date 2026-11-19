@@ -12,6 +12,7 @@ import yaml
 
 from mmo.analysis.method import check_method, study_methods
 from mmo.analysis.quote import MOVED, OK, Quotation, QuoteError, check_study, quote
+from mmo.analysis.review import decide, proposals
 from mmo.analysis.status import own_type_reminder, study_status
 from mmo.analysis.store import ACTIVE_STATUSES, Author, Store, author_of, check_store, write_memo
 from mmo.config import Settings
@@ -492,7 +493,9 @@ def cmd_memo_add(args: argparse.Namespace) -> int:
     author = _author(args, topic)
     body = Path(args.file).read_text(encoding="utf-8") if args.file else (args.text or "")
     quotations = [_quotation(topic, source, words) for source, words in args.quote or []]
-    path = write_memo(topic, author, args.type, args.title, body, args.about, quotations, args.method, args.phase)
+    path = write_memo(
+        topic, author, args.type, args.title, body, args.about, quotations, args.method, args.phase, args.alternative
+    )
     print(f"memo {path.relative_to(topic.root).as_posix()}")
     return 0
 
@@ -542,6 +545,48 @@ def cmd_phase(args: argparse.Namespace) -> int:
     previous = f" (was {event['previous']})" if event.get("previous") else ""
     print(f"{topic.slug}: {chosen[0].id} at {args.phase}{previous}")
     return 0
+
+
+def cmd_review_list(args: argparse.Namespace) -> int:
+    waiting = proposals(load_topic(args), args.kind)
+    for item in waiting:
+        print(f"{item.ref}  [{item.provenance}]  {item.summary}")
+    print(f"{len(waiting)} proposals wait for the researcher" if waiting else "no proposals wait")
+    return 0
+
+
+def _review(args: argparse.Namespace, verdict: str, changes: dict[str, str] | None = None) -> int:
+    topic = load_topic(args)
+    author = _author(args, topic)
+    for ref in args.refs:
+        event = decide(
+            topic, author, ref, verdict, reason=getattr(args, "reason", None), note=args.note, changes=changes
+        )
+        cascade = f" (with {', '.join(event['cascade'])})" if event.get("cascade") else ""
+        print(f"{ref}: {event['verdict']}{cascade}")
+    return 0
+
+
+def cmd_review_accept(args: argparse.Namespace) -> int:
+    return _review(args, "accept")
+
+
+def cmd_review_reject(args: argparse.Namespace) -> int:
+    return _review(args, "reject")
+
+
+def cmd_review_edit(args: argparse.Namespace) -> int:
+    kind = args.refs[0].split(":", 1)[0]
+    type_field = {"code": "code_type", "relation": "relation_type"}.get(kind, "type")
+    changes = {
+        "label": args.label,
+        type_field: args.type,
+        "definition": args.definition,
+        "broader": args.broader,
+        "code": args.code,
+        "description": args.description,
+    }
+    return _review(args, "edit", changes)
 
 
 def cmd_status(args: argparse.Namespace) -> int:
@@ -778,6 +823,7 @@ def build_parser() -> argparse.ArgumentParser:
     )
     m_add.add_argument("--method")
     m_add.add_argument("--phase")
+    m_add.add_argument("--alternative", action="append", help="an alternative reading (a model offers them)")
     m_add.set_defaults(func=cmd_memo_add)
 
     analysis = sub.add_parser("analysis", help="the analysis store of a study").add_subparsers(
@@ -806,6 +852,35 @@ def build_parser() -> argparse.ArgumentParser:
     status = sub.add_parser("status", help="the map of phases, where the study is, what was made, reminders")
     status.add_argument("topic")
     status.set_defaults(func=cmd_status)
+
+    review = sub.add_parser("review", help="proposals of models: list, accept, edit, reject (the researcher)")
+    review_sub = review.add_subparsers(dest="action", required=True)
+    r_list = review_sub.add_parser("list", help="what waits for the researcher")
+    r_list.add_argument("topic")
+    r_list.add_argument("--kind", choices=["code", "coding", "relation", "memo"])
+    r_list.set_defaults(func=cmd_review_list)
+    r_accept = review_sub.add_parser("accept", parents=[who], help="accept proposals as they are")
+    r_accept.add_argument("topic")
+    r_accept.add_argument("refs", nargs="+", help="code:<id>, coding:<id>, relation:<id>, memo:<id>")
+    r_accept.add_argument("--note")
+    r_accept.set_defaults(func=cmd_review_accept)
+    r_reject = review_sub.add_parser("reject", parents=[who], help="reject proposals, with a reason")
+    r_reject.add_argument("topic")
+    r_reject.add_argument("refs", nargs="+")
+    r_reject.add_argument("--reason", required=True)
+    r_reject.add_argument("--note")
+    r_reject.set_defaults(func=cmd_review_reject)
+    r_edit = review_sub.add_parser("edit", parents=[who], help="accept a proposal with changes (old values kept)")
+    r_edit.add_argument("topic")
+    r_edit.add_argument("refs", nargs=1, metavar="ref")
+    r_edit.add_argument("--label", help="code: a new label")
+    r_edit.add_argument("--type", help="code or relation: a new type")
+    r_edit.add_argument("--definition", help="code: a definition")
+    r_edit.add_argument("--broader", help="code: a broader code")
+    r_edit.add_argument("--code", help="coding: another code (id or label)")
+    r_edit.add_argument("--description", help="relation: a description")
+    r_edit.add_argument("--note", help="what you changed (for a memo edited by hand: required)")
+    r_edit.set_defaults(func=cmd_review_edit)
     return parser
 
 

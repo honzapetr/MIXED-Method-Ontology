@@ -139,7 +139,26 @@ uv run mmo analysis check <topic> [--record --by X]
   was made, proposals waiting, changed settings, reminders (merges or splits without a reason, own types if asked,
   the methods' practices). Orientation only; nothing there is a condition.
 
+## Proposals and the review (T29)
+
+`code/mmo/analysis/review.py`; commands `mmo review list|accept|edit|reject`.
+
+- **A proposal is a record, not a file of its own:** a code, coding, relation or memo written by a model has
+  `status: proposed` in the same file. No separate `analysis/proposals/` folder - accepting it changes its status in
+  place, so the accepted record keeps its provenance (`author`, `generated_by`) without being copied.
+- **Decisions:** `accepted`; `edited` with `decided.changes` (`{field: [old, new]}`; a coding's code by `--code`);
+  `rejected` with a required reason. `decided: {verdict, by, at, reason | note, changes}` on the record, `op:
+  review` in the history with the cascade. Accepting a coding accepts its proposed code; rejecting a code rejects its
+  proposed codings and is refused while codings the researcher holds use it. Memos are decided in their front
+  matter; an edit of a memo's text is made by hand and marked with `--note`.
+- **Only a person decides** (`decide` refuses a model; the guard denies `mmo review` other than `list` to a model).
+- **What a model may propose** (`Store.may_propose`): `model_proposes` of the current phase of each of the study's
+  methods (a phase without it, or a method without a phase set, does not limit); one method allowing the kind is
+  enough. A model may not rename, merge, split or recode (`researcher_only`) and withdraws only its own waiting
+  proposals. `analysis.model.alternatives: true` makes a model's analytic memo need `--alternative`.
+- SKAD's phases have `model_proposes` taken from their `model_role` (version `2026-11-19.2`); GT and TA have none
+  yet, so their phases do not limit what a model proposes.
+
 ## Later
 
-- T29 reviews proposals (accept, edit, reject) and limits what a model may propose per phase.
 - T30 builds the RDF graph from these files; T34 exports them to REFI-QDA.

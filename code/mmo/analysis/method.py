@@ -45,6 +45,7 @@ MEMO_TYPES = {
     "steering",
 }
 PHASE_KEYS = ("goal", "input", "output", "memos", "model_role", "researcher_decides")
+PROPOSAL_KINDS = {"code", "coding", "relation", "memo"}  # what a model may write as a proposal (T29)
 FRONT_VERSION = re.compile(r"(?m)^version:\s*\S+")
 
 DEFAULTS: dict[str, Any] = {
@@ -168,6 +169,9 @@ def check_method(folder: Path) -> list[str]:
             bad_memos = set(phase.get("memos") or []) - MEMO_TYPES
             if bad_memos:
                 problems.append(f"phase {pid}: unknown memo types {sorted(bad_memos)}")
+        proposes = phase.get("model_proposes")
+        if proposes is not None and (not isinstance(proposes, list) or set(proposes) - PROPOSAL_KINDS):
+            problems.append(f"phase {pid}: model_proposes is a list of {sorted(PROPOSAL_KINDS)}")
         if prompt := phase.get("prompt"):
             prompt_file = folder / str(prompt)
             if not prompt_file.is_file():
@@ -251,6 +255,31 @@ def model_may_write(topic: Topic, history: list[dict[str, Any]]) -> str | None:
         return None
     where = ", ".join(sorted(now)) or "no phase set (mmo phase)"
     return f"the study lets models propose only in the phases {', '.join(allowed)}; the study is at: {where}"
+
+
+def model_may_propose(topic: Topic, history: list[dict[str, Any]], kind: str) -> str | None:
+    """None when a model may propose a `kind` now, else why not.
+
+    `model_proposes` of the current phase (a binding part of `model_role`, for models only) names what a model may
+    write there; a phase without it, or a study whose phase is not set, does not limit the kind. With several
+    methods, one current phase that allows the kind is enough.
+    """
+    now = current_phases(history)
+    limits: list[str] = []
+    for method in study_methods(topic):
+        phase = method.phase(now.get(method.id, "")) if method.id in now else None
+        if phase is None or phase.get("model_proposes") is None:
+            return None
+        allowed = [str(k) for k in phase["model_proposes"]]
+        if kind in allowed:
+            return None
+        limits.append(f"{method.id}/{phase['id']}: {', '.join(allowed) or 'nothing'}")
+    if not limits:
+        return None
+    return (
+        f"in the study's current phase a model does not propose a {kind} ({'; '.join(limits)}); "
+        "say it in a memo, or the researcher moves the study to another phase"
+    )
 
 
 def vocabulary(topic: Topic) -> tuple[set[str], set[str]]:
