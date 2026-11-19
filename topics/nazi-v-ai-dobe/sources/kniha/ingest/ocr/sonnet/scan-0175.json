@@ -1,0 +1,16 @@
+{
+  "source": "kniha",
+  "scan": 175,
+  "image": "IMG_20260902_223141.jpg",
+  "image_sha256": "45d745fd5fc164f217a964c8e0b1e8bd41939272c46adf2c98d5df3b789b2f02",
+  "backend": "import",
+  "model": "claude-sonnet-5-5",
+  "prompt_version": "read-v1",
+  "confidence": null,
+  "quality": null,
+  "warnings": [],
+  "seconds": null,
+  "created": "2026-11-13T14:41:43+00:00",
+  "rotation": "0",
+  "text": "KAPITOLA VII.\n\n## SPOLEČNÝ TANEC\n\n„Úkolem Eliáše je sjednotit vše, co Bůh nerozdělil... uspořádat vše tak, aby vše bylo vzájemně provázané a přinášelo vzájemný prospěch.“\n\nJan Amos Komenský\n\n„Můžeme jednat ve svůj prospěch tím, že budeme jednat ve prospěch světa.“\n\nGeorge C. Marshall\n\n197\n"
+}

@@ -1,0 +1,16 @@
+{
+  "source": "kniha",
+  "scan": 187,
+  "image": "IMG_20260902_223252.jpg",
+  "image_sha256": "2f7e6fbfadf7fed7745a60ccc25422a6f235bb8bafdb64650b3d9476357d85c5",
+  "backend": "import",
+  "model": "claude-opus-5-5",
+  "prompt_version": "reread-v1",
+  "confidence": null,
+  "quality": null,
+  "warnings": [],
+  "seconds": null,
+  "created": "2026-11-12T22:58:46+00:00",
+  "text": "NAZÍ V AI DOBĚ\nzaměstnanců, také není nutně neetická. Ani člověk, který pečuje jen o své nejbližší příbuzné, zatímco jiní lidé jsou mu lhostejní, není nutně neetický.\n\nMáme tu věčný rozpor mezi dvěma póly, které jsme v šesté kapitole popsali jako utilitarismus a etiku péče. Tedy otázku, jestli usilovat o štěstí a zmírnění utrpení co nejširšího okruhu lidí, nebo pouze těch, kteří jsou nám nejbližší. Každý může mít svůj „okruh péče“ definovaný jinak.\n\nV naléhavých výzvách AI doby by nám samozřejmě pomohlo okruh naší péče spíše rozšiřovat. V tomto ohledu je zajímavé se podívat na stoický koncept „kruhů identity“, zformulovaný filozofem Hieroklem. Ten uvádí, že jako lidé máme různé kruhy identity, a tedy sounáležitosti. Nejbližší jsem já, další kruh nejbližší rodina, širší rodina, místní komunita, pak krajané a nakonec celé lidstvo. Naší morální snahou má podle něj být rozšiřování okruhu péče. Naše úsilí tímto směrem by nám jako lidstvu pomohlo, protože ty největší výzvy AI doby jsou problémy globální.\n\nStoický koncept je vyjádřením stoického kosmopolitismu, tedy myšlenky, že všichni lidé jsou součástí jedné univerzální komunity, jsou tedy „občany světa“. Na kosmopolitismus bývá občas nahlíženo jako na příliš utopistickou vizi, ale v dnešní globálně propojené AI době se jeví spíš jako realistický popis skutečnosti než odvážná hypotéza. Viděno z nadhledu máme všichni jen jeden domov – naši Zemi.\n\nTato globální identita je zároveň až na vzdáleném orbitu kruhů našich identit. Tato identita se jeví být „méně barvitá než jiné zdroje sounáležitosti“⁴⁷. Je logické, že nejvzdálenější kruhy identity nepovažujeme ze stejně důležité a naléhavé jako to, co se děje nám samotným nebo naší rodině. O to stoikové ani neusilovali – bylo jim jasné, že vnější kruhy v nás nebudou vzbuzovat\n209\n",
+  "merged_from": "claude"
+}

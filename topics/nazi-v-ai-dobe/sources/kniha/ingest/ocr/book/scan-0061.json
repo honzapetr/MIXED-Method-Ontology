@@ -1,0 +1,16 @@
+{
+  "source": "kniha",
+  "scan": 61,
+  "image": "IMG_20260902_200656.jpg",
+  "image_sha256": "13b092cbd2c6aec22b93ffe2836cbde4e9a30cfa783d46749ae5b74b240b6637",
+  "backend": "import",
+  "model": "claude-opus-5-5",
+  "prompt_version": "reread-v1",
+  "confidence": null,
+  "quality": null,
+  "warnings": [],
+  "seconds": null,
+  "created": "2026-11-12T22:58:43+00:00",
+  "text": "NAZÍ V AI DOBĚ\n## KLAMNÁ SPÁSA SKRZE AI\n\nFakt, že národní mýty o výjimečnosti spojené s mesiášským očekáváním přispívají k urychlení vývoje AI, přináší další negativa: ostatní naléhavá témata jdou stranou. Do oblasti vývoje AI proudí závratné investice, intelektuální kapacity a politická vůle. Přestože svět čelí bezprecedentním výzvám – klimatické krizi, výrazné ztrátě biodiverzity, rostoucí nerovnosti, otřesům na pracovním trhu, geopolitickému napětí, potravinové nejistotě, hrozbě dalších pandemií či závažnému ohrožení duševního zdraví. Může se také stát, že mesiášské očekávání od vývoje AI a koncentrace na dosažení obecné umělé inteligence povedou do slepé uličky (ostatně třeba i Apple začíná být ohledně schopnosti současných modelů vytvořit obecnou umělou inteligenci skeptický⁶¹), zatímco problémy, které jsme měli tendenci ignorovat, nás „doženou“.\n\nNamísto toho, abychom jako lidstvo soustředili svou pozornost na naléhavé problémy, modlíme se s mobilem v ruce k AI. Ostatní potíže jako bychom ani nemuseli řešit, protože je AI za nás vyřeší. Jak si postěžovala filozofka Shannon Vallor: „Hrozby vzdálené budoucnosti, dokonce i ty vysoce spekulativní, jako je obecná umělá inteligence, jednoduše zastiňují i ty nejnaléhavější morální nároky současně žijících nebo brzy narozených lidí.“⁶²\n\nPokud jde o vývoj AI, měli bychom mít střízlivá a realistická očekávání. Odkládat hledání řešení současných výzev do budoucnosti není moudrá strategie. Může se totiž stát, že vývoj AI nepůjde skokově kupředu, jak očekávají někteří, aby za nás globální problémy dokázala vyřešit. A i kdyby dokázala, není vůbec jisté, že by korporace vyvíjející AI měly odstranění globálních problémů s pomocí AI jako svůj prioritní cíl – pokud by to pro ně nebylo dostatečně rentabilní.\n\nPořád přece máme svou lidskou inteligenci. A byť nedokáže okamžitě vyhledat jakoukoli informaci ani během sekundy\n77\n",
+  "merged_from": "claude"
+}

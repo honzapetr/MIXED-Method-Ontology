@@ -1,0 +1,406 @@
+{
+  "source": "kniha",
+  "scan": 57,
+  "image": "IMG_20260902_200640.jpg",
+  "image_sha256": "e0c2a796c5f31e43e2e764c6f6da16244485d493954d20821631133b094d1126",
+  "backend": "import",
+  "model": "claude-opus-5-5",
+  "prompt_version": "reread-v1",
+  "confidence": null,
+  "quality": null,
+  "warnings": [],
+  "seconds": null,
+  "created": "2026-11-12T22:58:42+00:00",
+  "text": "NAZÍ V AI DOBĚ\n\ndále. Potomci těch, kdo poslouchali kázání Johna Winthropa o „pahorku na kopci“, to dotáhli obdivuhodně daleko. Mýtus evidentně dává americké společnosti energii, smysl, legitimitu a vizi budoucnosti, vytváří kolektivní identitu schopnou obětí a víry v pokrok.\n\nAvšak zúžení mýtu hledání spásy na mýtus ryze národního charakteru a vyzdvihující výjimečnost a s tím nadřazenost pouze jednoho jediného národa má zároveň své stinné stránky. Pocit morální nadřazenosti je nuzným východiskem při snaze získat podporu. USA si samozřejmě prosadí svou na základě ohromné vojenské, ekonomické a kulturní moci. Nicméně při absenci tohoto pocitu morální nadřazenosti vůči okolním zemím by nejspíš schopnost USA vytvářet efektivní aliance s jinými národy mohla být silnější a mezinárodní spolupráce s nimi díky tomu hlubší.\n\nŠíření specifické kulturní vize jako univerzální pravdy pro všechny je nebezpečím všech mýtů národní výjimečnosti. S těmito mýty, stejně jako jsme to pozorovali v případě amerického mýtu výjimečnosti, vzrůstá zároveň tendence vidět svět černobíle a chovat se vůči jiným zemím arogantně, až vojensky agresivně. Jak uvádí Samuel Huntington, Američané si často myslí, „že existují naprosto jasná pravidla, co je dobré a co je zlé“.⁴⁵ Takové sebevědomí však vede k morálnímu imperialismu, kdy jsou americké hodnoty prohlašovány za univerzální – a odlišné názory pak vnímány jako hrozba.\n\n## „MY“ VERSUS „ONI“\n\nAmerický mýtus výjimečnosti pojímá svět jako divadlo velkého dramatu – boje mezi dobrem a zlem, světlem a temnotou, božským a démonickým. Filozof Ernst Cassirer postřehl, že proces zbožštění jednoho je vždy doprovázen procesem „démonizace“\n\n73\n",
+  "cleaning": {
+    "version": "clean-v1",
+    "from_variant": "fabric",
+    "created": "2026-11-12T23:03:27+00:00",
+    "stuck": [
+      "76 repeated lines"
+    ],
+    "removed": [
+      {
+        "line": 20,
+        "rule": "repeated-line",
+        "text": "le a chovat se vůči jiným zemím arogantně, až vojensky agresiv-"
+      },
+      {
+        "line": 21,
+        "rule": "repeated-line",
+        "text": "le a chovat se vůči jiným zemím arogantně, až vojensky agresiv-"
+      },
+      {
+        "line": 22,
+        "rule": "repeated-line",
+        "text": "le a chovat se vůči jiným zemím arogantně, až vojensky agresiv-"
+      },
+      {
+        "line": 23,
+        "rule": "repeated-line",
+        "text": "le a chovat se vůči jiným zemím arogantně, až vojensky agresiv-"
+      },
+      {
+        "line": 24,
+        "rule": "repeated-line",
+        "text": "le a chovat se vůči jiným zemím arogantně, až vojensky agresiv-"
+      },
+      {
+        "line": 25,
+        "rule": "repeated-line",
+        "text": "le a chovat se vůči jiným zemím arogantně, až vojensky agresiv-"
+      },
+      {
+        "line": 26,
+        "rule": "repeated-line",
+        "text": "le a chovat se vůči jiným zemím arogantně, až vojensky agresiv-"
+      },
+      {
+        "line": 27,
+        "rule": "repeated-line",
+        "text": "le a chovat se vůči jiným zemím arogantně, až vojensky agresiv-"
+      },
+      {
+        "line": 28,
+        "rule": "repeated-line",
+        "text": "le a chovat se vůči jiným zemím arogantně, až vojensky agresiv-"
+      },
+      {
+        "line": 29,
+        "rule": "repeated-line",
+        "text": "le a chovat se vůči jiným zemím arogantně, až vojensky agresiv-"
+      },
+      {
+        "line": 30,
+        "rule": "repeated-line",
+        "text": "le a chovat se vůči jiným zemím arogantně, až vojensky agresiv-"
+      },
+      {
+        "line": 31,
+        "rule": "repeated-line",
+        "text": "le a chovat se vůči jiným zemím arogantně, až vojensky agresiv-"
+      },
+      {
+        "line": 32,
+        "rule": "repeated-line",
+        "text": "le a chovat se vůči jiným zemím arogantně, až vojensky agresiv-"
+      },
+      {
+        "line": 33,
+        "rule": "repeated-line",
+        "text": "le a chovat se vůči jiným zemím arogantně, až vojensky agresiv-"
+      },
+      {
+        "line": 34,
+        "rule": "repeated-line",
+        "text": "le a chovat se vůči jiným zemím arogantně, až vojensky agresiv-"
+      },
+      {
+        "line": 35,
+        "rule": "repeated-line",
+        "text": "le a chovat se vůči jiným zemím arogantně, až vojensky agresiv-"
+      },
+      {
+        "line": 36,
+        "rule": "repeated-line",
+        "text": "le a chovat se vůči jiným zemím arogantně, až vojensky agresiv-"
+      },
+      {
+        "line": 37,
+        "rule": "repeated-line",
+        "text": "le a chovat se vůči jiným zemím arogantně, až vojensky agresiv-"
+      },
+      {
+        "line": 38,
+        "rule": "repeated-line",
+        "text": "le a chovat se vůči jiným zemím arogantně, až vojensky agresiv-"
+      },
+      {
+        "line": 39,
+        "rule": "repeated-line",
+        "text": "le a chovat se vůči jiným zemím arogantně, až vojensky agresiv-"
+      },
+      {
+        "line": 40,
+        "rule": "repeated-line",
+        "text": "le a chovat se vůči jiným zemím arogantně, až vojensky agresiv-"
+      },
+      {
+        "line": 41,
+        "rule": "repeated-line",
+        "text": "le a chovat se vůči jiným zemím arogantně, až vojensky agresiv-"
+      },
+      {
+        "line": 42,
+        "rule": "repeated-line",
+        "text": "le a chovat se vůči jiným zemím arogantně, až vojensky agresiv-"
+      },
+      {
+        "line": 43,
+        "rule": "repeated-line",
+        "text": "le a chovat se vůči jiným zemím arogantně, až vojensky agresiv-"
+      },
+      {
+        "line": 44,
+        "rule": "repeated-line",
+        "text": "le a chovat se vůči jiným zemím arogantně, až vojensky agresiv-"
+      },
+      {
+        "line": 45,
+        "rule": "repeated-line",
+        "text": "le a chovat se vůči jiným zemím arogantně, až vojensky agresiv-"
+      },
+      {
+        "line": 46,
+        "rule": "repeated-line",
+        "text": "le a chovat se vůči jiným zemím arogantně, až vojensky agresiv-"
+      },
+      {
+        "line": 47,
+        "rule": "repeated-line",
+        "text": "le a chovat se vůči jiným zemím arogantně, až vojensky agresiv-"
+      },
+      {
+        "line": 48,
+        "rule": "repeated-line",
+        "text": "le a chovat se vůči jiným zemím arogantně, až vojensky agresiv-"
+      },
+      {
+        "line": 49,
+        "rule": "repeated-line",
+        "text": "le a chovat se vůči jiným zemím arogantně, až vojensky agresiv-"
+      },
+      {
+        "line": 50,
+        "rule": "repeated-line",
+        "text": "le a chovat se vůči jiným zemím arogantně, až vojensky agresiv-"
+      },
+      {
+        "line": 51,
+        "rule": "repeated-line",
+        "text": "le a chovat se vůči jiným zemím arogantně, až vojensky agresiv-"
+      },
+      {
+        "line": 52,
+        "rule": "repeated-line",
+        "text": "le a chovat se vůči jiným zemím arogantně, až vojensky agresiv-"
+      },
+      {
+        "line": 53,
+        "rule": "repeated-line",
+        "text": "le a chovat se vůči jiným zemím arogantně, až vojensky agresiv-"
+      },
+      {
+        "line": 54,
+        "rule": "repeated-line",
+        "text": "le a chovat se vůči jiným zemím arogantně, až vojensky agresiv-"
+      },
+      {
+        "line": 55,
+        "rule": "repeated-line",
+        "text": "le a chovat se vůči jiným zemím arogantně, až vojensky agresiv-"
+      },
+      {
+        "line": 56,
+        "rule": "repeated-line",
+        "text": "le a chovat se vůči jiným zemím arogantně, až vojensky agresiv-"
+      },
+      {
+        "line": 57,
+        "rule": "repeated-line",
+        "text": "le a chovat se vůči jiným zemím arogantně, až vojensky agresiv-"
+      },
+      {
+        "line": 58,
+        "rule": "repeated-line",
+        "text": "le a chovat se vůči jiným zemím arogantně, až vojensky agresiv-"
+      },
+      {
+        "line": 59,
+        "rule": "repeated-line",
+        "text": "le a chovat se vůči jiným zemím arogantně, až vojensky agresiv-"
+      },
+      {
+        "line": 60,
+        "rule": "repeated-line",
+        "text": "le a chovat se vůči jiným zemím arogantně, až vojensky agresiv-"
+      },
+      {
+        "line": 61,
+        "rule": "repeated-line",
+        "text": "le a chovat se vůči jiným zemím arogantně, až vojensky agresiv-"
+      },
+      {
+        "line": 62,
+        "rule": "repeated-line",
+        "text": "le a chovat se vůči jiným zemím arogantně, až vojensky agresiv-"
+      },
+      {
+        "line": 63,
+        "rule": "repeated-line",
+        "text": "le a chovat se vůči jiným zemím arogantně, až vojensky agresiv-"
+      },
+      {
+        "line": 64,
+        "rule": "repeated-line",
+        "text": "le a chovat se vůči jiným zemím arogantně, až vojensky agresiv-"
+      },
+      {
+        "line": 65,
+        "rule": "repeated-line",
+        "text": "le a chovat se vůči jiným zemím arogantně, až vojensky agresiv-"
+      },
+      {
+        "line": 66,
+        "rule": "repeated-line",
+        "text": "le a chovat se vůči jiným zemím arogantně, až vojensky agresiv-"
+      },
+      {
+        "line": 67,
+        "rule": "repeated-line",
+        "text": "le a chovat se vůči jiným zemím arogantně, až vojensky agresiv-"
+      },
+      {
+        "line": 68,
+        "rule": "repeated-line",
+        "text": "le a chovat se vůči jiným zemím arogantně, až vojensky agresiv-"
+      },
+      {
+        "line": 69,
+        "rule": "repeated-line",
+        "text": "le a chovat se vůči jiným zemím arogantně, až vojensky agresiv-"
+      },
+      {
+        "line": 70,
+        "rule": "repeated-line",
+        "text": "le a chovat se vůči jiným zemím arogantně, až vojensky agresiv-"
+      },
+      {
+        "line": 71,
+        "rule": "repeated-line",
+        "text": "le a chovat se vůči jiným zemím arogantně, až vojensky agresiv-"
+      },
+      {
+        "line": 72,
+        "rule": "repeated-line",
+        "text": "le a chovat se vůči jiným zemím arogantně, až vojensky agresiv-"
+      },
+      {
+        "line": 73,
+        "rule": "repeated-line",
+        "text": "le a chovat se vůči jiným zemím arogantně, až vojensky agresiv-"
+      },
+      {
+        "line": 74,
+        "rule": "repeated-line",
+        "text": "le a chovat se vůči jiným zemím arogantně, až vojensky agresiv-"
+      },
+      {
+        "line": 75,
+        "rule": "repeated-line",
+        "text": "le a chovat se vůči jiným zemím arogantně, až vojensky agresiv-"
+      },
+      {
+        "line": 76,
+        "rule": "repeated-line",
+        "text": "le a chovat se vůči jiným zemím arogantně, až vojensky agresiv-"
+      },
+      {
+        "line": 77,
+        "rule": "repeated-line",
+        "text": "le a chovat se vůči jiným zemím arogantně, až vojensky agresiv-"
+      },
+      {
+        "line": 78,
+        "rule": "repeated-line",
+        "text": "le a chovat se vůči jiným zemím arogantně, až vojensky agresiv-"
+      },
+      {
+        "line": 79,
+        "rule": "repeated-line",
+        "text": "le a chovat se vůči jiným zemím arogantně, až vojensky agresiv-"
+      },
+      {
+        "line": 80,
+        "rule": "repeated-line",
+        "text": "le a chovat se vůči jiným zemím arogantně, až vojensky agresiv-"
+      },
+      {
+        "line": 81,
+        "rule": "repeated-line",
+        "text": "le a chovat se vůči jiným zemím arogantně, až vojensky agresiv-"
+      },
+      {
+        "line": 82,
+        "rule": "repeated-line",
+        "text": "le a chovat se vůči jiným zemím arogantně, až vojensky agresiv-"
+      },
+      {
+        "line": 83,
+        "rule": "repeated-line",
+        "text": "le a chovat se vůči jiným zemím arogantně, až vojensky agresiv-"
+      },
+      {
+        "line": 84,
+        "rule": "repeated-line",
+        "text": "le a chovat se vůči jiným zemím arogantně, až vojensky agresiv-"
+      },
+      {
+        "line": 85,
+        "rule": "repeated-line",
+        "text": "le a chovat se vůči jiným zemím arogantně, až vojensky agresiv-"
+      },
+      {
+        "line": 86,
+        "rule": "repeated-line",
+        "text": "le a chovat se vůči jiným zemím arogantně, až vojensky agresiv-"
+      },
+      {
+        "line": 87,
+        "rule": "repeated-line",
+        "text": "le a chovat se vůči jiným zemím arogantně, až vojensky agresiv-"
+      },
+      {
+        "line": 88,
+        "rule": "repeated-line",
+        "text": "le a chovat se vůči jiným zemím arogantně, až vojensky agresiv-"
+      },
+      {
+        "line": 89,
+        "rule": "repeated-line",
+        "text": "le a chovat se vůči jiným zemím arogantně, až vojensky agresiv-"
+      },
+      {
+        "line": 90,
+        "rule": "repeated-line",
+        "text": "le a chovat se vůči jiným zemím arogantně, až vojensky agresiv-"
+      },
+      {
+        "line": 91,
+        "rule": "repeated-line",
+        "text": "le a chovat se vůči jiným zemím arogantně, až vojensky agresiv-"
+      },
+      {
+        "line": 92,
+        "rule": "repeated-line",
+        "text": "le a chovat se vůči jiným zemím arogantně, až vojensky agresiv-"
+      },
+      {
+        "line": 93,
+        "rule": "repeated-line",
+        "text": "le a chovat se vůči jiným zemím arogantně, až vojensky agresiv-"
+      },
+      {
+        "line": 94,
+        "rule": "repeated-line",
+        "text": "le a chovat se vůči jiným zemím arogantně, až vojensky agresiv-"
+      },
+      {
+        "line": 95,
+        "rule": "repeated-line",
+        "text": "le a chovat se vůči jiným zemím arogantně, až vojensky agresiv-"
+      }
+    ],
+    "replaced_from": "claude"
+  }
+}

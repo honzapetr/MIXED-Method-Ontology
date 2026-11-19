@@ -1,0 +1,22 @@
+{
+  "source": "kniha",
+  "scan": 105,
+  "image": "IMG_20260902_222104.jpg",
+  "image_sha256": "b20a8068bb2830defe0e8877052a7bed6f22ba0536d2274fe29bd2e228ebec23",
+  "backend": "fabric",
+  "model": "fabric/model",
+  "prompt_version": "fabric-service",
+  "confidence": null,
+  "quality": "full",
+  "warnings": [],
+  "seconds": 4.08,
+  "created": "2026-11-11T22:08:34+00:00",
+  "text": "STÁLE\nNEJSME\nBOHY\n\n„Radostně do světa ven,\nproti větru a počasí!\nNebude-li Bůh na zemi,\njsme bohy my sami!“\n\nWilhelm Müller\n\n„Pravdu poznáváme nejen rozumem,\nale také srdcem.“\n\nBlaise Pascal\n",
+  "cleaning": {
+    "version": "clean-v1",
+    "from_variant": "fabric",
+    "created": "2026-11-12T23:03:33+00:00",
+    "stuck": [],
+    "removed": []
+  }
+}

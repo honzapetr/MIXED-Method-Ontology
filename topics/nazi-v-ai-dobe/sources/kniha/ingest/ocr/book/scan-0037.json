@@ -1,0 +1,17 @@
+{
+  "source": "kniha",
+  "scan": 37,
+  "image": "IMG_20260902_200504.jpg",
+  "image_sha256": "a177c441f64adf2933b6269a7991ef5556d5c1f82496a1c4b50d0da7d6d42325",
+  "backend": "import",
+  "model": "claude-sonnet-5-5",
+  "prompt_version": "read-v1",
+  "confidence": null,
+  "quality": null,
+  "warnings": [],
+  "seconds": null,
+  "created": "2026-11-13T14:41:19+00:00",
+  "rotation": "0",
+  "text": "TANEC SLUNCÍ\n\n²² Andrew Von Hendy, The Modern Construction of Myth (Indiana University Press, 2002), 333.\n\n²³ Yuval Noah Harari, 21 lessons for the 21st century (Jonathan Cape, 2018), 276.\n\n²⁴ Bruce Lincoln, Discourse and the construction of society: comparative studies of myth, ritual, and classification (Oxford University Press, 1989), 24.\n\n²⁵ Chiara Bottici, A Philosophy of Political Myth (Cambridge university press, 2007), 125.\n\n²⁶ Daniel Wrana, ed., DiskursNetz: Wörterbuch der interdisziplinären Diskursforschung, Erste Auflage. Originalausgabe, Suhrkamp Taschenbuch Wissenschaft 2097 (Suhrkamp, 2014), 246.\n\n²⁷ Andrea Cornwall et al., „Gender Myths and Feminist Fables: The Struggle for Interpretive Power in Gender and Development“, Development and Change 38, č. 1 (2007): 1–20, https://doi.org/10.1111/j.1467-7660.2007.00400.x. 6.\n\n²⁸ Claude Lévi-Strauss, Myth and Meaning (Schocken Books, 1979), 17.\n\n²⁹ Roland Barthes, Mythologies, First American paperback edition, přel. Richard Howard a Annette Lavers (Hill and Wang, a division of Farrar, Straus and Giroux, 2013), 240.\n\n³⁰ George Sorel, Reflections on violence, roč. 2004 (Cambridge University Press, b.r.), 29.\n\n³¹ Lincoln, Discourse and the construction of society, 25–37.\n\n³² Anamaria Dutceac Segesten, Myth, identity, and conflict: a comparative analysis of Romanian and Serbian textbooks (Lexington Books, 2011), 79.\n\n³³ Greg Marston, „Metaphor, Morality and Myth: A Critical Discourse Analysis of Public Housing Policy in Queensland“, Critical Social Policy 20, č. 3 (2000): 349–73, https://doi.org/10.1177/026101830002000305, 367.\n\n³⁴ Dvora Yanow, How Does a Policy Mean? Interpreting Policy and Organizational Actions (Georgetown University Press, 1996), 191.\n\n³⁵ Yanow, How Does a Policy Mean?, 193.\n\n³⁶ Mircea Eliade, Mýtus o věčném návratu: archetypy a opakování, Třetí vydání, přel. Eva Strebingerová (OIKOYMENH, 2019), 89.\n\n³⁷ Bible: překlad 21. století, 6. opravené vydání (Biblion z.s., 2019), Kazatel 1:9.\n\n³⁸ Augustine a Marcus Dods, The City of God, Hendrickson Publishers ed (Hendrickson Publishers, 2009), 49.\n\n³⁹ C. G. Jung a C. G. Jung, Answer to Job, Routledge Classics (Routledge, 2007), 7.\n\n⁴⁰ Bible, Lukáš 17:21.\n\n⁴¹ Jung a Jung, Answer to Job, 89.\n\n[?]\n",
+  "merged_from": "sonnet"
+}

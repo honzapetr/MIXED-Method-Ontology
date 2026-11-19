@@ -1,0 +1,24 @@
+{
+  "source": "kniha",
+  "scan": 40,
+  "image": "IMG_20260902_200517.jpg",
+  "image_sha256": "98c59199d7ada3369c264fe62876d1ae7279e4c5951d00346f60b11d4deb917f",
+  "backend": "fabric",
+  "model": "fabric/model",
+  "prompt_version": "fabric-service",
+  "confidence": null,
+  "quality": "full",
+  "warnings": [
+    "page 1: rotated 90 degrees clockwise to read it"
+  ],
+  "seconds": 7.27,
+  "created": "2026-11-11T21:59:31+00:00",
+  "text": "58 Babik, *Statecraft and Salvation*, 29.\n\n59 Babik, *Statecraft and Salvation: International Politics, 1919-1969*, roč.\n\n60 ed. Brian Porter, *The Aberystwyth Papers: Oxford University Press, b.r.*, 34.\n\n61 1972 (*Oxford University Press*, b.r.), 15-16.\n\n62 Babik, *Statecraft and Salvation*, 16.\n\n63 Babik, *Statecraft and Salvation*, 17.\n\n64 Babik, *Statecraft and Salvation: America and World Order in the New Era*, roč.\n\n65 Jón G Ruggie, *Winning the Peace: America and World Order in the New Era*, roč.\n\n66 Jón G Ruggie, *Winning the Peace: America and World Order in the New Era*, roč. 1995 (*Columbia University Press*, b.r.), 2.\n\n67 Hannah Arendt, *The Origins of Totalitarianism*, Penguin Modern Classics roč.\n\n68 Hannah Arendt, *The Origins of Totalitarianism*, Penguin Modern Classics roč. 1936-1946, 43.\n\n69 (Penguin Classics, 2017), 352, 458.\n\n70 Jung et al., *Essays on Contemporary Events 1936-1946*, 95.\n\n71 Jung et al., *Essays on Contemporary Events 1936-1946*, 95.\n\n72 Jung et al., *Essays on Contemporary Events 1936-1946*, 95.\n\n73 Jung et al., *Essays on Contemporary Events 1936-1946*, 95.\n\n74 Mandaville a Williams, *Meaning and International Relations*, roč. 2003, 55.\n\n75 Mandaville a Williams, *Meaning and International Relations*, roč. 2003, 55.\n",
+  "cleaning": {
+    "version": "clean-v1",
+    "from_variant": "fabric",
+    "created": "2026-11-12T23:03:26+00:00",
+    "stuck": [],
+    "removed": []
+  }
+}

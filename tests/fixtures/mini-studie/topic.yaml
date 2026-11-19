@@ -1,0 +1,14 @@
+title: Mini-studie (simulated)
+created: '2026-11-14'
+purpose: Test the environment on a study of its own; the material is invented.
+questions:
+- id: q1
+  text: How does the speech frame the new bridge as a problem or as a solution?
+goals: []
+methods:
+- skad
+environment:
+  path: ../../..
+sources:
+- ohlas
+- projev

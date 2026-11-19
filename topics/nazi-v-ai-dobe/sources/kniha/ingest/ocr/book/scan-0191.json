@@ -1,0 +1,17 @@
+{
+  "source": "kniha",
+  "scan": 191,
+  "image": "IMG_20260902_223315.jpg",
+  "image_sha256": "0d2fc9cb3c9f8454c7dd08872dd292a68f8fb77df68aac7e5a5755d5c0a215c5",
+  "backend": "import",
+  "model": "claude-sonnet-5-5",
+  "prompt_version": "read-v1",
+  "confidence": null,
+  "quality": null,
+  "warnings": [],
+  "seconds": null,
+  "created": "2026-11-13T14:41:45+00:00",
+  "rotation": "0",
+  "text": "NAZÍ V AI DOBĚ\n\nplné smyslu. Víra v ně nám dává pocit smyslu – a právě ten je motorem naší aktivity i schopnosti posouvat věci dopředu.\n\nV současné době však máme k dispozici spíš jen kostry dávných mýtů s vágními přísliby „ráje\" a „pokroku\", které jsou již vyprázdněné. Nemají už tak silný náboj jako kdysi. Nejmocnějšími z tradičních mýtů se zdají být ty národní, zdůrazňující výlučnost a výjimečnost, jak jsme to viděli na příkladu amerického mýtu. V posledních letech dokonce získávají novou sílu tím, že se obohacují o další dimenze, včetně umělé inteligence. Zároveň je ale evidentní, že se stávají překážkou pro globální spolupráci, kterou dnes tolik potřebujeme.\n\nTo, co nyní můžeme zvážit, je tvorba nového mýtu. Takového, který by zahrnoval lidstvo jako jeden celek. Potřebujeme společný hnací motor pro spolupráci a hledání funkčních řešení. Potřebujeme ho jako sůl. Tento nový mýtus by mohl komunikovat společnou vizi. Mohl by nás sjednocovat v globálním „my\" tváří v tvář AI. Mohl by funkčně navázat na dávné mýty, které mají sílu dodnes, ale dodat jim nový, relevantní obsah.\n\nTvorba společného mýtu se nám může zdát jako něco složitého či nemožného. Snad i proto, že jsme to prostě ještě nezkusili. Jak poznamenává Mary Midgley, ve středověku považovaly tehdejší autority představu kulaté Země dlouhou dobu nejen za rouhačskou, ale taky za nesmyslnou, nepochopitelnou.⁵⁷ Jak ale říká John Browne, lidé mají dar snít – a každý pokrok začíná snem. Vizí lepšího světa.⁵⁸\n\nNeměli bychom rezignovat na snahu vytvořit lepší vizi pro náš sdílený svět. Důležité ale je, aby „tanec\" byl opravdu společný. Nový, globální mýtus ani jakékoli jiné úsilí o vytvoření globálního „my\" nesmějí být nikomu vnucovány. Historie je plná pokusů „vylepšovat ty druhé\", které nevedly k ráji, ale k peklu na zemi.\n\n213\n",
+  "merged_from": "sonnet"
+}

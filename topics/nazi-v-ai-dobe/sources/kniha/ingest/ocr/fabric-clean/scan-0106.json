@@ -1,0 +1,24 @@
+{
+  "source": "kniha",
+  "scan": 106,
+  "image": "IMG_20260902_222110.jpg",
+  "image_sha256": "9908692ee27c7ed9657c65e2d63e26a34f301d17721a1a1c0ebc1abfc877efb0",
+  "backend": "fabric",
+  "model": "fabric/model",
+  "prompt_version": "fabric-service",
+  "confidence": null,
+  "quality": "full",
+  "warnings": [
+    "page 1: rotated 270 degrees clockwise to read it"
+  ],
+  "seconds": 13.12,
+  "created": "2026-11-11T22:08:43+00:00",
+  "text": "IDÉ SE PO TISÍCILETÍ SNAŽILI přijít na to, co je dobré a co zlé.\nBiblický příběh o vyhnání z ráje a uvědomění si nahoty\nAdama a Evy se odehrál poté, co pojedli ze Stromu poznání\ndobra a zla - jediného stromu, z něhož jim bylo zakázáno jíst.\nSatan v příběhu pokoušel Evu slovy: „Bůh však ví, že v den, kdy\nz něho pojite, otevřou se vám oči a budete jako Bůh znát dobré\ni zlé.“¹ Schopnost rozeznat dobro a zlo byla tedy vnímána jako\nvýsada vyhrazená pouze bohům. Od té doby jako by lidstvo ni-\nkdy nepřestalo toužit po stejném ovoci. Po tisíce let se snažíme\npoznat hranici mezi dobrem a zlem, a tím se stát bohy. Byli jsme\nv této snaze úspěšní? A pomůže nám v tom AI?\n\nMEZI NEBEM A AI\n\nSlovo „etika“ pochází z řeckého éthos, což znamená „způsob živo-\nta“ nebo „společenské zvyklosti“. Etika je disciplína, která zkou-\nmá svůj původ v latinském mores, tedy „mravy“ nebo „společen-\nurčují, co je považováno za správné a špatné, dobré a zlé – buď\njednotlivcem, nebo společností jako celkem.\n\nOdkud se ale bere to, co považujeme za dobré a správné?\nV židovsko-křesťanské tradici má tato otázka poměrně jasnou\nna hoře Sinaj v podobě Desatera přikázání a v tu chvíli se sta-\nboženství sdílejí tuto představu, tedy že morálka není lidským\nsféry. Ve starověkých civilizacích, jako byl Egypt, byli vládci po-\ncelý národ.\n\nMnohá ná-\nvýtvorem, ale je něčím posvátným, pocházejícím z vyšší, božské\nvažování za vtělené bohy, kteří určovali zákony a hodnoty pro\n",
+  "cleaning": {
+    "version": "clean-v1",
+    "from_variant": "fabric",
+    "created": "2026-11-12T23:03:33+00:00",
+    "stuck": [],
+    "removed": []
+  }
+}

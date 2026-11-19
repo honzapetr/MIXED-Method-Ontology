@@ -5,11 +5,14 @@ description = "Ontology and tooling for qualitative and mixed-methods research: 
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
+    "fabric-ocr>=0.2.0",
+    "pillow>=11.0",
     "pyyaml>=6.0",
 ]
 
 [project.scripts]
-mmo = "mixed_method_ontology.cli:main"
+mmo = "mmo.cli:main"
+mmo-guard = "mmo.guard:main"
 
 [dependency-groups]
 dev = [
@@ -17,14 +20,21 @@ dev = [
     "ruff>=0.8",
 ]
 
+# Clients of the homelab AI Fabric come only from vendor/wheels (ADR 0005), never from PyPI. Pinned by file path,
+# so a study that uses this project as a path dependency resolves it too (ADR 0010).
+[tool.uv.sources]
+fabric-ocr = { path = "vendor/wheels/fabric_ocr-0.2.0-py3-none-any.whl" }
+
 [build-system]
 requires = ["hatchling>=1.25"]
 build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/mixed_method_ontology"]
+packages = ["code/mmo"]
 
 [tool.ruff]
+src = ["code", "tests"]
+extend-exclude = ["topics"]  # research data, no Python; a synced drive may hold locked folders there
 line-length = 120
 target-version = "py312"
 

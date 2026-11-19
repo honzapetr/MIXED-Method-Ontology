@@ -1,0 +1,22 @@
+{
+  "source": "kniha",
+  "scan": 145,
+  "image": "IMG_20260902_222548.jpg",
+  "image_sha256": "c8b9743bf5429d3c05965ee69884f56383661971db4bb9b81410fe4b6083a7ba",
+  "backend": "fabric",
+  "model": "fabric/model",
+  "prompt_version": "fabric-service",
+  "confidence": null,
+  "quality": "full",
+  "warnings": [],
+  "seconds": 12.06,
+  "created": "2026-11-11T22:13:15+00:00",
+  "text": "je výsledkem mocenských vztahů a zároveň – právě proto, že je jejich výsledkem – je i jejich aktivním přenašečem a zprostředkovatelem.\"⁴ To znamená, že nejsme jen pasivními příjemci moci, ale svou existencí a jednáním ji ovlivňujeme. To nám také může pomoci, abychom neupadali do očekávání, že nám identitu a smysl poskytne stát. Jung varuje: „Závislost na státu znamená, že každý spoléhá na všechno ostatní (= stát), místo aby spoléhal sám na sebe. Každý se drží toho dalšího a prožívá falešný pocit bezpečí.“⁵\n\nKaždý z nás může být vypravěčem svého osobního mýtu, který nám buduje identitu a poskytuje smysl. Jak uvádí izraelský historik Juval Noach Harari, v každém z nás je „vypravěč, který vysvětluje, kdo jsem, odkud pocházím, kam směřuji a co se právě děje“. A pokračuje, že stejně jako vláda buduje národní mýtus pomocí vlajek, ikon a průvodů, náš „vnitřní propagandistický stroj buduje osobní mýtus s ceněnými vzpomínkami a cennými traumaty, která mají často jen malou podobnost s pravdou“.⁶ Jeden z mých oblíbených filmů, Velká ryba od Tima Burtona, je krásným vylíčením člověka, který zažíval celý svůj život jako jeden velký dramatický příběh, mýtus, který mu poskytoval smysl. Ve filmu slyšíme vypravěče, jak říká: „Člověk vypráví své příběhy tolikrát, až se těmi příběhy sám stane.“\n\nMožnost vytvořit si své vlastní příběhy a mýty a třeba je i začlenit do některého filozofického či náboženského myšlenkového směru nám může dávat smysl, i když bychom vnitřně tušili, že jsou do značné míry jen naším výtvorem, iluzí. A to proto, že každý příběh, který si vyprávíme nebo kterému věříme, je už z podstaty věci nepravdivý, protože vesmír nefunguje jako příběh.⁷ Pravda je vždy relativní; jakýkoli lidský konceptuální systém je svou povahou spíše metaforický, a proto neexistuje žádná objektivní a absolutní pravda.⁸ Příběhy, které nám poskytují\n",
+  "cleaning": {
+    "version": "clean-v1",
+    "from_variant": "fabric",
+    "created": "2026-11-12T23:03:38+00:00",
+    "stuck": [],
+    "removed": []
+  }
+}

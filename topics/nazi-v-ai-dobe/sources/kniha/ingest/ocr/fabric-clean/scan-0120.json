@@ -1,0 +1,22 @@
+{
+  "source": "kniha",
+  "scan": 120,
+  "image": "IMG_20260902_222214.jpg",
+  "image_sha256": "337d83a28aceeb09a5347f5fdbd300422609e6ecad948a2a31997c1c745b138b",
+  "backend": "fabric",
+  "model": "fabric/model",
+  "prompt_version": "fabric-service",
+  "confidence": null,
+  "quality": "full",
+  "warnings": [],
+  "seconds": 9.73,
+  "created": "2026-11-11T22:10:23+00:00",
+  "text": "## CO KDYBY TO DĚLALI VŠICHNI?\n\nZatímco utilitarismus zvažoval na vahách štěstí a bolest, Immanuel Kant kladl důraz na lidskou důstojnost, svobodu a odpo-vědnost. Člověk podle něj není bytost, kterou lze „zvážit“ podle užitečnosti, ale autonomní jedinec, schopný svobodně se rozho-dovat na základě rozumu a svědomí. Právě tato schopnost z nás činí morální bytosti. Morálka je podle Kanta univerzální a od-vozená z rozumu, tudíž platí vždy, všude a pro každého. Co ne-obstojí jako obecně platné pravidlo, nemůže být považováno za morální.\n\nKant na rozdíl od Johna Stuarta Milla věřil, že správné mo-tivace činů jsou důležité; pokud někdo dává peníze chudým jen proto, aby se cítil spravedlivý, je to podle Kanta neetické. Etický je jinými slovy pouze čin, který má za sebou správné motivace. Podle Milla by takový čin byl eticky v pořádku, neboť konečným výsledkem by bylo zvýšení štěstí, i kdyby motivace byla špatná. Kant s tímto nesouhlasil. Kdyby třeba v byznysu vynakládala fir-ma své finance na charitativní a sociální záležitosti pouze z dů-vodů vylepšení svého PR a marketingu, bylo by to podle Kanta neetické.\n\nKant také věřil, že bychom se měli chovat eticky, protože chovat se morálně je naše povinnost. Byl silně věřící křesťan a zástával názor, že máme povinnost chovat se morálně za všech okolností, bez ohledu na výsledek nebo přínos. Kant byl také přesvědčený, že naši morálku by měl řídit rozum, a nikoli užitek, emoce nebo city.¹⁸ Člověk, který se nechová morálně správně, nevyužívá rozum daný mu Bohem k užívání.\n\nKant vyvinul vodítko, které nám má pomoci rozlišit, jak bychom se měli chovat. Pod názvem kategorický imperativ ho představil v díle Základy metafyziky mravů. Je kategorický, protože nepřipouští výjimky; je imperativní, protože ho musí dodržovat\n",
+  "cleaning": {
+    "version": "clean-v1",
+    "from_variant": "fabric",
+    "created": "2026-11-12T23:03:34+00:00",
+    "stuck": [],
+    "removed": []
+  }
+}

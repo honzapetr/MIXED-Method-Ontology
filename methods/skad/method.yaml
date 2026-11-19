@@ -1,0 +1,113 @@
+# Method module - DRAFT. Read by agents to plan and run an analysis; validated by tests/test_methods.py.
+# The full description is in the Markdown files of this folder; this file is the part agents and tests read.
+id: skad
+name: Sociology of Knowledge Approach to Discourse (SKAD)
+status: draft
+references:
+  - Keller (2005) Wissenssoziologische Diskursanalyse; Keller (2011) Human Studies 34(1); Keller, Hornidge &
+    Schünemann (eds., 2018) - see sources.md; details to be checked against these texts.
+summary: >-
+  Reconstructs how discourses produce and order knowledge about a phenomenon - who speaks and from which position,
+  with which interpretive schemes, classifications, phenomenon structure and story line, and with what effects -
+  by hermeneutic, non-deductive analysis of a corpus, using grounded-theory coding and comparison.
+research_design:
+  # short form; the full text is research-design.md
+  purpose: reconstruct how a discourse constitutes a phenomenon and orders knowledge about it, and with what effects
+  questions: >-
+    About the discourse, not about the "real" phenomenon: what is constituted as the problem, who speaks from
+    which position, which interpretive schemes, classifications, phenomenon structure and story line are used,
+    how the discourse relates to competing discourses, what it does (subject positions, practices, dispositif).
+    Refined while building the corpus and coding.
+  prior_theory: >-
+    A heuristic frame - social construction of reality (Berger & Luckmann), Foucault's questions about discourse
+    and power/knowledge, the SKAD concepts themselves; used as sensitising concepts, not as hypotheses.
+  reasoning: hermeneutic, interpretive, non-deductive; abductive moments; GT coding and constant comparison
+  theory_output: >-
+    A reconstruction of the discourse(s) - their content structure, speaker positions, relations and effects - as
+    a middle-range account, stated as propositions grounded in corpus segments.
+code_types:
+  - open                  # GT-style first coding of a passage
+  - interpretive_scheme   # Deutungsmuster: a typified figure of meaning that links elements into a sense
+  - classification        # how the discourse sorts and names phenomena, actors, practices
+  - phenomenon_dimension  # a dimension of the phenomenon structure (causes, responsibility, solutions, values, self and others)
+  - narrative_element     # an element of the story line (plot) that ties the other elements together
+  - speaker_position      # the position from which someone may speak legitimately in the discourse
+  - subject_position      # the identity the discourse offers or assigns to its addressees
+  - practice              # discursive or non-discursive practice, part of the dispositif
+relation_types:
+  - id: instance_of
+    description: A coded passage or open code is an instance of an interpretive scheme or classification.
+  - id: dimension_of
+    description: A phenomenon dimension belongs to the phenomenon structure of a discourse.
+  - id: story_link
+    description: A narrative element leads to or explains another in the story line.
+  - id: speaks_from
+    description: A speaker (author, actor) speaks from a speaker position.
+  - id: positions
+    description: The discourse offers or assigns a subject position to an addressee.
+  - id: competes_with
+    description: Two interpretive schemes or discourses compete for the definition of the phenomenon.
+  - id: supports
+    description: An element supports or legitimises another (scheme, classification, position).
+phases:
+  - id: framing
+    goal: State the purpose, the first research questions and the researcher's position; choose sensitising concepts.
+    input: topic purpose and the researcher
+    output: [questions, memos]
+    memos: [reflexive, methodological]
+    model_role: help formulate discourse-related questions and list sensitising concepts with their sources
+    human_gate: decide the purpose, the questions and the frame
+  - id: corpus
+    goal: Define the discourse field and arenas and build the corpus by theoretical sampling (minimal and maximal contrast).
+    input: candidate sources
+    output: [corpus, memos]
+    memos: [context, methodological]
+    model_role: propose candidate sources and contrasts, describe each candidate with its citation
+    human_gate: choose which sources enter the corpus and why
+  - id: context-analysis
+    goal: Describe the situational, institutional and socio-historical context and the formal structure of each document (genre, medium, author, speaker).
+    input: corpus sources and context sources
+    output: [memos]
+    memos: [context, first-impression]
+    model_role: summarise context with references to context sources; mark impressions as impressions
+    human_gate: confirm or correct the context memos
+  - id: fine-analysis
+    goal: Interpret selected passages sequentially and code them openly.
+    input: segments chosen by the researcher
+    output: [codes, memos]
+    memos: [analytic]
+    model_role: propose readings and open codes per passage with exact quotes; offer alternative readings
+    human_gate: choose the passages; confirm, edit or reject readings and codes
+  - id: content-structure
+    goal: Reconstruct interpretive schemes, classifications, phenomenon structure and story line across the corpus.
+    input: confirmed codes and segments
+    output: [codes, relations, memos]
+    allowed_relations: [instance_of, dimension_of, story_link, competes_with, supports]
+    memos: [analytic, theoretical]
+    model_role: propose schemes, classifications and dimensions with evidence and counter-evidence segments
+    human_gate: confirm, merge, split or reject; decide which schemes to follow
+  - id: speakers-and-effects
+    goal: Reconstruct speaker positions, subject positions, practices and the dispositif.
+    input: confirmed content structure and context memos
+    output: [codes, relations, memos]
+    allowed_relations: [speaks_from, positions, supports, competes_with]
+    memos: [analytic, theoretical]
+    model_role: propose positions and practices with evidence; point out missing voices
+    human_gate: confirm the positions and practices
+  - id: synthesis
+    goal: Reconstruct the discourse(s), their relations and effects; state propositions that answer the questions.
+    input: confirmed structure, positions and memos
+    output: [propositions, report, memos]
+    memos: [theoretical, reflexive]
+    model_role: draft propositions with evidence and counter-evidence and a report with quotes of confirmed segments
+    human_gate: approve the propositions and the report
+practices:
+  - hermeneutic reflexivity - the interpretation and the researcher's position are written down
+  - theoretical sampling of the corpus - minimal and maximal contrast
+  - constant comparison between passages, documents and discourses
+  - memoing in every phase
+  - context belongs to the analysis - context sources are part of the corpus or its frame
+conclusions: >-
+  A reconstruction of one or more discourses: their content structure (interpretive schemes, classifications,
+  phenomenon structure, story line), speaker and subject positions, practices and effects, stated as propositions
+  grounded in confirmed segments of the corpus and qualified by the context.

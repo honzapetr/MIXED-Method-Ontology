@@ -1,0 +1,24 @@
+{
+  "source": "kniha",
+  "scan": 126,
+  "image": "IMG_20260902_222250.jpg",
+  "image_sha256": "e6d9c50d7ad198c3501cf192b7db093a76b8eeca3e35e2e4b6d122fcff0cc340",
+  "backend": "fabric",
+  "model": "fabric/model",
+  "prompt_version": "fabric-service",
+  "confidence": null,
+  "quality": "full",
+  "warnings": [
+    "page 1: rotated 270 degrees clockwise to read it"
+  ],
+  "seconds": 12.88,
+  "created": "2026-11-11T22:11:25+00:00",
+  "text": "STÁLE NEJSME BOHY\n\ntendenci přebírat předpojatou AI a brát ji za bernou minci.²⁸\n\nStudie zjistila, že systémy pro rozhodování podporované AI mohou předpojatost a předsudky podporovat.²⁹\n\nSocioložka Ruha Benjamin popisuje znepokojivý jev, který na- zývá „nekontrolovatelnou zpětnou smyčkou“ (Runaway feedback loop). Tvrdí, že se naše vlastní, již existující předsudky promítají do umělé inteligence a ta je pak šíří do světa, čímž je ještě více do upevňuje.³⁰ Příkladem mohou být instagramové „beauty filtry“, které jsou nastaveny podle eurocentrických ideálů krásy: zesvět- lují plet, zvětšují oči a zužují nos. Tyto předsudky se v AI proje- vují diskriminací na základě rasy, věku, pohlaví, společenského statusu nebo náboženství.³¹ Ředitel Leverhulme centra pro bu- dounost inteligence při Cambridgeské univerzitě Stephen Cave s nizozemskou vědkyní Kantou Dihal publikovali studii, ve které poukazují na to, že inteligentní stroje jsou zobrazovány jako bílé, protože takto mainstream vnímá inteligenci a související žádoucí vlastnosti.³² Tato rasová preference bílé pleti je tím zesi- lována „nekontrolovatelnou zpětnou smyčkou“.\n\nVelkým tématem je také projekce hodnotových soudů těch, kteří vyvíjejí systémy AI. Tým výzkumníků z Technické univerzity v Mnichově a Univerzity v Hamburku zveřejnil článek, ve kterém uvádí, že konverzační AI systémy dodávají své vlastní hodnotové soudy a že nacházejí důkazy pro „konzistentní pro- environmentální, levicovou pozici chatbotu ChatGPT“.³³ Systémy AI mají zkrátka tendenci projevovat politicky zaujaté názory.³⁴ Výzkumník Brookings institutu porovnal Google Bard/Gemini s ChatGPT a nalezl značné názorové neshody těchto systémů u témat jako ruská invaze na Ukrajinu, zákaz TikToku či názorech na prezidenty Joea Bidena a Donalda Trumpa.³⁵\n\nDalší výzkumníci potvrdili, že existuje jasná levicově ori- entovaná zaujatost pro mnoho odpovědí chatbotu ChatGPT.³⁶\n",
+  "cleaning": {
+    "version": "clean-v1",
+    "from_variant": "fabric",
+    "created": "2026-11-12T23:03:36+00:00",
+    "stuck": [],
+    "removed": []
+  }
+}

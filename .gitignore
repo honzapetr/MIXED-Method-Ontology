@@ -11,7 +11,7 @@ __pycache__/
 .mypy_cache/
 dist/
 
-# Source scans and other large source files stay out of git (size, copyright); source.yaml keeps their hashes.
+# Source scans and other large source files stay out of git (size, copyright); ingest/files.yaml keeps their hashes.
 topics/*/sources/**/*.jpg
 topics/*/sources/**/*.jpeg
 topics/*/sources/**/*.png
@@ -22,3 +22,6 @@ topics/*/sources/**/*.pdf
 topics/*/sources/**/*.epub
 # Rebuildable indexes
 topics/*/graph/.store/
+
+# One-off scripts and temporary files of agents and the owner (AGENTS.md, Rules)
+scratch/

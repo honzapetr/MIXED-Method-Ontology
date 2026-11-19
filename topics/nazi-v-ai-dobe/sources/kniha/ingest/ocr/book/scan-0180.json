@@ -1,0 +1,17 @@
+{
+  "source": "kniha",
+  "scan": 180,
+  "image": "IMG_20260902_223206.jpg",
+  "image_sha256": "db768b23d9028e5e73bcb27d4a95cf8490e1032d17ec3bc264514c3df11fd841",
+  "backend": "import",
+  "model": "claude-sonnet-5-5",
+  "prompt_version": "read-v1",
+  "confidence": null,
+  "quality": null,
+  "warnings": [],
+  "seconds": null,
+  "created": "2026-11-13T14:41:43+00:00",
+  "rotation": "0",
+  "text": "SPOLEČNÝ TANEC\n\no jeho oslabení a rozšíření sféry vlivu, nebo opakované porušování mezinárodního práva, principu suverenity a uzavřených dohod ze strany mocnějších států, kdykoliv se jim to hodí. Zdá se, že touha po moci a sledování vlastního zájmu jsou realitou. A jak píše Niccolò Machiavelli: „Hodnější je dívat se na věci tak, jak se mají ve skutečnosti, než jak se zvnějšku jeví. Je totiž veliký rozdíl mezi tím, jaký život je a jaký by měl být.\"¹⁶\n\nPokud ale budeme na oblast mezinárodních vztahů pohlížet pouze prizmatem realismu, globální spolupráce pro řešení výzev spojených s AI revolucí bude velice obtížné dosáhnout. Potřebujeme ochotu spolupracovat a naději, že dohody budou dodržovány. Potřebujeme se spojit a nehledět pouze na úzce vymezený, bezprostřední národní zájem. A zdůraznit potřebu přítomnosti etiky také v oblasti chování států a mezinárodních vztahů. Teze, že morálka je pouze produktem moci, nevystihuje etiku v plné šíři, protože mnohé etické principy s mocí vůbec nesouvisejí.¹⁷ Politika může být interpretována jako boj o moc, ale nelze ji na boj o moc zcela redukovat. Ani samotný realismus – byť považuje moc za něco univerzálního – netvrdí, že význam moci se nemění v čase a místě.¹⁸ Takže pokud budeme souhlasit s definicí moci jako „zajištěním kýžených výsledků\",¹⁹ bylo by vhodné pohlížet na ni i jinak než pouze jako na „zisk pro sebe\". V propojeném světě, v době AI, jsme totiž všichni blízcí sousedé.\n\nJe důležité zdůraznit, že ani realismus nevzývá představu, že člověk je člověku nutně vlkem. Jak uvedl samotný „otec realismu\" Hans Morgenthau, existuje „mylná představa... že mezinárodní politika je natolik zlá, že nemá smysl hledat morální omezení mocenských ambicí na mezinárodní scéně\".²⁰ Avšak ani samotný realismus nevylučuje etické ohledy – pouze jeho „nihilistická verze\" je přesvědčena, že jednání států by mělo být\n\n202\n",
+  "merged_from": "sonnet"
+}

@@ -1,0 +1,16 @@
+{
+  "source": "kniha",
+  "scan": 160,
+  "image": "IMG_20260902_223014.jpg",
+  "image_sha256": "ea67bc3d299bb16e35c164ec28da7b0fe55a6bce02f9862bd5424e46e979c290",
+  "backend": "import",
+  "model": "claude-sonnet-5-5",
+  "prompt_version": "read-v1",
+  "confidence": null,
+  "quality": null,
+  "warnings": [],
+  "seconds": null,
+  "created": "2026-11-13T14:41:40+00:00",
+  "rotation": "0",
+  "text": "NAZÍ V AI DOBĚ\n\nna tváři, procházek přírodou, obejmutí člena rodiny nebo pohlazení domácího mazlíčka raději vytáhneme mobil a zcela se zavřeme před okolní realitou. Ze statistik vyplývá, že denně trávíme v průměru téměř sedm hodin na obrazovkách, generace Z v průměru až 9 hodin.⁵⁶ Na sociálních sítích jsme denně v průměru téměř dvě a půl hodiny, náctiletí až tři hodiny.⁵⁷ Přílišné ponoření se do digitálního světa přitom zvyšuje riziko vzniku stavů úzkosti a deprese o 30 %.⁵⁸\n\nNáš útěk do oblaků AI bude mít následky. Profesor Pearson, zakladatel Future Minds Lab, varuje před tím, abychom na AI pohlíželi pouze jako na další digitální „nástroj“: „Nelze to srovnávat s nástroji. Průmyslová revoluce, knihtisk, televize, počítače... Tohle je radikálně odlišné způsobem, kterému ještě plně nerozumíme.“⁵⁹ Se stálým vylepšováním AI můžeme očekávat, že v digitálním světě budeme trávit ještě více času, což přinese ještě větší výzvy pro naše duševní zdraví.\n\nV předchozí sekci jsme pozorovali některé negativní důsledky interakce s AI. Další studie naznačují, že naše užívání AI může snížit naši schopnost kritického myšlení a vytváření vlastního úsudku.⁶⁰ Podle studie MIT Media Lab užívání AI nástrojů nejspíše snižuje aktivitu našeho mozku.⁶¹ Další studie naznačuje, že naše interakce s AI může vést k větší lenosti.⁶² V důsledku častějšího používání AI můžeme trávit méně času aktivitami, které podle studií stimulují naše kognitivní schopnosti, jako je učení se nových jazyků nebo hraní na hudební nástroje.⁶³ Může to vést také k nižšímu využívání naší vlastní, lidské inteligence.\n\nKvěty stromů, sněhové vločky, narozené dítě, vřelá konverzace nad pivem s kamarádem, pohlazení po tváři, potřesení ruky, poslední výdech příbuzného. Chceme opravdu před tím vším utíkat do AI oblaků? To všechno je přece také krásné, je to život sám, hodný naší pozornosti. Náš útěk mimo existenciálně\n\n181\n"
+}

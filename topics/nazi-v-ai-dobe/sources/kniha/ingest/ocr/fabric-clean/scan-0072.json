@@ -1,0 +1,22 @@
+{
+  "source": "kniha",
+  "scan": 72,
+  "image": "IMG_20260902_200741.jpg",
+  "image_sha256": "5f16a7aade8e14c5cb7c3ff652f2551ec1c27043c24be77761a4da0a85d35f5f",
+  "backend": "fabric",
+  "model": "fabric/model",
+  "prompt_version": "fabric-service",
+  "confidence": null,
+  "quality": "full",
+  "warnings": [],
+  "seconds": 10.05,
+  "created": "2026-11-11T22:04:34+00:00",
+  "text": "zmíněný antický historik a generál Thúkydidés vědél, že jeho\nverze dějin bude možná méně „romantická“ než staré příběhy\nbohů a hrdinů. „Nedostatek romantiky v mém díle možná tro-\nchu ubere na jeho zajímavosti,“ připouští. Nelitoval toho ale, je-\nlikož jeho ambice byla vyšší – „vytvořit dějiny jako vlastnictví\npro všechny časy, ne jako ozdobu pomíjivé chvíle“.\n\nA tak se zrodil nový pohled na svět, který preferoval důkazy\nspíše než emoce a fakta spíše než vymyšlené příběhy. Filozofie,\nhistorie a další obory začaly vyrůstat jako vědecké disciplíny\nz pečlivého pozorování přírody a člověka. Mýty předků byly po-\nstupně stále více vnímány nikoliv jako projev jejich moudrosti,\nale spíše racionální nevyspělosti.\n\nZatímco Platón zahrnoval do svého náhledu na realitu ješ-\ntě svět idejí, ze kterého pramení naše realita, Aristoteles se ve\nsvých úvahách držel čistě „při zemi“. Mytické uvažování neměl\nani náznakem. Pro něj bylo reálné a hodno zájmu pouze to, co se\ndá racionálně analyzovat a kategorizovat. Svým ohromným úsi-\nlím položil základy mnoha vědeckých oborů, jak je známe dnes.\nV oborech jako biologie, fyzika, logika, etika, politika, poetika či\nmetafyzika vytvořil rámec, který měl realitu popsat a uspořádat\ndo systému. Jeho metoda pozorování, analýzy a dedukce se stala\nvzorem pro generace myslitelů a vědců.\n\nAristotelův důraz na užití racionality, kategorizace a syste-\nmatizace pro poznání a zmocnění se reality se stal základním\nvýchodiskem dějin západního myšlení. Byl oblíben v období re-\nnesance, kdy se člověk začal znovu dívat na svět sebevědoměji\njako na místo, které může přetvořit k obrazu svému. Renesanční\nmyslitel Giordano Bruno razil tezi, že všechny děje a jevy na\nsvětě jsou projevem jednoho skrytého Božství a že jsou všech-\nny propojeny jedním kosmickým řádem, který je možný lidmi\nnahlédnout. Bruno patřil mezi renesanční myslitele ovlivněné\n",
+  "cleaning": {
+    "version": "clean-v1",
+    "from_variant": "fabric",
+    "created": "2026-11-12T23:03:28+00:00",
+    "stuck": [],
+    "removed": []
+  }
+}

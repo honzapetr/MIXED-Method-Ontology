@@ -1,0 +1,17 @@
+{
+  "source": "kniha",
+  "scan": 140,
+  "image": "IMG_20260902_222350.jpg",
+  "image_sha256": "cff47df900c0024f2ccde96194758617f8fd440225c4a12e3e556a2a5e90f6a1",
+  "backend": "import",
+  "model": "claude-sonnet-5-5",
+  "prompt_version": "read-v1",
+  "confidence": null,
+  "quality": null,
+  "warnings": [],
+  "seconds": null,
+  "created": "2026-11-13T14:41:37+00:00",
+  "rotation": "0",
+  "text": "KAPITOLA VI.\n\n## LIDSKÉ, PŘÍLIŠ KRÁSNĚ LIDSKÉ\n\n„Všichni jsme roboti, když jsme nekriticky vtaženi do našich technologií.\"\n\nMarshall McLuhan\n\n„Ty jsi můj stvořitel, ale já jsem tvůj pán.\"\n\nMary Shelley, Frankenstein\n\n161\n",
+  "merged_from": "sonnet"
+}

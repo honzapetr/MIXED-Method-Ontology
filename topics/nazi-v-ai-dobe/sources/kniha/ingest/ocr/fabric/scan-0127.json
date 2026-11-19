@@ -1,0 +1,17 @@
+{
+  "source": "kniha",
+  "scan": 127,
+  "image": "IMG_20260902_222253.jpg",
+  "image_sha256": "992a6ff4139ffd517c9741001928a5197bdd886f2b822971173a68956d4d50ab",
+  "backend": "fabric",
+  "model": "fabric/model",
+  "prompt_version": "fabric-service",
+  "confidence": null,
+  "quality": "full",
+  "warnings": [
+    "page 1: rotated 90 degrees clockwise to read it"
+  ],
+  "seconds": 15.28,
+  "created": "2026-11-11T22:11:30+00:00",
+  "text": "V podcastu Lexe Fridmana prohlásil CEO OpenAI Sam Altman, že se nejvíce obává předpojatosti hodnotitelů lidské zpětné vazby, což je proces, který využívá zpětné vazby od lidských testerů, aby pomohl sladit reakce AI s lidskými hodnotami. Když byl v podcastu dotázán, jestli lze říci, že zaměstnanci jeho společnosti ovlivňují předpojatost ChatGPT, odpověděl „stoprocentně“, příjemězdůraznil důležitost vyhýbání se bublinám „skupinového myšlení“ v San Francisku (kde OpenAI sídlí) a v oblasti AI.³⁷\n\nGrok, AI chatbot od společnosti xAI Elona Muska, odpověděl uživateli na síti X, že od roku 2016 pochází více politického nášení z pravice než z levice. Muskovi se to nelíbilo a napsal: „Velké stará média,“ napsal Musk, přestože Grok citoval data z vládních zdrojů, jako je ministerstvo vnitřní bezpečnosti. Musk slíbil, že během tří dnů vydá velkou aktualizaci chatbotu Grok, která „přepíše celý korpus lidského poznání“, a vyzval uživatele sítě X, aby posílali „kontroverzní fakta“, která jsou „politicky nekorektní, přesto fakticky pravdivá“, aby pomohli trénovat model.³⁸\n\nLze se tedy obávat, že i samotní představitelé AI systémů se je snaží upravovat tak, aby zrcadlily jejich vlastní světonázory a morální soudy. Názor jediného člověka, který může být navíc značně předpojatý, tak může ovlivňovat morální vnímání lidí po celém světě. A co je ještě děsivější, toto ovlivňování by probíhalo těžko pozorovatelnou úpravou algoritmů, jejichž pravdivost drtivá většina lidí nebude ani zpochybňovat a bude jí zcela věřit. Možnost ovlivňovat názory miliard lidí prostřednictvím hodnotových soudů, které odrážejí postoje úzké skupiny vývojářů, či dokonce jediného člověka, bez kontroly jakékoli vyšší instance, je tedy naprosto reálná.\n\nMantra Silicon Valley „Pohybujte se rychle a rozbíjejte věci“, proslavená Markem Zuckerbergem, může být sice prospěšná pro"
+}

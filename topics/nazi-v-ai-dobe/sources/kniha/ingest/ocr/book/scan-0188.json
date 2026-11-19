@@ -1,0 +1,17 @@
+{
+  "source": "kniha",
+  "scan": 188,
+  "image": "IMG_20260902_223258.jpg",
+  "image_sha256": "bf75e51fefdab61ad7856280f90359720194d70750b41d86d30cd92ed1c8280e",
+  "backend": "import",
+  "model": "claude-sonnet-5-5",
+  "prompt_version": "read-v1",
+  "confidence": null,
+  "quality": null,
+  "warnings": [],
+  "seconds": null,
+  "created": "2026-11-13T14:41:44+00:00",
+  "rotation": "0",
+  "text": "SPOLEČNÝ TANEC\n\nstejnou míru morální povinnosti, jakou cítíme vůči členům své rodiny. Společným prvkem jejich úvah však bylo odmítnutí nechat se v morálních ohledech omezovat hranicemi států.⁴⁸ I malé posunutí vnějších kruhů naší identity směrem dovnitř může výrazně zvýšit naději, že jako lidstvo AI revoluci a další výzvy zvládneme.\n\nRozdílné hodnotové systémy lidí v různých státech a kulturách nejsou u základních morálních otázek překážkou. Výzkumy z nejrůznějších kultur ukázaly, že všichni sdílíme úctu k životu a vysokou hodnotu mají svoboda, spravedlnost, tolerance a odpovědnost.⁴⁹ To, že v rámci etiky nevyznáváme všichni pouze jeden přístup, nám nemůže být zábranou – vždyť toto nemáme ani v rámci národních států. Dokonce si troufám tvrdit, že všichni plus minus víme, co je dobré a co špatné. Shodneme se na tom, že rozvíjení ctností je důležité; že utrpení bychom měli minimalizovat a štěstí naopak maximalizovat a chovat se tak, jak bychom chtěli, aby se druzí chovali k nám. Lea Brilmayer trefně píše: „Nedostatek konsenzu v mezinárodní etice je často založen na konfliktech a neshodách ohledně faktů a zájmů, nikoli na morálních hodnotách.“⁵⁰\n\nStát v dnešní době zůstává silným prvkem naší identity. Jak poznamenává John Mearsheimer, moderní státní systém je první formou světové politické organizace, která zahrnuje lidstvo jako celek.⁵¹ Není ale důvod, abychom státní hranice vnímali jako něco, co má zásadní morální význam. Poslední tři století sice představovala teritoriální epochu lidských dějin,⁵² ale v dnešní době již teritorium nehraje pro naši identitu tak zásadní roli. Jsme čím dál víc obklopeni globálními symboly a celosvětový význam fenoménů, jako je AI, roste.⁵³\n\nNejvětší překážkou pro citlivější vnímání vnějších, až globálních kruhů naší identity není samotná existence národních\n\n210\n",
+  "merged_from": "sonnet"
+}

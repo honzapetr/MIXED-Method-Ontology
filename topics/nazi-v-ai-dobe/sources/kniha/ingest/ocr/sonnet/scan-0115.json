@@ -1,0 +1,16 @@
+{
+  "source": "kniha",
+  "scan": 115,
+  "image": "IMG_20260902_222150.jpg",
+  "image_sha256": "efea6c2a5fde8c638dae08878ce2ee02a48a4c27c2a251c31491e560650b797b",
+  "backend": "import",
+  "model": "claude-sonnet-5-5",
+  "prompt_version": "read-v1",
+  "confidence": null,
+  "quality": null,
+  "warnings": [],
+  "seconds": null,
+  "created": "2026-11-13T14:41:32+00:00",
+  "rotation": "90ccw",
+  "text": "NAZÍ V AI DOBĚ\n\nz toho plyne základní utilitaristická logika, kdy morální je to, co přináší co největší štěstí co největšímu počtu lidí a zároveň způsobuje co nejméně bolesti.\n\nMill se bránil tvrzení, že utilitarismus je bezbožná doktrína [?] (je pravda, že není založen na náboženských přesvědčeních, ale vychází z čistého rozumu), když prohlásil, že pokud považujeme Boha za dobrého, pak Bůh musí být také utilitaristou. Neboť jak by jinak dobrý a milující Bůh mohl chtít, aby jeho stvoření trpělo? Pokud je Bůh dobrý, pak musí toužit po největším štěstí a co nejmenším utrpení pro všechny, argumentuje. Mill také nachází „úplného ducha etiky užitku\" v Ježíšově učení. Poukazuje na Ježíšova slova „čiňte jiným, co byste chtěli, aby činili vám\" a „miluj bližního svého jako sebe sama\". Mill uvádí, že tato slova „představují ideální dokonalost utilitaristické morálky\".¹⁴\n\nUtilitarismus je univerzální teorie. Říká nám, co je správné a co špatné, v pojmech srozumitelných napříč různými kulturami, a také nám radí, jak se zachovat tváří v tvář etickým dilematům. Je nestranný, což znamená, že „princip největšího štěstí\" nedává přednost žádným konkrétním jednotlivcům ani třeba našim příbuzným. V každé situaci musí být zvolena možnost, která vytvoří více štěstí pro všechny, bez ohledu na to, zda s nimi máme nějaké zvláštní spojení, nebo nikoliv. Je to zároveň praktická teorie, kterou může kdokoli aplikovat v jakékoli životní situaci – v práci, ve škole, v domácnosti či v armádě. Mnozí velcí vůdci se při obtížných rozhodnutích řídili principy utilitarismu.\n\nAmerický prezident Harry Truman stál před volbou, jestli svrhnout atomové bomby na Hirošimu a Nagasaki, nebo riskovat miliony mrtvých při klasické invazi do Japonska. Japonci byli známí svou urputností a výsledkem jejich odporu by podle všeho bylo hodně krve. Truman zvolil jadernou variantu, která si\n\n135\n"
+}

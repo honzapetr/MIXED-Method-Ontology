@@ -1,0 +1,24 @@
+{
+  "source": "kniha",
+  "scan": 98,
+  "image": "IMG_20260902_222029.jpg",
+  "image_sha256": "43d4874a7e67b172d69091380d3a8ea4ad9ffa39d863274afcc5099e3b028d49",
+  "backend": "fabric",
+  "model": "fabric/model",
+  "prompt_version": "fabric-service",
+  "confidence": null,
+  "quality": "full",
+  "warnings": [
+    "page 1: rotated 270 degrees clockwise to read it"
+  ],
+  "seconds": 12.34,
+  "created": "2026-11-11T22:07:40+00:00",
+  "text": "Nebyl to proces snadný, ale byl pozvolný a dlouhou dobu sí\n„sedal“.\n\nRozmach AI je však prudký. V roce 1955, když americký akade-\nmik John McCarthy pracoval na Dartmouth College v New Hamp-\nshire, požádal Rockefellerův institut o financování letní školy\npřipravované na rok 1956. V rámci žádosti o finanční prostředky\npoužil název „umělá inteligence“, který tak poprvé definoval toto\npole.¹⁹ Ve stejném roce umělou inteligenci popsal jako „stroje,\nkteré mohou dělat věci, jež obvykle dělá lidská inteligence“.²⁰ Až\ndo 90. let se odborníci pracující na vývoji AI snažili vyvinout pra-\nvidly řízené programy pro překlad jazyků. Tento úkol se jevil jako\nnelehký, dokud se v roce 2015 nezačaly v této oblasti používat tzv.\nhluboké neuronové sítě – tehdy se strojový překlad výrazně zlep-\nšil.²¹ Vývoj AI zrychlil ještě více, když OpenAI 30. listopadu 2022\nurychlení vývoje a spuštění svých vlastních AI modelů.²²\n\nZMĚNY NA PRACOVNÍM TRHU\n\nSkupina vědců při Oxfordské univerzitě v roce 2013 odstartovala vášnivou debatu ohledně dopadů AI na pracovní trh publikací článku, ve kterém predikovala, že až 47 procent pracovních pozic v USA by mohlo být automatizováno během následujících dvou dekád.²³ Futurista Ray Kurzweil předvídá automatizaci 40 až 50 procent všech pracovních pozic v USA.²⁴ Studie poradenské firmy McKinsey tvrdí, že až 50 procent veškerých pracovních pozic na světě je již v tuto chvíli teoreticky nahraditelných, ale je více optimistická, co se týče jejich reálného nahrazení – i kdyby došlo k rychlé adopci automatizačních technik, 30 procent pracovních činností by mohlo být automatizováno do roku 2030, ale jen 14 procent zaměstnanců by muselo změnit povolání.²⁵\n",
+  "cleaning": {
+    "version": "clean-v1",
+    "from_variant": "fabric",
+    "created": "2026-11-12T23:03:32+00:00",
+    "stuck": [],
+    "removed": []
+  }
+}

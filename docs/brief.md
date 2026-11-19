@@ -29,17 +29,18 @@ The goal is the infrastructure, not the analysis of one particular book.
 ## Scope (first phase)
 
 - Repository set up for agentic development (Claude Code, Antigravity CLI, Project Lab).
-- Folder structure for topics, sources, intermediate results and the ontology.
-- Ingest of scanned book pages: OCR with interchangeable backends (local Tesseract, vision models behind the
-  OpenAI-compatible gateway) so that variants can be tested and compared.
-- Splitting OCR text into segments with exact positions.
+- Folder structure for topics, sources and the ontology.
 - Draft of the core ontology (LinkML) and of the first method definitions (grounded theory, thematic analysis).
+- The environment for qualitative analysis with AI (current focus; how it works is defined with the owner).
+
+**Tools:** source preparation turns new material into citable text for the analysis (OCR of page photos, reading
+order, segments with exact positions; `docs/environment/source-preparation.md`).
 
 ## Out of scope (for now)
 
 - Choosing the final models for analysis – the owner will test variants first.
-- The analysis engine, the graph store, review CLI, exports (SKOS, `.qdpx`, report) and the read-only MCP server.
-  They follow once ingest works on real scans.
+- The graph store, exports (SKOS, `.qdpx`, report) and the read-only MCP server, until the analysis environment
+  needs them.
 - A user interface.
 
 ## Constraints

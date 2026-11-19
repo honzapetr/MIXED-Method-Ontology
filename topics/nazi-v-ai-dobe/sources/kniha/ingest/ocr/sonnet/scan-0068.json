@@ -1,0 +1,16 @@
+{
+  "source": "kniha",
+  "scan": 68,
+  "image": "IMG_20260902_200724.jpg",
+  "image_sha256": "065acd34708223bdcfee9fd0c10fb53f2a954a135b4a908519b0093e329f74dc",
+  "backend": "import",
+  "model": "claude-sonnet-5-5",
+  "prompt_version": "read-v1",
+  "confidence": null,
+  "quality": null,
+  "warnings": [],
+  "seconds": null,
+  "created": "2026-11-13T14:41:23+00:00",
+  "rotation": "0",
+  "text": "KAPITOLA III.\n\n## PŘÍBĚH KONTROLY\n\n„Jaká chiméra je tedy člověk! Jak podivný a monstrózní! Chaos, protiklad, zázrak. Soudce všeho, a přece slabý červík země; nositel pravdy, a přece žumpa nejistoty a omylu; sláva i smetí vesmíru.“\n\nBlaise Pascal\n\n„Tehdy se oběma otevřely oči a poznali, že jsou nazí; spřádali tedy fíkové listy a udělali si zástěry.“\n\nKniha Genesis\n\n85\n"
+}

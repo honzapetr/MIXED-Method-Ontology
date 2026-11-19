@@ -7,13 +7,14 @@
 | :--- | :--- | :--- |
 | `Codebook` | SKOS `skos:ConceptScheme` | one scheme per topic (and per locked version) |
 | `Code`, `Category`, `Theme`, `CoreCategory` | SKOS `skos:Concept` | hierarchy with `skos:broader` / `skos:narrower`; label `skos:prefLabel`, definition `skos:definition` |
-| `Annotation` | W3C Web Annotation `oa:Annotation` | body = concept, target = segment with `oa:TextQuoteSelector` (exact quote) and `oa:TextPositionSelector` (start/end) |
-| `Segment`, `Page`, `Source` | Dublin Core terms (`dcterms:`), Web Annotation selectors | source metadata in `dcterms:`; segment = specific resource on a page |
+| `Annotation` | W3C Web Annotation `oa:Annotation` | body = concept, target = one or more quotations |
+| `Quotation` | W3C Web Annotation `oa:SpecificResource` | source = the source's `text.md`; selectors `oa:TextQuoteSelector` (exact words) and `oa:TextPositionSelector` (start/end in `text.md`); printed pages for citing. ATLAS.ti "quotation", REFI-QDA coded selection |
+| `Segment`, `Page`, `Source` | Dublin Core terms (`dcterms:`), Web Annotation selectors | source metadata in `dcterms:`; segment = a paragraph of `text.md` as a specific resource (a reading unit, not an annotation target) |
 | `AnalyticalStep` | PROV-O `prov:Activity` | `prov:used` segments, `prov:wasAssociatedWith` agent (person or model), start/end times |
 | proposals (`status`, `author`, `generated_by`) | PROV-O `prov:wasGeneratedBy`, `prov:wasAttributedTo` | every statement points to the step that produced it |
 | `Agent` | PROV-O `prov:Agent` (`prov:Person`, `prov:SoftwareAgent`) | models are software agents with name and version |
 | `Variable`, `Case` | DDI-CDI | instance variables and units; link qualitative concepts to variables (mixed methods) |
-| whole project | REFI-QDA Project Exchange (`.qdpx`) | export of sources, codes and coded segments for ATLAS.ti, MAXQDA, NVivo, QualCoder |
+| whole project | REFI-QDA Project Exchange (`.qdpx`) | export of sources, codes and quotations (coded selections) for ATLAS.ti, MAXQDA, NVivo, QualCoder |
 | concepts (optional) | ELSST | `skos:closeMatch` from our concepts to the social-science thesaurus |
 
 ## Open questions

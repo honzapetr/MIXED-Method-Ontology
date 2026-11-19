@@ -7,8 +7,6 @@ others). Agent-specific files (`CLAUDE.md`, `.claude/`) only add to it.
 
 ## Before you start
 
-* **Interactive session on the owner's computer:** ask the owner which GitHub account to use for this session
-  (`honzapetr` or `Jan-dolphin`) and check it with `gh auth status`. Never switch accounts on your own.
 * Read `docs/brief.md`, `docs/spec.md`, `docs/plan.md` and the end of `docs/progress.md`. They are the memory of the
   project – do not rely on what you think was done before.
 * Find your task in `docs/plan.md` (ID `T<n>`). Work on that task only.
@@ -34,11 +32,20 @@ you claim a task is done, and quote its result.
 5. `docs/progress.md` – append a short entry after every task: what changed, what is left, what the next session
    must know.
 6. `docs/adr/` – one file per significant decision (context, decision, consequences).
+7. `docs/development.md` – the working rules while the environment is built: building the environment and the
+   concrete analysis are two lines kept apart, and what goes where. Follow it in every session.
 
 ## Rules
 
 * **Git:** one branch per task, `task/T<n>-<short-name>`; Conventional Commits (`feat:`, `fix:`, `test:`, `docs:`,
   `refactor:`, `chore:`); small commits. **Never push to `main`** and never force-push.
+* **GitHub account:** local commits need none. Before the first operation in a session that talks to GitHub (push,
+  pull request, any `gh` command), run `gh auth status`, tell the owner which account is active and which others are
+  logged in, and wait for their confirmation. Never switch accounts or log in on your own. If `gh` cannot run, ask
+  the owner to run `gh auth status` and share the result. Headless runs in the lab use the account the lab gives
+  them.
+* **Git identity:** before the first commit in a session, check `git config user.name` and `git config user.email`
+  and ask the owner if they are unset or look unexpected.
 * **Scope:** change only what the task needs. If the task needs more, stop and ask.
 * **Tests:** new behaviour comes with tests; never delete or weaken a test to make it pass.
 * **Dependencies:** commit lock files (`uv.lock`, `package-lock.json`) together with the change that updates them.
@@ -49,6 +56,11 @@ you claim a task is done, and quote its result.
   owner, never merged automatically: `.github/`, `.claude/`, `.agents/roles/`, `.agents/skills/`, `.agents/lab.yaml`,
   `AGENTS.md`, `CLAUDE.md`, `tools/agents_sync.py`.
 * **Language:** code, comments, commits and docs in English.
+* **One-off scripts and temporary files** (decoding, image crops, quick counts, test inputs) go only to `scratch/`
+  (git-ignored), one subfolder per task (`scratch/T<n>/`), never elsewhere in the repository. When the task ends,
+  delete what is no longer needed; a script worth keeping for later analysis stays there and is named in the task's
+  `docs/progress.md` entry. A script whose output enters the analysis is not a one-off: it becomes an `mmo` command
+  in `code/mmo/` with tests, so every result can be traced to the code that made it.
 
 ## Headless runs in the lab
 
@@ -74,16 +86,32 @@ prompts for the lab live in `.agents/roles/`. Copies for Claude Code in `.claude
 ## Project specifics
 
 * **Talk to the owner in Czech**; code, comments, commits and docs stay in English.
-* **Layout:** `src/mixed_method_ontology/` (package, CLI `mmo`), `topics/<slug>/` (research topics: sources, OCR
-  results, segments, graph), `methods/*.yaml` (method modules), `ontology/` (LinkML schema and mapping to standards),
-  `docs/` (project memory). Details: `docs/spec.md`.
-* **CLI:** `uv run mmo --help` – `topic new`, `source scan`, `ocr run`, `ocr compare`, `segment`.
-* **Traceability is the core rule:** never write analytical output that cannot be traced to a segment (source, page,
-  offsets, quote) and to the step that produced it (model, prompt version, time).
-* **Sources:** page images and other source files are git-ignored (size, copyright); commit only manifests, OCR text
-  and segments.
+* **Layout:** `code/mmo/` (the program, CLI `mmo`: `core/` topics and sources, `ingest/` bringing new sources in),
+  `topics/<slug>/` (research topics, the only place for research data: sources, their text, segments, graph),
+  `methods/<id>/` (one folder per method: research design, procedure, rules for agents, applications, sources,
+  `method.yaml`), `ontology/` (LinkML schema and mapping to standards), `docs/` (project memory and, in
+  `docs/environment/`, how the environment works). Details: `docs/development.md`, `docs/spec.md`.
+* **Methods: precision before economy.** Describe each method completely in its own terms, even where it repeats
+  another; never merge, shorten or "deduplicate" method texts, codes or memos on your own (`methods/README.md`).
+* **Reflexivity: models are positioned analysts.** A model used for the first time writes its own profile in
+  `docs/environment/analysts/` before any analytic step, and writes a short reflexive note at once whenever a
+  trigger listed in `docs/environment/analysts/README.md` occurs (e.g. the owner corrects it, it used background
+  knowledge, it merged or softened something, the material concerns AI or its maker). The human researcher does
+  the same in their own profile and memos.
+* **Source preparation** (OCR of page photos, reading order, transcription) is a tool of the project, used when a
+  new source needs it (`docs/environment/source-preparation.md`). The analysis reads `sources/<id>/text.md` and its segments,
+  not `ingest/`.
+* **CLI:** `uv run mmo --help` – `topic new`, `source add`, `source check`, `source finalize`, `segment`; tools for
+  bringing sources in: `ingest`, `ocr ...`.
+* **Traceability is the core rule:** every analytic record carries its author and time, and for a model the model
+  and prompt version. Codes and everything a model proposes must be traced to quotations (the exact words with
+  source, pages and offsets in `text.md`, ADR 0012); a reflexive or methodological memo and an idea of the
+  researcher may stand without one. What a model writes is a proposal until the researcher accepts it (ADR 0013).
+* **The analysis is free:** `mmo` checks integrity (the rule above), never the method. A method's vocabulary and
+  phases are orientation; strictness is set by the researcher per study (ADR 0013). Never hard-wire one method.
+* **Sources:** page images and other source files are git-ignored (size, copyright); commit only manifests, the
+  text and segments.
 * **Models:** local first, through the OpenAI-compatible gateway configured in `.env`. Homelab services are
   reachable only from the owner's LAN or VPN – if a call fails from elsewhere, report it as `blocked`, do not work
   around it. A cloud model needs the owner's approval.
-* **Nothing is final yet:** OCR, models and analysis are being tested in variants. Keep every variant's output side
-  by side instead of overwriting.
+* **Nothing is final yet:** keep every variant's output side by side instead of overwriting.

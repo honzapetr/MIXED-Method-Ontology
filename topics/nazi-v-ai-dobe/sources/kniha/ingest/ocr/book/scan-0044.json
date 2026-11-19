@@ -1,0 +1,17 @@
+{
+  "source": "kniha",
+  "scan": 44,
+  "image": "IMG_20260902_200539.jpg",
+  "image_sha256": "dcfb3af934d9d0ee65f1d398e00626aadc6bfac0515ddde59322cfe6ab787f6a",
+  "backend": "import",
+  "model": "claude-sonnet-5-5",
+  "prompt_version": "read-v1",
+  "confidence": null,
+  "quality": null,
+  "warnings": [],
+  "seconds": null,
+  "created": "2026-11-13T14:41:20+00:00",
+  "rotation": "0",
+  "text": "MĚSTO NA AI PAHORKU\n\nnáhradu, když prohlásil, že kolonisté se mají stát novým vyvoleným lidem, který vstoupí do nové Země zaslíbené. Používá obraz města na pahorku, který vychází z Nového zákona: „Vy jste světlo světa. Nemůže zůstat skryto město ležící na hoře. A když rozsvítí lampu, nestaví ji pod nádobu, ale na svícen a svítí všem v domě. Tak ať svítí vaše světlo před lidmi, aby viděli vaše dobré skutky a vzdali slávu vašemu Otci v nebesích.“⁷ Američané měli být tímto zářícím městem na kopci, majákem, který povede ostatní národy z temnoty hříchu k Božímu světlu. Měli dodržovat přísná morální pravidla, aby naplnili Boží očekávání, která dříve nesplnili Židé ani křesťanská církev.\n\nOstatní, neamerické, nevyvolené národy a státy po celém světě žijící dole pod kopcem v naprosté tmě měly vzhlížet k městu na pahorku jako k majáku světla, naděje, prosperity a spravedlnosti. Nový americký národ konečně naplní vysoká Boží očekávání od Jeho vyvoleného lidu (na rozdíl od Židů nebo křesťanské církve), Bůh jim za to požehná a štědře je odmění, ostatní národy k nim budou vzhlížet a snažit se jim podobat.⁸ Kolonisté se tak cítili Bohem vyvoleni k nejvyšší misi, k záchraně světa. To jejich životům dodávalo hluboký smysl. Podobně jako indiáni kmene Pueblo cítili obrovskou odpovědnost. Smysluplný život si měli zasloužit pevnou vírou v příběh, který pro ně znamenal vše. Za neuposlechnutí hrozil zánik a hanba.\n\nPodobně jako staří Hebrejci prchali z otroctví v Egyptě, i američtí kolonisté opouštěli Evropu, aby unikli pronásledování. Nová země pro ně představovala příležitost a hojnost. A stejně jako kdysi Izraelité, narazili i oni na původní obyvatele. Stejně jako kdysi v Levantu byli domorodci označeni za méněcenné a začali být krutě vyhlazováni, včetně žen a dětí.⁹ Ačkoli byla genocida původních obyvatel Ameriky brutální, právě z tohoto důvodu byla dlouho přehlížena a bagatelizována.\n\n[?]\n",
+  "merged_from": "sonnet"
+}

@@ -1,0 +1,24 @@
+{
+  "source": "kniha",
+  "scan": 35,
+  "image": "IMG_20260902_200442.jpg",
+  "image_sha256": "b87680662a2cdb0c310362ad62ad15e06d7562102d34bfabb044f89b6d00c908",
+  "backend": "fabric",
+  "model": "fabric/model",
+  "prompt_version": "fabric-service",
+  "confidence": null,
+  "quality": "full",
+  "warnings": [
+    "page 1: rotated 90 degrees clockwise to read it"
+  ],
+  "seconds": 13.73,
+  "created": "2026-11-11T21:59:05+00:00",
+  "text": "jen částečné a neustále proměnlivé zájmy. Navíc svět technologií jde tak radikálně rychle vpřed, zejména v oblasti AI, že jej politici stěží zvládají registrovat, natož interpretovat pro své voliče, aby se v neustále se měnícím světě dokázali vyznat.\n\nOd doby, co jsme „zabili Boha\", postrádáme jednotící nadnárodní mýtus, který by nastartoval motor našeho kolektivnímu snažení. Různé ideologie a „ismy\" se pokusily zaplnit absenci společného smyslu, avšak neúspěšně – podařilo se jim to pouze lokalizovaně, s omezeným dopadem. Globální dominance, o kterou usilovaly, nedosáhla žádná. Šat společného smyslu, který nás v západní civilizaci zakrýval po dobu téměř dvou tisíciletí, již nemáme. Jsme nazí.\n\nPostrádáme jednotící nadnárodní mýtus, který by dával společný smysl našemu snažení. Co naopak máme, jsou mýty národní výjimečnosti, které pohání stále silná ideologie nacionalismu. V další kapitole se podíváme na jeden z nejvlivnějších moderních mýtů, který zásadně formoval nejen kolektivní identitu jedné země, ale ovlivnil i globální směřování vědy, technologií a politického myšlení. Je to mýtus americké výjimečnosti. Ukážeme si, jak se tento národní mýtus zrodil, jak se vyvíjel, podíváme se na jeho lineární pojetí dějin, mesiášskou naději v budoucnost, víru v pokrok jako morální imperativ a touhu přínést světu spásu.\n\nTento rámec národního mytického uvažování dnes sehrává zásadní roli ve vztahu politických a technologických představitelů Spojených států k AI. V kombinaci s myšlenkami již zmiňovaných myslitelů v této kapitole a s historickým vývojem západního chápání pokroku a smyslu nám tento příběh pomůže pochopit, proč se AI stala nejen technologickým nástrojem, ale také nosítelem hluboké symboliky, naděje a jisté formy náboženství.\n",
+  "cleaning": {
+    "version": "clean-v1",
+    "from_variant": "fabric",
+    "created": "2026-11-12T23:03:25+00:00",
+    "stuck": [],
+    "removed": []
+  }
+}

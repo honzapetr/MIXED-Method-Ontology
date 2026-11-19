@@ -1,0 +1,17 @@
+{
+  "source": "kniha",
+  "scan": 134,
+  "image": "IMG_20260902_222323.jpg",
+  "image_sha256": "59ec0defeb6f44ea15d8cb5d23395325c4993e59cc72710823a14fcbf392f683",
+  "backend": "fabric",
+  "model": "fabric/model",
+  "prompt_version": "fabric-service",
+  "confidence": null,
+  "quality": "full",
+  "warnings": [
+    "page 1: rotated 90 degrees clockwise to read it"
+  ],
+  "seconds": 13.22,
+  "created": "2026-11-11T22:12:13+00:00",
+  "text": "Představitel OpenAI Sam Altman se pochlubil, že generace Z po-\nužívá ChatGPT pro svá životní rozhodnutí.⁶⁰ AI chatboty nám\nvskutku dokážou poskytnout odpovědi i na otázky týkající se\netiky, a to obratem. Místo trávení mnohdy dlouhých a nepříjem-\nných chvil tápáním stačí zapnout AI chatbot a nechat ho vyřešit\nmorální dilemata za nás. Je to tak snadné... Před touto ocho-\ntou přesunout naše morální rozhodování na AI ovšem varuje\nfilozofka Vallor. AI představuje novou hrozbu pro naši kapacitu\nčinit etická rozhodnutí, protože z nás dokáže rychle a snadno\nsejmout tíhu rozhodování.⁶¹ Svěřujeme se s etickými dilematy\nAI, byť ona bez podrobné znalosti kontextu dokáže smysl našich\nživotů a našeho jednání postihnout jen chabě.⁶²\n\nSchopnost morální volby a osobní odpovědnost vytvářejí naši identitu a smysl existence. K této aktivní tvorbě hodnot vyzývá Friedrich Nietzsche ústy svého Zarathustry: „Když jsem přišel k lidem, nalezl jsem je sedící na staré domýšlivosti: všichni si domýšleli, že dávno již vědí, co člověku je dobré a zlé. (...) Z toho spáčství jsem je vyrušil, hlásaje: co je dobré a zlé, nikdo ještě neví - leda ten, kdo tvoří! To pak je ten, kdo vytváří cíl člověka a zemi dává její smysl a její budoucnost: ten teprve stvoří, že něco jest dobré a zlé.“⁶³\n\nNietzsche popisuje tři proměny lidského ducha. Nejprve popi-\nsuje ducha jako velblouda, který nese tíhu všech morálních pra-\nvidel převzatých a očekávaných společností. Poté se duch promě-\nňuje ve lva, který se bouří proti všemu „Musíš!“, zosobněnému\nvelkým drakem, nositelem starých morálních hodnot. Mnohdy\nsi přitom aní neuvědomuje, že naše rozhodování je dané spíše\nsocio-kulturním kontextem a očekáváním okolí než naší vlastní\nvolbou. A nakonec se duch stává dítětem: nevinným, tvořivým\na hravým. Jen ono je schopno říct „svaté Ano“ životu a vytvo-\nřit nové morální hodnoty, které nejsou převzaté, ale jsou mu"
+}

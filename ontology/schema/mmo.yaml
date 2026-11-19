@@ -71,8 +71,18 @@ classes:
 
   Segment:
     is_a: NamedThing
-    description: A span of source text with an exact position; the target of every annotation.
+    description: >-
+      A paragraph of a source's final text (text.md) with its place and offsets in it; a rebuildable unit for
+      reading, batching and counting, not what annotations point to.
     slots: [source, page, start, end, text]
+
+  Quotation:
+    description: >-
+      What an annotation, relation or proposition points to - the exact words of a passage of a source's final text
+      (text.md) with their offsets and printed pages; any length, may run over a page break. W3C Web Annotation
+      specific resource with a TextQuoteSelector (quote) and a TextPositionSelector (start, end).
+    class_uri: oa:SpecificResource
+    slots: [id, source, start, end, quote, cited_pages]
 
   Concept:
     is_a: NamedThing
@@ -101,9 +111,9 @@ classes:
     slots: [topic, concepts, locked]
 
   Annotation:
-    description: Assignment of a concept to a segment (W3C Web Annotation).
+    description: Assignment of a concept to one or more quotations (W3C Web Annotation).
     class_uri: oa:Annotation
-    slots: [id, body, target, quote, status, author, created, generated_by]
+    slots: [id, body, target, status, author, created, generated_by]
 
   Relation:
     description: A typed, directed relation between concepts, with evidence and confidence.
@@ -116,7 +126,7 @@ classes:
 
   Method:
     is_a: NamedThing
-    description: A method module (methods/*.yaml) - phases, code types, relation types, outputs.
+    description: A method (methods/<id>/method.yaml) - phases, code types, relation types, outputs.
     slots: [phases, relation_types]
 
   AnalyticalStep:
@@ -217,10 +227,16 @@ slots:
     range: Concept
     slot_uri: oa:hasBody
   target:
-    range: Segment
+    range: Quotation
+    multivalued: true
+    inlined: false
     slot_uri: oa:hasTarget
   quote:
     description: Exact quoted text (oa:TextQuoteSelector exact).
+  cited_pages:
+    description: Printed page numbers the quotation runs over, for citing.
+    range: integer
+    multivalued: true
   relation_type:
     description: Allowed values come from the method module.
   subject:
@@ -228,7 +244,7 @@ slots:
   object:
     range: Concept
   evidence:
-    range: Segment
+    range: Quotation
     multivalued: true
     inlined: false
   confidence:

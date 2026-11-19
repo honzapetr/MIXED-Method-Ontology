@@ -1,0 +1,30 @@
+{
+  "source": "kniha",
+  "scan": 204,
+  "image": "IMG_20260902_223439.jpg",
+  "image_sha256": "e2e87ddb24abafc3bde30bb05877344421dc3cf2239adc43df5ada0c9888ff31",
+  "backend": "fabric",
+  "model": "fabric/model",
+  "prompt_version": "fabric-service",
+  "confidence": null,
+  "quality": "full",
+  "warnings": [
+    "page 1: rotated 90 degrees clockwise to read it"
+  ],
+  "seconds": 12.05,
+  "created": "2026-11-11T22:20:20+00:00",
+  "text": "Chandler, David, Constructing Global Civil Society: Morality and Power in International Relations, paperback ed. (Palgrave Macmillan, 2005)\n\n\"China as a Moral Superpower in, This is China' – dasReispapier\", viděno 14. června 2025, https://dasreispapier.at/2020/china-as-a-moral-superpower-in-this-is-china/\n\nChristian, Brian, The Alignment Problem: How Can Artificial Intelligence Learn Human Values?, Paperback edition (Atlantic Books, 2021)\n\nJansen, Thomas, ed., „Reflections on European Identity\", *European Commission Forward Studies Unit*, Working paper, roč. 1999 (nadcházející)\n\nJung, C. G., a Jung, C. G., Answer to Job, Routledge Classics (Routledge, 2007)\n\nJung, C. G., a Jung, C. G., Civilization in transition, 2nd ed, Bollingen series 20 (Princeton University Press, 1970)\n\nJung, C. G., Analytical psychology, roč. 1968 (Random House, b.r.)\n\nJung, C. G., Die Beziehungen zwischen dem Ich und dem Unbewussten, ed. Lorenz Jung, Edition C. G. Jung (Edition C. G. Jung im Patmos Verlag, 2019)\n\nJung, C. G., et al., Essays on Contemporary Events 1936–1946, Routledge Classics (Routledge, 2002)\n\nJung, C. G., Memories, dreams, reflections, roč. 1963 (Pantheon Books, b.r.)\n\nKegley, Charles W., „The New Global Order: The Power of Principle in a Pluralistic World\", Ethics & International Affairs 6 (březen 1992): 21–40, https://doi.org/10.1111j.1747-7093.1992.tb00540.x\n\nKissinger, Henry, et al., The Age of AI: And Our Human Future, Paperback edition (John Murray, 2022)\n\nKosmyna, Nataliya, et al., „Your Brain on ChatGPT: Accumulation of Cognitive Debt when Using an AI Assistant for Essay Writing Task\", arXiv:2506.08872, verze 1, preprint, arXiv, 10. červen 2025, https://doi.org/10.48550/arXiv:2506.08872\n\nKozák, Jan A., Monomýtus: syntetické pojednání o teorii mýtu, Vydání první (Malvern, 2021)\n\nKropotkin, Petr, Mutual Aid (b.r.), viděno 30. června 2025, https://theanarchistlibrary.org/library/petr-kropotkin-mutual-aid-a-factor-of-evolution. Kumar, Naveen, „Character AI Statistics (2025) – 20 Million Active Users\", DemandSage, 4. červen 2025, https://www.demandsage.com/character-ai-statistics/\n\nKurzweil, Ray, The Singularity Is Nearer: When We Merge with AI (The Bodley Head, 2024)\n",
+  "cleaning": {
+    "version": "clean-v1",
+    "from_variant": "fabric",
+    "created": "2026-11-12T23:03:46+00:00",
+    "stuck": [],
+    "removed": [
+      {
+        "line": 11,
+        "rule": "repeated-line",
+        "text": "Jung, C. G., a Jung, C. G., Answer to Job, Routledge Classics (Routledge, 2007)"
+      }
+    ]
+  }
+}

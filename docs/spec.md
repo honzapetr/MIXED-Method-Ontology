@@ -12,44 +12,75 @@
 | Goal | What the author and the agent want to find out next; changes over time, every change recorded. |
 | Source | A book, interview, field note, document or dataset, with metadata and provenance. |
 | Page | One scanned image of a source, with its OCR results per backend. |
-| Segment | A span of source text with an exact position (source, page, paragraph, character offsets). |
-| Method | A declarative description of an analytical method (`methods/*.yaml`): phases, code types, relation types, outputs. |
+| Final text | `text.md` of a source: the one text the analysis reads, the same form for every kind of original (ADR 0012). |
+| Segment | A paragraph of the final text with its place (source, scan, page) and character offsets in `text.md`; a rebuildable index for reading, batching and counting. |
+| Quotation **(planned)** | What the analysis points to: the exact words of a passage with source, pages and offsets in `text.md`; any length, may cross a page break; checked by the program. |
+| Method | An analytical method, one folder `methods/<id>/`: research design, procedure, rules for agents, applications, sources, and `method.yaml` (phases, code types, relation types, outputs) for agents and tests. |
 | Analysis run **(planned)** | Method × questions × selected segments → proposals in the graph. |
-| Proposal **(planned)** | A code, category, theme, relation or memo with status `proposed` / `confirmed` / `rejected`, author and provenance. |
+| Proposal **(planned)** | A code, category, theme, relation or memo with status `proposed` / `confirmed` / `rejected`, author, provenance and its quotations. |
+
+## Repository layout
+
+`code/mmo/` the program (ADR 0007: `core/` topic and sources, later graph and analysis; `ingest/` OCR, page
+numbers, reading order, segments) · `topics/` research data, the only data folder · `methods/` method folders ·
+`ontology/` schema and mapping · `docs/` project memory · `tests/` · `tools/`.
 
 ## Topic folder
 
+Source-centric (ADR 0006, built in T2c): everything about one source is in its folder, and what the researcher
+writes is kept apart from what the machine produces.
+
 ```
 topics/<slug>/
-  topic.yaml            # title, questions, goals, sources (versioned)
-  sources/<source-id>/  # source.yaml (metadata) + page images (images are git-ignored)
-  work/ocr/<backend>/<source-id>/page-NNNN.json
-  work/segments/<source-id>.jsonl
-  ground-truth/<source-id>/page-NNNN.txt   # optional hand-corrected pages for OCR evaluation
-  graph/                # (planned) sorted Turtle per named graph
+  topic.yaml                  # title, questions, goals, methods: [<method id>], sources: [<id>, ...]
+  memos/                      # topic memos, research journal (written by the researcher)
+  graph/                      # (planned) sorted Turtle per named graph
+  sources/<id>/
+    source.yaml               # RESEARCHER: metadata, attributes, links, page-number fixes
+    notes.md                  # RESEARCHER: context memo - why the source is here, how it came about
+    files/                    # original files (page images git-ignored)
+    text.md                   # FINAL: the text the analysis reads (from the variant chosen in source.yaml)
+    segments.jsonl            # paragraphs of text.md with offsets in it (cut by mmo source finalize)
+    ground-truth/scan-NNNN.txt  # optional hand-corrected scans for OCR evaluation
+    ingest/                   # MACHINE: never edited by hand
+      files.yaml              #   every original file: scan number, name, SHA-256
+      ocr/<variant>/scan-NNNN.json
+      page-numbers.json       #   printed page numbers read from the page edges
+      order/<variant>.yaml    #   reading order report: gaps, duplicates, pages without a number
+      text/<variant>.md       #   whole text of one working variant in reading order
 ```
 
-Page images stay out of git; `source.yaml` lists each image with its SHA-256 so results stay traceable.
+**Scan and page.** `scan` is the position of a file in file-name order - the identity of an image. `page` is the
+printed page number. Results are stored by scan; the reading order maps scans to pages.
 
-## Ingest pipeline
+**`source.yaml`** (all fields except `id` optional):
 
-1. **Inspect** – the agent lists the files of a source and proposes a parsing plan (skill `ingest-sources`).
-2. **OCR** – `mmo ocr run` sends every page image to one backend and stores one JSON per page:
-   `page`, `image`, `image_sha256`, `backend`, `model`, `prompt_version`, `text`, `confidence` (if known),
-   `seconds`, `created`. Results of different backends live side by side, so variants can be compared.
-3. **Compare** – `mmo ocr compare` reports the character error rate (CER) of each backend against ground truth when
-   it exists, otherwise between two backends.
-4. **Segment** – `mmo segment` joins the text of one backend's pages, repairs words hyphenated across line ends and
-   splits paragraphs into segments with ids `<source>:p<page>:<n>` and character offsets into the page text.
+| Field | Meaning |
+| :--- | :--- |
+| `id`, `title` | identity and a human name |
+| `kind` | `book`, `interview`, `field-note`, `document`, `article`, `web`, `dataset` |
+| `role` | `primary` (default) or `context` - supplementary material about other sources |
+| `about` | for `context`: ids of the sources it is about |
+| `language` | ISO 639-3 (`ces`) |
+| `citation` | `authors`, `year`, `title`, `publisher`, `isbn`, `url`, `accessed` |
+| `attributes` | free key-value pairs (document variables / cases in QDA terms) |
+| `questions` | ids of the topic's research questions the source serves |
+| `printed_pages` | hand fixes `{<file>: <page>}` where reading the page number failed |
+| `retakes` | `{<second photo>: <photo kept>}`: a page photographed twice; the second photo is left out of the reading order, the text and the segments |
+| `text` | `{variant: <variant>}`: the OCR variant chosen as the final text; `mmo source finalize` builds `text.md` from it |
+| `note` | one line; longer context goes to `notes.md` |
 
-### OCR backends
+Page images stay out of git; `ingest/files.yaml` lists each file with its SHA-256 so results stay traceable.
 
-| Backend | How | Notes |
-| :--- | :--- | :--- |
-| `tesseract` | local `tesseract` binary, language `ces` by default | free, offline baseline; needs `tesseract-ocr-ces` |
-| `openai` | OpenAI-compatible `chat/completions` with the image as a data URL | the homelab LiteLLM gateway, Ollama or vLLM; Claude can sit behind the same gateway |
+**Supplementary information** (reviews, interviews with the author, context documents) is a source of its own with
+`role: context` and `about`, ingested and segmented the same way, so statements drawn from it are traceable too.
 
-Backends are registered in `src/mixed_method_ontology/ocr/`; a new one implements `OcrBackend.recognize()`.
+## Source preparation
+
+Every original (photos, PDF, web page, text file) becomes the same final `text.md`, its segments and, in the
+analysis, quotations: converted by the program without AI, OCR only where there is no text layer (ADR 0012). The
+whole pipeline – steps, formats, what is built and what is planned – is in `docs/source-pipeline.md`; the manual
+with the commands and OCR backends is `docs/source-preparation.md` of the research environment.
 
 ## Homelab
 
@@ -78,6 +109,31 @@ mapping is relied on.
   of material before review; merge = accept. PROV-O records why something changed.
 - Every model call stores the model, prompt version and input segments.
 
+## Research design in a topic (planned)
+
+How methods link purpose, questions and theory: `methods/foundations.md` and `research-design.md` of each method.
+In a topic this means (proposal, T8):
+
+1. **The purpose is recorded, not implied.** A topic states why it exists (problem, motive, for whom) and the
+   researcher's position. Every question traces back to it.
+2. **Questions are living objects.** Each research question has a type (qualitative, quantitative, mixed), an
+   origin (from the purpose, from the framework, from a surprise in the analysis), a status (initial, refined,
+   dropped, answered) and a history - which memo or finding changed it (Maxwell's "design in use").
+3. **The conceptual framework is explicit:** sensitising concepts, prior theories, assumptions. The method says how
+   the framework may be used.
+4. **Theory is built from propositions.** A proposition connects confirmed concepts and relations, answers one or
+   more questions, has evidence and counter-evidence (quotations) and a memo on how it was reached.
+5. **Working with theory afterwards:** test it against new sources (confirms / extends / contradicts), compare it
+   with prior theories, derive new questions - including quantitative ones (the mixed-methods link).
+6. **Ontology:** today it has `ResearchQuestion` and `Goal`; it would need the purpose and position of the topic,
+   a conceptual framework with sensitising concepts, and `Theory` / `Proposition` linked to questions and evidence.
+7. **Reflexivity (T10):** every analyst of a topic – the researcher and each model – has a profile
+   (`docs/environment/analysts/`) and a positionality memo at framing, writes reflexive notes when a trigger occurs
+   and revisits the memo at synthesis (`methods/reflexivity.md`). The ontology would need `Analyst` (person or
+   model version, PROV-O agent) linked to its profile, memos and steps.
+
+Memos are part of every method; format and use: `docs/environment/memos.md`.
+
 ## Human steering (planned)
 
 Framing (questions, goals, sensitising concepts, seed codebook) · review of proposals (confirm, edit, merge,
@@ -86,4 +142,5 @@ codebook (deductive mode). Gates between method phases: the next phase starts fr
 
 ## Out of scope now
 
-Analysis engine, graph store, exports, MCP server, UI – see `docs/plan.md`.
+Exports, MCP server, UI – see `docs/plan.md`. The analysis environment is the current focus; how it works is
+defined with the owner before it is specified here.

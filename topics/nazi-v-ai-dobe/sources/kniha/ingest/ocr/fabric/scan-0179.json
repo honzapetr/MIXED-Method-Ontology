@@ -1,0 +1,17 @@
+{
+  "source": "kniha",
+  "scan": 179,
+  "image": "IMG_20260902_223159.jpg",
+  "image_sha256": "8339f54dfa4c1afc26aba1a148bddace92bc924dda2eaaff3581d7155ad0068f",
+  "backend": "fabric",
+  "model": "fabric/model",
+  "prompt_version": "fabric-service",
+  "confidence": null,
+  "quality": "full",
+  "warnings": [
+    "page 1: rotated 270 degrees clockwise to read it"
+  ],
+  "seconds": 13.36,
+  "created": "2026-11-11T22:17:32+00:00",
+  "text": "Na dějiny mezinárodních vztahů je pohlíženo realismem jako na dějiny sobeckosti a násilí.¹⁴ Jediné, co je možné v tomto sténáři dělat, je vyvažovat moc států jinými státy či koalicemi, aby žádný nezískal přílišnou dominanci nad ostatními. Válek se nikdy zcela nezbavíme, můžeme jen omezit jejich početnost a dopad. Na morálku států je nahlíženo přinejmenším se značnou skepsí jako na zástěrku zištných zájmů. Stát je nahlížen jakožto subjekt mimo naše kategorie dobra a zla.\n\nOproti tomu liberalismus a liberální teorie mezinárodních vztahů vnímají podstatu člověka mnohem pozitivněji: nejsme jen mocichtvými sobeckými jedinci, ale tvory, kteří preferují spolupráci před konfliktem. Jsme schopni altruismu a nezištné pomoci druhým. Války a mocenské boje jsou způsobeny spíš menší mocichtivou a agresivní skupinou lidí, které se vyskytují v každé společnosti. Liberálové věří, že když správně pochopíme příčiny rozporů a chytře nastavíme mezinárodní instituce, budeme schopni se válek a sporů zbavit.\n\nJádrem liberalismu je tudíž optimismus. Lidská povaha je v jádru dobrá a její dobro lze pěstovat a rozvíjet lepším uspořádáním institucionálního a právního rámce vzájemných vztahvů lidí a států. Možnost vyhnout se válkám jednou provždy je podle Kanta, jednoho z čelných představitelů této teorie, možné. Prosazuje uzavření „Paktu míru“ mezi národy, které by se spojily v dobrovolnou federaci a ta „by se postupně rozšiřovala na všechny státy, a tak vedla k věčnému míru“.¹⁵\n\nRealismus bývá při výkladu „reality“ mezinárodních vztahů dominantní. Není se co divit. Stačí se například podívat na dosud nerealizovanou reformu Rady bezpečnosti OSN, jejíž stálí členové s právem veta stále odrážejí mocenské poměry po druhé světové válce. Limity stávajícího pořádku ukazuje i snaha USA udržet si hegemonické postavení, zatímco Čina a Rusko usilují."
+}

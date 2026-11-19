@@ -1,0 +1,22 @@
+{
+  "source": "kniha",
+  "scan": 4,
+  "image": "IMG_20260902_195555.jpg",
+  "image_sha256": "6e45103ae67247bd6adda1eeed37a0c0b2f4cf25ce47cdc082535e2cfb5145d3",
+  "backend": "fabric",
+  "model": "fabric/model",
+  "prompt_version": "fabric-service",
+  "confidence": null,
+  "quality": "full",
+  "warnings": [],
+  "seconds": 21.89,
+  "created": "2026-11-11T20:04:19+00:00",
+  "text": "lidské bytosti k neustálé snaze, když jsou základní potřeby uspo-\nkojeny.\"⁷ Možná máme tendenci přenechávat hledání smyslu ně-\nkomu jinému – třeba státu. Ale stát není všemocný. Jednotlivec\nje nositelem tvořivosti.\n\nTouha po smyslu je s námi od počátku. Německý filozof Martin Heidegger napsal, že jsme byli do této existence „vržení“ a generace za generací se znovu ptaly po smyslu. Hledání smyslu bylo hlavně doménou filozofie. Ostatní vědy se tomuto tématu spíše vyhýbaly. Teprve nedávno se smysl začal více zkoumat, hlavně v politologii a mezinárodních vztazích.⁸ Ty se totiž historicky zajímaly spíše o logiku moci než o smysl.⁹ Američtí lingvisté George Lakoff a Mark Johnson poznamenali: „Politická debata se obvykle týká svobody a ekonomiky. Ale člověk může být svobodný a bohatý, a přitom žít prázdný život bez smyslu.“¹⁰\n\nPříběh Junga ukazuje, že smysl je pro lidskou psychiku na-\nprosto zásadní. V dnešní době, kdy nás bude AI stále více vy-\nsvlékat donaha z našeho dosavadního pojetí sebe samých, bude\notázka smyslu hrát stejnou – ne-li ještě naléhavější – roli jako\nu kmene Pueblo. Dnes, kdy AI překonává kognitivní schopnosti\nčlověka, je důležitější než kdy jindy smysl najít – jak pro nás\njako jednotlivce, tak pro nás jako lidstvo.\n\nDIVOKÉ A DOMESTIKOVANÉ MYŠLENÍ\n\nFrancouzský antropolog a filozof Claude Lévi-Strauss uvádí, že jsme jako lidé zvyklí fungovat ve dvou způsobech myšlení, a to v myšlení divokém a domestikovaném. Divoké myšlení je podle něj myšlením ve své původní formě. Je přirovnáváno k pralesnímu ekosystému, v němž si nalézá cestu pro svůj růst instinktivně tam, kde je mu to dovoleno okolním porostem. Je to myšlené asociativní a hravé, které hledá podobnosti, aniž by\n",
+  "cleaning": {
+    "version": "clean-v1",
+    "from_variant": "fabric",
+    "created": "2026-11-12T23:03:22+00:00",
+    "stuck": [],
+    "removed": []
+  }
+}

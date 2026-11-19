@@ -1,0 +1,32 @@
+id: kniha
+title: Nazí v AI době
+kind: book
+language: ces
+citation:
+  # found on the web (T8, 2026-11-13)
+  authors: [Lukáš Sedláček]
+  year: 2025
+  title: 'Nazí v AI době: Identita člověka a hledání smyslu tváří v tvář umělé inteligenci'
+  publisher: Muza books
+  isbn: 978-80-530-6104-9
+  url: https://www.kosmas.cz/knihy/558975/nazi-v-ai-dobe/
+  accessed: '2026-11-13'
+attributes:
+  # from the publisher's annotation and the launch announcement (context sources anotace-kosmas, oznameni-feedit)
+  genre: essay
+  author_role: founder of Týden inovací, an AI and innovation event in Central Europe
+note: >-
+  Phone photos of the printed book, one page per photo, taken out of order (2026-09-02). Page 235 ends the book.
+  Not photographed (lost, owner 2026-11-13): 1-14 (front matter and the start of the introduction), 17-19, and the
+  notes or sources pages 56, 84, 105-106, 124, 160, 196, 219.
+printed_pages:
+  # set from the text (T2f): the photo shows no number
+  IMG_20260902_195457.jpg: 16 # end of the introduction, continues page 15
+  IMG_20260902_200532.jpg: 59 # continues page 58, continued by page 60
+retakes:
+  # a second photo of a page -> the photo kept; left out of the reading order, the text and the segments (owner 2026-11-13)
+  IMG_20260902_195748.jpg: IMG_20260902_195753.jpg # page 29, its last line cut off
+  IMG_20260902_195822.jpg: IMG_20260902_195802.jpg # page 31, same text
+text:
+  # the OCR variant the analysis reads; `mmo source finalize` builds text.md from it (owner 2026-11-13)
+  variant: book

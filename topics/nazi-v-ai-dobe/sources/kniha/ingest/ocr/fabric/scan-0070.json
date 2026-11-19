@@ -1,0 +1,17 @@
+{
+  "source": "kniha",
+  "scan": 70,
+  "image": "IMG_20260902_200733.jpg",
+  "image_sha256": "c92e648a30d7291182be44e6b4bfd6323639254912d8c5d5971c963ae322bb3d",
+  "backend": "fabric",
+  "model": "fabric/model",
+  "prompt_version": "fabric-service",
+  "confidence": null,
+  "quality": "full",
+  "warnings": [
+    "page 1: rotated 90 degrees clockwise to read it"
+  ],
+  "seconds": 22.44,
+  "created": "2026-11-11T22:04:10+00:00",
+  "text": "ověkávání. Magii považoval za falešnou vědu, první formu snahy fungovat\" v chaotickém světě a získat nad ním moc.³ Druhá eta- pa bylo období náboženství, kdy poté, co magie začala selhávat, dospěli lidé k závěru, že nad světem nestojí zákony, ale bohové. Člověk tedy potřebuje mít vztah s bohy, aby si zajistil účast na vládě nad světem.\n\nTřetí etapa bylo období vědy. V této - poslední - fázi lidé pod-\nje Frazera opustili bohy a začali hledat racionální, objektivní zá-\nkonitosti, které by svět vysvětlily a umožnily jej ovládat. Věda\nje podle Frazera nejnovější nástroj lidské touhy po kontrole,\njen sofistikovanější a účinnější než magie či náboženství. Na vý-\nvoj AI by pohlížel stejným prizmatem - jako na novou kapitolu\nv naší snaze získat kontrolu.\n\nOdpradávna jsme získávali moc pomocí nástrojů, stejně jako\njsme používali mytické a racionální uchopení světa jako své\nšaty\", jako další nástroj, který nás měl chránit. Příroda a pří-\nrodní jevy byly mimo naši kontrolu, byli jsme vystaveni jejich\nnezmarům a cítili se mnohdy bezmocně. Kdykoli nás mohla\nsežrat nebezpečná zvěř, smést povodeň, zabít blesk. Opustili\njsme divokou přírodu a postavili si města s hradbami. Tam jsme\nsi vytvořili prostor s řádem - předvídatelný a bezpečný. Začali\njsme si „oblékat šaty\".\n\nDnes v tom pokračujeme matematizací vnímání okolní re-\nality. Na vývoj AI můžeme nahlížet jako na vyvrcholení naší\nodvěké snahy získat kontrolu nad okolím. V této kapitole se po-\ndíváme na to, jak probíhal náš úprk z mytického vnímání svě-\nta do vnímání zdánlivě více racionálního, a to vědeckého. Píši\n\"zdánlivě více racionálního\", protože nelze říct, že by mytické\nvnímání světa bylo iracionální - byť se nám může jevit jako ne-\npřesné, potřebuje vycházet také z rozumového uvažování, aby\nnám \"dávalo smysl\"."
+}

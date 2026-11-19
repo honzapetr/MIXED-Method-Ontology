@@ -1,0 +1,24 @@
+{
+  "source": "kniha",
+  "scan": 133,
+  "image": "IMG_20260902_222317.jpg",
+  "image_sha256": "ebe8a6699e4b41c048445d6845695ae3f7c5cd404b3b4b095f89143a18fb44ad",
+  "backend": "fabric",
+  "model": "fabric/model",
+  "prompt_version": "fabric-service",
+  "confidence": null,
+  "quality": "full",
+  "warnings": [
+    "page 1: rotated 90 degrees clockwise to read it"
+  ],
+  "seconds": 11.59,
+  "created": "2026-11-11T22:12:07+00:00",
+  "text": "Zatím jsme podle Nietscheho jen „upgradovanými“ opicemi – lidskou morálku vnímá pouze jako lži „z nouze, aby nás tato bestie v nás nerozervala\", přičemž bez „omylů, které vězí v předpokladech morálky, by byl člověk zůstal zvířetem“.⁵⁸ Naši velikost vnímá pouze v tom, že jsme přechodným stadiem pro nadčlověka: „Člověk jest provaz natažený mezi zvířetem a nadčlověkem – provaz nad propastí... Co je velkého na člověku, jest, že je mostem, a nikoli účelem: co lze milovati na člověku, jest, že je přechodem a zánikem.“⁵⁹\n\nPokud se nám podaří dosáhnout momentu Kurzweilovy Sin-gularity, staneme se skutečně nietzschovskými nadlidmi. Naše stadium člověčenství by tím pádem sloužilo pouze jako přechod k nadčlověku. Díky našemu naprostému splynutí s AI by na nás naši potomci pohlíželi jako na nižší a překonaný vývojový stu-peň. Podle obou autorů bychom se přerodem v nadčlověka záro-veň měli stát nejen mnohem inteligentnějšími, ale i etičtějšími. Těžko říct, zda by k takovému historickému zlomu skutečně do-shlo. Pokud má pravdu Spinoza a Kant a naše morální smýšlení tkví v našich rozumových kapacitách, tak by vyšší inteligence, a tím i lepší rozumové úsudky skutečně mohly vést u nadčlověka k vyšší úrovni etiky, k jakési „superetice“.\n\nPokud by ovšem zároveň došlo k integraci AI do nás samot-ných a AI by se mohla vydat na cestu k dosažení superintelligence, mohlo by se také stát, že bude mít pravdu Kropotkin a v zájmu zachování svého vlastního druhu nebude AI dbát žádného z na-šich etických pravidel a stanoví si svá vlastní.\n\n## Z VELBLOUDA DÍTĚTEM\n\nOrientovat se v oblasti morálních dilemat není pro nás snad-né a případy, kdy řešíme etické volby, nastávají denodenně.\n",
+  "cleaning": {
+    "version": "clean-v1",
+    "from_variant": "fabric",
+    "created": "2026-11-12T23:03:37+00:00",
+    "stuck": [],
+    "removed": []
+  }
+}
