@@ -99,3 +99,4 @@ never by copying a whole test folder back. The files to take are the same study 
 | `test1`-`test4` | T16-T19 | a model's first start without its profile |
 | `test5`-`test7` | T20-T22 | the analyst's steps, positions, guards; in `test7` the framing of `nazi-v-ai-dobe` |
 | `test8` | T25 (`37c1bb2`), `--carry test7` | the framing of `test7` on the final text with segments and the quotation rules |
+| `test9` | T29 (`cde59c7`), from the start, `--git` | the whole working cycle: session start, positions, framing, sources, phases, quotations, codes, memos, review (plan: test 9) |

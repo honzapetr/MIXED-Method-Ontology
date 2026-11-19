@@ -273,6 +273,27 @@
 - A trial that the analyst role is clean in a test copy (`/memory`).
 - Releasing `mmo` as a wheel into the research environment instead of the path dependency.
 
+## Where we are (2026-11-19)
+
+Built and merged into `main` of both repositories: the source pipeline (any original -> `text.md` -> segments ->
+quotations, T24-T26), the analysis store and the free toolbox (T32), the method as orientation with study
+settings, phases and status (T33), proposals of models and the researcher's review (T29); the workshop holds no
+research (T15). The whole working cycle can be walked: session start -> profile and position -> study -> sources ->
+phases -> quotations, codes, memos, relations -> proposals -> review -> checks. How it works for the researcher:
+`../MIXED-Method-Ontology/docs/how-it-works.md`; for the builder: `docs/source-pipeline.md`,
+`docs/analysis-store.md`, `docs/test-copies.md`.
+
+**Now: test 9 (owner).** `zkusebna/test9` made from the research environment `main` without `--carry` (from the
+start). The owner walks the study `nazi-v-ai-dobe` with a model: session start, profile, the researcher's and the
+model's positions, framing (`topic.yaml` questions), `mmo phase`, corpus and context sources (a web page saved as a
+text file in `files/` goes through `mmo ingest` + `source finalize` without T28), context analysis memos, fine
+analysis of passages of the book (`mmo quote`, `mmo code apply`, `mmo memo add`), `mmo review`, `mmo status`,
+`mmo analysis check`. What it teaches is written as tasks; it decides T36, T39 and T31 in detail.
+
+**After test 9**, in this order unless the test says otherwise: T39 (prompts per phase), T36 (outline and
+orientation reading), T28 (web pages), T37, T34, T30, T38, T35, T31; T40 and T41 when convenient; T27 when a PDF
+comes.
+
 ## Analysis
 
 > Replaces T4-T6 of the first plan (written before the split, for paths that no longer exist). The analytic layer
@@ -496,6 +517,39 @@
 - Verify: `uv run pytest tests/test_graph.py && uv run ruff check . && uv run ruff format --check .`
 - Paths: `code/mmo/graph/`, `code/mmo/cli.py`, `tests/`, `docs/`
 - Depends on: T30
+
+### T39 – Prompts per phase of a method (versioned)
+- Goal: what a model does in a phase is written down and versioned, so `--prompt-version` names a real prompt, not
+  `chat@<date>`; the same prompt serves the agent in a chat and a local model (T31).
+- Acceptance criteria: `methods/skad/prompts/<phase>.md` for the phases a model works in (at least
+  context-analysis, fine-analysis), each with a `version:` line, the inputs it needs (passages as quotations,
+  the model's position, the study's questions), what it writes through `mmo` (`model_proposes` of the phase,
+  quotations, alternatives) and its reflexive checks from `methods/skad/reflexivity.md`; `prompt` set in
+  `method.yaml`, method version raised; `mmo status` shows the phase's prompt and version; the skill or the
+  analyst's instructions tell a model to use `<method>/<phase>@<version>` as `--prompt-version`; written from what
+  test 9 showed; the method texts are not shortened (precision before economy); the owner approves the prompts.
+- Verify: `uv run pytest tests/analysis/ tests/test_methods.py && uv run ruff check . && uv run ruff format --check .`
+- Paths: `../MIXED-Method-Ontology/methods/skad/`, `../MIXED-Method-Ontology/.agents/skills/`,
+  `../MIXED-Method-Ontology/AGENTS.md` (protected: owner's approval), `code/mmo/analysis/`, `tests/`, `docs/`
+- Depends on: T29, test 9
+
+### T40 – What a model proposes in grounded theory and thematic analysis
+- Goal: GT and TA bind models per phase as SKAD does.
+- Acceptance criteria: `model_proposes` for every phase of `methods/grounded-theory/method.yaml` and
+  `methods/thematic-analysis/method.yaml`, derived from their `model_role` and procedure texts, method versions
+  raised; `mmo method check` passes; the owner approves the mapping (it binds models).
+- Verify: `uv run pytest tests/test_methods.py && uv run ruff check .`
+- Paths: `../MIXED-Method-Ontology/methods/grounded-theory/`, `../MIXED-Method-Ontology/methods/thematic-analysis/`
+- Depends on: T29
+
+### T41 – Clean scratch folders
+- Goal: no stale copies of study data in the workshop.
+- Acceptance criteria: `scratch/T15/` (leftovers of the old `topics/`, all present in the research environment,
+  and the empty sandbox), `scratch/T25b/old-main-leftovers/`, `scratch/T32/env`, `scratch/T29/env` deleted after the
+  owner agrees (the classifier refuses deleting without it); one-off scripts of finished tasks removed.
+- Verify: `ls scratch/`
+- Paths: `scratch/`
+- Depends on: -
 
 Open for discussion: a model proposing bibliographic fields of `source.yaml` (from the imprint or the annotation),
 confirmed by the researcher.

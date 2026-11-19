@@ -572,3 +572,16 @@
   shows 0 waiting.
 - Verified: `uv run pytest` – 148 passed; `uv run ruff check . && uv run ruff format --check .` clean.
 - Next: a new test copy from the start (owner); then T36 (outline and orientation reading).
+
+## 2026-11-19 – Test 9 made; plan brought up to date
+- T29 merged (PR #6; workshop 873d1e4, research environment `main` cde59c7).
+- `zkusebna/test9` made with `python tools/new_test_env.py test9 --git` from the research environment `main`
+  cde59c7, without `--carry` (from the start): 966 files, `uv sync` done, git commit eedb2b3. Checked in the copy:
+  `Guards: on`, `kniha/text.md` the rebuilt one (`left_out` 203/200, 1,240 segments), `mmo method check` 4 ok,
+  `mmo status nazi-v-ai-dobe`: SKAD 2026-11-19.2, no phase set, 1 proposal waiting (the model's first-impression
+  memo of 2026-11-13), the researcher's position `positions/owner.md`, the profile `analysts/claude-opus-5-5.md`
+  present (a model's first start would need `--without-profile claude-opus-5-5`).
+- Plan: section "Where we are" (what is built, test 9 and what it should walk, the order after it); new tasks T39
+  (prompts per phase, versioned), T40 (`model_proposes` for GT and TA), T41 (clean scratch folders).
+  `docs/test-copies.md` records test 9.
+- Next: the owner walks test 9; findings become tasks; then T39, T36, T28, ... as in the plan.
