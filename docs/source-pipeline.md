@@ -36,7 +36,7 @@ files/  ── 2 convert ──▶  ingest/ocr/<variant>/  ── 5 ──▶  t
 | 4 | Clean the working text | `mmo ocr clean`, `merge`; hyphenation and page furniture at step 5 | built |
 | 5 | Choose the variant, write the final text | `source.yaml` `text: {variant: …}`, `mmo source finalize` | built |
 | 6 | Cut the final text into segments | done by `finalize`; again with `mmo segment` | built |
-| 7 | Quotations: store and check what the analysis points to | `mmo quote …` | planned |
+| 7 | Quotations: make and check what the analysis points to | `mmo quote find`, `mmo quote check` | built |
 | – | What a source still lacks | `mmo source check` | built |
 
 ## The source folder
@@ -219,31 +219,54 @@ Second paragraph …
 - **What they are for:** reading in passages, giving a model a batch instead of the whole book, knowing which
   passages were read or coded, counting (code × place × source), and export to QDA tools.
 
-## Step 7 – Quotations (planned)
+## Step 7 – Quotations (`mmo quote`, T26)
 
-A quotation is what a code, reading, memo, proposition or context statement points to. Planned record (stored with
-the analytic output that uses it):
+A quotation is what a code, reading, memo, proposition or context statement points to (code: `mmo/analysis/quote.py`).
+
+```bash
+uv run mmo quote find nazi-v-ai-dobe kniha "My Američané jsme zvláštní, vyvolený národ"
+uv run mmo quote find nazi-v-ai-dobe kniha "Opakovaná věta." --page 16      # words found more than once
+uv run mmo quote find nazi-v-ai-dobe kniha "…" --segment kniha:s41:2 --format json
+uv run mmo quote check nazi-v-ai-dobe              # every quotation of the study against the current text.md
+uv run mmo quote check nazi-v-ai-dobe --update     # store the new place of quotations that moved
+```
+
+`find` prints the record to put into the analytic file that uses it (fields = slots of the ontology class
+`Quotation`):
 
 ```yaml
 quotation:
   source: kniha
-  start: 1042          # offsets in text.md (inside the segment kniha:s1:2)
-  end: 1101
-  pages: [15]          # from the location comments the span crosses
-  scans: [1]
-  exact: "téma nahoty, kterou vnímám jako upřímný a osvobozující stav"
-  text_md: {variant: book, built: "2026-11-13"}   # which text.md it was taken from
+  start: 70674          # offsets in text.md read with \n line ends, as for segments
+  end: 70716
+  pages: [57]           # printed pages the words run over (location comments the span crosses)
+  scans: [41]           # the originals they run over
+  exact: My Američané jsme zvláštní, vyvolený národ
+  prefix: 'OLA II. ## MĚSTO NA AI PAHORKU „'   # 32 characters before and after, to find it again
+  suffix: ' – Izrael naší doby; neseme arch'
+  text_sha256: f2675f80…                       # which text.md the offsets refer to
 ```
 
-- **Creating:** the analyst (person or model) gives the source and the exact words, optionally a hint where (page or
-  segment). The program finds the words in `text.md`, fills offsets, pages and scans, and refuses the quotation when
-  the words are not there or are there more than once without a hint. A model never writes offsets by itself.
-- **Across a page break:** the words may run over a location comment; the comment is not part of `exact`, and
-  `pages` lists both pages. Whitespace (a line break against a space) is compared loosely; letters, punctuation and
-  `[?]` exactly.
-- **Checking:** before storing, and in a check over a study, the program verifies that `exact` is at
-  `start`–`end`. After `text.md` is rebuilt (a page read again), it finds the words again and updates the offsets;
-  a quotation whose words are gone is reported for the researcher, never silently dropped or moved.
+- **Creating:** the analyst (person or model) gives the source and the words copied from `text.md`, optionally a
+  hint where (`--page`, `--segment`). The program finds the words and refuses them when they are not there
+  (`refused: not in the final text …`) or there more than once without a hint (`found 630 times (pages 15, 16, …)`).
+  Only the text of the places counts: the header, the note and the title before the first location comment are not
+  the source's words. A model never writes offsets by itself.
+- **Compared on a view of the text:** location comments are left out and every run of whitespace is one space, so
+  a line break may be quoted as a space and a quotation may run over a page break: `pages` then lists both pages,
+  `text.md[start:end]` contains the comment, `exact` does not. Letters, punctuation and `[?]` are compared exactly
+  (a missing accent is a different word).
+- **Checking:** `mmo quote check <topic>` reads every analytic file of the study - YAML, JSON, JSONL and the front
+  matter of Markdown files anywhere in the study except `sources/` and `work/` (and `topic.yaml`) - and checks every
+  mapping with `source`, `exact` and `start`:
+  - `ok` - the words are at `start`-`end`;
+  - `moved` - `text.md` was rebuilt and the words are elsewhere, once (or once with the same `prefix` and `suffix`);
+    `--update` writes the new offsets, pages and scans back (YAML is rewritten without its comments);
+  - `gone` - the words are no longer in `text.md`; `ambiguous` - more than once and the surrounding words do not
+    decide; `no text` - the source has no `text.md`. These are for the researcher: nothing is dropped or moved
+    silently. The command exits with 1 while any is left.
+- **Guard:** `mmo quote` reads the text of a study, so for a model it is closed exactly when reading `text.md` is
+  (the position not yet confirmed, `mmo-guard`).
 - **Several per statement:** a code, scheme or proposition carries a list (evidence; for propositions also
   counter-evidence), possibly from several sources.
 - **Standards:** W3C Web Annotation `oa:TextQuoteSelector` (`exact`, with prefix and suffix if needed) plus

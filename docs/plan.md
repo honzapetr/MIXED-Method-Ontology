@@ -295,7 +295,7 @@
 - Built: ADR 0013, `AGENTS.md` traceability rule in both repositories, this section rewritten (T26-T36).
 - Depends on: T25
 
-### T26 – Quotations: find, check, find again
+### T26 – Quotations: find, check, find again (done)
 - Goal: what the analysis points to can be created only from words that are really in `text.md`.
 - Acceptance criteria: `mmo quote find <topic> <source> "<words>" [--page n | --segment id]` prints a quotation
   (source, start, end, pages, scans, exact, which `text.md`) or refuses (not found, found more than once without a
@@ -303,6 +303,8 @@
   verifies every quotation in a study's analytic files and finds moved ones again after `text.md` was rebuilt,
   reporting those whose words are gone; ontology `Quotation` used; format in `docs/source-pipeline.md`.
 - Verify: `uv run pytest tests/test_quote.py && uv run ruff check . && uv run ruff format --check .`
+- Built: `code/mmo/analysis/quote.py`, `mmo quote find` / `check [--update]`; ontology `Quotation` slots `exact`,
+  `prefix`, `suffix`, `pages`, `scans`, `text_sha256`; the guard closes `mmo quote` like `text.md`.
 - Paths: `code/mmo/analysis/`, `code/mmo/cli.py`, `tests/`, `docs/`, `../MIXED-Method-Ontology/ontology/`
 - Depends on: T24
 

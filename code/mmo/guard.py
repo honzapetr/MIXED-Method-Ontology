@@ -292,6 +292,33 @@ def looks_like_path(word: str) -> bool:
     ) and "://" not in word
 
 
+MMO_READS_TEXT = {"quote"}  # `mmo` commands that read the text of a study: `mmo quote <action> <topic> ...`
+
+
+def check_mmo(words: list[str], root: Path, model_id: str | None) -> dict | None:
+    """`mmo quote` reads a study's `text.md`, so it is closed exactly when reading `text.md` is."""
+    program = Path(words[0]).name.lower().removesuffix(".exe")
+    if program == "mmo":
+        args = words[1:]
+    elif program == "uv" and words[1:3] == ["run", "mmo"]:
+        args = words[3:]
+    else:
+        return None
+    if len(args) < 3 or args[0] not in MMO_READS_TEXT:
+        return None
+    slug = Path(args[2]).name
+    if not (root / "topics" / slug / "topic.yaml").is_file():
+        return None
+    ok, missing = study_open(root, slug, model_id)
+    if ok:
+        return None
+    return decision(
+        "deny",
+        f"`mmo {args[0]}` reads the text of the study {slug}, which stays closed until the steps in AGENTS.md are "
+        f"done and confirmed: {missing}.",
+    )
+
+
 def check_bash(command: str, cwd: Path, root: Path, model_id: str | None) -> dict | None:
     here = cwd
     for words in bash_tokens(command):
@@ -302,6 +329,8 @@ def check_bash(command: str, cwd: Path, root: Path, model_id: str | None) -> dic
             here = target
             continue
         program = Path(words[0]).name.lower()
+        if found := check_mmo(words, root, model_id):
+            return found
         recursive = (
             program in ALWAYS_RECURSIVE
             or (
