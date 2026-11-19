@@ -1,46 +1,40 @@
 # How we develop the environment
 
 > The working rules while the analysis environment is being built: what goes where. Agents and the owner follow
-> them in every session. Status: agreed with the owner 2026-11-14 (T9).
+> them in every session. Agreed with the owner 2026-11-14 (T9); since T15 the two lines are two repositories
+> (ADR 0010, ADR 0011).
 
-## Two lines, kept apart
+## Two lines, two repositories
 
-1. **Building the environment** – the methods, the program, the ontology and the project's memory of how it is
-   built: `methods/`, `code/`, `tests/`, `ontology/`, `docs/`.
-2. **The concrete analysis** – a study with its purpose, questions, sources, memos and results:
-   `topics/<slug>/`.
+1. **Building the environment** – this workshop: the program `mmo`, its tests, tools and the project's memory of
+   how it is built (`code/`, `tests/`, `tools/`, `docs/`).
+2. **The environment and the research** – `../MIXED-Method-Ontology/`: methods, ontology, the analyst's
+   instructions, skills and manuals, the analysts' profiles, and the studies in `topics/<slug>/`.
 
-The environment is built by walking one study through it (SKAD on `topics/nazi-v-ai-dobe/`). What the study shows
-about the environment is written in line 1; what it shows about the book and its discourse stays in line 2.
-Nothing about a concrete study goes to `docs/` or `methods/`; nothing about how a method works in general goes to
-`topics/`.
+The environment is built by walking one study through it (SKAD on `topics/nazi-v-ai-dobe/` of the research
+environment), tried in test copies (`docs/test-copies.md`). What the study shows about the environment is written
+here as a task; what it shows about the book and its discourse stays in the study. Nothing about a concrete study
+goes to this workshop.
 
 ## What goes where
 
 | What | Where |
 | :--- | :--- |
-| A new method while it is developed | `methods/<id>/` copied from `methods/_template/`, `status: draft` |
-| Literature and findings about a method | `methods/<id>/sources.md`, `methods/<id>/research-design.md` |
-| The method's procedure, rules for agents, connected applications | `methods/<id>/procedure.md`, `agent-rules.md`, `applications.md` |
-| Methodology shared by methods (overview, comparison) | `methods/foundations.md` – never instead of a method's own text |
 | What the owner wants | `docs/brief.md` |
 | How the environment will work (specification) | `docs/spec.md` |
-| How a built part of the environment works (manual) | `docs/environment/` |
 | Tasks and their record | `docs/plan.md`, `docs/progress.md` |
 | The owner's decisions and answers | `docs/answers.md` |
 | A significant decision with its reasons | `docs/adr/` |
+| How sources become `text.md`, segments and quotations (for the builder) | `docs/source-pipeline.md` |
+| Test copies of the research environment | `docs/test-copies.md`, `tools/new_test_env.py` |
 | The owner's own notes while building | `docs/owner-notes.md` (written by the owner, in Czech – the one exception to English docs) |
 | Program and its tests | `code/mmo/`, `tests/` |
-| Schema and mapping to standards | `ontology/` |
-| A study: title, purpose, questions, goals, chosen method, sources | `topics/<slug>/topic.yaml` |
-| A source of the study and information about it | `topics/<slug>/sources/<id>/` (`source.yaml`, `notes.md`, `files/`, `text.md`) |
-| Supplementary material about a source (reviews, interviews, announcements) | a source of its own with `role: context` |
-| Reflexivity in general and per method | `methods/reflexivity.md`, `methods/<id>/reflexivity.md` |
-| Profiles and journals of analysts (researchers, models) | `docs/environment/analysts/<id>.md` – each written by the analyst |
-| The analysts' positions and reflexive notes in a study | `topics/<slug>/memos/` (`reflexive`) |
-| Notes, impressions and memos of the study | `topics/<slug>/memos/` (format `docs/environment/memos.md`) |
-| Results of the analysis | `topics/<slug>/` (runs and graph, planned) |
 | One-off scripts and temporary files | `scratch/T<n>/` (git-ignored) |
+| Methods (one folder each, from `methods/_template/`), shared methodology, reflexivity | research environment: `methods/` |
+| Schema and mapping to standards | research environment: `ontology/` |
+| Manuals for the researcher and the analyst | research environment: `docs/`, `analysts/README.md` |
+| Profiles of analysts (researchers, models) | research environment: `analysts/<id>.md` – each written by the analyst |
+| A study: topic, sources, memos, positions, analysis | research environment: `topics/<slug>/` |
 
 ## Writing about methods
 
@@ -51,7 +45,9 @@ appears in another method. Agents do not merge or shorten method texts, codes or
 ## Order of work in a task
 
 The general rules (branch per task, commits, tests, protected paths) are in `AGENTS.md`. In addition:
-- a finding about a method goes to its folder in the same task in which it is found;
+- a task that changes the research environment does it on a branch of the same name there, and both are merged
+  together; never check out an old commit there (the studies' input data are git-ignored and would be overwritten);
+- a finding about a method goes to its folder in the research environment in the same task in which it is found;
 - an owner's answer goes to `docs/answers.md` before it is acted on;
 - a step of the study that teaches something about the environment is recorded in both lines: the result in the
-  topic, the lesson for the environment in `methods/` or `docs/`.
+  study, the lesson for the environment as a task here.

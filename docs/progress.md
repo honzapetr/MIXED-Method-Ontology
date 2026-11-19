@@ -506,3 +506,18 @@
   in `methods/reflexivity.md` explains the old word.
 - Next: T15 (clean the workshop; `tests/test_methods.py` then reads the research environment and its
   `researcher_decides`), then T32.
+
+## T15 – 2026-11-19
+- Done: the workshop holds no research. Removed `methods/`, `ontology/`, `topics/`, `docs/environment/` and the
+  analyst skills `ingest-sources`, `transcribe-pages` (all in the research environment; the workshop-only sample
+  topic `sample-masaryk-suicide` and two old position memos stay in git history). Untracked leftovers of `topics/`
+  (all present in the research environment) and the empty sandbox `../studie/` moved to `scratch/T15/`, not
+  deleted - can go when the owner agrees. `mmo study init` and `code/mmo/core/study.py` removed; the tests of the
+  topic argument as a path kept (`tests/core/test_study_folder.py`, fixture `mini-studie`). `tests/test_methods.py`
+  (now `researcher_decides`) and `tests/test_ontology.py` read `../MIXED-Method-Ontology/` and skip without it.
+  Rewritten for the builder: `AGENTS.md` (two repositories, layout here, CLI with `quote`), `README.md`,
+  `docs/README.md`, `docs/development.md`, `docs/spec.md` (layout), link in `docs/brief.md`. `CLAUDE.md` needed no
+  change.
+- Verified: `uv run pytest` – 119 passed; `uv run ruff check . && uv run ruff format --check .` clean;
+  `python tools/agents_sync.py --check` clean.
+- Next: merge T25c + T15 (both repositories), then T32.

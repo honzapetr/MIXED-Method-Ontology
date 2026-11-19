@@ -1,15 +1,21 @@
-"""Consistency checks of the method folders in methods/<id>/ (layout: methods/README.md)."""
+"""Consistency checks of the method folders of the research environment (`../MIXED-Method-Ontology/methods/`).
+
+The methods live in the research environment (ADR 0011); the workshop checks them when the two repositories sit
+side by side, as on the owner's machine. Where the research environment is absent (CI) the checks are skipped.
+"""
 
 from pathlib import Path
 
 import pytest
 import yaml
 
-ROOT = Path(__file__).resolve().parent.parent
-METHODS_DIR = ROOT / "methods"
+ENVIRONMENT = Path(__file__).resolve().parents[2] / "MIXED-Method-Ontology"
+METHODS_DIR = ENVIRONMENT / "methods"
+if not METHODS_DIR.is_dir():
+    pytest.skip("the research environment is not next to the workshop", allow_module_level=True)
 DOCUMENTS = ("research-design.md", "procedure.md", "agent-rules.md", "applications.md", "sources.md", "reflexivity.md")
 STATUSES = {"draft", "testing", "stable"}
-# memo types of docs/environment/memos.md
+# memo types of docs/memos.md of the research environment
 MEMO_TYPES = {
     "context",
     "first-impression",
@@ -61,7 +67,7 @@ def test_method_module(folder: Path) -> None:
     phase_ids = [p["id"] for p in method["phases"]]
     assert len(phase_ids) == len(set(phase_ids))
     for phase in method["phases"]:
-        for key in ("goal", "input", "output", "memos", "model_role", "human_gate"):
+        for key in ("goal", "input", "output", "memos", "model_role", "researcher_decides"):
             assert phase.get(key), f"{folder.name}/{phase['id']}: missing {key}"
         assert set(phase.get("allowed_relations", [])) <= relation_ids
         assert set(phase["memos"]) <= MEMO_TYPES, f"{folder.name}/{phase['id']}: unknown memo type"

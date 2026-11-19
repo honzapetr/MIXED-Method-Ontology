@@ -109,7 +109,7 @@
 - Paths: new repository `../MIXED-Method-Ontology/`
 - Depends on: T13
 
-### T15 – Clean the workshop
+### T15 – Clean the workshop (done)
 - Goal: the workshop holds no research and instructs only the builder.
 - Acceptance criteria: `methods/`, `ontology/`, `topics/`, `docs/environment/` and the analyst skills removed;
   `mmo study init` (`code/mmo/core/study.py`, `tests/core/test_study.py`) and `docs/environment/studies.md` removed,
@@ -120,6 +120,9 @@
 - Verify: `uv run pytest && uv run ruff check . && uv run ruff format --check . && python tools/agents_sync.py --check`
 - Paths: `methods/`, `ontology/`, `topics/`, `docs/`, `code/mmo/`, `tests/`, `AGENTS.md`, `CLAUDE.md`, `README.md`,
   `.agents/`, `.claude/`
+- Built (2026-11-19): research folders and the analyst skills removed (kept in the research environment and in
+  git history); `mmo study init` removed, the path tests kept in `tests/core/test_study_folder.py`; method and
+  ontology tests read `../MIXED-Method-Ontology/` and skip without it (CI); builder docs rewritten.
 - Depends on: T14
 
 ### T16 – Model profiles from sources (research environment)

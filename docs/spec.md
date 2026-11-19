@@ -7,7 +7,7 @@
 
 | Concept | Meaning |
 | :--- | :--- |
-| Topic | A long-lived research project: research questions, goals, sources, analyses, graph. One folder in `topics/`. |
+| Topic | A long-lived research project (a study): research questions, goals, sources, analyses. One folder in `topics/` of the research environment. |
 | Research question | A question of the topic. A topic usually has several. |
 | Goal | What the author and the agent want to find out next; changes over time, every change recorded. |
 | Source | A book, interview, field note, document or dataset, with metadata and provenance. |
@@ -15,15 +15,18 @@
 | Final text | `text.md` of a source: the one text the analysis reads, the same form for every kind of original (ADR 0012). |
 | Segment | A paragraph of the final text with its place (source, scan, page) and character offsets in `text.md`; a rebuildable index for reading, batching and counting. |
 | Quotation | What the analysis points to: the exact words of a passage with source, pages and offsets in `text.md`; any length, may cross a page break; made and checked by `mmo quote` (T26). |
-| Method | An analytical method, one folder `methods/<id>/`: research design, procedure, rules for agents, applications, sources, and `method.yaml` (phases, code types, relation types, outputs) for agents and tests. |
+| Method | An analytical method, one folder `methods/<id>/` of the research environment: research design, procedure, rules for agents, applications, sources, and `method.yaml` (phases, code types, relation types, outputs) for agents and tests. |
 | Analysis run **(planned)** | A step of a model: method phase × questions × chosen passages → proposals in `analysis/`. |
 | Proposal **(planned)** | What a model writes - a code, reading, category, theme, relation or memo - with status `proposed` / `accepted` / `edited` / `rejected` / `superseded`, provenance and its quotations; the researcher's own records are not proposals (ADR 0013). |
 
 ## Repository layout
 
-`code/mmo/` the program (ADR 0007: `core/` topic and sources, later graph and analysis; `ingest/` OCR, page
-numbers, reading order, segments) · `topics/` research data, the only data folder · `methods/` method folders ·
-`ontology/` schema and mapping · `docs/` project memory · `tests/` · `tools/`.
+Two repositories (ADR 0010, ADR 0011). **Workshop** (this one): `code/mmo/` the program (ADR 0007: `core/` topic
+and sources, `ingest/` OCR, page numbers, reading order, final text, segments, `analysis/` quotations and later the
+analytic layer, `guard.py` the analyst's hooks) · `docs/` project memory · `tests/` · `tools/`. **Research
+environment** `../MIXED-Method-Ontology/`: `topics/` the studies, the only data folder · `methods/` method folders ·
+`ontology/` schema and mapping · `analysts/` profiles · `docs/` manuals for the researcher and the analyst ·
+`AGENTS.md` and skills of the analyst; it uses `mmo` from the workshop.
 
 ## Topic folder
 
@@ -100,7 +103,7 @@ The owner's infrastructure is described in the `honzapetr/aiops-homelab` reposit
 
 ## Ontology (draft)
 
-`ontology/schema/mmo.yaml` is a LinkML schema of the core classes. `ontology/mapping.md` maps them to SKOS, W3C Web
+`ontology/schema/mmo.yaml` (research environment) is a LinkML schema of the core classes. `ontology/mapping.md` maps them to SKOS, W3C Web
 Annotation, PROV-O, DDI-CDI and REFI-QDA. Versions and exact scope of each standard must be verified before the
 mapping is relied on.
 
@@ -119,7 +122,7 @@ mapping is relied on.
 
 ## Research design in a topic (planned)
 
-How methods link purpose, questions and theory: `methods/foundations.md` and `research-design.md` of each method.
+How methods link purpose, questions and theory: `methods/foundations.md` (research environment) and `research-design.md` of each method.
 In a topic this means (proposal, T8):
 
 1. **The purpose is recorded, not implied.** A topic states why it exists (problem, motive, for whom) and the
@@ -136,11 +139,11 @@ In a topic this means (proposal, T8):
 6. **Ontology:** today it has `ResearchQuestion` and `Goal`; it would need the purpose and position of the topic,
    a conceptual framework with sensitising concepts, and `Theory` / `Proposition` linked to questions and evidence.
 7. **Reflexivity (T10):** every analyst of a topic – the researcher and each model – has a profile
-   (`docs/environment/analysts/`) and a positionality memo at framing, writes reflexive notes when a trigger occurs
+   (`analysts/` of the research environment) and a position in the study at framing, writes reflexive notes when a trigger occurs
    and revisits the memo at synthesis (`methods/reflexivity.md`). The ontology would need `Analyst` (person or
    model version, PROV-O agent) linked to its profile, memos and steps.
 
-Memos are part of every method; format and use: `docs/environment/memos.md`.
+Memos are part of every method; format and use: `docs/memos.md` of the research environment.
 
 ## Human steering (planned)
 

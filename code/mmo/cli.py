@@ -14,7 +14,6 @@ from mmo.analysis.quote import MOVED, OK, QuoteError, check_study, quote
 from mmo.config import Settings
 from mmo.core.check import check_source
 from mmo.core.migrate import migrate_topic, needs_migration
-from mmo.core.study import init_study
 from mmo.core.topic import ROLES, SOURCE_KINDS, Topic, sha256_file
 from mmo.ingest.clean import clean_record, import_record, merge_variants
 from mmo.ingest.compare import cer
@@ -77,13 +76,6 @@ def load_topic(args: argparse.Namespace) -> Topic:
 def cmd_topic_new(args: argparse.Namespace) -> int:
     topic = Topic.create(args.topics, args.slug, args.title)
     print(f"created {topic.root}")
-    return 0
-
-
-def cmd_study_init(args: argparse.Namespace) -> int:
-    topic = init_study(args.path, args.title, args.method, git=not args.no_git)
-    print(f"created study {topic.root} (method {args.method})")
-    print(f"next: cd {topic.root}; uv sync; uv run mmo source check .")
     return 0
 
 
@@ -406,16 +398,6 @@ def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="mmo", description=__doc__)
     parser.add_argument("--topics", type=Path, default=Path("topics"), help="folder with topics (default: topics)")
     sub = parser.add_subparsers(dest="command", required=True)
-
-    study = sub.add_parser("study", help="studies in repositories of their own").add_subparsers(
-        dest="action", required=True
-    )
-    init = study.add_parser("init", help="create a study next to the environment: topic, analyst instructions, git")
-    init.add_argument("path", type=Path, help="new or empty folder outside the environment, e.g. ../studie/<slug>")
-    init.add_argument("--title", required=True)
-    init.add_argument("--method", required=True, help="id of a method folder of the environment, e.g. skad")
-    init.add_argument("--no-git", action="store_true", help="do not run git init")
-    init.set_defaults(func=cmd_study_init)
 
     topic = sub.add_parser("topic", help="topics").add_subparsers(dest="action", required=True)
     new = topic.add_parser("new", help="create a topic folder")
