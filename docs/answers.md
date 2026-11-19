@@ -242,3 +242,12 @@
 - Classic RAG is not used for interpretation, which reads passages in sequence with their context.
 - Narratives that relate without similar words are found through interpretation (codes of story elements, schemes,
   dimensions) and graph procedures over the confirmed analysis (T38).
+
+## 2026-11-19 – The plan as a whole (amendment of ADR 0013)
+
+- Statuses of a proposal: `proposed`, `accepted`, `edited`, `rejected`, `superseded`.
+- Memos and positions stay in `memos/` and `positions/`; `analysis/` holds codebook, codings, relations, proposals,
+  history.
+- The methods' "gates" are renamed to what they are - decisions of the researcher (`researcher_decides`,
+  "Researcher decides:"); the method texts are otherwise kept word for word.
+- T15 (clean the workshop) comes before T32.

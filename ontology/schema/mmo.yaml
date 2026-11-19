@@ -21,12 +21,20 @@ imports:
 
 enums:
   ProposalStatus:
-    description: Every analytical statement is proposed by a model or a person and decided by a person.
+    description: >-
+      What a model proposes waits for the researcher, who accepts, edits or rejects it (ADR 0013); the researcher's
+      own records are not proposals and need no decision.
     permissible_values:
       proposed:
-      confirmed:
+        description: written by a model, not yet decided
+      accepted:
+        description: accepted by the researcher as proposed
+      edited:
+        description: accepted with changes by the researcher (the change is kept, to see what came from whom)
       rejected:
+        description: rejected by the researcher, with a reason
       superseded:
+        description: replaced by a later record (a rename, merge or split), kept for the history
   SourceKind:
     permissible_values:
       book:

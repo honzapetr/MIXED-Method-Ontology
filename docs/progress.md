@@ -493,3 +493,16 @@
 - Git on Google Drive: a stale `.git/index.lock` and index entries with a wrong size (16384 instead of the file's
   size) made identical files look modified; fixed by removing the stale lock and `git add` of the identical files.
 - Next: T32 (analysis store and the free toolbox).
+
+## T25c – 2026-11-19 – The plan checked as a whole
+- Found and resolved contradictions with ADR 0013: phase gates and the graph as files of record in `docs/spec.md`,
+  three vocabularies of proposal statuses, memos in `analysis/`, "gates" in the method texts; gaps: setting the phase
+  (`mmo phase`, T33), machine indexes in git and `--carry` (T30, T37), hand edits (T32), offsets in the REFI-QDA
+  export (T34).
+- Workshop: `docs/spec.md` (concepts, topic folder, analysis and graph, human steering), ADR 0013 amendment, plan,
+  ontology `ProposalStatus` (both copies). Research environment: `researcher_decides` in every `method.yaml`,
+  "Researcher decides:" in the procedures, "decision of the researcher" in the reflexivity texts, analysts' README
+  and template, skill `state-position` (synced); the confirmed profile of `claude-opus-5-5` is left as it is, a note
+  in `methods/reflexivity.md` explains the old word.
+- Next: T15 (clean the workshop; `tests/test_methods.py` then reads the research environment and its
+  `researcher_decides`), then T32.
