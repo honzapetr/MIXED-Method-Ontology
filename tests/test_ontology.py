@@ -2,9 +2,14 @@
 
 from pathlib import Path
 
+import pytest
 import yaml
 
-ROOT = Path(__file__).resolve().parent.parent
+# the ontology lives in the research environment (ADR 0011); skipped where it is absent (CI)
+ENVIRONMENT = Path(__file__).resolve().parents[2] / "MIXED-Method-Ontology"
+if not (ENVIRONMENT / "ontology").is_dir():
+    pytest.skip("the research environment is not next to the workshop", allow_module_level=True)
+ROOT = ENVIRONMENT
 BUILTIN_TYPES = {"string", "integer", "float", "boolean", "datetime", "date", "uriorcurie", "uri"}
 
 

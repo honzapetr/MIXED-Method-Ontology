@@ -233,3 +233,21 @@
   contrast. The key is set per study.
 - The model's orientation reading covers the whole book, marked as first impressions, with a reflexive note.
 - The researcher reads too, but the researcher's reading is never a condition for the model's reading.
+
+## 2026-11-19 – Similarity search and graph procedures
+
+- Semantic similarity (embeddings of segments) is a tool that finds candidates - for constant comparison, contrast
+  and reception - never a relation of the analysis; a kept candidate gets its reason in a memo or a proposal. Index
+  as a view, local multilingual model, recorded, a trigger of a reflexive note (T37).
+- Classic RAG is not used for interpretation, which reads passages in sequence with their context.
+- Narratives that relate without similar words are found through interpretation (codes of story elements, schemes,
+  dimensions) and graph procedures over the confirmed analysis (T38).
+
+## 2026-11-19 – The plan as a whole (amendment of ADR 0013)
+
+- Statuses of a proposal: `proposed`, `accepted`, `edited`, `rejected`, `superseded`.
+- Memos and positions stay in `memos/` and `positions/`; `analysis/` holds codebook, codings, relations, proposals,
+  history.
+- The methods' "gates" are renamed to what they are - decisions of the researcher (`researcher_decides`,
+  "Researcher decides:"); the method texts are otherwise kept word for word.
+- T15 (clean the workshop) comes before T32.

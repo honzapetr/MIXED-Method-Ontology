@@ -1,7 +1,8 @@
 # Docs
 
-Documentation of the environment. Nothing about a concrete study belongs here – studies live in `topics/<slug>/`,
-methods in `methods/` (`development.md`).
+The project's memory: how the environment is built. Nothing about a concrete study belongs here, and nothing the
+analyst reads: methods, ontology, studies and the analyst's manuals live in the research environment
+`../MIXED-Method-Ontology/` (`development.md`).
 
 ## How we build the environment (project memory)
 
@@ -18,11 +19,8 @@ methods in `methods/` (`development.md`).
 | `test-copies.md` | test copies of the research environment in `zkusebna/`; carrying a study's work from copy to copy (`--carry`) |
 | `source-pipeline.md` | how every kind of source becomes `text.md`, segments and quotations: steps, formats, built and planned |
 
-## How the environment works (manual)
+## How the environment works (manuals)
 
-| File | Content | Status |
-| :--- | :--- | :--- |
-| `environment/studies.md` | studies in repositories of their own: `mmo study init`, the sandbox, the test study | built |
-| `environment/source-preparation.md` | bringing new material in: OCR of page photos, reading order, final text, segments | built |
-| `environment/memos.md` | memos: where they live, format, how agents use them | proposal |
-| `environment/analysts/` | researchers and models as analysts: profiles, journals, when to write a reflexive note | proposal |
+The manuals for the researcher and the analyst live in the research environment, next to what they describe:
+`docs/source-preparation.md` (bringing material in, the final text, segments, quotations), `docs/memos.md`,
+`analysts/README.md` (profiles, positions, reflexive notes), `methods/README.md`.

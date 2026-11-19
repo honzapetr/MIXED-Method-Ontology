@@ -485,3 +485,39 @@
 - Verified: `uv run pytest` – 125 passed; `uv run ruff check . && uv run ruff format --check .` clean.
 - Next: T32 (analysis store and the free toolbox) - its layout decides where quotations live; `mmo quote check`
   already finds them in any YAML/JSON there. `AGENTS.md` CLI lines do not list `quote` yet (protected path).
+
+## 2026-11-19 – Plan: T37 similarity index, T38 graph procedures
+- Owner approved: T37 (embeddings of segments as a finder of candidates, after T29) and T38 (graph procedures over
+  the confirmed analysis, after T30); classic RAG not used for interpretation. Order in the plan's Analysis note.
+- T26 merged (PR #2, b55a4a6); research environment `main` moved without a checkout (b27eb43).
+- Git on Google Drive: a stale `.git/index.lock` and index entries with a wrong size (16384 instead of the file's
+  size) made identical files look modified; fixed by removing the stale lock and `git add` of the identical files.
+- Next: T32 (analysis store and the free toolbox).
+
+## T25c – 2026-11-19 – The plan checked as a whole
+- Found and resolved contradictions with ADR 0013: phase gates and the graph as files of record in `docs/spec.md`,
+  three vocabularies of proposal statuses, memos in `analysis/`, "gates" in the method texts; gaps: setting the phase
+  (`mmo phase`, T33), machine indexes in git and `--carry` (T30, T37), hand edits (T32), offsets in the REFI-QDA
+  export (T34).
+- Workshop: `docs/spec.md` (concepts, topic folder, analysis and graph, human steering), ADR 0013 amendment, plan,
+  ontology `ProposalStatus` (both copies). Research environment: `researcher_decides` in every `method.yaml`,
+  "Researcher decides:" in the procedures, "decision of the researcher" in the reflexivity texts, analysts' README
+  and template, skill `state-position` (synced); the confirmed profile of `claude-opus-5-5` is left as it is, a note
+  in `methods/reflexivity.md` explains the old word.
+- Next: T15 (clean the workshop; `tests/test_methods.py` then reads the research environment and its
+  `researcher_decides`), then T32.
+
+## T15 – 2026-11-19
+- Done: the workshop holds no research. Removed `methods/`, `ontology/`, `topics/`, `docs/environment/` and the
+  analyst skills `ingest-sources`, `transcribe-pages` (all in the research environment; the workshop-only sample
+  topic `sample-masaryk-suicide` and two old position memos stay in git history). Untracked leftovers of `topics/`
+  (all present in the research environment) and the empty sandbox `../studie/` moved to `scratch/T15/`, not
+  deleted - can go when the owner agrees. `mmo study init` and `code/mmo/core/study.py` removed; the tests of the
+  topic argument as a path kept (`tests/core/test_study_folder.py`, fixture `mini-studie`). `tests/test_methods.py`
+  (now `researcher_decides`) and `tests/test_ontology.py` read `../MIXED-Method-Ontology/` and skip without it.
+  Rewritten for the builder: `AGENTS.md` (two repositories, layout here, CLI with `quote`), `README.md`,
+  `docs/README.md`, `docs/development.md`, `docs/spec.md` (layout), link in `docs/brief.md`. `CLAUDE.md` needed no
+  change.
+- Verified: `uv run pytest` – 119 passed; `uv run ruff check . && uv run ruff format --check .` clean;
+  `python tools/agents_sync.py --check` clean.
+- Next: merge T25c + T15 (both repositories), then T32.

@@ -7,23 +7,26 @@
 
 | Concept | Meaning |
 | :--- | :--- |
-| Topic | A long-lived research project: research questions, goals, sources, analyses, graph. One folder in `topics/`. |
+| Topic | A long-lived research project (a study): research questions, goals, sources, analyses. One folder in `topics/` of the research environment. |
 | Research question | A question of the topic. A topic usually has several. |
 | Goal | What the author and the agent want to find out next; changes over time, every change recorded. |
 | Source | A book, interview, field note, document or dataset, with metadata and provenance. |
 | Page | One scanned image of a source, with its OCR results per backend. |
 | Final text | `text.md` of a source: the one text the analysis reads, the same form for every kind of original (ADR 0012). |
 | Segment | A paragraph of the final text with its place (source, scan, page) and character offsets in `text.md`; a rebuildable index for reading, batching and counting. |
-| Quotation **(planned)** | What the analysis points to: the exact words of a passage with source, pages and offsets in `text.md`; any length, may cross a page break; checked by the program. |
-| Method | An analytical method, one folder `methods/<id>/`: research design, procedure, rules for agents, applications, sources, and `method.yaml` (phases, code types, relation types, outputs) for agents and tests. |
-| Analysis run **(planned)** | Method × questions × selected segments → proposals in the graph. |
-| Proposal **(planned)** | A code, category, theme, relation or memo with status `proposed` / `confirmed` / `rejected`, author, provenance and its quotations. |
+| Quotation | What the analysis points to: the exact words of a passage with source, pages and offsets in `text.md`; any length, may cross a page break; made and checked by `mmo quote` (T26). |
+| Method | An analytical method, one folder `methods/<id>/` of the research environment: research design, procedure, rules for agents, applications, sources, and `method.yaml` (phases, code types, relation types, outputs) for agents and tests. |
+| Analysis run **(planned)** | A step of a model: method phase × questions × chosen passages → proposals in `analysis/`. |
+| Proposal **(planned)** | What a model writes - a code, reading, category, theme, relation or memo - with status `proposed` / `accepted` / `edited` / `rejected` / `superseded`, provenance and its quotations; the researcher's own records are not proposals (ADR 0013). |
 
 ## Repository layout
 
-`code/mmo/` the program (ADR 0007: `core/` topic and sources, later graph and analysis; `ingest/` OCR, page
-numbers, reading order, segments) · `topics/` research data, the only data folder · `methods/` method folders ·
-`ontology/` schema and mapping · `docs/` project memory · `tests/` · `tools/`.
+Two repositories (ADR 0010, ADR 0011). **Workshop** (this one): `code/mmo/` the program (ADR 0007: `core/` topic
+and sources, `ingest/` OCR, page numbers, reading order, final text, segments, `analysis/` quotations and later the
+analytic layer, `guard.py` the analyst's hooks) · `docs/` project memory · `tests/` · `tools/`. **Research
+environment** `../MIXED-Method-Ontology/`: `topics/` the studies, the only data folder · `methods/` method folders ·
+`ontology/` schema and mapping · `analysts/` profiles · `docs/` manuals for the researcher and the analyst ·
+`AGENTS.md` and skills of the analyst; it uses `mmo` from the workshop.
 
 ## Topic folder
 
@@ -33,8 +36,11 @@ writes is kept apart from what the machine produces.
 ```
 topics/<slug>/
   topic.yaml                  # title, questions, goals, methods: [<method id>], sources: [<id>, ...]
-  memos/                      # topic memos, research journal (written by the researcher)
-  graph/                      # (planned) sorted Turtle per named graph
+  memos/                      # memos of the study (researcher and models; Markdown with front matter)
+  positions/                  # position of each analyst in the study (ADR 0009)
+  analysis/                   # (planned, T32) source of truth of the analysis: codebook, codings, relations,
+                              #   proposals, history - text files in git, written through mmo
+  graph/                      # (planned, T30) a view: Turtle and index built from analysis/, not in git
   sources/<id>/
     source.yaml               # RESEARCHER: metadata, attributes, links, page-number fixes
     notes.md                  # RESEARCHER: context memo - why the source is here, how it came about
@@ -97,21 +103,26 @@ The owner's infrastructure is described in the `honzapetr/aiops-homelab` reposit
 
 ## Ontology (draft)
 
-`ontology/schema/mmo.yaml` is a LinkML schema of the core classes. `ontology/mapping.md` maps them to SKOS, W3C Web
+`ontology/schema/mmo.yaml` (research environment) is a LinkML schema of the core classes. `ontology/mapping.md` maps them to SKOS, W3C Web
 Annotation, PROV-O, DDI-CDI and REFI-QDA. Versions and exact scope of each standard must be verified before the
 mapping is relied on.
 
-## Graph and versioning (planned)
+## Analysis, graph and versioning (planned; ADR 0013)
 
-- The graph is RDF. Files of record are sorted Turtle per named graph in `topics/<slug>/graph/`; an Oxigraph store is
-  a rebuildable index for SPARQL queries.
-- Git gives versions: `main` = confirmed state of the topic, a branch = another angle, another method or a new batch
-  of material before review; merge = accept. PROV-O records why something changed.
-- Every model call stores the model, prompt version and input segments.
+- **Free analysis on a fixed core.** `mmo` checks integrity, never the method: a quotation is the exact words of
+  `text.md`; every record has author and time (and model, prompt version for a model); what a model writes is a
+  proposal until the researcher accepts, edits or rejects it; nothing disappears without a trace. A method's
+  vocabulary and phases orient the work; strictness is set per study in `topic.yaml`.
+- **Source of truth:** text files in `topics/<slug>/analysis/` (T32), plus `memos/` and `positions/`. Git keeps their
+  history; acceptance is the status of a proposal, not a merge of branches.
+- **Views**, built again at any time, never edited and not in git: the RDF graph (sorted Turtle and an Oxigraph
+  index, T30) with its procedures (T38) and browser (T35), the REFI-QDA export (T34), the similarity index of
+  segments (T37). Machine indexes are never carried between test copies.
+- Every model call stores the model, prompt version and input quotations.
 
 ## Research design in a topic (planned)
 
-How methods link purpose, questions and theory: `methods/foundations.md` and `research-design.md` of each method.
+How methods link purpose, questions and theory: `methods/foundations.md` (research environment) and `research-design.md` of each method.
 In a topic this means (proposal, T8):
 
 1. **The purpose is recorded, not implied.** A topic states why it exists (problem, motive, for whom) and the
@@ -128,17 +139,19 @@ In a topic this means (proposal, T8):
 6. **Ontology:** today it has `ResearchQuestion` and `Goal`; it would need the purpose and position of the topic,
    a conceptual framework with sensitising concepts, and `Theory` / `Proposition` linked to questions and evidence.
 7. **Reflexivity (T10):** every analyst of a topic – the researcher and each model – has a profile
-   (`docs/environment/analysts/`) and a positionality memo at framing, writes reflexive notes when a trigger occurs
+   (`analysts/` of the research environment) and a position in the study at framing, writes reflexive notes when a trigger occurs
    and revisits the memo at synthesis (`methods/reflexivity.md`). The ontology would need `Analyst` (person or
    model version, PROV-O agent) linked to its profile, memos and steps.
 
-Memos are part of every method; format and use: `docs/environment/memos.md`.
+Memos are part of every method; format and use: `docs/memos.md` of the research environment.
 
 ## Human steering (planned)
 
-Framing (questions, goals, sensitising concepts, seed codebook) · review of proposals (confirm, edit, merge,
-reject with reason) · steering memos fed into later steps · choice of data for the next round · locking the
-codebook (deductive mode). Gates between method phases: the next phase starts from confirmed state only.
+Framing (questions, goals, sensitising concepts, seed codebook) · review of proposals (accept, edit, reject with a
+reason) · the researcher's own coding and memos, never gated · steering memos fed into later steps · choice of data for
+the next round · a fixed codebook when the study asks for one (deductive mode). Phases of a method are a map: the
+researcher says where the study is (`mmo phase`, T33) and moves freely; the phase decides only what a model may
+propose. What the method calls the researcher's decisions (`researcher_decides`) are decisions, not locks.
 
 ## Out of scope now
 

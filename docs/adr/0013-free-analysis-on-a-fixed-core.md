@@ -82,3 +82,20 @@ phases and prompts for models, checked by `mmo method check`. A method that need
   `Quotation`).
 - The REFI-QDA export loses what the standard cannot carry (status of a proposal, model, method types); method types
   are mapped to code groups or colours.
+
+## Amendment (2026-11-19, owner)
+
+A review of the plan as a whole found places where earlier texts contradicted this decision; resolved:
+
+- **Statuses of a proposal:** `proposed`, `accepted`, `edited` (accepted with changes, kept to see what came from
+  whom), `rejected` (with a reason), `superseded` (replaced by a rename, merge or split). The ontology's
+  `ProposalStatus` and `docs/spec.md` use them.
+- **Memos and positions stay where they are**, `topics/<slug>/memos/` and `positions/`; `analysis/` holds the
+  codebook, codings, relations, proposals and the history.
+- **Phases:** the researcher sets where the study is (`mmo phase`, T33) and moves freely; the phase only limits what
+  a model may propose. `docs/spec.md` no longer says that a phase starts from confirmed state only.
+- **The method's "gates"** are renamed: `researcher_decides` in `method.yaml`, "Researcher decides:" in the
+  procedures, "decision of the researcher" in the reflexivity texts - what the researcher decides, never a lock.
+- **Graph:** a view, not files of record; acceptance is the status of a proposal, not a merge of git branches.
+- **Machine indexes** (graph, similarity) are kept out of git and never carried between test copies.
+- **Hand edits** of `analysis/` by the researcher are allowed; `mmo` notices them and records them in the history.
