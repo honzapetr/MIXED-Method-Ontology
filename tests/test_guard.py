@@ -124,6 +124,19 @@ def test_content_search_over_closed_data(root):
     assert _decide(root, "Grep", pattern="x") is None
 
 
+def test_mmo_quote_reads_the_text_so_it_is_closed_too(root):
+    def bash(command: str) -> str | None:
+        return _decide(root, "Bash", command=command)
+
+    assert bash('uv run mmo quote find s k "the data"') == "deny"
+    assert "reads the text of the study s" in _reason(root, "Bash", command="mmo quote check s")
+    assert bash("uv run mmo source check s") is None, "commands that do not read the text stay open"
+    assert bash('uv run mmo quote find other k "x"') is None, "not a study of this environment"
+    _open_study(root)
+    assert bash('uv run mmo quote find s k "the data"') is None
+    assert bash("mmo quote check s") is None
+
+
 def test_only_the_owner_confirms(root):
     profile = str(root / "analysts" / "m.md")
     assert _decide(root, "Edit", file_path=profile, old_string="proposed (2026", new_string="confirmed (2026") == "ask"

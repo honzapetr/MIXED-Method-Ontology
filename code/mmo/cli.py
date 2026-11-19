@@ -8,6 +8,9 @@ import sys
 from collections import Counter
 from pathlib import Path
 
+import yaml
+
+from mmo.analysis.quote import MOVED, OK, QuoteError, check_study, quote
 from mmo.config import Settings
 from mmo.core.check import check_source
 from mmo.core.migrate import migrate_topic, needs_migration
@@ -346,6 +349,48 @@ def cmd_segment(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_quote_find(args: argparse.Namespace) -> int:
+    """Make a quotation from words of `text.md`; print it to paste into an analytic file."""
+    source = load_topic(args).source(args.source)
+    try:
+        found = quote(source, args.words, page=args.page, segment=args.segment)
+    except QuoteError as err:
+        print(f"refused: {err}", file=sys.stderr)
+        return 1
+    if args.format == "json":
+        print(json.dumps(found.record(), ensure_ascii=False))
+    else:
+        print(yaml.safe_dump({"quotation": found.record()}, allow_unicode=True, sort_keys=False), end="")
+    return 0
+
+
+def cmd_quote_check(args: argparse.Namespace) -> int:
+    """Check every quotation of a study against the current `text.md` of its source."""
+    topic = load_topic(args)
+    results = check_study(topic, update=args.update)
+    counts = Counter(r.status for r in results)
+    for r in results:
+        if r.status == OK:
+            continue
+        where = r.path.relative_to(topic.root).as_posix()
+        words = str(r.record.get("exact", ""))[:60]
+        if r.status == MOVED and r.new is not None:
+            done = "updated" if args.update else "run with --update to store"
+            print(
+                f"{where}: moved {r.record.get('start')}-{r.record.get('end')} -> {r.new.start}-{r.new.end} "
+                f"({done}): {words!r}"
+            )
+        else:
+            print(f"{where}: {r.status} - {r.note}: {words!r}")
+    print(
+        f"{len(results)} quotations: " + ", ".join(f"{n} {s}" for s, n in sorted(counts.items()))
+        if results
+        else "no quotations in the analytic files yet"
+    )
+    unresolved = sum(n for s, n in counts.items() if s != OK and not (s == MOVED and args.update))
+    return 1 if unresolved else 0
+
+
 def add_backend_options(parser: argparse.ArgumentParser) -> None:
     parser.add_argument("--backend", choices=BACKENDS, default="tesseract")
     parser.add_argument("--model", help="model name for the openai backend (default: MMO_OCR_MODEL)")
@@ -481,10 +526,29 @@ def build_parser() -> argparse.ArgumentParser:
     seg.add_argument("topic")
     seg.add_argument("source")
     seg.set_defaults(func=cmd_segment)
+
+    quotes = sub.add_parser("quote", help="quotations: exact words of text.md with their place").add_subparsers(
+        dest="action", required=True
+    )
+    find = quotes.add_parser("find", help="make a quotation from words of a source's text.md (refused if not there)")
+    find.add_argument("topic")
+    find.add_argument("source")
+    find.add_argument("words", help="the exact words, copied from text.md; line breaks may be spaces")
+    find.add_argument("--page", type=int, help="printed page the words are on, when they occur more than once")
+    find.add_argument("--segment", help="segment id the words are in, when they occur more than once")
+    find.add_argument("--format", choices=["yaml", "json"], default="yaml")
+    find.set_defaults(func=cmd_quote_find)
+    qcheck = quotes.add_parser("check", help="check every quotation of a study; find moved ones again")
+    qcheck.add_argument("topic")
+    qcheck.add_argument("--update", action="store_true", help="store the new place of moved quotations")
+    qcheck.set_defaults(func=cmd_quote_check)
     return parser
 
 
 def main(argv: list[str] | None = None) -> int:
+    for stream in (sys.stdout, sys.stderr):  # quotations are pasted from here: never in the console's code page
+        if hasattr(stream, "reconfigure"):
+            stream.reconfigure(encoding="utf-8")
     args = build_parser().parse_args(argv)
     try:
         return args.func(args)

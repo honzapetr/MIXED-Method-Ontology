@@ -80,9 +80,9 @@ classes:
     description: >-
       What an annotation, relation or proposition points to - the exact words of a passage of a source's final text
       (text.md) with their offsets and printed pages; any length, may run over a page break. W3C Web Annotation
-      specific resource with a TextQuoteSelector (quote) and a TextPositionSelector (start, end).
+      specific resource with a TextQuoteSelector (exact, prefix, suffix) and a TextPositionSelector (start, end).
     class_uri: oa:SpecificResource
-    slots: [id, source, start, end, quote, cited_pages]
+    slots: [id, source, start, end, exact, prefix, suffix, pages, scans, text_sha256]
 
   Concept:
     is_a: NamedThing
@@ -231,12 +231,27 @@ slots:
     multivalued: true
     inlined: false
     slot_uri: oa:hasTarget
-  quote:
-    description: Exact quoted text (oa:TextQuoteSelector exact).
-  cited_pages:
+  exact:
+    description: >-
+      The quoted words, whitespace as one space, location comments of text.md left out (oa:TextQuoteSelector
+      exact). Made by `mmo quote find`, never typed with offsets by hand.
+    slot_uri: oa:exact
+  prefix:
+    description: Words just before the quotation, to find it again after text.md is rebuilt (oa:prefix).
+    slot_uri: oa:prefix
+  suffix:
+    description: Words just after the quotation (oa:suffix).
+    slot_uri: oa:suffix
+  pages:
     description: Printed page numbers the quotation runs over, for citing.
     range: integer
     multivalued: true
+  scans:
+    description: The originals (photos, files) the quotation runs over, in file-name order.
+    range: integer
+    multivalued: true
+  text_sha256:
+    description: SHA-256 of the text.md the offsets refer to.
   relation_type:
     description: Allowed values come from the method module.
   subject:

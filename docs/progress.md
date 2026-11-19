@@ -469,3 +469,19 @@
   browser, T31 model backends. Order: T26, T32, T33, T29, T36, T34, T30, T35, T31.
 - Owner decided T36: structural start searched by the research questions, then reception and contrast; the model reads the whole book first as impressions; the researcher's reading is never a condition for the model's.
 - Next: T26 (quotations).
+
+## T26 – 2026-11-19
+- Done: `code/mmo/analysis/quote.py` and `mmo quote find <topic> <source> "<words>" [--page n | --segment id]
+  [--format yaml|json]`, `mmo quote check <topic> [--update]`. Words are compared on a view of `text.md` (location
+  comments left out, whitespace as one space; header and title not searchable); refused when not found or found more
+  than once without a hint. The record carries `source, start, end, pages, scans, exact, prefix, suffix,
+  text_sha256`; `check` reads YAML/JSON/JSONL and Markdown front matter of a study (not `sources/`, `work/`,
+  `topic.yaml`), reports ok / moved / gone / ambiguous / no text, `--update` stores the new place of moved ones.
+  Ontology `Quotation` slots aligned (both copies). Guard: `mmo quote` on a study is denied to a model exactly when
+  reading its `text.md` is. `mmo` prints UTF-8 (the Windows console garbled Czech). Docs: `docs/source-pipeline.md`
+  step 7, research environment `docs/source-preparation.md`.
+- Tried on `kniha`: "My Američané jsme zvláštní, vyvolený národ" -> page 57, scan 41, 3.5 s; "AI" refused (630
+  times, pages listed).
+- Verified: `uv run pytest` – 125 passed; `uv run ruff check . && uv run ruff format --check .` clean.
+- Next: T32 (analysis store and the free toolbox) - its layout decides where quotations live; `mmo quote check`
+  already finds them in any YAML/JSON there. `AGENTS.md` CLI lines do not list `quote` yet (protected path).
