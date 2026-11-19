@@ -3,6 +3,7 @@
 
 import io
 import json
+import os
 from pathlib import Path
 
 import pytest
@@ -158,6 +159,7 @@ def test_bash(root, tmp_path):
     assert bash("echo x > /tmp/probe.txt") is None
 
 
+@pytest.mark.skipif(os.name != "nt", reason="Git Bash spellings of paths exist only on Windows")
 def test_git_bash_drive_paths():
     assert guard.to_path("/g/Some dir/x", Path("C:/")).as_posix().lower().startswith("g:/some dir")
 

@@ -50,10 +50,11 @@ def project_root(env: dict[str, str] | None = None, cwd: str | None = None) -> P
 def to_path(token: str, cwd: Path) -> Path:
     """A path as written in a tool call or a command line (Windows, Git Bash `/g/...`, `~`, relative)."""
     text = token.strip().strip("'\"")
-    if match := DRIVE_POSIX.match(text):
-        text = f"{match.group(1).upper()}:/{text[match.end() :]}"
-    elif text == "/tmp" or text.startswith("/tmp/"):  # Git Bash maps /tmp to the user's temp folder
-        text = tempfile.gettempdir() + text[4:]
+    if os.name == "nt":  # Git Bash spellings; on Linux and macOS these are real paths
+        if match := DRIVE_POSIX.match(text):
+            text = f"{match.group(1).upper()}:/{text[match.end() :]}"
+        elif text == "/tmp" or text.startswith("/tmp/"):  # Git Bash maps /tmp to the user's temp folder
+            text = tempfile.gettempdir() + text[4:]
     if text.startswith("~"):
         text = str(Path.home()) + text[1:]
     path = Path(text)
