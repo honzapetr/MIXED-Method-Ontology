@@ -346,7 +346,7 @@
 > story elements, schemes, dimensions) and graph procedures over the confirmed analysis. Classic RAG is not used for
 > interpretation, which reads passages in sequence with their context.
 
-### T32 – The analysis store and the free toolbox
+### T32 – The analysis store and the free toolbox (done)
 - Goal: the researcher and an agent code and write freely; every step is recorded and traceable.
 - Acceptance criteria: layout of `topics/<slug>/analysis/` (codebook, codings, relations, proposals, history; text
   files, sorted, readable in a diff; memos and positions stay in `memos/` and `positions/`) in `docs/` and the ontology; `mmo code` adds a code (any name and type), codes a
@@ -358,6 +358,10 @@
 - Verify: `uv run pytest tests/analysis/ && uv run ruff check . && uv run ruff format --check .`
 - Paths: `code/mmo/analysis/`, `code/mmo/cli.py`, `code/mmo/guard.py`, `tests/analysis/`, `docs/`,
   `../MIXED-Method-Ontology/ontology/`, `../MIXED-Method-Ontology/docs/`
+- Built: `code/mmo/analysis/store.py`; `mmo code add|apply|rename|merge|split|recode|withdraw|list`,
+  `mmo relation add`, `mmo memo add`, `mmo analysis check [--record]`; guard: `analysis/` through `mmo` only, under
+  the model's own id; ontology `withdrawn`, slot `method`; docs `docs/analysis-store.md`, research environment
+  `docs/analysis.md`.
 - Depends on: T26
 
 ### T33 – The method as orientation, strictness per study

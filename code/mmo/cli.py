@@ -10,7 +10,8 @@ from pathlib import Path
 
 import yaml
 
-from mmo.analysis.quote import MOVED, OK, QuoteError, check_study, quote
+from mmo.analysis.quote import MOVED, OK, Quotation, QuoteError, check_study, quote
+from mmo.analysis.store import ACTIVE_STATUSES, Author, Store, author_of, check_store, write_memo
 from mmo.config import Settings
 from mmo.core.check import check_source
 from mmo.core.migrate import migrate_topic, needs_migration
@@ -380,7 +381,125 @@ def cmd_quote_check(args: argparse.Namespace) -> int:
         else "no quotations in the analytic files yet"
     )
     unresolved = sum(n for s, n in counts.items() if s != OK and not (s == MOVED and args.update))
+    moved_in_store = [r for r in results if r.status == MOVED and "analysis" in r.path.relative_to(topic.root).parts]
+    if args.update and moved_in_store:  # the program changed the store: record it, so it is not taken for a hand edit
+        Store(topic).save(None, "update-quotations", count=len(moved_in_store))
     return 1 if unresolved else 0
+
+
+# ---------------------------------------------------------------- the free toolbox (T32, ADR 0013)
+
+
+def _author(args: argparse.Namespace, topic: Topic) -> Author:
+    return author_of(topic, args.by, args.prompt_version)
+
+
+def _quotation(topic: Topic, source: str, words: str, page: int | None = None, segment: str | None = None) -> Quotation:
+    """A quotation; in `--quote`/`--evidence` the page may ride on the source: `kniha@57`."""
+    if "@" in source and page is None:
+        source, _, at = source.partition("@")
+        page = int(at)
+    return quote(topic.source(source), words, page=page, segment=segment)
+
+
+def cmd_code_add(args: argparse.Namespace) -> int:
+    topic = load_topic(args)
+    code = Store(topic).add_code(
+        _author(args, topic), args.label, args.type, args.method, args.definition, args.broader
+    )
+    print(f"code {code['id']} ({code['status']})")
+    return 0
+
+
+def cmd_code_apply(args: argparse.Namespace) -> int:
+    topic = load_topic(args)
+    author = _author(args, topic)
+    quotation = _quotation(topic, args.source, args.words, args.page, args.segment)
+    coding = Store(topic).apply_code(author, args.code, quotation, args.method, args.note)
+    pages = "/".join(str(p) for p in quotation.pages) or f"scan {quotation.scans[0]}"
+    print(f"coding {coding['id']}: {coding['body']} <- {args.source} p. {pages} ({coding['status']})")
+    return 0
+
+
+def cmd_code_rename(args: argparse.Namespace) -> int:
+    topic = load_topic(args)
+    code = Store(topic).rename_code(_author(args, topic), args.code, args.label)
+    print(f"code {code['id']} is now {code['label']!r}")
+    return 0
+
+
+def cmd_code_merge(args: argparse.Namespace) -> int:
+    topic = load_topic(args)
+    Store(topic).merge_codes(_author(args, topic), args.into, args.codes, args.reason)
+    print(f"merged {', '.join(args.codes)} into {args.into}")
+    return 0
+
+
+def cmd_code_split(args: argparse.Namespace) -> int:
+    topic = load_topic(args)
+    store = Store(topic)
+    new = store.split_code(_author(args, topic), args.code, args.labels, args.reason)
+    waiting = [c["id"] for c in store.codings if c["body"] == args.code and c["status"] in ACTIVE_STATUSES]
+    print(f"split {args.code} into {', '.join(c['id'] for c in new)}")
+    if waiting:
+        print(f"{len(waiting)} codings to recode (mmo code recode): {', '.join(waiting)}")
+    return 0
+
+
+def cmd_code_recode(args: argparse.Namespace) -> int:
+    topic = load_topic(args)
+    coding = Store(topic).recode(_author(args, topic), args.coding, args.code)
+    print(f"coding {coding['id']} -> {coding['body']}")
+    return 0
+
+
+def cmd_code_withdraw(args: argparse.Namespace) -> int:
+    topic = load_topic(args)
+    Store(topic).withdraw(_author(args, topic), args.ref, args.reason)
+    print(f"{args.ref} withdrawn (kept in the files for the history)")
+    return 0
+
+
+def cmd_code_list(args: argparse.Namespace) -> int:
+    store = Store(load_topic(args))
+    counts = Counter(c["body"] for c in store.codings if c["status"] in ACTIVE_STATUSES)
+    for code in sorted(store.codes, key=lambda c: c["label"].lower()):
+        kind = f" [{code['code_type']}]" if code.get("code_type") else ""
+        status = "" if code["status"] == "accepted" else f" ({code['status']})"
+        print(f"{code['id']}: {code['label']}{kind} - {counts.get(code['id'], 0)} codings{status}")
+    if not store.codes:
+        print("no codes yet")
+    return 0
+
+
+def cmd_relation_add(args: argparse.Namespace) -> int:
+    topic = load_topic(args)
+    author = _author(args, topic)
+    evidence = [_quotation(topic, source, words) for source, words in args.evidence or []]
+    relation = Store(topic).relate(author, args.subject, args.type, args.object, args.method, args.note, evidence)
+    print(f"relation {relation['id']}: {relation['subject']} -{relation['relation_type']}-> {relation['object']}")
+    return 0
+
+
+def cmd_memo_add(args: argparse.Namespace) -> int:
+    topic = load_topic(args)
+    author = _author(args, topic)
+    body = Path(args.file).read_text(encoding="utf-8") if args.file else (args.text or "")
+    quotations = [_quotation(topic, source, words) for source, words in args.quote or []]
+    path = write_memo(topic, author, args.type, args.title, body, args.about, quotations, args.method, args.phase)
+    print(f"memo {path.relative_to(topic.root).as_posix()}")
+    return 0
+
+
+def cmd_analysis_check(args: argparse.Namespace) -> int:
+    topic = load_topic(args)
+    if args.record and not args.by:
+        raise ValueError("who edited the files by hand? give --by <analyst id> with --record")
+    findings = check_store(topic, record_hand_edits=args.record, by=args.by)
+    for finding in findings:
+        print(f"{finding.where}: {finding.problem}")
+    print("analysis: no problems" if not findings else f"analysis: {len(findings)} to look at")
+    return 1 if findings else 0
 
 
 def add_backend_options(parser: argparse.ArgumentParser) -> None:
@@ -524,6 +643,104 @@ def build_parser() -> argparse.ArgumentParser:
     qcheck.add_argument("topic")
     qcheck.add_argument("--update", action="store_true", help="store the new place of moved quotations")
     qcheck.set_defaults(func=cmd_quote_check)
+
+    who = argparse.ArgumentParser(add_help=False)
+    who.add_argument("--by", help="who does it: the researcher's id or the exact model id (required to write)")
+    who.add_argument("--prompt-version", help="for a model: the skill or prompt it works from and its version")
+    where = argparse.ArgumentParser(add_help=False)
+    where.add_argument("--page", type=int, help="printed page, when the words occur more than once")
+    where.add_argument("--segment", help="segment id, when the words occur more than once")
+
+    codes = sub.add_parser("code", help="codes and codings: any label, any type (ADR 0013)").add_subparsers(
+        dest="action", required=True
+    )
+    c_add = codes.add_parser("add", parents=[who], help="add a code to the codebook")
+    c_add.add_argument("topic")
+    c_add.add_argument("label")
+    c_add.add_argument("--type", help="any type; the method's vocabulary only orients")
+    c_add.add_argument("--method")
+    c_add.add_argument("--definition")
+    c_add.add_argument("--broader", help="id of a broader code")
+    c_add.set_defaults(func=cmd_code_add)
+    c_apply = codes.add_parser("apply", parents=[who, where], help="code exact words of a source (a new label adds it)")
+    c_apply.add_argument("topic")
+    c_apply.add_argument("code", help="code id or label")
+    c_apply.add_argument("source")
+    c_apply.add_argument("words")
+    c_apply.add_argument("--method")
+    c_apply.add_argument("--note")
+    c_apply.set_defaults(func=cmd_code_apply)
+    c_rename = codes.add_parser("rename", parents=[who], help="give a code a new label (its id stays)")
+    c_rename.add_argument("topic")
+    c_rename.add_argument("code")
+    c_rename.add_argument("label")
+    c_rename.set_defaults(func=cmd_code_rename)
+    c_merge = codes.add_parser("merge", parents=[who], help="merge codes into one; their codings move with them")
+    c_merge.add_argument("topic")
+    c_merge.add_argument("into")
+    c_merge.add_argument("codes", nargs="+")
+    c_merge.add_argument("--reason")
+    c_merge.set_defaults(func=cmd_code_merge)
+    c_split = codes.add_parser("split", parents=[who], help="split a code into new ones; its codings wait for recode")
+    c_split.add_argument("topic")
+    c_split.add_argument("code")
+    c_split.add_argument("labels", nargs="+")
+    c_split.add_argument("--reason")
+    c_split.set_defaults(func=cmd_code_split)
+    c_recode = codes.add_parser("recode", parents=[who], help="give a coding another code")
+    c_recode.add_argument("topic")
+    c_recode.add_argument("coding")
+    c_recode.add_argument("code", help="code id or label (a new label adds it)")
+    c_recode.set_defaults(func=cmd_code_recode)
+    c_withdraw = codes.add_parser("withdraw", parents=[who], help="take back a coding, code or relation (kept)")
+    c_withdraw.add_argument("topic")
+    c_withdraw.add_argument("ref", help="coding:<id>, code:<id> or relation:<id>")
+    c_withdraw.add_argument("--reason")
+    c_withdraw.set_defaults(func=cmd_code_withdraw)
+    c_list = codes.add_parser("list", help="the codebook with the number of codings")
+    c_list.add_argument("topic")
+    c_list.set_defaults(func=cmd_code_list)
+
+    relations = sub.add_parser("relation", help="relations between any two items").add_subparsers(
+        dest="action", required=True
+    )
+    r_add = relations.add_parser(
+        "add", parents=[who], help="relate two items: code:, coding:, relation:, memo:, source:"
+    )
+    r_add.add_argument("topic")
+    r_add.add_argument("subject")
+    r_add.add_argument("type", help="any type; the method's types only orient")
+    r_add.add_argument("object")
+    r_add.add_argument("--method")
+    r_add.add_argument("--note")
+    r_add.add_argument("--evidence", nargs=2, action="append", metavar=("SOURCE[@PAGE]", "WORDS"))
+    r_add.set_defaults(func=cmd_relation_add)
+
+    memos = sub.add_parser("memo", help="memos of the study (memos/, format docs/memos.md)").add_subparsers(
+        dest="action", required=True
+    )
+    m_add = memos.add_parser("add", parents=[who], help="write a memo about anything, with quotations as its basis")
+    m_add.add_argument("topic")
+    m_add.add_argument("--type", required=True, help="e.g. analytic, reflexive, methodological, first-impression")
+    m_add.add_argument("--title", required=True)
+    m_add.add_argument("--text", help="the memo's text")
+    m_add.add_argument("--file", help="read the memo's text from a file")
+    m_add.add_argument("--about", action="append", help="code:<id>, coding:<id>, relation:<id>, memo:<id>, source:<id>")
+    m_add.add_argument(
+        "--quote", nargs=2, action="append", metavar=("SOURCE[@PAGE]", "WORDS"), help="a quotation as basis"
+    )
+    m_add.add_argument("--method")
+    m_add.add_argument("--phase")
+    m_add.set_defaults(func=cmd_memo_add)
+
+    analysis = sub.add_parser("analysis", help="the analysis store of a study").add_subparsers(
+        dest="action", required=True
+    )
+    a_check = analysis.add_parser("check", help="integrity: authors, references, quotations, edits made by hand")
+    a_check.add_argument("topic")
+    a_check.add_argument("--record", action="store_true", help="record edits made by hand in the history")
+    a_check.add_argument("--by", help="who made the edits by hand (with --record)")
+    a_check.set_defaults(func=cmd_analysis_check)
     return parser
 
 

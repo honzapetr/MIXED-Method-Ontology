@@ -292,20 +292,44 @@ def looks_like_path(word: str) -> bool:
     ) and "://" not in word
 
 
-MMO_READS_TEXT = {"quote"}  # `mmo` commands that read the text of a study: `mmo quote <action> <topic> ...`
+# `mmo` commands that work on a study: `mmo <command> <action> <topic> ...`; they read its text or write its analysis
+MMO_STUDY_COMMANDS = {"quote", "code", "relation", "memo", "analysis"}
+WRITES_FILES = re.compile(
+    r"(>|\btee\b|\bsed\s+(-\w*i|--in-place)|\b(cp|mv|rm|del|move|copy)\b|Set-Content|Out-File|Add-Content)"
+)
+
+
+def mmo_args(words: list[str]) -> list[str] | None:
+    """The arguments of an `mmo` call (`mmo ...`, `uv run mmo ...`), or None for another program."""
+    program = Path(words[0]).name.lower().removesuffix(".exe")
+    if program == "mmo":
+        return words[1:]
+    if program == "uv" and words[1:3] == ["run", "mmo"]:
+        return words[3:]
+    return None
+
+
+def option(args: list[str], name: str) -> str | None:
+    for i, word in enumerate(args):
+        if word == name and i + 1 < len(args):
+            return args[i + 1]
+        if word.startswith(name + "="):
+            return word.split("=", 1)[1]
+    return None
 
 
 def check_mmo(words: list[str], root: Path, model_id: str | None) -> dict | None:
-    """`mmo quote` reads a study's `text.md`, so it is closed exactly when reading `text.md` is."""
-    program = Path(words[0]).name.lower().removesuffix(".exe")
-    if program == "mmo":
-        args = words[1:]
-    elif program == "uv" and words[1:3] == ["run", "mmo"]:
-        args = words[3:]
-    else:
+    """`mmo` on a study is closed exactly when reading its `text.md` is; a model writes only under its own id."""
+    args = mmo_args(words)
+    if args is None or len(args) < 3 or args[0] not in MMO_STUDY_COMMANDS:
         return None
-    if len(args) < 3 or args[0] not in MMO_READS_TEXT:
-        return None
+    by = option(args, "--by")
+    if model_id and by and by != model_id:
+        return decision(
+            "deny",
+            f"You are {model_id}: write under your own id (--by {model_id}). Only the researcher writes as "
+            f"themselves; a record of yours is a proposal until they decide.",
+        )
     slug = Path(args[2]).name
     if not (root / "topics" / slug / "topic.yaml").is_file():
         return None
@@ -314,9 +338,23 @@ def check_mmo(words: list[str], root: Path, model_id: str | None) -> dict | None
         return None
     return decision(
         "deny",
-        f"`mmo {args[0]}` reads the text of the study {slug}, which stays closed until the steps in AGENTS.md are "
+        f"`mmo {args[0]}` works on the study {slug}, which stays closed until the steps in AGENTS.md are "
         f"done and confirmed: {missing}.",
     )
+
+
+def in_analysis(path: Path, root: Path) -> bool:
+    """`topics/<slug>/analysis/...`: the analysis store, written by a model only through `mmo` (ADR 0013)."""
+    if not inside(path, root):
+        return False
+    parts = Path(os.path.relpath(path, root)).parts
+    return len(parts) >= 3 and parts[0] == "topics" and parts[2] == "analysis"
+
+
+ANALYSIS_THROUGH_MMO = (
+    "The analysis store topics/<slug>/analysis/ is written through mmo (mmo code, mmo relation, mmo memo), so every "
+    "record carries its quotation, author and history. Use the mmo command instead."
+)
 
 
 def check_bash(command: str, cwd: Path, root: Path, model_id: str | None) -> dict | None:
@@ -359,6 +397,8 @@ def check_bash(command: str, cwd: Path, root: Path, model_id: str | None) -> dic
         for path in paths:
             if found := (check_search(path, root, model_id) if recursive else check_path(path, root, model_id)):
                 return found
+            if in_analysis(path, root) and mmo_args(words) is None and WRITES_FILES.search(command):
+                return decision("deny", ANALYSIS_THROUGH_MMO)
             if CONFIRMED_ANYWHERE.search(command) and is_record(path, root):
                 return decision(
                     "ask", "This command may set a profile or a position to confirmed: only the owner confirms them."
@@ -380,6 +420,8 @@ def pre_tool_use(event: dict, root: Path, model_id: str | None = None) -> dict |
         path = to_path(data.get("file_path") or data.get("notebook_path") or "", cwd)
         if found := check_path(path, root, model_id, reading=False):
             return found
+        if in_analysis(path, root):
+            return decision("deny", ANALYSIS_THROUGH_MMO)
         return ask_if_confirming(path, root, tool, data)
     if tool == "Grep":
         return check_search(to_path(data.get("path") or ".", cwd), root, model_id)

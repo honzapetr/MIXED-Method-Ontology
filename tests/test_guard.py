@@ -129,12 +129,34 @@ def test_mmo_quote_reads_the_text_so_it_is_closed_too(root):
         return _decide(root, "Bash", command=command)
 
     assert bash('uv run mmo quote find s k "the data"') == "deny"
-    assert "reads the text of the study s" in _reason(root, "Bash", command="mmo quote check s")
+    assert "works on the study s, which stays closed" in _reason(root, "Bash", command="mmo quote check s")
     assert bash("uv run mmo source check s") is None, "commands that do not read the text stay open"
     assert bash('uv run mmo quote find other k "x"') is None, "not a study of this environment"
     _open_study(root)
     assert bash('uv run mmo quote find s k "the data"') is None
     assert bash("mmo quote check s") is None
+
+
+def test_the_analysis_store_is_written_through_mmo_under_ones_own_id(root):
+    _open_study(root)
+    store = root / "topics" / "s" / "analysis" / "codebook.yaml"
+    _write(store, "codes: []\n")
+
+    def decide(tool: str, **data) -> str | None:
+        result = guard.pre_tool_use({"tool_name": tool, "tool_input": data, "cwd": str(root)}, root, "m")
+        return result["hookSpecificOutput"]["permissionDecision"] if result else None
+
+    assert decide("Write", file_path=str(store), content="codes: [x]") == "deny"
+    assert decide("Edit", file_path=str(store), old_string="[]", new_string="[x]") == "deny"
+    assert decide("Read", file_path=str(store)) is None, "reading the store is free"
+    assert decide("Bash", command="echo x >> topics/s/analysis/codebook.yaml") == "deny"
+    assert decide("Bash", command="sed -i s/a/b/ topics/s/analysis/codebook.yaml") == "deny"
+    assert decide("Bash", command="cat topics/s/analysis/codebook.yaml") is None
+    assert decide("Bash", command='uv run mmo code add s "nahota" --by m --prompt-version chat@1') is None
+    assert decide("Bash", command='uv run mmo code add s "nahota" --by owner') == "deny", "no writing as someone else"
+    assert decide("Bash", command="mmo memo add s --type analytic --title t --by=owner") == "deny"
+    memo = root / "topics" / "s" / "memos" / "2026-11-19-b.md"
+    assert decide("Write", file_path=str(memo), content="---\nauthor: m\n---\n") is None, "memos stay free Markdown"
 
 
 def test_only_the_owner_confirms(root):

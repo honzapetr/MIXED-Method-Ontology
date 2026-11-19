@@ -18,6 +18,7 @@ analyst reads: methods, ontology, studies and the analyst's manuals live in the 
 | `owner-notes.md` | the owner's own notes while building |
 | `test-copies.md` | test copies of the research environment in `zkusebna/`; carrying a study's work from copy to copy (`--carry`) |
 | `source-pipeline.md` | how every kind of source becomes `text.md`, segments and quotations: steps, formats, built and planned |
+| `analysis-store.md` | the analysis store of a study and the free toolbox: `mmo code`, `relation`, `memo`, `analysis check` |
 
 ## How the environment works (manuals)
 
