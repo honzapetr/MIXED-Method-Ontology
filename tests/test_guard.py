@@ -156,7 +156,8 @@ def test_bash(root, tmp_path):
     # shell devices and the temp folder are not paths of the environment (test7: `2>/dev/null` was denied)
     assert bash("ls topics/ && ls topics/*/positions/ 2>/dev/null; ls analysts/") is None
     assert bash("git status > /dev/null 2>&1") is None
-    assert bash("echo x > /tmp/probe.txt") is None
+    temp = "/tmp" if os.name == "nt" else (tmp_path / "systemp").as_posix()  # Git Bash maps /tmp to temp
+    assert bash(f"echo x > {temp}/probe.txt") is None
 
 
 @pytest.mark.skipif(os.name != "nt", reason="Git Bash spellings of paths exist only on Windows")
