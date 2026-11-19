@@ -228,4 +228,8 @@
   the export are views built from them.
 - QDA programs: export to REFI-QDA (`.qdpx`) only for now; import later.
 - A graph browser in the homelab goes into the plan now (T35).
-- Open: the key for choosing the passages of the fine analysis and the model's orientation reading (T36).
+- Choosing passages (T36): start structurally (introduction, first chapter, openings and endings of chapters)
+  searched by the research questions; later rounds by reception (what reviews and the debate discuss) and by
+  contrast. The key is set per study.
+- The model's orientation reading covers the whole book, marked as first impressions, with a reflexive note.
+- The researcher reads too, but the researcher's reading is never a condition for the model's reading.

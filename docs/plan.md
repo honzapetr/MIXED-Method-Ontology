@@ -376,14 +376,26 @@
 
 ### T36 – Outline of a source and the model's orientation reading
 - Goal: the researcher and the model know the structure of a source and where to start the fine analysis.
-- Acceptance criteria: `mmo outline <topic> <source>` lists the parts of `text.md` from its headings (chapter,
-  section, pages, segment range), without a model; the key for choosing passages is decided by the owner (see the
-  open question below) and set per study; the model's orientation reading is a proposal with quotations, marked as
-  first impressions; tried on `kniha`.
+- Acceptance criteria:
+  - `mmo outline <topic> <source>` lists the parts of `text.md` from its headings (chapter, section, pages, segment
+    range), without a model.
+  - Orientation reading: the model restates its position, then reads the whole source chapter by chapter and writes
+    a first-impression memo (SKAD context analysis) as a proposal: what each part is about, places that touch the
+    research questions, candidate passages each with a quotation and the key it was chosen by; marked as
+    impressions, not interpretation; followed by a reflexive note of the model on having read the whole first.
+  - Keys for choosing passages, set per study in `topic.yaml` with this default (owner, 2026-11-19): first
+    *structural* (introduction, openings and endings of chapters, where the author says what the book is about)
+    searched by the *research questions*; in later rounds *reception* (places the context sources cite or discuss)
+    and *contrast* (minimal and maximal, theoretical sampling).
+  - The researcher chooses the passages and records why in a memo; the fine analysis reads a chosen passage
+    sequentially with its nearest context and proposes readings (with alternatives) and open codes (T29).
+  - The researcher's own reading is supported (a first-impression memo of the researcher, recorded with its time,
+    so it can be seen what came from whom) but is never a condition for the model's reading.
+  - Tried on `kniha` in a test copy.
 - Verify: `uv run pytest tests/analysis/ && uv run ruff check . && uv run ruff format --check .`
-- Paths: `code/mmo/analysis/`, `code/mmo/cli.py`, `tests/`, `docs/`, `../MIXED-Method-Ontology/methods/skad/`
+- Paths: `code/mmo/analysis/`, `code/mmo/cli.py`, `tests/`, `docs/`, `../MIXED-Method-Ontology/methods/skad/`,
+  `../MIXED-Method-Ontology/.agents/skills/`
 - Depends on: T29
-- Open: the key for choosing passages (the owner, 2026-11-19).
 
 ### T34 – Export to REFI-QDA
 - Goal: the study can be opened and looked at in QualCoder, ATLAS.ti, MAXQDA or NVivo.

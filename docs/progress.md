@@ -467,4 +467,5 @@
 - Plan: Analysis rewritten - T32 store and toolbox, T33 method as orientation and study settings, T29 proposals of
   models, T36 outline and orientation reading (key for passages open), T34 REFI-QDA export, T30 graph, T35 graph
   browser, T31 model backends. Order: T26, T32, T33, T29, T36, T34, T30, T35, T31.
-- Next: the owner decides the key for choosing passages (T36); then T26.
+- Owner decided T36: structural start searched by the research questions, then reception and contrast; the model reads the whole book first as impressions; the researcher's reading is never a condition for the model's.
+- Next: T26 (quotations).
