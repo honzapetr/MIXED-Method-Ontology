@@ -334,8 +334,13 @@
 > researcher accepts it, nothing disappears without a trace - never the method. The operations of qualitative
 > analysis are a toolbox for every method; a method's vocabulary and phases are orientation, `model_role` binds
 > models only; strictness is set per study in `topic.yaml`. Source of truth: text files in
-> `topics/<slug>/analysis/`; the graph, the graph browser and the REFI-QDA export are views. Order: T26, T32, T33,
-> T29, then T36, T34, T30, T35, T31.
+> `topics/<slug>/analysis/`; the graph, the graph browser and the REFI-QDA export are views. Order: T26 (done),
+> T32, T33, T29, then T36, T37, T34, T30, T38, T35, T31.
+>
+> **Similarity and graph procedures (owner, 2026-11-19).** Semantic similarity finds candidates, never analytic
+> relations: narratives that belong together without similar words are found through interpretation (codes of
+> story elements, schemes, dimensions) and graph procedures over the confirmed analysis. Classic RAG is not used for
+> interpretation, which reads passages in sequence with their context.
 
 ### T32 – The analysis store and the free toolbox
 - Goal: the researcher and an agent code and write freely; every step is recorded and traceable.
@@ -436,6 +441,43 @@
 - Verify: `uv run pytest tests/test_llm.py && uv run ruff check . && uv run ruff format --check .`
 - Paths: `code/mmo/analysis/`, `tests/`
 - Depends on: T29
+
+### T37 – Similarity index of segments (a finder of candidates)
+- Goal: passages that say something similar in other words are found as candidates for constant comparison,
+  minimal and maximal contrast and reception (what a review discusses in the book).
+- Acceptance criteria:
+  - a local multilingual embedding model through the gateway (Czech; e.g. bge-m3 or multilingual-e5; chosen in the
+    task, ADR) - if the gateway has none, setting it up is part of the task (homelab, LAN/VPN only);
+  - `mmo similar index <topic>` embeds the segments of every `text.md` into an index that is a view (rebuilt from
+    the segments, never edited, not in git; a light store in `mmo` such as sqlite-vec or LanceDB, chosen in the
+    task); the index records model, version and the `text_sha256` it was built from and says when it is stale;
+  - `mmo similar find <topic> (--quotation <file/record> | --segment <id> | "<words>") [--source] [--top n]` lists
+    candidate segments with source, pages and score; a candidate is not a relation: what is kept becomes a proposal
+    or a coding with its quotation (T29, T32), its reason written by the researcher or the model;
+  - every search used in the analysis is recorded (model, query, time) and is a trigger of a reflexive note (what
+    the machine took as similar steered attention); on/off per study in `topic.yaml`;
+  - closed to a model like `text.md` (guard); tests with a small fake embedding backend; tried on `kniha` and the
+    reviews.
+- Verify: `uv run pytest tests/analysis/ && uv run ruff check . && uv run ruff format --check .`
+- Paths: `code/mmo/analysis/`, `code/mmo/cli.py`, `code/mmo/guard.py`, `tests/analysis/`, `docs/`, `docs/adr/`,
+  `pyproject.toml`, `uv.lock`, `../MIXED-Method-Ontology/docs/`
+- Depends on: T29
+
+### T38 – Graph procedures over the analysis
+- Goal: narratives and themes that relate without similar words are found through the analysis itself - codes,
+  relations, memos - not through the wording.
+- Acceptance criteria:
+  - over the graph of the confirmed analysis (T30), with the method's vocabulary as orientation: co-occurrence of
+    codes (in a quotation, a segment, a document), chains of relations (e.g. SKAD `story_link`: the story line),
+    paths between two codes or themes through shared elements, communities and central codes, passages with the
+    same story element but an opposite evaluation (contrast);
+  - `mmo graph query <topic> <procedure> ...` runs a named procedure (SPARQL kept in the repository, versioned) and
+    lists results with their quotations; the same procedures are saved queries of the graph browser (T35);
+  - results are views for the researcher; what is kept is written as a memo or a relation through the toolbox;
+  - procedures are method-agnostic (a toy method in tests) and tried on the study in a test copy.
+- Verify: `uv run pytest tests/test_graph.py && uv run ruff check . && uv run ruff format --check .`
+- Paths: `code/mmo/graph/`, `code/mmo/cli.py`, `tests/`, `docs/`
+- Depends on: T30
 
 Open for discussion: a model proposing bibliographic fields of `source.yaml` (from the imprint or the annotation),
 confirmed by the researcher.

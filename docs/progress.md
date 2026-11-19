@@ -485,3 +485,11 @@
 - Verified: `uv run pytest` – 125 passed; `uv run ruff check . && uv run ruff format --check .` clean.
 - Next: T32 (analysis store and the free toolbox) - its layout decides where quotations live; `mmo quote check`
   already finds them in any YAML/JSON there. `AGENTS.md` CLI lines do not list `quote` yet (protected path).
+
+## 2026-11-19 – Plan: T37 similarity index, T38 graph procedures
+- Owner approved: T37 (embeddings of segments as a finder of candidates, after T29) and T38 (graph procedures over
+  the confirmed analysis, after T30); classic RAG not used for interpretation. Order in the plan's Analysis note.
+- T26 merged (PR #2, b55a4a6); research environment `main` moved without a checkout (b27eb43).
+- Git on Google Drive: a stale `.git/index.lock` and index entries with a wrong size (16384 instead of the file's
+  size) made identical files look modified; fixed by removing the stale lock and `git add` of the identical files.
+- Next: T32 (analysis store and the free toolbox).

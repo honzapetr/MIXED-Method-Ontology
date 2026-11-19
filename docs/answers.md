@@ -233,3 +233,12 @@
   contrast. The key is set per study.
 - The model's orientation reading covers the whole book, marked as first impressions, with a reflexive note.
 - The researcher reads too, but the researcher's reading is never a condition for the model's reading.
+
+## 2026-11-19 – Similarity search and graph procedures
+
+- Semantic similarity (embeddings of segments) is a tool that finds candidates - for constant comparison, contrast
+  and reception - never a relation of the analysis; a kept candidate gets its reason in a memo or a proposal. Index
+  as a view, local multilingual model, recorded, a trigger of a reflexive note (T37).
+- Classic RAG is not used for interpretation, which reads passages in sequence with their context.
+- Narratives that relate without similar words are found through interpretation (codes of story elements, schemes,
+  dimensions) and graph procedures over the confirmed analysis (T38).
