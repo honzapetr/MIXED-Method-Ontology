@@ -554,3 +554,21 @@
   phase set yet, 1 proposal waiting (the model's first-impression memo of 2026-11-13).
 - Verified: `uv run pytest` – 140 passed; `uv run ruff check . && uv run ruff format --check .` clean.
 - Next: T29 (proposals of models and their review); the owner sets the phase of the study (`mmo phase`).
+
+## T29 – 2026-11-19
+- Done: proposals of models and the researcher's review. A proposal is a record of the toolbox with
+  `status: proposed`, decided in place by `mmo review accept|edit|reject` (edit keeps old and new values, reject
+  needs a reason; `decided` on the record, `review` in the history; cascades: a coding takes its proposed code, a
+  rejected code its proposed codings). Only a person decides (mmo and guard). What a model may propose follows
+  `model_proposes` of the current phase (new optional field of `method.yaml`; SKAD filled from its `model_role`,
+  version `2026-11-19.2`); codebook changes are the researcher's; a model withdraws only its own waiting proposals;
+  `analysis.model.alternatives` asks a model's analytic memo for `--alternative`.
+- Decision to note for the owner: no `analysis/proposals/` folder as the plan said - proposals stay in the same
+  files with their status, so an accepted proposal is the same record with its provenance.
+- Docs: `docs/analysis-store.md`; research environment `docs/how-it-works.md` (the whole way through, linked from
+  its README), `docs/analysis.md` (review), `methods/README.md` (`model_proposes`).
+- Tried on a copy of `kniha` with SKAD (`scratch/T29/env`): a model's coding refused in framing, proposed in fine
+  analysis (p. 57), a memo with an alternative reading; accepted (with its code) and a memo marked edited; status
+  shows 0 waiting.
+- Verified: `uv run pytest` – 148 passed; `uv run ruff check . && uv run ruff format --check .` clean.
+- Next: a new test copy from the start (owner); then T36 (outline and orientation reading).

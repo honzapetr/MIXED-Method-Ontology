@@ -293,7 +293,7 @@ def looks_like_path(word: str) -> bool:
 
 
 # `mmo` commands that work on a study: `mmo <command> <action> <topic> ...`; they read its text or write its analysis
-MMO_STUDY_COMMANDS = {"quote", "code", "relation", "memo", "analysis"}
+MMO_STUDY_COMMANDS = {"quote", "code", "relation", "memo", "analysis", "review"}
 WRITES_FILES = re.compile(
     r"(>|\btee\b|\bsed\s+(-\w*i|--in-place)|\b(cp|mv|rm|del|move|copy)\b|Set-Content|Out-File|Add-Content)"
 )
@@ -321,6 +321,11 @@ def option(args: list[str], name: str) -> str | None:
 def check_mmo(words: list[str], root: Path, model_id: str | None) -> dict | None:
     """`mmo` on a study is closed exactly when reading its `text.md` is; a model writes only under its own id."""
     args = mmo_args(words)
+    if args and args[0] == "review" and len(args) > 1 and args[1] != "list" and model_id:
+        return decision(
+            "deny",
+            "Only the researcher decides proposals (mmo review). Comment on a proposal in a memo instead.",
+        )
     if args and args[0] == "phase" and model_id:
         return decision(
             "deny",

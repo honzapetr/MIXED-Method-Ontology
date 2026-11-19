@@ -236,3 +236,14 @@ def test_only_the_researcher_sets_the_phase(root):
     assert (
         guard.pre_tool_use({"tool_name": "Bash", "tool_input": {"command": "uv run mmo status s"}}, root, "m") is None
     )
+
+
+def test_only_the_researcher_decides_proposals(root):
+    _open_study(root)
+
+    def decide(command: str) -> str | None:
+        result = guard.pre_tool_use({"tool_name": "Bash", "tool_input": {"command": command}}, root, "m")
+        return result["hookSpecificOutput"]["permissionDecision"] if result else None
+
+    assert decide("uv run mmo review accept s code:x --by m") == "deny"
+    assert decide("uv run mmo review list s") is None, "a model may see what waits"

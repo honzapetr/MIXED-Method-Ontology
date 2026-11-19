@@ -25,7 +25,14 @@ from typing import Any
 
 import yaml
 
-from mmo.analysis.method import Method, check_move, current_phases, model_may_write, study_settings
+from mmo.analysis.method import (
+    Method,
+    check_move,
+    current_phases,
+    model_may_propose,
+    model_may_write,
+    study_settings,
+)
 from mmo.analysis.quote import GONE, OK, Quotation, check_record, read_final_text
 from mmo.core.topic import Topic
 
@@ -207,6 +214,7 @@ class Store:
     ) -> dict[str, Any]:
         if not label.strip():
             raise StoreError("a code needs a label")
+        self.may_propose(author, "code")
         if study_settings(self.topic)["codebook"] == "fixed":
             raise StoreError(
                 f"the study's codebook is fixed (analysis.codebook in topic.yaml): no new code {label!r}; "
@@ -237,6 +245,7 @@ class Store:
         self, author: Author, code_ref: str, quotation: Quotation, method: str | None = None, note: str | None = None
     ) -> dict[str, Any]:
         """Code a quotation; a code that does not exist yet is created with that label (coding is free)."""
+        self.may_propose(author, "coding")
         code = self.find_code(code_ref) or self.add_code(author, code_ref, method=method)
         if code["status"] in ("superseded", "withdrawn", "rejected"):
             raise StoreError(
@@ -258,6 +267,7 @@ class Store:
         return coding
 
     def rename_code(self, author: Author, code_id: str, label: str) -> dict[str, Any]:
+        self.researcher_only(author, "renames a code")
         code = self.code(code_id)
         if self.find_code(label) not in (None, code):
             raise StoreError(f"a code {label!r} exists already")
@@ -267,6 +277,7 @@ class Store:
         return code
 
     def merge_codes(self, author: Author, into: str, sources: list[str], reason: str | None = None) -> dict[str, Any]:
+        self.researcher_only(author, "merges codes")
         target = self.code(into)
         moved: list[str] = []
         for source_id in sources:
@@ -287,6 +298,7 @@ class Store:
         self, author: Author, code_id: str, labels: list[str], reason: str | None = None
     ) -> list[dict[str, Any]]:
         """New codes from one; its codings stay with it until recoded (the researcher decides each)."""
+        self.researcher_only(author, "splits a code")
         old = self.code(code_id)
         new = [
             self.add_code(author, label, old.get("code_type"), old.get("method"), broader=old.get("broader"))
@@ -299,6 +311,7 @@ class Store:
         return new
 
     def recode(self, author: Author, coding_id: str, code_ref: str) -> dict[str, Any]:
+        self.researcher_only(author, "recodes")
         coding = self.coding(coding_id)
         code = self.find_code(code_ref) or self.add_code(author, code_ref)
         old = coding["body"]
@@ -314,10 +327,21 @@ class Store:
         if item is None:
             raise StoreError(f"{kind} cannot be withdrawn here")
         record = item(key)
+        if author.kind == "model" and (record.get("author") != author.id or record.get("status") != "proposed"):
+            raise StoreError("a model withdraws only its own proposals that wait for the researcher")
         record["status"] = "withdrawn"
         if reason:
             record["withdrawn_because"] = reason
         self.save(author, "withdraw", target=ref, reason=reason)
+
+    def may_propose(self, author: Author, kind: str) -> None:
+        """A model writes a kind only where the current phase lets it (`model_proposes`); the researcher always."""
+        if author.kind == "model" and (why := model_may_propose(self.topic, self.history(), kind)):
+            raise StoreError(why)
+
+    def researcher_only(self, author: Author, what: str) -> None:
+        if author.kind == "model":
+            raise StoreError(f"the researcher {what}; a model proposes it in a memo (mmo memo add)")
 
     def set_phase(self, author: Author, method: Method, phase: str) -> dict[str, Any]:
         """Say where the study is in a method's map of phases; free unless the study asked for a sequence."""
@@ -346,6 +370,7 @@ class Store:
     ) -> dict[str, Any]:
         if not relation_type.strip():
             raise StoreError("a relation needs a type (any word; the method's types only orient)")
+        self.may_propose(author, "relation")
         relation: dict[str, Any] = {
             "id": self._next_id("rel", self.relations),
             "relation_type": relation_type.strip(),
@@ -378,10 +403,17 @@ def write_memo(
     quotations: list[Quotation] | None = None,
     method: str | None = None,
     phase: str | None = None,
+    alternatives: list[str] | None = None,
 ) -> Path:
     """A memo in `memos/` in the format of `docs/memos.md`; quotations go to `basis`."""
     store = Store(topic)
+    store.may_propose(author, "memo")
     refs = [store.check_ref(ref) for ref in about or []]
+    settings = study_settings(topic)
+    if author.kind == "model" and settings["model"]["alternatives"] and memo_type == "analytic" and not alternatives:
+        raise StoreError(
+            "the study asks a model to offer alternative readings (analysis.model.alternatives): add --alternative"
+        )
     if memo_type in study_settings(topic)["quotation_required"]["memos"] and not quotations:
         raise StoreError(
             f"the study asks for a quotation in {memo_type} memos (analysis.quotation_required.memos): add --quote"
@@ -402,6 +434,8 @@ def write_memo(
     }
     if quotations:
         meta["basis"] = {"quotations": [q.record() for q in quotations]}
+    if alternatives:
+        meta["alternatives"] = list(alternatives)
     if method:
         meta["method"] = method
     if phase:

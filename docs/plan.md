@@ -382,7 +382,7 @@
   environment `methods/README.md`, `docs/analysis.md`.
 - Depends on: T32
 
-### T29 – Proposals of models and their review
+### T29 – Proposals of models and their review (done)
 - Goal: what a model proposes (readings, codes, memos, relations) waits for the researcher, who accepts, edits or
   rejects it (replaces T6).
 - Acceptance criteria: proposals in `analysis/proposals/` with status `proposed` / `accepted` / `edited` /
@@ -393,6 +393,9 @@
 - Verify: `uv run pytest tests/analysis/ && uv run ruff check . && uv run ruff format --check .`
 - Paths: `code/mmo/analysis/`, `tests/analysis/`, `docs/`, `../MIXED-Method-Ontology/methods/skad/`,
   `../MIXED-Method-Ontology/.agents/skills/`
+- Built: `code/mmo/analysis/review.py`; `mmo review list|accept|edit|reject`; proposals are records with
+  `status: proposed` in place (no separate folder); `model_proposes` per phase (SKAD filled from `model_role`);
+  codebook changes researcher-only; `--alternative`; guard; research environment `docs/how-it-works.md`.
 - Depends on: T33
 
 ### T36 – Outline of a source and the model's orientation reading
