@@ -1,0 +1,263 @@
+"""The method as orientation, strictness per study (T33, ADR 0013 and its amendment).
+
+A method is a description (`methods/<id>/method.yaml` of the research environment): a vocabulary of code and
+relation types, a map of phases with what the model does (`model_role`) and what the researcher decides
+(`researcher_decides`), practices, and optionally a prompt per phase. `mmo` reads it to guide - `mmo status`,
+reminders - never to limit the researcher. What a study wants stricter it says itself, in `topic.yaml`:
+
+```yaml
+analysis:
+  codebook: emergent          # emergent | evolving | fixed (no new codes while fixed)
+  own_types: allowed          # allowed | ask_memo (a type outside the methods' vocabulary asks for a memo)
+  phases: orientation         # orientation | sequence (only the next phase or back)
+  model:
+    phases: all               # all, or the phase ids in which a model may write proposals
+    alternatives: false       # a model offers alternative readings (used by T29)
+  team: none                  # none | consensus | agreement
+  quotation_required:
+    memos: []                 # memo types that need a quotation, e.g. [analytic, theoretical]
+```
+
+The core is not a setting: codes and everything a model proposes always carry quotations (ADR 0013).
+"""
+
+from __future__ import annotations
+
+import copy
+import re
+from dataclasses import dataclass, field
+from pathlib import Path
+from typing import Any
+
+import yaml
+
+from mmo.core.topic import Topic
+
+STATUSES = {"draft", "testing", "stable"}
+MEMO_TYPES = {
+    "context",
+    "first-impression",
+    "familiarisation",
+    "reflexive",
+    "analytic",
+    "theoretical",
+    "methodological",
+    "steering",
+}
+PHASE_KEYS = ("goal", "input", "output", "memos", "model_role", "researcher_decides")
+FRONT_VERSION = re.compile(r"(?m)^version:\s*\S+")
+
+DEFAULTS: dict[str, Any] = {
+    "codebook": "emergent",
+    "own_types": "allowed",
+    "phases": "orientation",
+    "model": {"phases": "all", "alternatives": False},
+    "team": "none",
+    "quotation_required": {"memos": []},
+}
+CHOICES = {
+    "codebook": {"emergent", "evolving", "fixed"},
+    "own_types": {"allowed", "ask_memo"},
+    "phases": {"orientation", "sequence"},
+    "team": {"none", "consensus", "agreement"},
+}
+
+
+class SettingsError(ValueError):
+    """`analysis:` of `topic.yaml` names something `mmo` does not know."""
+
+
+# ---------------------------------------------------------------- methods
+
+
+@dataclass
+class Method:
+    id: str
+    folder: Path
+    data: dict[str, Any]
+
+    @property
+    def name(self) -> str:
+        return str(self.data.get("name", self.id))
+
+    @property
+    def version(self) -> str:
+        return str(self.data.get("version", "unversioned"))
+
+    @property
+    def phases(self) -> list[dict[str, Any]]:
+        return list(self.data.get("phases") or [])
+
+    @property
+    def phase_ids(self) -> list[str]:
+        return [str(p["id"]) for p in self.phases]
+
+    def phase(self, phase_id: str) -> dict[str, Any] | None:
+        return next((p for p in self.phases if p["id"] == phase_id), None)
+
+    @property
+    def code_types(self) -> set[str]:
+        return {str(t) for t in self.data.get("code_types") or []}
+
+    @property
+    def relation_types(self) -> set[str]:
+        return {str(r["id"]) for r in self.data.get("relation_types") or []}
+
+    @property
+    def practices(self) -> list[str]:
+        return [str(p) for p in self.data.get("practices") or []]
+
+
+def environment_of(topic: Topic) -> Path:
+    return topic.root.parent.parent  # <environment>/topics/<slug>
+
+
+def load_method(methods_dir: Path, method_id: str) -> Method:
+    path = methods_dir / method_id / "method.yaml"
+    if not path.is_file():
+        raise FileNotFoundError(f"no method {method_id!r}: {path}")
+    return Method(method_id, path.parent, yaml.safe_load(path.read_text(encoding="utf-8")) or {})
+
+
+def study_methods(topic: Topic) -> list[Method]:
+    methods_dir = environment_of(topic) / "methods"
+    return [load_method(methods_dir, str(m)) for m in topic.data.get("methods") or []]
+
+
+def check_method(folder: Path) -> list[str]:
+    """What is wrong with a method folder's `method.yaml`; the template only needs the shape."""
+    path = folder / "method.yaml"
+    if not path.is_file():
+        return ["no method.yaml"]
+    try:
+        data = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+    except yaml.YAMLError as err:
+        return [f"method.yaml cannot be read: {err}"]
+    template = folder.name.startswith("_")
+    problems: list[str] = []
+    if not template and data.get("id") != folder.name:
+        problems.append(f"id {data.get('id')!r} is not the folder name {folder.name!r}")
+    if data.get("status") not in STATUSES:
+        problems.append(f"status must be one of {sorted(STATUSES)}")
+    for key in ("name", "summary", "phases", "relation_types", "conclusions"):
+        if not data.get(key):
+            problems.append(f"missing {key}")
+    if "version" in data and not str(data["version"]).strip():
+        problems.append("version is empty")
+    for key in ("purpose", "questions", "prior_theory", "reasoning", "theory_output"):
+        if not (data.get("research_design") or {}).get(key):
+            problems.append(f"missing research_design.{key}")
+    if not isinstance(data.get("code_types", []), list):
+        problems.append("code_types must be a list (a vocabulary that orients, not a list of what is allowed)")
+    relation_ids = {str(r.get("id")) for r in data.get("relation_types") or [] if isinstance(r, dict)}
+    seen: set[str] = set()
+    for phase in data.get("phases") or []:
+        pid = str(phase.get("id"))
+        if pid in seen:
+            problems.append(f"phase {pid} appears twice")
+        seen.add(pid)
+        for key in PHASE_KEYS:
+            if not phase.get(key):
+                problems.append(f"phase {pid}: missing {key}")
+        if "human_gate" in phase:
+            problems.append(f"phase {pid}: human_gate is now researcher_decides (a decision, never a lock)")
+        if not template:
+            unknown = set(phase.get("allowed_relations") or []) - relation_ids
+            if unknown:
+                problems.append(f"phase {pid}: allowed_relations not among relation_types: {sorted(unknown)}")
+            bad_memos = set(phase.get("memos") or []) - MEMO_TYPES
+            if bad_memos:
+                problems.append(f"phase {pid}: unknown memo types {sorted(bad_memos)}")
+        if prompt := phase.get("prompt"):
+            prompt_file = folder / str(prompt)
+            if not prompt_file.is_file():
+                problems.append(f"phase {pid}: prompt {prompt} does not exist")
+            elif not FRONT_VERSION.search(prompt_file.read_text(encoding="utf-8")):
+                problems.append(f"phase {pid}: prompt {prompt} has no 'version:' line")
+    return problems
+
+
+# ---------------------------------------------------------------- settings of a study
+
+
+def _merge(base: dict[str, Any], over: dict[str, Any]) -> dict[str, Any]:
+    out = copy.deepcopy(base)
+    for key, value in over.items():
+        if key not in base:
+            raise SettingsError(f"analysis.{key} is not a setting (known: {', '.join(sorted(base))})")
+        out[key] = _merge(base[key], value) if isinstance(base[key], dict) and isinstance(value, dict) else value
+    return out
+
+
+@dataclass
+class Settings:
+    data: dict[str, Any] = field(default_factory=lambda: copy.deepcopy(DEFAULTS))
+
+    def __getitem__(self, key: str) -> Any:
+        return self.data[key]
+
+    def changed(self) -> dict[str, Any]:
+        """The settings that differ from the free defaults."""
+        return {k: v for k, v in self.data.items() if v != DEFAULTS[k]}
+
+
+def study_settings(topic: Topic) -> Settings:
+    settings = Settings(_merge(DEFAULTS, topic.data.get("analysis") or {}))
+    for key, allowed in CHOICES.items():
+        if settings[key] not in allowed:
+            raise SettingsError(f"analysis.{key}: {settings[key]!r} is not one of {sorted(allowed)}")
+    model_phases = settings["model"]["phases"]
+    if model_phases != "all" and not isinstance(model_phases, list):
+        raise SettingsError("analysis.model.phases: 'all' or a list of phase ids")
+    if not isinstance(settings["quotation_required"]["memos"], list):
+        raise SettingsError("analysis.quotation_required.memos: a list of memo types")
+    return settings
+
+
+# ---------------------------------------------------------------- where the study is
+
+
+def current_phases(history: list[dict[str, Any]]) -> dict[str, str]:
+    """The phase of each method, from the last `phase` operation for it."""
+    phases: dict[str, str] = {}
+    for event in history:
+        if event.get("op") == "phase":
+            phases[str(event["method"])] = str(event["phase"])
+    return phases
+
+
+def check_move(method: Method, settings: Settings, current: str | None, target: str) -> str | None:
+    """None when the move is fine, else why not (only when the study asked for a sequence)."""
+    if target not in method.phase_ids:
+        return f"{method.id} has no phase {target!r} (phases: {', '.join(method.phase_ids)})"
+    if settings["phases"] != "sequence" or current is None:
+        return None
+    order = method.phase_ids
+    if order.index(target) > order.index(current) + 1:
+        return (
+            f"the study follows the phases in sequence (analysis.phases: sequence): from {current} the next phase is "
+            f"{order[order.index(current) + 1]}; going back is always possible"
+        )
+    return None
+
+
+def model_may_write(topic: Topic, history: list[dict[str, Any]]) -> str | None:
+    """None when a model may write proposals now, else why not (the study limits models to some phases)."""
+    allowed = study_settings(topic)["model"]["phases"]
+    if allowed == "all":
+        return None
+    now = set(current_phases(history).values())
+    if now & set(allowed):
+        return None
+    where = ", ".join(sorted(now)) or "no phase set (mmo phase)"
+    return f"the study lets models propose only in the phases {', '.join(allowed)}; the study is at: {where}"
+
+
+def vocabulary(topic: Topic) -> tuple[set[str], set[str]]:
+    """Code types and relation types of all the study's methods."""
+    codes: set[str] = set()
+    relations: set[str] = set()
+    for method in study_methods(topic):
+        codes |= method.code_types
+        relations |= method.relation_types
+    return codes, relations

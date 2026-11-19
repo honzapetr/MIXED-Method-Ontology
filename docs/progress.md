@@ -539,3 +539,18 @@
 - Waiting for the owner: the research environment's `AGENTS.md` (protected) should list the new commands and
   `docs/analysis.md`; the change was blocked without approval. Same for the workshop's `AGENTS.md` CLI line.
 - Next: T33 (method as orientation, `mmo phase`, study settings).
+
+## T33 – 2026-11-19
+- Done: the method as orientation. `mmo method check` (schema of `method.yaml`: version, phases with
+  `researcher_decides`, known memo types, relations among `relation_types`, optional versioned `prompt` per phase);
+  SKAD, GT, TA and the template pass, each now has `version: "2026-11-19"`. Study settings `analysis:` in
+  `topic.yaml` with free defaults (codebook, own_types, phases, model.phases/alternatives, team,
+  quotation_required.memos); what a study asks for is kept by the toolbox (fixed codebook, sequence of phases, models
+  only in some phases, quotations in some memo types, reminders on own types). `mmo phase` (the researcher only,
+  per method, recorded in the history; denied to a model by `mmo` and the guard), `mmo status` (map of phases, where
+  the study is, model role and researcher's decisions there, what was made, proposals waiting, reminders). Several
+  methods in one study; tests with a toy method.
+- Tried on the research environment: `mmo method check` - 4 ok; `mmo status nazi-v-ai-dobe` - SKAD's 7 phases, no
+  phase set yet, 1 proposal waiting (the model's first-impression memo of 2026-11-13).
+- Verified: `uv run pytest` – 140 passed; `uv run ruff check . && uv run ruff format --check .` clean.
+- Next: T29 (proposals of models and their review); the owner sets the phase of the study (`mmo phase`).

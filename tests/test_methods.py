@@ -71,3 +71,12 @@ def test_method_module(folder: Path) -> None:
             assert phase.get(key), f"{folder.name}/{phase['id']}: missing {key}"
         assert set(phase.get("allowed_relations", [])) <= relation_ids
         assert set(phase["memos"]) <= MEMO_TYPES, f"{folder.name}/{phase['id']}: unknown memo type"
+
+
+@pytest.mark.parametrize("folder", [*METHODS, METHODS_DIR / "_template"], ids=[*(p.name for p in METHODS), "_template"])
+def test_method_schema_of_mmo(folder: Path) -> None:
+    """The schema `mmo method check` uses (T33): a version, researcher_decides, versioned prompts if any."""
+    from mmo.analysis.method import check_method
+
+    assert check_method(folder) == []
+    assert "version" in load(folder / "method.yaml"), f"{folder.name}: no version"
