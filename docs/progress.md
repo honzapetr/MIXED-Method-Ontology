@@ -521,3 +521,21 @@
 - Verified: `uv run pytest` – 119 passed; `uv run ruff check . && uv run ruff format --check .` clean;
   `python tools/agents_sync.py --check` clean.
 - Next: merge T25c + T15 (both repositories), then T32.
+
+## T32 – 2026-11-19
+- Done: the analysis store `topics/<slug>/analysis/` (`codebook.yaml`, `codings.jsonl`, `relations.yaml`,
+  `history.jsonl` with the files' state after every operation; field names = ontology slots) and the free toolbox:
+  `mmo code add|apply|rename|merge|split|recode|withdraw|list`, `mmo relation add`, `mmo memo add` (memos stay in
+  `memos/`, format of `docs/memos.md`), `mmo analysis check [--record --by]` (authors, references, quotations, edits
+  by hand). Only integrity is refused: words not in `text.md`, no author, a model without `--prompt-version`, a
+  reference to nothing. A model's record is `proposed`, the researcher's `accepted`; nothing is deleted (superseded,
+  withdrawn). `--quote`/`--evidence` take `<source>@<page>`. `mmo quote check --update` records itself so it is not
+  taken for a hand edit. Guard: a model writes `analysis/` only through `mmo` (Write/Edit and shell writes denied),
+  only under its own id; `mmo quote|code|relation|memo|analysis` closed like `text.md`. Ontology: status
+  `withdrawn`, slot `method`.
+- Tried on a copy of `kniha` in `scratch/T32/env`: codings on p. 57 and 77, a relation, a model's memo with a
+  quotation on p. 57 ("vyvolený národ" occurs 3 times - refused without the page); checks clean.
+- Verified: `uv run pytest` – 128 passed; `uv run ruff check . && uv run ruff format --check .` clean.
+- Waiting for the owner: the research environment's `AGENTS.md` (protected) should list the new commands and
+  `docs/analysis.md`; the change was blocked without approval. Same for the workshop's `AGENTS.md` CLI line.
+- Next: T33 (method as orientation, `mmo phase`, study settings).
