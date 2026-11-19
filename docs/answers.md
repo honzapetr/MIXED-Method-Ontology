@@ -212,3 +212,20 @@
   tied to one agent. The agent first for interpretive work in dialogue (SKAD fine analysis); `mmo` with local models
   for repetitive work over many passages (T31).
 - Changes of T24 approved, including the protected paths (`AGENTS.md` of both repositories, skill `ingest-sources`).
+
+## 2026-11-19 – Free analysis on a fixed core (ADR 0013)
+
+- Qualitative analysis must stay free, as the methods require. `mmo` guards integrity, not the method: quotations
+  are the exact words, every record has author and time (model and prompt version for a model), a model's output is
+  a proposal until the researcher accepts it, nothing disappears without a trace. The operations of qualitative
+  analysis are a toolbox for every method; a method's vocabulary and phases are orientation; `model_role` binds
+  models only. New methods are added by describing them.
+- A quotation is required for codes and for everything a model proposes; a reflexive or methodological memo and an
+  idea of the researcher may stand without one. The traceability rule of `AGENTS.md` in both repositories is changed
+  accordingly (protected path, approved).
+- Strictness is set by the researcher per study (`topic.yaml`), not by the method.
+- Storage: text files in `topics/<slug>/analysis/` are the source of truth; the RDF graph, the graph browser and
+  the export are views built from them.
+- QDA programs: export to REFI-QDA (`.qdpx`) only for now; import later.
+- A graph browser in the homelab goes into the plan now (T35).
+- Open: the key for choosing the passages of the fine analysis and the model's orientation reading (T36).

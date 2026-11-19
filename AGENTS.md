@@ -103,9 +103,12 @@ prompts for the lab live in `.agents/roles/`. Copies for Claude Code in `.claude
   not `ingest/`.
 * **CLI:** `uv run mmo --help` – `topic new`, `source add`, `source check`, `source finalize`, `segment`; tools for
   bringing sources in: `ingest`, `ocr ...`.
-* **Traceability is the core rule:** never write analytical output that cannot be traced to quotations (the exact
-  words with source, pages and offsets in `text.md`, ADR 0012) and to the step that produced it (model, prompt
-  version, time).
+* **Traceability is the core rule:** every analytic record carries its author and time, and for a model the model
+  and prompt version. Codes and everything a model proposes must be traced to quotations (the exact words with
+  source, pages and offsets in `text.md`, ADR 0012); a reflexive or methodological memo and an idea of the
+  researcher may stand without one. What a model writes is a proposal until the researcher accepts it (ADR 0013).
+* **The analysis is free:** `mmo` checks integrity (the rule above), never the method. A method's vocabulary and
+  phases are orientation; strictness is set by the researcher per study (ADR 0013). Never hard-wire one method.
 * **Sources:** page images and other source files are git-ignored (size, copyright); commit only manifests, the
   text and segments.
 * **Models:** local first, through the OpenAI-compatible gateway configured in `.env`. Homelab services are

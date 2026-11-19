@@ -456,3 +456,15 @@
   (1,240 segments).
 - Docs: `docs/test-copies.md` (making copies, `--carry`, growing over time, from a test to the research).
 - Next: the owner continues the study in `test8`; T26 (quotations).
+
+## 2026-11-19 – T25b Design of the analytic layer (ADR 0013)
+- Owner: the analysis must stay free; the first proposal (a method-enforcing engine: unknown code types refused,
+  phase gates) mixed integrity with framing and was dropped.
+- ADR 0013: a fixed core of integrity, a free toolbox of qualitative operations, the method as orientation
+  (`model_role` binds models only), strictness per study in `topic.yaml`; text files in `analysis/` as the source of
+  truth, graph, graph browser and REFI-QDA export as views.
+- `AGENTS.md` of both repositories: traceability rule made precise, rule "the analysis is free" added (approved).
+- Plan: Analysis rewritten - T32 store and toolbox, T33 method as orientation and study settings, T29 proposals of
+  models, T36 outline and orientation reading (key for passages open), T34 REFI-QDA export, T30 graph, T35 graph
+  browser, T31 model backends. Order: T26, T32, T33, T29, T36, T34, T30, T35, T31.
+- Next: the owner decides the key for choosing passages (T36); then T26.

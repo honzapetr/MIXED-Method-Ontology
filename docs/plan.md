@@ -290,6 +290,11 @@
   `kniha` 203 running heads and 200 page numbers left out, segments 1,581 -> 1,240.
 - Depends on: T24
 
+### T25b – Design of the analytic layer (done)
+- Goal: decide how `mmo` supports the analysis without limiting it.
+- Built: ADR 0013, `AGENTS.md` traceability rule in both repositories, this section rewritten (T26-T36).
+- Depends on: T25
+
 ### T26 – Quotations: find, check, find again
 - Goal: what the analysis points to can be created only from words that are really in `text.md`.
 - Acceptance criteria: `mmo quote find <topic> <source> "<words>" [--page n | --segment id]` prints a quotation
@@ -322,37 +327,104 @@
 - Paths: `code/mmo/ingest/`, `tests/ingest/`, `pyproject.toml`, `uv.lock`, `docs/`
 - Depends on: T24
 
-### T29 – Proposals and their review (first SKAD fine analysis)
-- Goal: readings and open codes of a passage are stored with quotations, status and provenance, and the researcher
-  confirms, edits or rejects them (replaces T6).
-- Acceptance criteria: a format for proposals in `topics/<slug>/` (status `proposed` / `confirmed` / `rejected`,
-  author, step: model, prompt version, time; quotations checked by T26); `mmo review` lists, confirms, edits, merges
-  or rejects with a reason; a phase gate passes only confirmed items; tried on passages of `kniha` chosen by the
-  owner in a test copy.
-- Verify: `uv run pytest tests/test_review.py && uv run ruff check . && uv run ruff format --check .`
-- Paths: `code/mmo/analysis/`, `tests/`, `docs/`, `../MIXED-Method-Ontology/methods/skad/`
+> **ADR 0013 (2026-11-19): free analysis on a fixed core.** `mmo` checks integrity - quotations are the exact
+> words, every record has author and time (and model, prompt version), a model's output is a proposal until the
+> researcher accepts it, nothing disappears without a trace - never the method. The operations of qualitative
+> analysis are a toolbox for every method; a method's vocabulary and phases are orientation, `model_role` binds
+> models only; strictness is set per study in `topic.yaml`. Source of truth: text files in
+> `topics/<slug>/analysis/`; the graph, the graph browser and the REFI-QDA export are views. Order: T26, T32, T33,
+> T29, then T36, T34, T30, T35, T31.
+
+### T32 – The analysis store and the free toolbox
+- Goal: the researcher and an agent code and write freely; every step is recorded and traceable.
+- Acceptance criteria: layout of `topics/<slug>/analysis/` (codebook, codings, memos, relations, history; text files,
+  sorted, readable in a diff) in `docs/` and the ontology; `mmo code` adds a code (any name and type), codes a
+  quotation, renames, merges, splits, recodes; `mmo memo` attaches a memo to a quotation, code, relation, source or
+  memo; `mmo relate` links any two items; every operation records author, time, method and, for a model, model and
+  prompt version, and appends to the history; nothing is refused for method reasons, only for integrity (a quotation
+  not in `text.md`, a missing author); the guard lets only `mmo` write `analysis/`; tests with a toy method.
+- Verify: `uv run pytest tests/analysis/ && uv run ruff check . && uv run ruff format --check .`
+- Paths: `code/mmo/analysis/`, `code/mmo/cli.py`, `code/mmo/guard.py`, `tests/analysis/`, `docs/`,
+  `../MIXED-Method-Ontology/ontology/`, `../MIXED-Method-Ontology/docs/`
 - Depends on: T26
 
-### T30 – Graph store and versioning (replaces T4)
-- Goal: confirmed codes, schemes, relations and their quotations in RDF (sorted Turtle per named graph + an Oxigraph
-  index), versioned in git.
-- Acceptance criteria: ADR on the graph store; `mmo graph build` writes Turtle and rebuilds the index; round trip
-  test; SPARQL query by quotation and by code works.
-- Verify: `uv run pytest tests/test_graph.py`
-- Paths: `code/mmo/graph/`, `tests/`, `docs/adr/`, `../MIXED-Method-Ontology/ontology/`
+### T33 – The method as orientation, strictness per study
+- Goal: a new method is added by describing it; `mmo` guides by it without limiting the researcher.
+- Acceptance criteria: a schema of `method.yaml` (vocabulary, map of phases, `model_role`, practices, prompts per
+  phase, versioned) and `mmo method check`; SKAD, GT, TA and the template pass; `topic.yaml` `analysis:` settings
+  (codebook, own types, phases as orientation or sequence, model phases and alternatives, team mode, where a
+  quotation is required) with defaults that leave the analysis free; `mmo status` shows the map of phases, where the
+  study is, what was made and the reminders of the method's practices; a type outside the vocabulary is allowed
+  (a memo asked for only if the study says so); several methods in one study; tests with a toy method.
+- Verify: `uv run pytest tests/analysis/ tests/test_methods.py && uv run ruff check . && uv run ruff format --check .`
+- Paths: `code/mmo/analysis/`, `code/mmo/cli.py`, `tests/`, `docs/`, `../MIXED-Method-Ontology/methods/`,
+  `../MIXED-Method-Ontology/docs/`
+- Depends on: T32
+
+### T29 – Proposals of models and their review
+- Goal: what a model proposes (readings, codes, memos, relations) waits for the researcher, who accepts, edits or
+  rejects it (replaces T6).
+- Acceptance criteria: proposals in `analysis/proposals/` with status `proposed` / `accepted` / `edited` /
+  `rejected` (with a reason), model, prompt version, time and quotations checked by T26; a proposal outside what the
+  method's `model_role` and the study allow for the current phase is refused; `mmo review` lists, accepts, edits,
+  rejects; an accepted proposal becomes a record of the toolbox (T32) that keeps its provenance; the researcher's
+  own work is never gated; tried on passages of `kniha` in a test copy.
+- Verify: `uv run pytest tests/analysis/ && uv run ruff check . && uv run ruff format --check .`
+- Paths: `code/mmo/analysis/`, `tests/analysis/`, `docs/`, `../MIXED-Method-Ontology/methods/skad/`,
+  `../MIXED-Method-Ontology/.agents/skills/`
+- Depends on: T33
+
+### T36 – Outline of a source and the model's orientation reading
+- Goal: the researcher and the model know the structure of a source and where to start the fine analysis.
+- Acceptance criteria: `mmo outline <topic> <source>` lists the parts of `text.md` from its headings (chapter,
+  section, pages, segment range), without a model; the key for choosing passages is decided by the owner (see the
+  open question below) and set per study; the model's orientation reading is a proposal with quotations, marked as
+  first impressions; tried on `kniha`.
+- Verify: `uv run pytest tests/analysis/ && uv run ruff check . && uv run ruff format --check .`
+- Paths: `code/mmo/analysis/`, `code/mmo/cli.py`, `tests/`, `docs/`, `../MIXED-Method-Ontology/methods/skad/`
 - Depends on: T29
+- Open: the key for choosing passages (the owner, 2026-11-19).
+
+### T34 – Export to REFI-QDA
+- Goal: the study can be opened and looked at in QualCoder, ATLAS.ti, MAXQDA or NVivo.
+- Acceptance criteria: `mmo export qdpx <topic>` writes a `.qdpx` (REFI-QDA project 1.0): sources as plain text
+  documents from `text.md`, codes with their hierarchy, codings as plain-text selections (our offsets), memos,
+  relations as links, document groups and attributes; method types as code groups or colours; what the standard
+  cannot carry is listed in the export's report; validated against the REFI-QDA schema; opened in QualCoder by the
+  owner. Export only; import is a later task.
+- Verify: `uv run pytest tests/export/ && uv run ruff check . && uv run ruff format --check .`
+- Paths: `code/mmo/export/`, `code/mmo/cli.py`, `tests/export/`, `docs/`
+- Depends on: T32
+
+### T30 – Graph store (replaces T4)
+- Goal: the analysis as an RDF graph, built from the files of `analysis/`, for queries.
+- Acceptance criteria: ADR on the graph store; `mmo graph build` writes sorted Turtle per named graph and an
+  Oxigraph index from the files (a view: built again at any time, never edited); quotations as W3C Web Annotation,
+  provenance as PROV; SPARQL queries by quotation, code, memo and method work; round trip test.
+- Verify: `uv run pytest tests/test_graph.py && uv run ruff check . && uv run ruff format --check .`
+- Paths: `code/mmo/graph/`, `tests/`, `docs/adr/`, `../MIXED-Method-Ontology/ontology/`
+- Depends on: T32
+
+### T35 – Graph browser in the homelab
+- Goal: the researcher looks at the network of codes, quotations and memos in a browser.
+- Acceptance criteria: GraphDB Free or Apache Jena Fuseki chosen (ADR), run as a container in the homelab
+  (compose file, LAN/VPN only); `mmo graph push` loads a study's graph into it; a short guide with saved queries and
+  views (codes of a source, quotations of a code, memos of a code); tried on the study in a test copy.
+- Verify: `uv run pytest tests/test_graph.py && uv run ruff check . && uv run ruff format --check .`
+- Paths: `code/mmo/graph/`, `compose.*.yaml`, `docs/`, `docs/adr/`
+- Depends on: T30
 
 ### T31 – Model backends for analysis steps (replaces T5)
 - Goal: an analysis step can run on a local model through the gateway with the same checks as an agent.
-- Acceptance criteria: (both drivers decided, see the note above) backend per step configured in the
-  topic; every call recorded (model, prompt version, input segments); proposals whose quotations fail T26 are
-  refused.
-- Verify: `uv run pytest tests/test_llm.py`
+- Acceptance criteria: (both drivers decided, see the note above) backend per step configured in the topic; the
+  prompt of the method's phase (T33); every call recorded (model, prompt version, input quotations); its output goes
+  in as proposals (T29); proposals whose quotations fail T26 are refused.
+- Verify: `uv run pytest tests/test_llm.py && uv run ruff check . && uv run ruff format --check .`
 - Paths: `code/mmo/analysis/`, `tests/`
 - Depends on: T29
 
 Open for discussion: a model proposing bibliographic fields of `source.yaml` (from the imprint or the annotation),
 confirmed by the researcher.
 
-Later: exports (SKOS, `.qdpx` tested in ATLAS.ti and QualCoder, report), querying a finished topic, adding material
+Later: import of the researcher's coding from REFI-QDA, exports (SKOS, report), querying a finished topic, adding material
 with a change overview, quantitative link (DDI-CDI), read-only MCP server, UI.
