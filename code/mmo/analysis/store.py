@@ -25,6 +25,7 @@ from typing import Any
 
 import yaml
 
+from mmo.analysis.method import Method, check_move, current_phases, model_may_write, study_settings
 from mmo.analysis.quote import GONE, OK, Quotation, check_record, read_final_text
 from mmo.core.topic import Topic
 
@@ -85,6 +86,8 @@ def author_of(topic: Topic, by: str | None, prompt_version: str | None = None) -
             f"{by} is a model: give --prompt-version (the skill or prompt it works from and its version, "
             "e.g. skad-fine-analysis@1, or chat@<date> for a dialogue with the researcher)"
         )
+    if is_model and (why := model_may_write(topic, Store(topic).history())):
+        raise StoreError(why)
     return Author(by, "model" if is_model else "person", prompt_version if is_model else None)
 
 
@@ -204,6 +207,11 @@ class Store:
     ) -> dict[str, Any]:
         if not label.strip():
             raise StoreError("a code needs a label")
+        if study_settings(self.topic)["codebook"] == "fixed":
+            raise StoreError(
+                f"the study's codebook is fixed (analysis.codebook in topic.yaml): no new code {label!r}; "
+                "use a code of the codebook, or change the setting"
+            )
         if self.find_code(label.strip()):
             raise StoreError(f"a code {label!r} exists already")
         if broader:
@@ -311,6 +319,15 @@ class Store:
             record["withdrawn_because"] = reason
         self.save(author, "withdraw", target=ref, reason=reason)
 
+    def set_phase(self, author: Author, method: Method, phase: str) -> dict[str, Any]:
+        """Say where the study is in a method's map of phases; free unless the study asked for a sequence."""
+        if author.kind == "model":
+            raise StoreError("the researcher says where the study is; a model may suggest it in a memo")
+        current = current_phases(self.history()).get(method.id)
+        if why := check_move(method, study_settings(self.topic), current, phase):
+            raise StoreError(why)
+        return self.save(author, "phase", method=method.id, phase=phase, previous=current)
+
     def _relation(self, relation_id: str) -> dict[str, Any]:
         for relation in self.relations:
             if relation["id"] == relation_id:
@@ -365,6 +382,10 @@ def write_memo(
     """A memo in `memos/` in the format of `docs/memos.md`; quotations go to `basis`."""
     store = Store(topic)
     refs = [store.check_ref(ref) for ref in about or []]
+    if memo_type in study_settings(topic)["quotation_required"]["memos"] and not quotations:
+        raise StoreError(
+            f"the study asks for a quotation in {memo_type} memos (analysis.quotation_required.memos): add --quote"
+        )
     created = datetime.now(UTC).date().isoformat()
     base = f"{created}-{slug(title)}"
     memo_id, n = base, 1

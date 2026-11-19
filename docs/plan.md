@@ -364,7 +364,7 @@
   `docs/analysis.md`.
 - Depends on: T26
 
-### T33 – The method as orientation, strictness per study
+### T33 – The method as orientation, strictness per study (done)
 - Goal: a new method is added by describing it; `mmo` guides by it without limiting the researcher.
 - Acceptance criteria: a schema of `method.yaml` (vocabulary, map of phases, `model_role`, practices, prompts per
   phase, versioned) and `mmo method check`; SKAD, GT, TA and the template pass; `topic.yaml` `analysis:` settings
@@ -377,6 +377,9 @@
 - Verify: `uv run pytest tests/analysis/ tests/test_methods.py && uv run ruff check . && uv run ruff format --check .`
 - Paths: `code/mmo/analysis/`, `code/mmo/cli.py`, `tests/`, `docs/`, `../MIXED-Method-Ontology/methods/`,
   `../MIXED-Method-Ontology/docs/`
+- Built: `code/mmo/analysis/method.py`, `status.py`; `mmo method check`, `mmo phase`, `mmo status`; settings
+  `analysis:` kept by the toolbox; `version` in every `method.yaml`; docs `docs/analysis-store.md`, research
+  environment `methods/README.md`, `docs/analysis.md`.
 - Depends on: T32
 
 ### T29 – Proposals of models and their review

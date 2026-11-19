@@ -117,9 +117,29 @@ uv run mmo analysis check <topic> [--record --by X]
 - `mmo quote|code|relation|memo|analysis` on a study is closed exactly when reading its `text.md` is;
 - a model writes only under its own id: `--by <someone else>` is denied.
 
+## The method as orientation, strictness per study (T33)
+
+`code/mmo/analysis/method.py`, `status.py`; commands `mmo method check`, `mmo phase`, `mmo status`.
+
+- **Method schema** (`check_method`, `mmo method check [ids] [--methods DIR]`): the keys of `methods/README.md` of
+  the research environment, a `version`, every phase with `goal`, `input`, `output`, `memos`, `model_role`,
+  `researcher_decides` (`human_gate` is reported as renamed), `allowed_relations` among `relation_types`, known memo
+  types, and an optional versioned `prompt` file per phase. `mmo` holds no code for any method.
+- **Study settings** (`study_settings`): `analysis:` of `topic.yaml` merged over free defaults; unknown keys or
+  values are refused. Kept by the toolbox: `codebook: fixed` refuses new codes; `phases: sequence` allows only the
+  next phase or going back; `model.phases` refuses a model's writes outside the listed phases (in `author_of`);
+  `quotation_required.memos` refuses those memo types without `--quote`; `own_types: ask_memo` prints a reminder
+  after `code add` / `relation add` and lists such types in `mmo status`. `model.alternatives` and `team` are stored
+  for T29 and later.
+- **Phase**: `mmo phase <topic> <phase> [--method]` - the researcher only (refused for a model in `mmo` and by the
+  guard); recorded as `op: phase` with `method`, `phase`, `previous` in `history.jsonl`; the current phase of each
+  method is the last such event.
+- **Status**: `mmo status <topic>` - every method of the study with its version and map of phases (`->` marks where
+  the study is), the model's role and the researcher's decisions there, the memo types the phase usually has, what
+  was made, proposals waiting, changed settings, reminders (merges or splits without a reason, own types if asked,
+  the methods' practices). Orientation only; nothing there is a condition.
+
 ## Later
 
 - T29 reviews proposals (accept, edit, reject) and limits what a model may propose per phase.
-- T33 adds `mmo phase` and the study's settings (`analysis:` in `topic.yaml`), e.g. asking for a memo when a type
-  outside the method's vocabulary is used.
 - T30 builds the RDF graph from these files; T34 exports them to REFI-QDA.

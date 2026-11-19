@@ -225,3 +225,14 @@ def test_main_reads_stdin_and_writes_hook_json(root, monkeypatch, capsys):
     out = json.loads(capsys.readouterr().out)
     assert out["hookSpecificOutput"]["additionalContext"].startswith("Guards: on")
     assert guard.main(["nonsense"]) == 2
+
+
+def test_only_the_researcher_sets_the_phase(root):
+    _open_study(root)
+    result = guard.pre_tool_use(
+        {"tool_name": "Bash", "tool_input": {"command": "uv run mmo phase s coding --by m"}}, root, "m"
+    )
+    assert result["hookSpecificOutput"]["permissionDecision"] == "deny"
+    assert (
+        guard.pre_tool_use({"tool_name": "Bash", "tool_input": {"command": "uv run mmo status s"}}, root, "m") is None
+    )

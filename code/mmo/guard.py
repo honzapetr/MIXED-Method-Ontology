@@ -321,6 +321,12 @@ def option(args: list[str], name: str) -> str | None:
 def check_mmo(words: list[str], root: Path, model_id: str | None) -> dict | None:
     """`mmo` on a study is closed exactly when reading its `text.md` is; a model writes only under its own id."""
     args = mmo_args(words)
+    if args and args[0] == "phase" and model_id:
+        return decision(
+            "deny",
+            "The researcher says where the study is (mmo phase): the phase decides what a model may propose. "
+            "Suggest a phase in a memo instead.",
+        )
     if args is None or len(args) < 3 or args[0] not in MMO_STUDY_COMMANDS:
         return None
     by = option(args, "--by")

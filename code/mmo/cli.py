@@ -10,7 +10,9 @@ from pathlib import Path
 
 import yaml
 
+from mmo.analysis.method import check_method, study_methods
 from mmo.analysis.quote import MOVED, OK, Quotation, QuoteError, check_study, quote
+from mmo.analysis.status import own_type_reminder, study_status
 from mmo.analysis.store import ACTIVE_STATUSES, Author, Store, author_of, check_store, write_memo
 from mmo.config import Settings
 from mmo.core.check import check_source
@@ -408,6 +410,8 @@ def cmd_code_add(args: argparse.Namespace) -> int:
         _author(args, topic), args.label, args.type, args.method, args.definition, args.broader
     )
     print(f"code {code['id']} ({code['status']})")
+    if reminder := own_type_reminder(topic, "code", args.type):
+        print(reminder)
     return 0
 
 
@@ -478,6 +482,8 @@ def cmd_relation_add(args: argparse.Namespace) -> int:
     evidence = [_quotation(topic, source, words) for source, words in args.evidence or []]
     relation = Store(topic).relate(author, args.subject, args.type, args.object, args.method, args.note, evidence)
     print(f"relation {relation['id']}: {relation['subject']} -{relation['relation_type']}-> {relation['object']}")
+    if reminder := own_type_reminder(topic, "relation", args.type):
+        print(reminder)
     return 0
 
 
@@ -500,6 +506,47 @@ def cmd_analysis_check(args: argparse.Namespace) -> int:
         print(f"{finding.where}: {finding.problem}")
     print("analysis: no problems" if not findings else f"analysis: {len(findings)} to look at")
     return 1 if findings else 0
+
+
+# ---------------------------------------------------------------- the method as orientation (T33)
+
+
+def cmd_method_check(args: argparse.Namespace) -> int:
+    """Check method folders against the schema of `method.yaml` (methods/README.md of the environment)."""
+    base: Path = args.methods
+    folders = [base / m for m in args.ids] if args.ids else sorted(p for p in base.iterdir() if p.is_dir())
+    failed = 0
+    for folder in folders:
+        problems = check_method(folder)
+        print(f"{folder.name}: {'ok' if not problems else f'{len(problems)} problems'}")
+        for problem in problems:
+            print(f"  - {problem}")
+        failed += bool(problems)
+    return 1 if failed else 0
+
+
+def cmd_phase(args: argparse.Namespace) -> int:
+    topic = load_topic(args)
+    methods = study_methods(topic)
+    if args.method:
+        chosen = [m for m in methods if m.id == args.method]
+        if not chosen:
+            raise ValueError(f"{args.method} is not a method of the study (topic.yaml methods)")
+    else:
+        chosen = [m for m in methods if args.phase in m.phase_ids]
+        if len(chosen) != 1:
+            names = ", ".join(m.id for m in chosen) or "none of the study's methods"
+            raise ValueError(f"phase {args.phase!r} is in {names}: name the method with --method")
+    store = Store(topic)
+    event = store.set_phase(_author(args, topic), chosen[0], args.phase)
+    previous = f" (was {event['previous']})" if event.get("previous") else ""
+    print(f"{topic.slug}: {chosen[0].id} at {args.phase}{previous}")
+    return 0
+
+
+def cmd_status(args: argparse.Namespace) -> int:
+    print("\n".join(study_status(load_topic(args))))
+    return 0
 
 
 def add_backend_options(parser: argparse.ArgumentParser) -> None:
@@ -741,6 +788,24 @@ def build_parser() -> argparse.ArgumentParser:
     a_check.add_argument("--record", action="store_true", help="record edits made by hand in the history")
     a_check.add_argument("--by", help="who made the edits by hand (with --record)")
     a_check.set_defaults(func=cmd_analysis_check)
+
+    methods = sub.add_parser("method", help="method modules of the environment").add_subparsers(
+        dest="action", required=True
+    )
+    m_check = methods.add_parser("check", help="check method.yaml against its schema (methods/README.md)")
+    m_check.add_argument("ids", nargs="*", help="method ids (default: every folder)")
+    m_check.add_argument("--methods", type=Path, default=Path("methods"), help="the methods folder (default: methods)")
+    m_check.set_defaults(func=cmd_method_check)
+
+    phase = sub.add_parser("phase", parents=[who], help="say where the study is in a method's phases (the researcher)")
+    phase.add_argument("topic")
+    phase.add_argument("phase")
+    phase.add_argument("--method", help="needed when several methods of the study have this phase")
+    phase.set_defaults(func=cmd_phase)
+
+    status = sub.add_parser("status", help="the map of phases, where the study is, what was made, reminders")
+    status.add_argument("topic")
+    status.set_defaults(func=cmd_status)
     return parser
 
 
