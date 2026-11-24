@@ -171,6 +171,32 @@ propose. What the method calls the researcher's decisions (`researcher_decides`)
   run.
 - Subagents inside Claude Code use the lead's model.
 
+## The critic of another maker (ADR 0014; built in T46)
+
+- `analysis.critic` of `topic.yaml`: `analyst` (profile id, default `gemini-4-neon`), `model` (the `agy` model,
+  default `gemini-4-neon-medium`), `timeout_minutes` (60).
+- `mmo critic brief` (the researcher only) copies the method's critic template (`roles: critic:` of `method.yaml`) to
+  `topics/<slug>/critic/brief.md`; the researcher replaces every `<fill: ...>` and sets `status: ready`. The guard
+  denies a model writing `topics/<slug>/critic/`.
+- `mmo critic run --round 1|2 [--dry-run] [--timeout]` refuses a critic of the same maker as another positioned model
+  (maker from the profile row `| name, maker | <name>, <maker> |`), a critic without a confirmed profile and position
+  listing `critic`, a brief not ready, and round 2 before an accepted round 1. It starts a run of the role `critic`
+  and runs `agy -p <prompt> --model <model> --output-format stream-json --sandbox` in the environment with
+  `MMO_ANALYST`, `MMO_CRITIC_RUN`, `MMO_CRITIC_ROUND`, `MMO_STUDY`. The prompt is the run's header, the role and the
+  brief without the other round's section.
+- Record: `topics/<slug>/critic/runs/<run>/` (`prompt.md`, `stream.jsonl`, `response.md`, `check.yaml`) and
+  `op: critic-run` (round, analyst, model, prompt version, brief template and hash, prompt hash, status, exit code,
+  minutes, steps, calls denied by the guard, records written, files changed, violations).
+- After the run the files of the environment (size and time; not `.git`, `.venv`, `files/`, `ingest/`) are compared
+  with their state before; anything but memos, the analysis files and the run's record is a violation: `status:
+  violations`, not accepted.
+- The guard as an `agy` hook (`.agents/hooks.json` of the environment, `mmo-guard agy-pre-tool-use`): the same checks,
+  mapped from `agy` tools (`run_command` -> the Bash checks; tools with path arguments -> path checks; `search_web`,
+  `read_url_content`, browser tools -> the web check). `agy` treats a missing decision as a denial: no objection is
+  `allow` inside a critic's run and `ask` otherwise. In a critic's run file-writing tools are denied (it writes only
+  through `mmo`); in round 1 the lead's memos, the analysis files and other analysts' positions are closed.
+- In Claude Code a subagent named `critic` is refused (the critic is another maker's model).
+
 ## Context search (ADR 0015; built in T44, the blind probe in T45)
 
 - `method.yaml` has `context_search`: `derived_from`, `source_types` (list), `character`, `where` (list), `repeat`;

@@ -301,9 +301,9 @@ pull request per repository.
 **Done after that:** T44 (context search by method), on `task/T44-context-search` in both repositories, on top of
 `task/T43-roles`.
 
-T45 (blind probe), on `task/T45-blind-probe` on top of T44.
+T45 (blind probe), on `task/T45-blind-probe` on top of T44. T46 (critic through `agy`), on `task/T46-critic` on top of T45.
 
-**Next, in this order:** T46 (critic through `agy`), T36
+**Next, in this order:** T36
 (outline, orientation reading, coverage), T47 (many decisions at once), then test 10 (one agent against the
 orchestrator on a new source). After it: T28 (web pages), T37, T34, T30, T38, T35, T31; T40 and T41 when convenient;
 T27 when a PDF comes.
@@ -658,7 +658,7 @@ T27 when a PDF comes.
   gemini-4-neon (agy, twice) does not know the book but recalls the author as founder of ELAI and organiser of Týden
   inovací - which the publisher's announcement in test 9 confirms.
 
-### T46 – The critic of another maker through `agy`
+### T46 – The critic of another maker through `agy` (done; owner approves)
 - Goal: the critic runs under the same conditions as the lead and its work is in the record (ADR 0014).
 - Acceptance criteria:
   - `mmo critic run <topic>` starts `agy -p --model <model> --output-format stream-json` in the study's environment;

@@ -12,6 +12,7 @@ import yaml
 
 from mmo.analysis.context import add_request, close_request, plans, requests, rounds, start_round
 from mmo.analysis.context import summary as context_summary
+from mmo.analysis.critic import check_critic, critic_runs, critic_settings, run_critic, write_brief
 from mmo.analysis.method import check_method, study_methods
 from mmo.analysis.probe import prior_record, probes, start_probe
 from mmo.analysis.probe import task as probe_task
@@ -730,6 +731,48 @@ def cmd_probe_list(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_critic_brief(args: argparse.Namespace) -> int:
+    topic = load_topic(args)
+    path = write_brief(topic, _author(args, topic))
+    print(f"{path.relative_to(topic.root).as_posix()}: replace every place marked fill:, then set status: ready")
+    return 0
+
+
+def cmd_critic_run(args: argparse.Namespace) -> int:
+    """The critic of another maker through agy (T46, ADR 0014)."""
+    topic = load_topic(args)
+    record = run_critic(topic, _author(args, topic), args.round, args.timeout, dry_run=args.dry_run)
+    who = f"critic {record['analyst']} ({record['model']})"
+    print(f"{record['run']}: {who}, round {record['round']}: {record['status']}")
+    print(f"    record: {record['record']}/ (prompt.md, stream.jsonl, response.md, check.yaml)")
+    if record["status"] == "dry-run":
+        print(f"    would run: {' '.join(record['command'])}")
+        return 0
+    print(f"    wrote: {', '.join(record['wrote']) or 'nothing in the analysis'}")
+    print(f"    tool steps {record['steps']}, denied by the guard {record['denied_by_guard']}, {record['minutes']} min")
+    if record["violations"]:
+        print("    changed outside what a critic may write - not accepted:")
+        for path in record["violations"]:
+            print(f"      {path}")
+    return 0 if record["status"] == "ok" else 1
+
+
+def cmd_critic_list(args: argparse.Namespace) -> int:
+    topic = load_topic(args)
+    settings = critic_settings(topic)
+    print(f"critic: {settings['analyst']} through agy ({settings['model']})")
+    for problem in check_critic(topic):
+        print(f"  - {problem}")
+    found = critic_runs(Store(topic).history())
+    for event in found:
+        print(
+            f"{event['run']} round {event['round']} ({event['at'][:16]}): {event['status']}; "
+            f"wrote {len(event.get('wrote') or [])}; violations {len(event.get('violations') or [])}"
+        )
+    print(f"{len(found)} critic runs" if found else "no critic runs")
+    return 0
+
+
 def cmd_run_list(args: argparse.Namespace) -> int:
     topic = load_topic(args)
     store = Store(topic)
@@ -1061,6 +1104,22 @@ def build_parser() -> argparse.ArgumentParser:
     run_list = run.add_parser("list", help="the runs of a study and what each wrote")
     run_list.add_argument("topic")
     run_list.set_defaults(func=cmd_run_list)
+
+    critic = sub.add_parser("critic", help="the critic of another maker through agy (ADR 0014)").add_subparsers(
+        dest="action", required=True
+    )
+    cr_brief = critic.add_parser("brief", parents=[who], help="copy the method's critic template (the researcher)")
+    cr_brief.add_argument("topic")
+    cr_brief.set_defaults(func=cmd_critic_brief)
+    cr_run = critic.add_parser("run", parents=[who], help="run the critic through agy and keep the whole run")
+    cr_run.add_argument("topic")
+    cr_run.add_argument("--round", type=int, required=True, choices=[1, 2], help="1 own reading, 2 comparison")
+    cr_run.add_argument("--timeout", type=int, help="minutes (default: analysis.critic.timeout_minutes)")
+    cr_run.add_argument("--dry-run", action="store_true", help="check and record the prompt, do not start agy")
+    cr_run.set_defaults(func=cmd_critic_run)
+    cr_list = critic.add_parser("list", help="the critic, what stops it, its runs")
+    cr_list.add_argument("topic")
+    cr_list.set_defaults(func=cmd_critic_list)
 
     probe = sub.add_parser("probe", help="blind probe of a model's prior knowledge of a source (T45)").add_subparsers(
         dest="action", required=True

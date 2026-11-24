@@ -17,6 +17,10 @@ analysis:
   quotation_required:
     memos: []                 # memo types that need a quotation, e.g. [analytic, theoretical]
   web_search: []              # the models the researcher lets search the web for this study (T44, ADR 0015)
+  critic:                     # the critic of another maker, through agy (T46, ADR 0014)
+    analyst: gemini-4-neon    # the id of its profile in analysts/
+    model: gemini-4-neon-medium   # the agy model
+    timeout_minutes: 60
 ```
 
 The core is not a setting: codes and everything a model proposes always carry quotations (ADR 0013).
@@ -58,6 +62,7 @@ DEFAULTS: dict[str, Any] = {
     "team": "none",
     "quotation_required": {"memos": []},
     "web_search": [],
+    "critic": {"analyst": "gemini-4-neon", "model": "gemini-4-neon-medium", "timeout_minutes": 60},
 }
 CHOICES = {
     "codebook": {"emergent", "evolving", "fixed"},
