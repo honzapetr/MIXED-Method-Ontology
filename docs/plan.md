@@ -273,7 +273,7 @@
 - A trial that the analyst role is clean in a test copy (`/memory`).
 - Releasing `mmo` as a wheel into the research environment instead of the path dependency.
 
-## Where we are (2026-11-19)
+## Where we are (2026-11-24)
 
 Built and merged into `main` of both repositories: the source pipeline (any original -> `text.md` -> segments ->
 quotations, T24-T26), the analysis store and the free toolbox (T32), the method as orientation with study
@@ -283,16 +283,18 @@ phases -> quotations, codes, memos, relations -> proposals -> review -> checks. 
 `../MIXED-Method-Ontology/docs/how-it-works.md`; for the builder: `docs/source-pipeline.md`,
 `docs/analysis-store.md`, `docs/test-copies.md`.
 
-**Now: test 9 (owner).** `zkusebna/test9` made from the research environment `main` without `--carry` (from the
-start). The owner walks the study `nazi-v-ai-dobe` with a model: session start, profile, the researcher's and the
-model's positions, framing (`topic.yaml` questions), `mmo phase`, corpus and context sources (a web page saved as a
-text file in `files/` goes through `mmo ingest` + `source finalize` without T28), context analysis memos, fine
-analysis of passages of the book (`mmo quote`, `mmo code apply`, `mmo memo add`), `mmo review`, `mmo status`,
-`mmo analysis check`. What it teaches is written as tasks; it decides T36, T39 and T31 in detail.
+**Test 9 (done, 2026-11-23/24).** The owner walked `nazi-v-ai-dobe` in `zkusebna/test9` from position to the final
+report with claude-opus-5-5, and brought in gemini-4-neon (Antigravity CLI) as a critic. Record: `scratch/test9/`.
+What it taught (ADR 0014, ADR 0015): the context filled with reading (540k tokens) and a compaction removed the
+whole-book reading; the model worked in a closed loop of its own map and missed chapters; the critic, with a clean
+context and chapters read whole, corrected the schemes in four of six places; the critic's instructions were written
+by the model it criticised, it ran without the guard and outside the record; the corpus grew only when the owner
+pushed, without a search plan. The owner decided (2026-11-24): a lead analyst with subagents of narrow roles, a
+critic of another maker through `agy`, a context search by the method and the questions; then test 10.
 
-**After test 9**, in this order unless the test says otherwise: T39 (prompts per phase), T36 (outline and
-orientation reading), T28 (web pages), T37, T34, T30, T38, T35, T31; T40 and T41 when convenient; T27 when a PDF
-comes.
+**Next, in this order:** T42 (done), T43 + T39, T44, T45, T46, T36, T47, then test 10 (one agent against the
+orchestrator on a new source). After it: T28 (web pages), T37, T34, T30, T38, T35, T31; T40 and T41 when convenient;
+T27 when a PDF comes.
 
 ## Analysis
 
@@ -436,6 +438,10 @@ comes.
     sequentially with its nearest context and proposes readings (with alternatives) and open codes (T29).
   - The researcher's own reading is supported (a first-impression memo of the researcher, recorded with its time,
     so it can be seen what came from whom) but is never a condition for the model's reading.
+  - **Coverage** (ADR 0014, test 9): `mmo` records for each part of a source whether it was read whole (by whom:
+    lead or chapter reader), read in passages, or known only through the map; `mmo status` shows it, so a gap such
+    as "chapter V only through the map" is seen before a critic finds it. The orientation reading may be done by
+    chapter readers (T43), one part each, the lead writing the memo from their notes and the quoted places.
   - Tried on `kniha` in a test copy.
 - Verify: `uv run pytest tests/analysis/ && uv run ruff check . && uv run ruff format --check .`
 - Paths: `code/mmo/analysis/`, `code/mmo/cli.py`, `tests/`, `docs/`, `../MIXED-Method-Ontology/methods/skad/`,
@@ -477,9 +483,12 @@ comes.
 - Acceptance criteria: (both drivers decided, see the note above) backend per step configured in the topic; the
   prompt of the method's phase (T33); every call recorded (model, prompt version, input quotations); its output goes
   in as proposals (T29); proposals whose quotations fail T26 are refused.
+- Note (2026-11-24): narrowed by ADR 0014 - subagents inside Claude Code and the critic through `agy` (T46) cover
+  the agent driver; this task is the local models through the gateway, using the role prompts of T39 and the run
+  record of T43.
 - Verify: `uv run pytest tests/test_llm.py && uv run ruff check . && uv run ruff format --check .`
 - Paths: `code/mmo/analysis/`, `tests/`
-- Depends on: T29
+- Depends on: T29, T43
 
 ### T37 – Similarity index of segments (a finder of candidates)
 - Goal: passages that say something similar in other words are found as candidates for constant comparison,
@@ -518,9 +527,14 @@ comes.
 - Paths: `code/mmo/graph/`, `code/mmo/cli.py`, `tests/`, `docs/`
 - Depends on: T30
 
-### T39 – Prompts per phase of a method (versioned)
-- Goal: what a model does in a phase is written down and versioned, so `--prompt-version` names a real prompt, not
-  `chat@<date>`; the same prompt serves the agent in a chat and a local model (T31).
+### T39 – Prompts per phase and role of a method (versioned)
+- Goal: what a model does in a phase **and in a role** (ADR 0014: lead, chapter reader, instance finder, context
+  searcher, source preparer, blind probe, critic) is written down and versioned, so `--prompt-version` names a real
+  prompt, not `chat@<date>`; the same prompt serves the agent in a chat, a subagent and a local model (T31).
+- Added 2026-11-24: role prompts in `methods/<id>/prompts/roles/<role>.md` (or one shared file where a role does not
+  depend on the method), each with `version:`, inputs, outputs, what it must not do (a subagent returns quotations
+  and findings, not conclusions); the critic's prompt is a template the researcher fills in (T46); `mmo method check`
+  checks the role prompts named in `method.yaml`; written together with T43.
 - Acceptance criteria: `methods/skad/prompts/<phase>.md` for the phases a model works in (at least
   context-analysis, fine-analysis), each with a `version:` line, the inputs it needs (passages as quotations,
   the model's position, the study's questions), what it writes through `mmo` (`model_proposes` of the phase,
@@ -531,7 +545,7 @@ comes.
 - Verify: `uv run pytest tests/analysis/ tests/test_methods.py && uv run ruff check . && uv run ruff format --check .`
 - Paths: `../MIXED-Method-Ontology/methods/skad/`, `../MIXED-Method-Ontology/.agents/skills/`,
   `../MIXED-Method-Ontology/AGENTS.md` (protected: owner's approval), `code/mmo/analysis/`, `tests/`, `docs/`
-- Depends on: T29, test 9
+- Depends on: T29, test 9, T42; together with T43
 
 ### T40 – What a model proposes in grounded theory and thematic analysis
 - Goal: GT and TA bind models per phase as SKAD does.
@@ -550,6 +564,108 @@ comes.
 - Verify: `ls scratch/`
 - Paths: `scratch/`
 - Depends on: -
+
+### T42 – Decision: lead analyst, subagents, critic; context search by method (done)
+- Goal: what test 9 taught becomes one system, decided before it is built.
+- Acceptance criteria: ADR 0014 (lead analyst, subagents with narrow roles, critic of another maker through `agy`)
+  and ADR 0015 (context search by the method and the research questions) accepted by the owner; spec sections
+  "Analysts and roles" and "Context search"; plan with T43-T47, T39, T36, T31 adjusted; the owner's decisions in
+  `docs/answers.md`.
+- Verify: `ls docs/adr/0014-* docs/adr/0015-*`
+- Paths: `docs/`
+- Depends on: test 9
+
+### T43 – Roles of subagents and the orchestrator (research environment)
+- Goal: the lead analyst can hand bounded work to subagents with a clean context, and the single view stays in the
+  record (ADR 0014).
+- Acceptance criteria:
+  - Each role (chapter reader, instance finder, context searcher, source preparer, blind probe, critic) is described
+    in the research environment (`.agents/`, generated into `.claude/agents/` like the skills): input, output, what it
+    must not do, its position for the role, its prompt (T39) and version.
+  - A skill of the lead analyst (orchestrator): when to delegate, what to keep (position, codebook, interpretation,
+    synthesis), how to read what a subagent returns (the quoted places themselves, not the summary).
+  - A subagent writes only through `mmo` under its own analyst id (e.g. `claude-opus-5-5/chapter-reader`); the guard
+    lets it write only that; its profile is the model's profile with a role note; a short position per role and
+    study, confirmed by the researcher once per study.
+  - Every run is recorded in the study (`analysis/runs.jsonl` or similar, set in the task): analyst id, role, model,
+    prompt version, input (parts of sources, codes), records written, time.
+  - Subagents inside Claude Code use the lead's model.
+  - Tried in a test copy: two chapter readers and an instance finder on `kniha`; their records pass
+    `mmo analysis check`.
+- Verify: `uv run pytest && uv run ruff check . && uv run ruff format --check .`
+- Paths: `code/mmo/`, `tests/`, `docs/`, `../MIXED-Method-Ontology/.agents/` (protected skills: owner's approval),
+  `../MIXED-Method-Ontology/AGENTS.md` (protected: owner's approval), `../MIXED-Method-Ontology/docs/`
+- Depends on: T42; together with T39
+
+### T44 – Context search by the method and the research questions
+- Goal: relevant context is searched for by a plan derived from the questions and the method, not ad hoc, and not
+  only on the web (ADR 0015).
+- Acceptance criteria:
+  - `method.yaml` of SKAD, GT, TA and the template describe context search (what it is derived from, types of
+    sources, when repeated); method versions raised; `mmo method check` knows the field; method texts not shortened.
+  - A search-plan memo (type set in the task) per study: per research question the context needed, **the types and
+    character of sources and why they matter**, where to look (catalogues, Webarchiv NK, registers, scholarly
+    databases, the web, what only the researcher can obtain), how independence is judged, when to stop; approved by
+    the researcher.
+  - Requests to the researcher for what a model cannot reach (paid media archives, printed sources, interviews) are
+    recorded and listed by `mmo status`.
+  - `source.yaml` of a candidate records query, place and date found, type and character, speaker and relation to
+    the object of the study (author, author's circle, independent); `mmo source check` reports a candidate without
+    them.
+  - `topic.yaml` records the researcher's approval of web search by a cloud model for the study; without it a
+    context searcher on a cloud model does not search the web.
+  - A gap from a later phase or the critic can start a new round of the same plan (recorded).
+  - Tried on `nazi-v-ai-dobe` q3 (reception outside the author's circle) in a test copy.
+- Verify: `uv run pytest && uv run ruff check . && uv run ruff format --check .`
+- Paths: `code/mmo/`, `tests/`, `docs/`, `../MIXED-Method-Ontology/methods/`, `../MIXED-Method-Ontology/topics/README.md`,
+  `../MIXED-Method-Ontology/docs/`
+- Depends on: T43
+
+### T45 – Blind probe of a model's prior knowledge
+- Goal: what a model knows of a source from training is on record before it meets the source (owner's note
+  2026-11-23, ADR 0015).
+- Acceptance criteria: a blind-probe subagent gets only the source's title and author (no text, no web, no study)
+  and says what it knows of the source, the author and its reception; the answer is a reflexive memo of the model
+  marked "prior knowledge", written before the context search; later context memos say which of it a source
+  confirmed; the same probe for the critic's model; tried on `kniha` with claude-opus-5-5 and gemini-4-neon.
+- Verify: `uv run pytest && uv run ruff check .`
+- Paths: `../MIXED-Method-Ontology/.agents/`, `../MIXED-Method-Ontology/methods/reflexivity.md` (owner approves any
+  change of method texts), `code/mmo/`, `tests/`
+- Depends on: T43
+
+### T46 – The critic of another maker through `agy`
+- Goal: the critic runs under the same conditions as the lead and its work is in the record (ADR 0014).
+- Acceptance criteria:
+  - `mmo critic run <topic>` starts `agy -p --model <model> --output-format stream-json` in the study's environment;
+    the model comes from `topic.yaml` (default `gemini-4-neon-medium`); `mmo` refuses a model of the lead's maker.
+  - The whole run (prompt, steps, output) is stored in the study's record with the prompt version.
+  - The critic's instructions come from the method's critic template (T39) filled in by the researcher; round 1
+    independent (sources and labels of confirmed schemes, not the lead's memos), round 2 comparison.
+  - The critic's profile and position are written once per study (interactively, or proposed and confirmed with
+    `mmo review`); a print-mode run does not start without them.
+  - The guard: as a hook if `agy` supports one (found out in the task); otherwise `--sandbox` and a check after the
+    run that only what an analyst may write changed; a run that changed more is reported and not accepted.
+  - Tried in a test copy on `nazi-v-ai-dobe`.
+- Verify: `uv run pytest && uv run ruff check . && uv run ruff format --check .`
+- Paths: `code/mmo/`, `tests/`, `docs/`, `../MIXED-Method-Ontology/methods/`, `../MIXED-Method-Ontology/.agents/`
+- Depends on: T43, T39
+
+### T47 – Many decisions of the researcher at once
+- Goal: the researcher decides the proposals of several subagents without one command per record.
+- Acceptance criteria: one `mmo review` command accepts or rejects a list or a filter of proposals (by author, role,
+  phase, kind), each recorded as its own decision with the same note; a rejection still needs a reason; only a person
+  decides (mmo and guard).
+- Verify: `uv run pytest tests/analysis/ && uv run ruff check .`
+- Paths: `code/mmo/analysis/`, `code/mmo/cli.py`, `tests/`, `docs/analysis-store.md`
+- Depends on: T29
+
+### Test 10 – One agent against the orchestrator (owner)
+- Goal: find out whether subagents keep the context clean without losing the single view of the analyst.
+- On a new source (not `kniha`, so the model brings no memory of test 9): fine analysis and content structure twice,
+  side by side - A one agent as in test 9, B the lead with chapter readers and instance finders - then the same
+  critic on both. Compared: pages read whole, the critic's corrections, peak context, the owner's judgment of whether
+  B's interpretation is one. Both variants kept.
+- Depends on: T43-T47, T36
 
 Open for discussion: a model proposing bibliographic fields of `source.yaml` (from the imprint or the annotation),
 confirmed by the researcher.

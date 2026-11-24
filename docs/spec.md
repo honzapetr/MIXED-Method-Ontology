@@ -153,6 +153,36 @@ the next round · a fixed codebook when the study asks for one (deductive mode).
 researcher says where the study is (`mmo phase`, T33) and moves freely; the phase decides only what a model may
 propose. What the method calls the researcher's decisions (`researcher_decides`) are decisions, not locks.
 
+## Analysts and roles (planned; ADR 0014)
+
+- **Lead analyst** of a study: position, codebook, interpretation, relations, synthesis, revisiting its position,
+  the conversation with the researcher.
+- **Subagents** with a clean context and one role each: chapter reader, instance finder, context searcher, source
+  preparer, blind probe, critic. Each has a profile, a short position for its role, a versioned prompt of its role and
+  phase; it writes only through `mmo` under its own analyst id; its output is a proposal.
+- A subagent returns quotations and findings, not conclusions; the lead reads the quoted places before interpreting.
+- The single view lives in the record: map, memos, codebook and the **coverage** of each source (read whole, read in
+  passages, known only through the map).
+- Every run of a subagent is recorded: analyst id, role, model, prompt version, input, what it wrote.
+- **The critic** is a model of another maker (checked by `mmo`), chosen per study in `topic.yaml` (default
+  `gemini-4-neon-medium`), started through `agy` in print mode by `mmo critic run`; its run is stored in the study;
+  its instructions come from the method's critic template filled in by the researcher; round 1 independent, round 2
+  comparison. The guard holds: as a hook if `agy` supports one, otherwise `--sandbox` and a check of changes after the
+  run.
+- Subagents inside Claude Code use the lead's model.
+
+## Context search (planned; ADR 0015)
+
+- `method.yaml` describes what relevant context is for the method, what it is derived from, the types of sources and
+  when the search is repeated.
+- A **search plan** memo, approved by the researcher, per research question: context needed, types and character of
+  sources and why, where to look (not only the web), how independence is judged, when to stop.
+- What a model cannot reach (paid archives, printed sources, interviews) is a request to the researcher.
+- `source.yaml` of a candidate: query, place and date found; type and character; speaker and relation to the object
+  (author, author's circle, independent).
+- A blind probe records the model's prior knowledge before the search.
+- `topic.yaml` records the researcher's approval of web search by a cloud model, per study.
+
 ## Out of scope now
 
 Exports, MCP server, UI – see `docs/plan.md`. The analysis environment is the current focus; how it works is

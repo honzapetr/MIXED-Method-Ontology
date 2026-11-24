@@ -251,3 +251,18 @@
 - The methods' "gates" are renamed to what they are - decisions of the researcher (`researcher_decides`,
   "Researcher decides:"); the method texts are otherwise kept word for word.
 - T15 (clean the workshop) comes before T32.
+
+## 2026-11-24 – After test 9: roles of analysts and context search (ADR 0014, ADR 0015)
+
+- What test 9 showed is turned into one system before the next test; test 10 comes after it.
+- A lead analyst keeps position, codebook, interpretation and synthesis; subagents with a clean context do bounded
+  work (chapter reader, instance finder, context searcher, source preparer, blind probe, critic) and return
+  quotations and findings, not conclusions.
+- Subagents inside Claude Code use the same model as the lead; a smaller model may be tried later as a variant.
+- The critic is a model of another maker, connected through the Antigravity CLI (`agy`); the model is chosen per
+  study, default Gemini 4 Neon (Medium).
+- A step of relevant context search is part of the analysis, derived from the research questions and the method, not
+  only on the web. The types and the character of sources matter and are recorded.
+- Paid media archives (Newton, Anopress): the owner has no access; they are requests to the researcher.
+- Web search by a cloud model is approved per study, not in general.
+- What a model knows from training is probed before the search (owner's note 2026-11-23).
