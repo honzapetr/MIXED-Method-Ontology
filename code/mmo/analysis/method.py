@@ -178,7 +178,28 @@ def check_method(folder: Path) -> list[str]:
                 problems.append(f"phase {pid}: prompt {prompt} does not exist")
             elif not FRONT_VERSION.search(prompt_file.read_text(encoding="utf-8")):
                 problems.append(f"phase {pid}: prompt {prompt} has no 'version:' line")
+    roles = data.get("roles")
+    if roles is not None and not isinstance(roles, dict):
+        problems.append("roles maps a role to the method's own prompt for it (role: prompts/roles/<role>.md)")
+    for role_id, prompt in (roles or {}).items():
+        prompt_file = folder / str(prompt)
+        if not prompt_file.is_file():
+            problems.append(f"role {role_id}: prompt {prompt} does not exist")
+        elif not FRONT_VERSION.search(prompt_file.read_text(encoding="utf-8")):
+            problems.append(f"role {role_id}: prompt {prompt} has no 'version:' line")
     return problems
+
+
+def prompt_version(method: Method, phase_id: str) -> str | None:
+    """`<method>/<phase>@<version>` of a phase's prompt (T39), or None when the phase has none."""
+    phase = method.phase(phase_id) or {}
+    if not phase.get("prompt"):
+        return None
+    path = method.folder / str(phase["prompt"])
+    match = FRONT_VERSION.search(path.read_text(encoding="utf-8")) if path.is_file() else None
+    if not match:
+        return None
+    return f"{method.id}/{phase_id}@{match.group(0).split(':', 1)[1].strip().strip(chr(34))}"
 
 
 # ---------------------------------------------------------------- settings of a study

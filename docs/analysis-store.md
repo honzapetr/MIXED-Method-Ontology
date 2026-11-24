@@ -162,3 +162,31 @@ uv run mmo analysis check <topic> [--record --by X]
 ## Later
 
 - T30 builds the RDF graph from these files; T34 exports them to REFI-QDA.
+
+## Roles and runs of subagents (T43, ADR 0014)
+
+`code/mmo/analysis/roles.py`. A role is a file of the research environment, `.agents/roles/<role>.md`, with front
+matter `name`, `description`, `version`, `writes` (`code`, `coding`, `relation`, `memo`, or `none`); its body is
+the role's prompt, its prompt version `role/<role>@<version>`. `tools/agents_sync.py` of the environment copies the
+roles to `.claude/agents/` as Claude Code subagents.
+
+```bash
+uv run mmo role list [--env <environment>]          # roles, prompt versions, what they write; problems of the files
+uv run mmo run start <topic> --role R --input "..." [--input ...] [--analyst <model>] [--note N] --by X [--prompt-version V]
+uv run mmo run list <topic>                         # each run, its input, what it wrote
+uv run mmo memo add <topic> ... --by <model> --run run-0001   # any write command takes --run
+```
+
+- `run start` (the lead or the researcher) refuses a role the analyst's position does not list (`roles:` in the front
+  matter of `positions/<model>.md`), an analyst without a model profile, a run started from inside a run, and a run
+  without input. It is an event of `history.jsonl`: `op: run`, `run`, `analyst`, `role`, `prompt_version`, `input`.
+- `--run` makes the author the run's analyst in its role: the prompt version comes from the run (another one is
+  refused), `generated_by` gets `role` and `run`, and the role's `writes` limits what may be written (on top of
+  `model_proposes` of the phase). An instance finder (`coding, memo`) can code only with existing codes, because a
+  new label would add a code.
+- `run list` finds what a run wrote by `generated_by.run` of codes, codings, relations and memos.
+- `analysis check` reports a record whose run is not in the history, or whose author or role differ from the run.
+- `mmo-guard` closes `mmo run` on a closed study like the other study commands.
+- Phase prompts (T39): `prompt` of a phase in `method.yaml` (versioned file); `mmo status` shows it with the
+  `--prompt-version <method>/<phase>@<version>` to use. Method-specific role prompts: optional `roles:` of
+  `method.yaml` (role -> file with a `version:` line), checked by `mmo method check`.

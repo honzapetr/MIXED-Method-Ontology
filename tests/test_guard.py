@@ -132,7 +132,9 @@ def test_mmo_quote_reads_the_text_so_it_is_closed_too(root):
     assert "works on the study s, which stays closed" in _reason(root, "Bash", command="mmo quote check s")
     assert bash("uv run mmo source check s") is None, "commands that do not read the text stay open"
     assert bash('uv run mmo quote find other k "x"') is None, "not a study of this environment"
+    assert bash("uv run mmo run start s --role chapter-reader --input k --by m --prompt-version p") == "deny"
     _open_study(root)
+    assert bash("uv run mmo run start s --role chapter-reader --input k --by m --prompt-version p") is None
     assert bash('uv run mmo quote find s k "the data"') is None
     assert bash("mmo quote check s") is None
 

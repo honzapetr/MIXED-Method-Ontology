@@ -604,3 +604,32 @@
 - `agy` (Antigravity CLI) can run in print mode (`-p`, `--model`, `--output-format stream-json`, `--sandbox`,
   `--settings`); whether it runs hooks for the guard is open (T46). It also serves Claude models.
 - Next: T43 together with T39.
+
+## T43 + T39 – 2026-11-24
+- Done (workshop): `code/mmo/analysis/roles.py` - roles from `.agents/roles/<role>.md` of the environment (`version`,
+  `writes`), runs as `op: run` events of `history.jsonl`; `mmo role list`, `mmo run start|list`, `--run` on every
+  write command (the run gives role and prompt version; `generated_by` gets `role`, `run`; the role's `writes` limits
+  what is written); a role must be listed in the analyst's position (`roles:`); `analysis check` reports records
+  whose run is missing or differs; the guard gates `mmo run` like other study commands. T39: `prompt_version()` of a
+  phase, `mmo status` shows the phase's prompt and the `--prompt-version` to use, `roles:` of `method.yaml` checked by
+  `mmo method check`. Docs: `docs/analysis-store.md`.
+- Done (research environment, branch `task/T43-roles`, not committed to `main`): six roles in `.agents/roles/`
+  (chapter-reader, instance-finder, context-searcher, source-preparer, blind-probe, critic; copies in
+  `.claude/agents/`), skill `lead-analyst`, `state-position` with `roles:` and a section "Roles", SKAD prompts
+  `prompts/context-analysis.md` and `prompts/fine-analysis.md` (version 2026-11-24, from test 9), SKAD version
+  2026-11-24; `AGENTS.md` (protected), `docs/how-it-works.md` (section 7a), `docs/analysis.md`, `methods/README.md`.
+- Decisions made in the task: a subagent writes under the model's own id with `--run` (no composite ids, so the
+  guard's own-id rule and the profile stay as they are); role prompts that do not depend on the method live in the
+  role files, method-specific ones (the critic's template, T46; context search, T44) in `methods/<id>/prompts/roles/`.
+- Tried on a copy of `nazi-v-ai-dobe` in `scratch/T43/env` (deleted): position with roles, two chapter readers
+  (memos on pp. 101 and 145 with quotations), an instance finder coding the existing code; refused: a chapter reader
+  coding, a role not in the position, a finder adding a new code; `run list` shows what each run wrote;
+  `analysis check` clean; `status` shows the phase prompt and the runs. Real Claude Code subagents were not run; that
+  is the first step of test 10 (or a run in a test copy before it).
+- Verified: `uv run pytest` - 157 passed; `uv run ruff check . && uv run ruff format --check .` clean; in the
+  environment `mmo method check` 4 ok, `mmo role list` 6 roles, `python3 tools/agents_sync.py --check` clean.
+- Open for the owner: approve the prompts and roles (protected `.agents/`, `AGENTS.md`); the critic's role is also
+  generated as a Claude Code subagent, but it is meant for another maker (T46 enforces it); prompts for the other
+  SKAD phases (content structure, speakers and effects, synthesis) when they are needed; the workshop's `AGENTS.md`
+  CLI line does not list `role`, `run` (protected).
+- Next: T44 (context search by method).

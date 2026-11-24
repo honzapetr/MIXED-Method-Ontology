@@ -11,8 +11,9 @@ from typing import Any
 
 import yaml
 
-from mmo.analysis.method import current_phases, study_methods, study_settings, vocabulary
+from mmo.analysis.method import current_phases, prompt_version, study_methods, study_settings, vocabulary
 from mmo.analysis.quote import FRONT_MATTER
+from mmo.analysis.roles import runs
 from mmo.analysis.store import ACTIVE_STATUSES, Store
 from mmo.core.topic import Topic
 
@@ -50,6 +51,8 @@ def study_status(topic: Topic) -> list[str]:
             continue
         phase = method.phase(current) or {}
         lines.append(f"    the model here: {phase.get('model_role', '-')}")
+        if version := prompt_version(method, current):
+            lines.append(f"    the model's prompt: {phase['prompt']} - write with --prompt-version {version}")
         lines.append(f"    the researcher decides: {phase.get('researcher_decides', '-')}")
         expected = [str(t) for t in phase.get("memos") or []]
         if expected:
@@ -68,6 +71,9 @@ def study_status(topic: Topic) -> list[str]:
         f"{len(memos)} memos" + (f" ({', '.join(f'{t} {n}' for t, n in sorted(memo_types.items()))})" if memos else "")
     )
     lines.append(f"proposals of models waiting for the researcher: {waiting}")
+    if done := runs(history):
+        by_role = Counter(str(e.get("role")) for e in done)
+        lines.append(f"runs of subagents: {len(done)} ({', '.join(f'{r} {n}' for r, n in sorted(by_role.items()))})")
     changed = settings.changed()
     lines.append(
         "settings: free defaults" if not changed else "settings: " + ", ".join(f"{k}={v}" for k, v in changed.items())

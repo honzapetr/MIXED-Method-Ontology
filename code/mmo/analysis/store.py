@@ -34,6 +34,8 @@ from mmo.analysis.method import (
     study_settings,
 )
 from mmo.analysis.quote import GONE, OK, Quotation, check_record, read_final_text
+from mmo.analysis.roles import RoleError, environment, find_run, front_matter, next_run_id, position_roles
+from mmo.analysis.roles import role as role_of
 from mmo.core.topic import Topic
 
 ACTIVE_STATUSES = {"accepted", "edited", "proposed"}  # ontology ProposalStatus; the rest are kept for the history
@@ -65,11 +67,20 @@ class Author:
     id: str
     kind: str  # person | model
     prompt_version: str | None = None
+    role: str | None = None  # a subagent's role (T43, ADR 0014)
+    run: str | None = None  # the run it works in
+    writes: frozenset[str] | None = None  # what the role may write; None = no role
+
+    def generated_by(self) -> dict[str, Any]:
+        made: dict[str, Any] = {"model": self.id, "prompt_version": self.prompt_version}
+        if self.role:
+            made.update(role=self.role, run=self.run)
+        return made
 
     def stamp(self) -> dict[str, Any]:
         stamp: dict[str, Any] = {"author": self.id, "created": now()}
         if self.kind == "model":
-            stamp["generated_by"] = {"model": self.id, "prompt_version": self.prompt_version}
+            stamp["generated_by"] = self.generated_by()
         return stamp
 
     @property
@@ -82,20 +93,43 @@ def analysts_dir(topic: Topic) -> Path:
     return topic.root.parent.parent / "analysts"  # <environment>/topics/<slug> -> <environment>/analysts
 
 
-def author_of(topic: Topic, by: str | None, prompt_version: str | None = None) -> Author:
+def is_model(topic: Topic, analyst: str) -> bool:
+    profile = analysts_dir(topic) / f"{analyst}.md"
+    return profile.is_file() and "model profile" in profile.read_text(encoding="utf-8").splitlines()[0].lower()
+
+
+def author_of(topic: Topic, by: str | None, prompt_version: str | None = None, run: str | None = None) -> Author:
     if not by or not by.strip():
         raise StoreError("who does this? give --by <analyst id> (the researcher or the exact model id)")
     by = by.strip()
-    profile = analysts_dir(topic) / f"{by}.md"
-    is_model = profile.is_file() and "model profile" in profile.read_text(encoding="utf-8").splitlines()[0].lower()
-    if is_model and not prompt_version:
+    model = is_model(topic, by)
+    if run:
+        return run_author(topic, by, prompt_version, run)
+    if model and not prompt_version:
         raise StoreError(
             f"{by} is a model: give --prompt-version (the skill or prompt it works from and its version, "
             "e.g. skad-fine-analysis@1, or chat@<date> for a dialogue with the researcher)"
         )
-    if is_model and (why := model_may_write(topic, Store(topic).history())):
+    if model and (why := model_may_write(topic, Store(topic).history())):
         raise StoreError(why)
-    return Author(by, "model" if is_model else "person", prompt_version if is_model else None)
+    return Author(by, "model" if model else "person", prompt_version if model else None)
+
+
+def run_author(topic: Topic, by: str, prompt_version: str | None, run_id: str) -> Author:
+    """A subagent writing in a run: the run gives its role and prompt version (T43, ADR 0014)."""
+    history = Store(topic).history()
+    try:
+        run = find_run(history, run_id)
+        role = role_of(environment(topic), str(run["role"]))
+    except RoleError as err:
+        raise StoreError(str(err)) from err
+    if run.get("analyst") != by:
+        raise StoreError(f"{run_id} is a run of {run.get('analyst')}, not of {by}")
+    if prompt_version and prompt_version != run["prompt_version"]:
+        raise StoreError(f"{run_id} works from {run['prompt_version']}; leave out --prompt-version or give that one")
+    if why := model_may_write(topic, history):
+        raise StoreError(why)
+    return Author(by, "model", str(run["prompt_version"]), role.id, run_id, role.writes)
 
 
 class Store:
@@ -151,7 +185,7 @@ class Store:
         if author is not None:
             event["author"] = author.id
             if author.kind == "model":
-                event["generated_by"] = {"model": author.id, "prompt_version": author.prompt_version}
+                event["generated_by"] = author.generated_by()
         event.update(details)
         event["state"] = self.state()
         with (self.dir / "history.jsonl").open("a", encoding="utf-8", newline="\n") as handle:
@@ -335,9 +369,57 @@ class Store:
         self.save(author, "withdraw", target=ref, reason=reason)
 
     def may_propose(self, author: Author, kind: str) -> None:
+        if author.writes is not None and kind not in author.writes:
+            allowed = ", ".join(sorted(author.writes)) or "nothing in the analysis"
+            raise StoreError(
+                f"the role {author.role} writes {allowed}, not a {kind} ({author.run}); "
+                "say it in what you return to the lead analyst"
+            )
         """A model writes a kind only where the current phase lets it (`model_proposes`); the researcher always."""
         if author.kind == "model" and (why := model_may_propose(self.topic, self.history(), kind)):
             raise StoreError(why)
+
+    def start_run(
+        self, author: Author, analyst: str, role_id: str, inputs: list[str], note: str | None = None
+    ) -> dict[str, Any]:
+        """The lead (or the researcher) hands one piece of work to a subagent (T43, ADR 0014)."""
+        if author.run:
+            raise StoreError(f"a subagent does not start runs ({author.run}); the lead analyst does")
+        if not is_model(self.topic, analyst):
+            raise StoreError(f"{analyst} has no model profile in analysts/: roles are for models")
+        try:
+            role = role_of(environment(self.topic), role_id)
+        except RoleError as err:
+            raise StoreError(str(err)) from err
+        if role.id not in position_roles(self.topic, analyst):
+            raise StoreError(
+                f"{analyst} takes no role {role.id!r} in this study: its position (positions/{analyst}.md) lists "
+                "the roles it takes under 'roles:', confirmed by the researcher (skill state-position)"
+            )
+        if not inputs:
+            raise StoreError("what does the run work on? give --input (a part of a source, a code, a plan item)")
+        run_id = next_run_id(self.history())
+        return self.save(
+            author,
+            "run",
+            run=run_id,
+            analyst=analyst,
+            role=role.id,
+            prompt_version=role.prompt_version,
+            input=list(inputs),
+            **({"note": note} if note else {}),
+        )
+
+    def run_records(self, run_id: str) -> list[str]:
+        """References of everything written in a run (codes, codings, relations, memos)."""
+        found = [f"code:{c['id']}" for c in self.codes if (c.get("generated_by") or {}).get("run") == run_id]
+        found += [f"coding:{c['id']}" for c in self.codings if (c.get("generated_by") or {}).get("run") == run_id]
+        found += [f"relation:{r['id']}" for r in self.relations if (r.get("generated_by") or {}).get("run") == run_id]
+        for path in sorted((self.topic.root / "memos").glob("*.md")):
+            meta = front_matter(path.read_text(encoding="utf-8"))
+            if (meta.get("generated_by") or {}).get("run") == run_id:
+                found.append(f"memo:{path.stem}")
+        return found
 
     def researcher_only(self, author: Author, what: str) -> None:
         if author.kind == "model":
@@ -441,7 +523,7 @@ def write_memo(
     if phase:
         meta["phase"] = phase
     if author.kind == "model":
-        meta["generated_by"] = {"model": author.id, "prompt_version": author.prompt_version}
+        meta["generated_by"] = author.generated_by()
     path = topic.root / "memos" / f"{memo_id}.md"
     path.parent.mkdir(parents=True, exist_ok=True)
     front = yaml.safe_dump(meta, allow_unicode=True, sort_keys=False)
@@ -478,11 +560,19 @@ def check_store(topic: Topic, record_hand_edits: bool = False, by: str | None = 
         else:
             findings.append(Finding(", ".join(changed), "edited by hand since the last mmo operation (--record)"))
     texts: dict[str, str | None] = {}
+    known_runs = {e.get("run"): e for e in store.history() if e.get("op") == "run"}
     for kind, items in (("code", store.codes), ("coding", store.codings), ("relation", store.relations)):
         for item in items:
             where = f"{kind} {item.get('id', '?')}"
             if not item.get("author") or not item.get("created"):
                 findings.append(Finding(where, "no author or time"))
+            made = item.get("generated_by") or {}
+            if made.get("run"):
+                run = known_runs.get(made["run"])
+                if run is None:
+                    findings.append(Finding(where, f"written in {made['run']}, which is not in the history"))
+                elif (run.get("analyst"), run.get("role")) != (item.get("author"), made.get("role")):
+                    findings.append(Finding(where, f"author or role differs from {made['run']}"))
     code_ids = {c["id"] for c in store.codes}
     for code in store.codes:
         for ref in [code.get("broader"), *(code.get("superseded_by") or [])]:
