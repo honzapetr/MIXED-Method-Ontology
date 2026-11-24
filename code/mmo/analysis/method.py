@@ -16,6 +16,7 @@ analysis:
   team: none                  # none | consensus | agreement
   quotation_required:
     memos: []                 # memo types that need a quotation, e.g. [analytic, theoretical]
+  web_search: []              # the models the researcher lets search the web for this study (T44, ADR 0015)
 ```
 
 The core is not a setting: codes and everything a model proposes always carry quotations (ADR 0013).
@@ -43,6 +44,7 @@ MEMO_TYPES = {
     "theoretical",
     "methodological",
     "steering",
+    "search-plan",
 }
 PHASE_KEYS = ("goal", "input", "output", "memos", "model_role", "researcher_decides")
 PROPOSAL_KINDS = {"code", "coding", "relation", "memo"}  # what a model may write as a proposal (T29)
@@ -55,6 +57,7 @@ DEFAULTS: dict[str, Any] = {
     "model": {"phases": "all", "alternatives": False},
     "team": "none",
     "quotation_required": {"memos": []},
+    "web_search": [],
 }
 CHOICES = {
     "codebook": {"emergent", "evolving", "fixed"},
@@ -107,6 +110,11 @@ class Method:
     @property
     def practices(self) -> list[str]:
         return [str(p) for p in self.data.get("practices") or []]
+
+    @property
+    def context_search(self) -> dict[str, Any]:
+        """What relevant context is for the method and when its search is repeated (T44, ADR 0015)."""
+        return dict(self.data.get("context_search") or {})
 
 
 def environment_of(topic: Topic) -> Path:
@@ -178,6 +186,7 @@ def check_method(folder: Path) -> list[str]:
                 problems.append(f"phase {pid}: prompt {prompt} does not exist")
             elif not FRONT_VERSION.search(prompt_file.read_text(encoding="utf-8")):
                 problems.append(f"phase {pid}: prompt {prompt} has no 'version:' line")
+    problems += check_context_search(data.get("context_search"))
     roles = data.get("roles")
     if roles is not None and not isinstance(roles, dict):
         problems.append("roles maps a role to the method's own prompt for it (role: prompts/roles/<role>.md)")
@@ -187,6 +196,28 @@ def check_method(folder: Path) -> list[str]:
             problems.append(f"role {role_id}: prompt {prompt} does not exist")
         elif not FRONT_VERSION.search(prompt_file.read_text(encoding="utf-8")):
             problems.append(f"role {role_id}: prompt {prompt} has no 'version:' line")
+    return problems
+
+
+CONTEXT_SEARCH_KEYS = ("derived_from", "source_types", "character", "where", "repeat")
+
+
+def check_context_search(block: Any) -> list[str]:
+    """`context_search:` of `method.yaml` (T44, ADR 0015): its shape only, never what a method asks.
+
+    derived_from (what the search is derived from), source_types (a list: the types of sources and why they matter),
+    character (how the character and independence of a source are judged), where (a list of places, not only the
+    web), repeat (when the search returns).
+    """
+    if block is None:
+        return []
+    if not isinstance(block, dict):
+        return ["context_search: a mapping of " + ", ".join(CONTEXT_SEARCH_KEYS)]
+    problems = [f"context_search: missing {key}" for key in CONTEXT_SEARCH_KEYS if not block.get(key)]
+    problems += [f"context_search: {key} is not a field" for key in block if key not in CONTEXT_SEARCH_KEYS]
+    for key in ("source_types", "where"):
+        if block.get(key) and not isinstance(block[key], list):
+            problems.append(f"context_search: {key} must be a list")
     return problems
 
 
@@ -236,6 +267,8 @@ def study_settings(topic: Topic) -> Settings:
         raise SettingsError("analysis.model.phases: 'all' or a list of phase ids")
     if not isinstance(settings["quotation_required"]["memos"], list):
         raise SettingsError("analysis.quotation_required.memos: a list of memo types")
+    if not isinstance(settings["web_search"], list):
+        raise SettingsError("analysis.web_search: a list of the model ids the researcher lets search the web")
     return settings
 
 

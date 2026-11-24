@@ -298,7 +298,10 @@ critic of another maker through `agy`, a context search by the method and the qu
 (0c450a6). They wait for the owner's approval of the protected paths (roles, skills, prompts, `AGENTS.md`) and one
 pull request per repository.
 
-**Next, in this order:** T44 (context search by method), T45 (blind probe), T46 (critic through `agy`), T36
+**Done after that:** T44 (context search by method), on `task/T44-context-search` in both repositories, on top of
+`task/T43-roles`.
+
+**Next, in this order:** T45 (blind probe), T46 (critic through `agy`), T36
 (outline, orientation reading, coverage), T47 (many decisions at once), then test 10 (one agent against the
 orchestrator on a new source). After it: T28 (web pages), T37, T34, T30, T38, T35, T31; T40 and T41 when convenient;
 T27 when a PDF comes.
@@ -604,7 +607,7 @@ T27 when a PDF comes.
   `../MIXED-Method-Ontology/AGENTS.md` (protected: owner's approval), `../MIXED-Method-Ontology/docs/`
 - Depends on: T42; together with T39
 
-### T44 – Context search by the method and the research questions
+### T44 – Context search by the method and the research questions (done; owner approves)
 - Goal: relevant context is searched for by a plan derived from the questions and the method, not ad hoc, and not
   only on the web (ADR 0015).
 - Acceptance criteria:
@@ -627,6 +630,12 @@ T27 when a PDF comes.
 - Paths: `code/mmo/`, `tests/`, `docs/`, `../MIXED-Method-Ontology/methods/`, `../MIXED-Method-Ontology/topics/README.md`,
   `../MIXED-Method-Ontology/docs/`
 - Depends on: T43
+- Built: `context_search` in the four `method.yaml` (versions raised), memo type `search-plan`, `mmo context
+  round|request|close|list`, `mmo source provenance`, `analysis.web_search`, `web` of a run, the guard on web tools,
+  the SKAD prompt of the context searcher (`methods/skad/prompts/roles/context-searcher.md`). Also touched, for the
+  owner's approval (protected): `.agents/roles/context-searcher.md`, `.claude/settings.json` (hook matcher) and
+  `AGENTS.md` of the research environment. The trial ran the mechanics on a copy of test 9 (plan, approval, round,
+  run, request, provenance); a real context searcher with web search was not run - that is for test 10.
 
 ### T45 – Blind probe of a model's prior knowledge
 - Goal: what a model knows of a source from training is on record before it meets the source (owner's note

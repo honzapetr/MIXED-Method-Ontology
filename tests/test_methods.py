@@ -25,6 +25,7 @@ MEMO_TYPES = {
     "theoretical",
     "methodological",
     "steering",
+    "search-plan",
 }
 METHODS = sorted(p for p in METHODS_DIR.iterdir() if p.is_dir() and not p.name.startswith(("_", ".")))
 
@@ -80,3 +81,4 @@ def test_method_schema_of_mmo(folder: Path) -> None:
 
     assert check_method(folder) == []
     assert "version" in load(folder / "method.yaml"), f"{folder.name}: no version"
+    assert load(folder / "method.yaml").get("context_search"), f"{folder.name}: no context_search (T44, ADR 0015)"

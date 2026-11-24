@@ -407,6 +407,8 @@ class Store:
             role=role.id,
             prompt_version=role.prompt_version,
             input=list(inputs),
+            # whether the researcher lets this model search the web for the study (T44, ADR 0015)
+            web=analyst in [str(m) for m in study_settings(self.topic)["web_search"]],
             **({"note": note} if note else {}),
         )
 

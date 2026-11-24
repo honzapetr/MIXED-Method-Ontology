@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from mmo.core.provenance import provenance_problems
 from mmo.core.topic import NOTES_TEMPLATE, ROLE_CONTEXT, ROLES, SOURCE_KINDS, Source, read_yaml
 from mmo.ingest.ocr import load_pages
 from mmo.ingest.segment import read_segments, stale_segments
@@ -40,6 +41,7 @@ def check_source(source: Source) -> list[str]:
             found.append("about: a context source must name the source(s) it is about")
         elif [a for a in about if a not in known]:
             found.append(f"about: unknown sources: {', '.join(a for a in about if a not in known)}")
+        found += provenance_problems(meta)  # T44, ADR 0015: whose voice a context source is, and how it was found
     notes = source.notes_file.read_text(encoding="utf-8") if source.notes_file.is_file() else ""
     title = meta.get("title") or source.id
     if not notes.strip() or notes == NOTES_TEMPLATE.format(title=title):
