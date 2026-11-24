@@ -292,7 +292,14 @@ by the model it criticised, it ran without the guard and outside the record; the
 pushed, without a search plan. The owner decided (2026-11-24): a lead analyst with subagents of narrow roles, a
 critic of another maker through `agy`, a context search by the method and the questions; then test 10.
 
-**Next, in this order:** T42, T43 + T39 (done), T44, T45, T46, T36, T47, then test 10 (one agent against the
+**Done after test 9 (2026-11-24, not yet merged):** T42 (ADR 0014, ADR 0015), T43 + T39 (roles of subagents, runs,
+`lead-analyst`, SKAD phase prompts). Workshop branch `task/T43-roles` holds three commits on top of `main`
+(1fc676b plan after T29, c8c570c T42, 4ccedc6 T43); research environment branch `task/T43-roles` one commit
+(0c450a6). They wait for the owner's approval of the protected paths (roles, skills, prompts, `AGENTS.md`) and one
+pull request per repository.
+
+**Next, in this order:** T44 (context search by method), T45 (blind probe), T46 (critic through `agy`), T36
+(outline, orientation reading, coverage), T47 (many decisions at once), then test 10 (one agent against the
 orchestrator on a new source). After it: T28 (web pages), T37, T34, T30, T38, T35, T31; T40 and T41 when convenient;
 T27 when a PDF comes.
 

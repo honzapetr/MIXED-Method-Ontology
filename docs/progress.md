@@ -633,3 +633,18 @@
   SKAD phases (content structure, speakers and effects, synthesis) when they are needed; the workshop's `AGENTS.md`
   CLI line does not list `role`, `run` (protected).
 - Next: T44 (context search by method).
+
+## 2026-11-24 – Handover (session ends with a compaction)
+- Where we are: test 9 analysed (record `scratch/test9/`, kept); what it taught is decided (ADR 0014 lead analyst,
+  subagents, critic of another maker; ADR 0015 context search by method and questions) and the first part is built
+  (T43 + T39). The direction: one system of analysts in roles with the single view kept in the record, then test 10
+  comparing one agent with the orchestrator on a new source.
+- Not merged: workshop `task/T43-roles` = 1fc676b (plan after T29) + c8c570c (T42) + 4ccedc6 (T43, T39) on `main`;
+  research environment `task/T43-roles` = 0c450a6. Nothing pushed. Before a push or PR: `gh auth status` and the
+  owner's confirmation (AGENTS.md).
+- Waiting for the owner: approval of the six roles, the skill `lead-analyst`, the `state-position` change, the SKAD
+  prompts (`methods/skad/prompts/`) and `AGENTS.md` of the research environment (protected); then the pull requests.
+- Open points: the critic role is also generated as a Claude Code subagent although it is meant for another maker
+  (T46 enforces); prompts of the other SKAD phases; the workshop's `AGENTS.md` CLI line lacks `role`, `run`
+  (protected); `zkusebna/test9` had a stale `.git/index.lock` from Google Drive (fixed) - watch for it in new copies.
+- Next session: T44 (context search by method) on a new branch from `task/T43-roles` (or from `main` after merge).
