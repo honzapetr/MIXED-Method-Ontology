@@ -10,6 +10,8 @@ Two hooks, both reading the hook's JSON from stdin:
     study's `work/`) until a model has a confirmed profile and a confirmed position in that study written from the
     current profile version;
   - ask the owner (permission prompt) when a profile or a position is being set to `confirmed`;
+  - keep a blind probe blind (T45): when the harness names the subagent `blind-probe`, it reads nothing of a
+    study but its position, runs no `mmo` but `memo add`, and gets no web tools;
   - deny web search and web fetch until the researcher lets a model search the web for a study (`analysis.web_search`
     of a study's `topic.yaml`, T44, ADR 0015); the hook sees no study here, so one approving study is enough, and the
     role and the run say which study it is for.
@@ -297,6 +299,43 @@ def looks_like_path(word: str) -> bool:
 
 
 # `mmo` commands that work on a study: `mmo <command> <action> <topic> ...`; they read its text or write its analysis
+BLIND_ROLE = "blind-probe"
+
+
+def blind_path(path: Path, root: Path) -> bool:
+    """A path a blind probe may not touch: anything of a study but its positions."""
+    if not inside(path, root):
+        return False
+    parts = Path(os.path.relpath(path, root)).parts
+    return len(parts) >= 2 and parts[0] == "topics" and not (len(parts) >= 3 and parts[2] == "positions")
+
+
+BLIND = (
+    "You are a blind probe: answer from training only, with the title and the author you were given. The study's "
+    "files, other mmo commands and the web stay closed to you; write your answer with mmo memo add."
+)
+
+
+def check_blind(tool: str, data: dict, cwd: Path, root: Path) -> dict | None:
+    if tool in WEB_TOOLS:
+        return decision("deny", BLIND)
+    if tool == "Bash":
+        for words in bash_tokens(data.get("command", "")):
+            args = mmo_args(words)
+            if args is not None and args[:2] != ["memo", "add"]:
+                return decision("deny", BLIND)
+            values = [w.split("=", 1)[1] if w.startswith("-") and "=" in w else w for w in words]
+            if any(looks_like_path(v) and blind_path(to_path(v, cwd), root) for v in values):
+                return decision("deny", BLIND)
+        return None
+    raw = data.get("file_path") or data.get("notebook_path") or data.get("path") or "."
+    if tool in ("Read", "NotebookRead", "Grep", "Glob") and (
+        blind_path(to_path(raw, cwd), root) or to_path(raw, cwd) in (root, root / "topics")
+    ):
+        return decision("deny", BLIND)
+    return None
+
+
 MMO_STUDY_COMMANDS = {"quote", "code", "relation", "memo", "analysis", "review", "run", "context"}
 WRITES_FILES = re.compile(
     r"(>|\btee\b|\bsed\s+(-\w*i|--in-place)|\b(cp|mv|rm|del|move|copy)\b|Set-Content|Out-File|Add-Content)"
@@ -453,6 +492,10 @@ def check_web(root: Path, model_id: str | None) -> dict | None:
 
 def pre_tool_use(event: dict, root: Path, model_id: str | None = None) -> dict | None:
     tool = event.get("tool_name", "")
+    if event.get("agent_type") == BLIND_ROLE and (
+        found := check_blind(tool, event.get("tool_input") or {}, Path(event.get("cwd") or root), root)
+    ):
+        return found
     if tool in WEB_TOOLS:
         return check_web(root, model_id)
     data = event.get("tool_input") or {}

@@ -672,3 +672,27 @@
   runs in test 10. Open: the guard opens web tools for the whole environment when one study approves (it sees no
   study); the context sources of test 9 have no provenance - fill them when the study is carried over. Next task T45
   (blind probe). `scratch/T44/` can be deleted (trial only).
+
+## T45 – 2026-11-24
+- Done: blind probe of a model's prior knowledge (owner's note 2026-11-23, ADR 0015).
+  - Workshop: `code/mmo/analysis/probe.py`, `mmo probe start|list`, `mmo memo add --prior-knowledge source:<id>`
+    (`prior_knowledge: {source, model, before_search, met_source_before}`), probes and reminders in `mmo status`,
+    `mmo-guard` keeps the subagent `blind-probe` (hook `agent_type`, confirmed in the Claude Code hooks docs) away
+    from the study's files but its position, from `mmo` but `memo add`, and from the web.
+  - Research environment (branch `task/T45-blind-probe` on T44), for the owner's approval: role `blind-probe` and
+    skill `lead-analyst` (protected), `methods/reflexivity.md` (one sentence added to "Prior knowledge declared before
+    reading"), SKAD `prompts/context-analysis.md` (compare the probe; version 2026-11-24.1, method 2026-11-24.2),
+    `docs/analysis.md` "Blind probe", `docs/how-it-works.md` 7b, `AGENTS.md`.
+- Verified: `uv run pytest` 167 passed; ruff check and format clean; `mmo method check` 4 ok; `agents_sync --check`
+  clean. Trial on `kniha` in `scratch/T45/env` (kept: answers, prompt, agy streams): three probes recorded before the
+  context search, `analysis check` clean.
+  - claude-opus-5-5, a fresh Claude Code subagent with no tools: the book and the author not known; warns of "genre
+    memory" (AI-and-identity essays).
+  - gemini-4-neon (agy, `gemini-4-neon-medium`, `--sandbox`, empty workspace, no tool steps), twice: the book not
+    known; the author recalled as founder of ELAI and organiser of Týden inovací, with a caution about the name. The
+    publisher's announcement in test 9 confirms it ("zakladatel Týdne inovací ČR a platformy ELAI"). The critic's
+    model knows the author, the lead's does not - this is what the probe is for.
+- Next: in a real study the probes run before the context search; their memos are compared by the context memos.
+  `agy` on Windows: pass the prompt from Python `subprocess` (Git Bash and PowerShell argv and `-p` with stdin
+  failed); the terminal shows Czech letters as U+FFFD but the files are UTF-8 - this matters for T46. Next task T46
+  (critic through `agy`).

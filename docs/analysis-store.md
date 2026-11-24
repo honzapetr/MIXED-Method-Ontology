@@ -207,3 +207,18 @@ uv run mmo memo add <topic> ... --by <model> --run run-0001   # any write comman
   when the hook does not know the model, any model) in `analysis.web_search`. The research environment's
   `.claude/settings.json` matches these tools.
 - `check_source` reports a context source without complete provenance; the studied (primary) source needs none.
+
+## Blind probe (T45, ADR 0015)
+
+`code/mmo/analysis/probe.py`, `mmo probe start|list`, `mmo memo add --prior-knowledge source:<id>`.
+
+- `start_probe` = `start_run` with the role `blind-probe` and the input `[source:<id>, title: ..., author: ...]` from
+  `source.yaml` (refused without `citation.authors` and a title); `task()` is the text the lead hands over.
+- `write_memo(prior_knowledge=...)` needs type `reflexive` and adds `source:<id>` to `about`. `prior_record` computes
+  `before_search` (no `search-round` in the history) and `met_source_before` (a coding of the model on the source, or a
+  memo of the model quoting it or about it, prior-knowledge memos aside).
+- `probes()` lists the memos with `prior_knowledge` and the memos that refer to them (`about: memo:<id>`).
+- `mmo-guard`: `check_blind` applies when the hook input's `agent_type` is `blind-probe` (Claude Code names the
+  subagent there).
+- `agy` on Windows: pass the prompt as an argument from Python (`subprocess`), not through Git Bash or PowerShell;
+  stdin with `-p` does not work in 1.5.16. The terminal shows Czech letters as `?`/U+FFFD, the files are UTF-8.
