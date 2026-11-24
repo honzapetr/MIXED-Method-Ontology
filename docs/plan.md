@@ -273,7 +273,7 @@
 - A trial that the analyst role is clean in a test copy (`/memory`).
 - Releasing `mmo` as a wheel into the research environment instead of the path dependency.
 
-## Where we are (2026-11-24)
+## Where we are (2026-11-25)
 
 Built and merged into `main` of both repositories: the source pipeline (any original -> `text.md` -> segments ->
 quotations, T24-T26), the analysis store and the free toolbox (T32), the method as orientation with study

@@ -725,3 +725,29 @@
   `text.md` of sources created in the earlier copy (22 codings in t46-critic point to context sources without text);
   a fix for the tool. (3) Round 2 was not run in the trial.
 - Next: T36 (outline, orientation reading, coverage), T47, then test 10.
+
+## 2026-11-25 – Handover (session ends with a compaction)
+- Built since test 9, stacked and not merged, nothing pushed:
+  - workshop: `task/T43-roles` (1fc676b, c8c570c, 4ccedc6, 25401c2) -> `task/T44-context-search` (b94a455) ->
+    `task/T45-blind-probe` (9a1ac69) -> `task/T46-critic` (df705b1 + this handover);
+  - research environment: `task/T43-roles` (0c450a6) -> `task/T44-context-search` (c3dea63) ->
+    `task/T45-blind-probe` (f7a8a91) -> `task/T46-critic` (d087b5c).
+  Each branch was made from the previous one; merging `task/T46-critic` brings all four. Before a push or PR:
+  `gh auth status` and the owner's confirmation (AGENTS.md).
+- Waiting for the owner (protected paths and method texts): roles and their generated copies, skills `lead-analyst`
+  and `state-position`, `.agents/hooks.json`, `.claude/settings.json` (matcher with WebSearch|WebFetch), `AGENTS.md`
+  of the research environment, `methods/reflexivity.md` (one sentence), `method.yaml` of SKAD/GT/TA/template
+  (`context_search`; SKAD 2026-11-24.3 with `roles:` context-searcher and critic), SKAD prompts
+  (`context-analysis.md` 2026-11-24.1, `fine-analysis.md`, `roles/context-searcher.md`, `roles/critic.md`). I
+  recommended approving T43-T46 and making the pull requests before T36.
+- Open decisions for the owner: (1) the critic's counter-evidence codings are refused in the phase `synthesis`
+  (`model_proposes`) - exempt a critic's run, or let the brief say it; (2) the guard opens web tools for the whole
+  environment when one study approves (it sees no study); (3) the workshop's `AGENTS.md` CLI line lacks `role`, `run`,
+  `context`, `probe`, `critic` (protected).
+- Fixes noted for later: `new_test_env.py --carry` does not bring `text.md` of sources created in the earlier copy;
+  the context sources of test 9 have no provenance; prompts of the other SKAD phases are missing.
+- Kept for reference: `scratch/test9/` (record of test 9), `scratch/T45/` (probe answers, agy streams),
+  `scratch/T46/` (agy hook experiment, critic run output); test copies `zkusebna/t46-critic` (a real critic run,
+  run-0002). `scratch/T44/` can be deleted.
+- Next: the owner's review and PRs; then T36 (outline, orientation reading, coverage), T47 (many decisions at once),
+  then test 10 (one agent against the orchestrator on a new source).
