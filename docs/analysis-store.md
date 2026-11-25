@@ -194,6 +194,19 @@ uv run mmo memo add <topic> ... --by <model> --run run-0001   # any write comman
   `--prompt-version <method>/<phase>@<version>` to use. Method-specific role prompts: optional `roles:` of
   `method.yaml` (role -> file with a `version:` line), checked by `mmo method check`.
 
+## Outline and coverage (T36, ADR 0014)
+
+`code/mmo/analysis/outline.py`, `mmo outline`, `mmo coverage add|list` (spec, "Outline, coverage and the choice of
+passages").
+
+- `outline(topic, source)` -> `Outline(parts, chapters, problems, text_sha256)`: parts from `HEADING` after the front
+  matter plus `outline.parts` of `source.yaml`; pages and segment ids from `segments.jsonl` (a segment belongs to the
+  part where it starts; headings are segments too). `resolve()` turns part ids, chapter ids and ranges into part ids.
+- `add_coverage()` saves `op: coverage`; `coverage()` joins the declarations with `quoted` from the quotations of
+  codings and memos (not rejected or withdrawn); `best()` ranks whole > passages > map > quoted; `summary()` gives
+  the lines of `mmo status`.
+- Settings: `passage_keys` in `DEFAULTS` of `method.py`; memo type `passage-choice`; `source.yaml` field `outline`.
+
 ## Context search (T44, ADR 0015)
 
 `code/mmo/analysis/context.py` (plans, rounds, requests, the summary for `mmo status`), `code/mmo/core/provenance.py`

@@ -14,6 +14,8 @@ from mmo.analysis.context import add_request, close_request, plans, requests, ro
 from mmo.analysis.context import summary as context_summary
 from mmo.analysis.critic import check_critic, critic_runs, critic_settings, run_critic, write_brief
 from mmo.analysis.method import check_method, study_methods
+from mmo.analysis.outline import HOW, add_coverage, coverage, pages_label
+from mmo.analysis.outline import summary as coverage_summary
 from mmo.analysis.probe import prior_record, probes, start_probe
 from mmo.analysis.probe import task as probe_task
 from mmo.analysis.quote import MOVED, OK, Quotation, QuoteError, check_study, quote
@@ -773,6 +775,49 @@ def cmd_critic_list(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_outline(args: argparse.Namespace) -> int:
+    """The parts of a source from the headings of text.md, with the researcher's chapters (T36)."""
+    topic = load_topic(args)
+    found, by_part = coverage(topic, args.source)
+    for problem in found.problems:
+        print(f"problem: {problem}", file=sys.stderr)
+    if not found.parts:
+        print(f"{args.source}: text.md has no headings")
+        return 0
+    chapters = {c.id: c for c in found.chapters}
+    shown: set[str] = set()
+    for part in found.parts:
+        if part.chapter and part.chapter not in shown:
+            shown.add(part.chapter)
+            chapter = chapters[part.chapter]
+            print(f"{chapter.id}  {chapter.title}  ({pages_label(chapter.pages)}, {len(chapter.parts)} parts)")
+        segs = f"{part.segments[0]} .. {part.segments[-1]} ({len(part.segments)})" if part.segments else "no segments"
+        indent = "    " if part.chapter else ""
+        title = ("#" * part.level) + " " + part.title if part.level else f"[{part.title}] (outline.parts)"
+        print(f"{indent}{part.id}  {title}  {pages_label(part.pages)}  {segs}  chars {part.start}-{part.end}")
+        if args.coverage:
+            for entry in by_part[part.id]:
+                stale = " (on an earlier text.md)" if entry["stale"] else ""
+                print(f"{indent}    {entry['how']}: {entry['by']} {entry['at']}{stale}".rstrip())
+    print(f"{len(found.parts)} parts, {len(found.chapters)} chapters (outline of source.yaml)")
+    return 1 if found.problems else 0
+
+
+def cmd_coverage_add(args: argparse.Namespace) -> int:
+    """The reader says how it read parts of a source: whole, in passages, or through a map (T36)."""
+    topic = load_topic(args)
+    event = add_coverage(Store(topic), _author(args, topic), args.source, args.part, args.how, args.note)
+    print(f"{args.source}: {', '.join(event['parts'])} read {event['how']} by {event['author']}")
+    return 0
+
+
+def cmd_coverage_list(args: argparse.Namespace) -> int:
+    topic = load_topic(args)
+    for line in coverage_summary(topic):
+        print(line)
+    return 0
+
+
 def cmd_run_close(args: argparse.Namespace) -> int:
     """The lead closes a run when its work came back; the web closes with it (T48)."""
     topic = load_topic(args)
@@ -1120,6 +1165,27 @@ def build_parser() -> argparse.ArgumentParser:
     run_list = run.add_parser("list", help="the runs of a study and what each wrote")
     run_list.add_argument("topic")
     run_list.set_defaults(func=cmd_run_list)
+
+    out = sub.add_parser("outline", help="the parts of a source from its headings, with chapters (T36)")
+    out.add_argument("topic")
+    out.add_argument("source")
+    out.add_argument("--coverage", action="store_true", help="also how each part was read, by whom")
+    out.set_defaults(func=cmd_outline)
+
+    cov = sub.add_parser("coverage", help="how each part of a source was read: whole, passages, map (T36)")
+    cov = cov.add_subparsers(dest="action", required=True)
+    cov_add = cov.add_parser("add", parents=[who], help="say how you read parts of a source")
+    cov_add.add_argument("topic")
+    cov_add.add_argument("source")
+    cov_add.add_argument(
+        "--part", action="append", required=True, help="a part id, a chapter id or part-03..part-07 (repeatable)"
+    )
+    cov_add.add_argument("--how", required=True, choices=HOW)
+    cov_add.add_argument("--note")
+    cov_add.set_defaults(func=cmd_coverage_add)
+    cov_list = cov.add_parser("list", help="the coverage of the study's sources")
+    cov_list.add_argument("topic")
+    cov_list.set_defaults(func=cmd_coverage_list)
 
     critic = sub.add_parser("critic", help="the critic of another maker through agy (ADR 0014)").add_subparsers(
         dest="action", required=True

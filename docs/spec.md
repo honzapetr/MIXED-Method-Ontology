@@ -171,6 +171,27 @@ propose. What the method calls the researcher's decisions (`researcher_decides`)
   run.
 - Subagents inside Claude Code use the lead's model.
 
+## Outline, coverage and the choice of passages (ADR 0014; built in T36)
+
+- `mmo outline <topic> <source> [--coverage]`: parts of `text.md` from its headings, without a model - `part-01`,
+  `part-02`, ... in the order of the headings, each with its level, title, character range, pages and segments.
+- `outline` of `source.yaml` (the researcher's): `chapters` (`id`, `title`, `first` - a heading's text or a part id;
+  a chapter runs to the next one) and `parts` without a heading (`id`, `title`, `at` - exact words found once in
+  `text.md`; the part starts at their line). Declared parts do not renumber the parts from headings. Problems
+  (unknown heading, words not found once, a chapter out of order, a taken id) are printed; `mmo outline` exits 1.
+- `mmo coverage add <topic> <source> --part <part|chapter|part-03..part-07> --how whole|passages|map` records
+  `op: coverage` (`source`, `parts`, `how`, `text_sha256`, `note`) with its author and run; any author. `mmo coverage
+  list` and `mmo status` show for each studied source (not context sources) the best reading of each part - whole >
+  passages > map > quoted (a coding or memo quotes it, no reading declared) > nobody - per chapter, and the parts
+  outside chapters known only through a map or by nobody. A declaration on an earlier `text.md` is not counted.
+- `analysis.passage_keys` (`first: [structural, questions]`, `later: [reception, contrast]`; owner 2026-11-19);
+  `mmo status` shows them and the number of `passage-choice` memos (the researcher's choice of passages and why).
+- `mmo status` shows first impressions by author (the researcher's own reading kept with its time).
+- The orientation reading is the method's prompt (SKAD `context-analysis` 2026-11-25): position restated, the whole
+  source read chapter by chapter (or by chapter readers), coverage recorded, a first-impression memo with candidate
+  passages and their keys, a reflexive memo on having read the whole first.
+- `mmo-guard` closes `mmo outline` and `mmo coverage` on a closed study (they read `text.md`).
+
 ## The critic of another maker (ADR 0014; built in T46)
 
 - `analysis.critic` of `topic.yaml`: `analyst` (profile id, default `gemini-4-neon`), `model` (the `agy` model,

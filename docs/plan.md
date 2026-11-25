@@ -292,21 +292,16 @@ by the model it criticised, it ran without the guard and outside the record; the
 pushed, without a search plan. The owner decided (2026-11-24): a lead analyst with subagents of narrow roles, a
 critic of another maker through `agy`, a context search by the method and the questions; then test 10.
 
-**Done after test 9 (2026-11-24, not yet merged):** T42 (ADR 0014, ADR 0015), T43 + T39 (roles of subagents, runs,
-`lead-analyst`, SKAD phase prompts). Workshop branch `task/T43-roles` holds three commits on top of `main`
-(1fc676b plan after T29, c8c570c T42, 4ccedc6 T43); research environment branch `task/T43-roles` one commit
-(0c450a6). They wait for the owner's approval of the protected paths (roles, skills, prompts, `AGENTS.md`) and one
-pull request per repository.
+**Done after test 9 and merged (2026-11-25):** T42 (ADR 0014, ADR 0015), T43 + T39 (roles of subagents, runs,
+`lead-analyst`, SKAD phase prompts), T44 (context search by method), T45 (blind probe), T46 (critic through `agy`),
+T48 (the web only during an open run). Workshop PRs #7-#12; the research environment's `main` at `b2724cd`.
 
-**Done after that:** T44 (context search by method), on `task/T44-context-search` in both repositories, on top of
-`task/T43-roles`.
+**Done, waiting for the owner:** T36 (outline, chapters and parts declared in `source.yaml`, coverage, keys for
+choosing passages, the orientation reading in the SKAD prompts), on `task/T36-outline` in both repositories.
 
-T45 (blind probe), on `task/T45-blind-probe` on top of T44. T46 (critic through `agy`), on `task/T46-critic` on top of T45.
-
-**Next, in this order:** T36
-(outline, orientation reading, coverage), T47 (many decisions at once), then test 10 (one agent against the
-orchestrator on a new source). After it: T28 (web pages), T37, T34, T30, T38, T35, T31; T40 and T41 when convenient;
-T27 when a PDF comes.
+**Next, in this order:** T47 (many decisions at once), then test 10 (one agent against the orchestrator on a new
+source; before it the researcher declares the chapters of the new source). After it: T28 (web pages), T37, T34, T30,
+T38, T35, T31; T40 and T41 when convenient; T27 when a PDF comes.
 
 ## Analysis
 
@@ -433,7 +428,7 @@ T27 when a PDF comes.
   codebook changes researcher-only; `--alternative`; guard; research environment `docs/how-it-works.md`.
 - Depends on: T33
 
-### T36 – Outline of a source and the model's orientation reading
+### T36 – Outline of a source and the model's orientation reading (done; owner approves)
 - Goal: the researcher and the model know the structure of a source and where to start the fine analysis.
 - Acceptance criteria:
   - `mmo outline <topic> <source>` lists the parts of `text.md` from its headings (chapter, section, pages, segment
