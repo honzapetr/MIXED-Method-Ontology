@@ -572,3 +572,35 @@
   shows 0 waiting.
 - Verified: `uv run pytest` – 148 passed; `uv run ruff check . && uv run ruff format --check .` clean.
 - Next: a new test copy from the start (owner); then T36 (outline and orientation reading).
+
+## 2026-11-19 – Test 9 made; plan brought up to date
+- T29 merged (PR #6; workshop 873d1e4, research environment `main` cde59c7).
+- `zkusebna/test9` made with `python tools/new_test_env.py test9 --git` from the research environment `main`
+  cde59c7, without `--carry` (from the start): 966 files, `uv sync` done, git commit eedb2b3. Checked in the copy:
+  `Guards: on`, `kniha/text.md` the rebuilt one (`left_out` 203/200, 1,240 segments), `mmo method check` 4 ok,
+  `mmo status nazi-v-ai-dobe`: SKAD 2026-11-19.2, no phase set, 1 proposal waiting (the model's first-impression
+  memo of 2026-11-13), the researcher's position `positions/owner.md`, the profile `analysts/claude-opus-5-5.md`
+  present (a model's first start would need `--without-profile claude-opus-5-5`).
+- Plan: section "Where we are" (what is built, test 9 and what it should walk, the order after it); new tasks T39
+  (prompts per phase, versioned), T40 (`model_proposes` for GT and TA), T41 (clean scratch folders).
+  `docs/test-copies.md` records test 9.
+- Next: the owner walks test 9; findings become tasks; then T39, T36, T28, ... as in the plan.
+
+## T42 – 2026-11-24
+- Test 9 walked by the owner (2026-11-23/24): `nazi-v-ai-dobe` from position to the final report in `zkusebna/test9`
+  with claude-opus-5-5, gemini-4-neon as a critic through the Antigravity CLI. The copy's `.git/index` was missing
+  (a stale `index.lock` of 2026-11-19 on Google Drive); removed and the index rebuilt from HEAD, files unchanged.
+- Record in `scratch/test9/` (kept for later analysis): `session-2026-11-23.jsonl` (Claude's session, copied
+  2026-11-24 14:49) and `.md` transcript (`to_md.py`); `gemini/` with the Antigravity conversation database, its
+  `history.jsonl` and a decoded `conversation.md` (`gemini_to_md.py`, protobuf strings, raw).
+- Findings: context 540k tokens, two thirds `text.md` of the book; a compaction right after the whole-book reading;
+  closed loop of the model's own map (missed chapters, S6 overstated, S7 missed); the critic corrected 4 of 6 places
+  with text the lead had not read; the critic's instructions were written by the model it criticised, it ran without
+  the guard and outside the record; the corpus grew only on the owner's push.
+- Done: ADR 0014 (lead analyst, subagents, critic of another maker through `agy`), ADR 0015 (context search by the
+  method and the questions); spec sections "Analysts and roles", "Context search"; plan: test 9 recorded, T42-T47
+  and test 10, T39 extended to roles, T36 to coverage, T31 narrowed; owner's decisions in `docs/answers.md`; the
+  owner's two notes of 2026-11-23 in `docs/owner-notes.md`.
+- `agy` (Antigravity CLI) can run in print mode (`-p`, `--model`, `--output-format stream-json`, `--sandbox`,
+  `--settings`); whether it runs hooks for the guard is open (T46). It also serves Claude models.
+- Next: T43 together with T39.
