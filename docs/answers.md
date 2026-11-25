@@ -290,5 +290,6 @@
   project (`topics/<slug>/`). A lesson from a test is kept as a general rule with a general reason. This is needed
   anyway, so that the environment can analyse different things.
 - Test 10 runs on the same book (`kniha`, `nazi-v-ai-dobe`). The owner writes in their own position that the book was
-  walked once before (test 9).
+  walked once before (test 9) - in the test copy `zkusebna/test10`, not in the base environment: the position, the
+  chapters of the source and all else of the test belong to the test's project.
 
