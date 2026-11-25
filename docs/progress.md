@@ -833,4 +833,13 @@
   Harmless for a new source; hints if test 10 runs on `kniha` again.
 - Workshop: a stale `.git/packed-refs.lock` (0 bytes, no git process holding it) was removed; `git fsck` clean.
 - Verified: `mmo method check` 4 ok; `uv run pytest tests/test_methods.py`.
+- 2026-11-25, the owner's answer (`docs/answers.md`): the environment holds no knowledge of a particular study; test
+  10 runs on the same book. Done (research environment, `ab99d07` on `task/T49-content-structure-prompt`): the SKAD
+  prompts (context analysis 2026-11-25.1, fine analysis 2026-11-25.1, content structure, the critic's brief
+  2026-11-25.1, the context searcher 2026-11-25), SKAD 2026-11-25.4, the skills `lead-analyst` and
+  `transcribe-pages`, `docs/analysis.md`, `how-it-works.md`, `memos.md`, `source-preparation.md`, `README.md`,
+  `methods/README.md`, `procedure.md`, `applications.md`, `topics/README.md` and two lines of the profile of
+  claude-opus-5-5 (an example and "Used for"; no layer or position changed, so its version stays): lessons kept as
+  general rules, the study, its book and test 9 no longer named. What stays: `topics/nazi-v-ai-dobe/` (the project
+  itself) and its line in `topics/.gitignore`.
 
