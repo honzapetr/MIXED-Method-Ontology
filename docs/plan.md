@@ -300,8 +300,10 @@ T48 (the web only during an open run). Workshop PRs #7-#12; the research environ
 choosing passages, the orientation reading in the SKAD prompts) - PR #13; the research environment's `main` at
 `24ca063`.
 
-**Done, waiting for the owner:** T47 (many decisions at once: filters, dry run, one batch), on
-`task/T47-batch-review` in both repositories.
+**Done and merged:** T47 (many decisions at once) - PR #14; the research environment's `main` at `36cbeca`.
+
+**Done, waiting for the owner:** T49 (the SKAD prompt of content structure), on
+`task/T49-content-structure-prompt` in both repositories.
 
 **Next, in this order:** test 10 (one agent against the orchestrator on a new
 source; before it the researcher declares the chapters of the new source). After it: T28 (web pages), T37, T34, T30,
@@ -695,6 +697,17 @@ T38, T35, T31; T40 and T41 when convenient; T27 when a PDF comes.
 - Verify: `uv run pytest tests/analysis/ && uv run ruff check .`
 - Paths: `code/mmo/analysis/`, `code/mmo/cli.py`, `tests/`, `docs/analysis-store.md`
 - Depends on: T29
+
+### T49 – The SKAD prompt of content structure (done; owner approves)
+- Goal: both variants of test 10 work in content structure from the same instructions of the method.
+- Acceptance criteria: `methods/skad/prompts/content-structure.md` with a `version:` line, linked as `prompt` of the
+  phase in `method.yaml` (SKAD 2026-11-25.3); written from `procedure.md` 5, `research-design.md`,
+  `agent-rules.md`, `reflexivity.md` and the lessons of test 9 stated in general terms (coverage first; evidence and
+  counter-evidence; where a figure is staged and where it ends; registers side by side; instance finders; no merging);
+  `mmo method check` ok.
+- Verify: `uv run pytest tests/test_methods.py`
+- Paths: `../MIXED-Method-Ontology/methods/skad/`, `docs/`
+- Depends on: T43, T36
 
 ### Test 10 – One agent against the orchestrator (owner)
 - Goal: find out whether subagents keep the context clean without losing the single view of the analyst.

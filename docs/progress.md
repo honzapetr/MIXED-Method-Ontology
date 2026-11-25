@@ -816,3 +816,21 @@
 - Done (research environment, `task/T47-batch-review`): `docs/analysis.md` and `docs/how-it-works.md` (many at once).
 - Verified: `uv run pytest` 186 passed; ruff check and format clean.
 - Next: the owner's review; then test 10 (before it the researcher declares the chapters of the new source).
+
+## T49 – 2026-11-25 – The SKAD prompt of content structure
+- Merged before it: T47 (PR #14); the research environment's `main` fast-forwarded to `36cbeca`.
+- Done (research environment, `task/T49-content-structure-prompt`, `1210a0a`): `methods/skad/prompts/content-structure.md`
+  2026-11-25 - check the coverage first, candidates as codes of their SKAD type linked with `instance_of`, an analytic
+  memo per candidate with evidence, counter-evidence, where the figure is staged and where it ends, its registers;
+  instance finders for instances and counter-instances; classifications; phenomenon dimensions (and empty ones); the
+  story line with `story_link`, `competes_with`, `supports`; a memo "State of content structure"; reflexive checks
+  (schemes from training, expectations). SKAD 2026-11-25.3. The lessons of test 9 are stated in general terms,
+  without the book's content.
+- Found while writing it: the texts of the research environment carry details of test 9's book (see the owner's
+  question on test 10 and `kniha`): the profile journal of claude-opus-5-5 names the study; the SKAD prompts say
+  that in the first study most context sources came from the author's circle and that a passage's reading was
+  turned by the end of its chapter; `docs/source-preparation.md` and `docs/how-it-works.md` quote or name `kniha`.
+  Harmless for a new source; hints if test 10 runs on `kniha` again.
+- Workshop: a stale `.git/packed-refs.lock` (0 bytes, no git process holding it) was removed; `git fsck` clean.
+- Verified: `mmo method check` 4 ok; `uv run pytest tests/test_methods.py`.
+
