@@ -292,7 +292,14 @@ by the model it criticised, it ran without the guard and outside the record; the
 pushed, without a search plan. The owner decided (2026-11-24): a lead analyst with subagents of narrow roles, a
 critic of another maker through `agy`, a context search by the method and the questions; then test 10.
 
-**Next, in this order:** T42 (done), T43 + T39, T44, T45, T46, T36, T47, then test 10 (one agent against the
+**Done after test 9 (2026-11-24, not yet merged):** T42 (ADR 0014, ADR 0015), T43 + T39 (roles of subagents, runs,
+`lead-analyst`, SKAD phase prompts). Workshop branch `task/T43-roles` holds three commits on top of `main`
+(1fc676b plan after T29, c8c570c T42, 4ccedc6 T43); research environment branch `task/T43-roles` one commit
+(0c450a6). They wait for the owner's approval of the protected paths (roles, skills, prompts, `AGENTS.md`) and one
+pull request per repository.
+
+**Next, in this order:** T44 (context search by method), T45 (blind probe), T46 (critic through `agy`), T36
+(outline, orientation reading, coverage), T47 (many decisions at once), then test 10 (one agent against the
 orchestrator on a new source). After it: T28 (web pages), T37, T34, T30, T38, T35, T31; T40 and T41 when convenient;
 T27 when a PDF comes.
 
@@ -527,7 +534,7 @@ T27 when a PDF comes.
 - Paths: `code/mmo/graph/`, `code/mmo/cli.py`, `tests/`, `docs/`
 - Depends on: T30
 
-### T39 – Prompts per phase and role of a method (versioned)
+### T39 – Prompts per phase and role of a method (versioned) (done; owner approves the prompts)
 - Goal: what a model does in a phase **and in a role** (ADR 0014: lead, chapter reader, instance finder, context
   searcher, source preparer, blind probe, critic) is written down and versioned, so `--prompt-version` names a real
   prompt, not `chat@<date>`; the same prompt serves the agent in a chat, a subagent and a local model (T31).
@@ -575,7 +582,7 @@ T27 when a PDF comes.
 - Paths: `docs/`
 - Depends on: test 9
 
-### T43 – Roles of subagents and the orchestrator (research environment)
+### T43 – Roles of subagents and the orchestrator (research environment) (done; owner approves)
 - Goal: the lead analyst can hand bounded work to subagents with a clean context, and the single view stays in the
   record (ADR 0014).
 - Acceptance criteria:

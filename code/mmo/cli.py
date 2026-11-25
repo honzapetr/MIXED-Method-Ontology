@@ -13,6 +13,8 @@ import yaml
 from mmo.analysis.method import check_method, study_methods
 from mmo.analysis.quote import MOVED, OK, Quotation, QuoteError, check_study, quote
 from mmo.analysis.review import decide, proposals
+from mmo.analysis.roles import check_roles, roles_dir, runs
+from mmo.analysis.roles import role as role_of
 from mmo.analysis.status import own_type_reminder, study_status
 from mmo.analysis.store import ACTIVE_STATUSES, Author, Store, author_of, check_store, write_memo
 from mmo.config import Settings
@@ -394,7 +396,7 @@ def cmd_quote_check(args: argparse.Namespace) -> int:
 
 
 def _author(args: argparse.Namespace, topic: Topic) -> Author:
-    return author_of(topic, args.by, args.prompt_version)
+    return author_of(topic, args.by, args.prompt_version, getattr(args, "run", None))
 
 
 def _quotation(topic: Topic, source: str, words: str, page: int | None = None, segment: str | None = None) -> Quotation:
@@ -589,6 +591,53 @@ def cmd_review_edit(args: argparse.Namespace) -> int:
     return _review(args, "edit", changes)
 
 
+def cmd_run_start(args: argparse.Namespace) -> int:
+    """The lead analyst hands one piece of work to a subagent (T43, ADR 0014)."""
+    topic = load_topic(args)
+    author = _author(args, topic)
+    event = Store(topic).start_run(author, args.analyst or author.id, args.role, args.input, args.note)
+    print(
+        f"{event['run']}: {event['analyst']} as {event['role']} ({event['prompt_version']}) on "
+        f"{'; '.join(event['input'])}"
+    )
+    print(f"the subagent writes with: --by {event['analyst']} --run {event['run']}")
+    return 0
+
+
+def cmd_run_list(args: argparse.Namespace) -> int:
+    topic = load_topic(args)
+    store = Store(topic)
+    found = runs(store.history())
+    for event in found:
+        records = store.run_records(event["run"])
+        print(
+            f"{event['run']}  {event['at'][:16]}  {event['analyst']} as {event['role']} ({event['prompt_version']}), "
+            f"started by {event.get('author', '?')}"
+        )
+        print(f"    input: {'; '.join(event.get('input') or [])}")
+        print(f"    wrote: {', '.join(records) if records else 'nothing in the analysis'}")
+    print(f"{len(found)} runs" if found else "no runs")
+    return 0
+
+
+def cmd_role_list(args: argparse.Namespace) -> int:
+    """Roles of subagents in the environment (`.agents/roles/`), with the problems of their files."""
+    problems = check_roles(args.env)
+    if not problems:
+        print(f"no roles in {roles_dir(args.env)}")
+        return 0
+    for name, found in problems.items():
+        if found:
+            print(f"{name}: {len(found)} problems")
+            for problem in found:
+                print(f"  - {problem}")
+            continue
+        r = role_of(args.env, name)
+        print(f"{name} ({r.prompt_version}) writes {', '.join(sorted(r.writes)) or 'nothing in the analysis'}")
+        print(f"    {r.description}")
+    return 1 if any(problems.values()) else 0
+
+
 def cmd_status(args: argparse.Namespace) -> int:
     print("\n".join(study_status(load_topic(args))))
     return 0
@@ -739,6 +788,7 @@ def build_parser() -> argparse.ArgumentParser:
     who = argparse.ArgumentParser(add_help=False)
     who.add_argument("--by", help="who does it: the researcher's id or the exact model id (required to write)")
     who.add_argument("--prompt-version", help="for a model: the skill or prompt it works from and its version")
+    who.add_argument("--run", help="a subagent: the run it works in (mmo run start); gives its role and prompt")
     where = argparse.ArgumentParser(add_help=False)
     where.add_argument("--page", type=int, help="printed page, when the words occur more than once")
     where.add_argument("--segment", help="segment id, when the words occur more than once")
@@ -848,6 +898,29 @@ def build_parser() -> argparse.ArgumentParser:
     phase.add_argument("phase")
     phase.add_argument("--method", help="needed when several methods of the study have this phase")
     phase.set_defaults(func=cmd_phase)
+
+    run = sub.add_parser("run", help="work handed to a subagent in a role (ADR 0014)").add_subparsers(
+        dest="action", required=True
+    )
+    run_start = run.add_parser("start", parents=[who], help="hand one piece of work to a subagent (the lead)")
+    run_start.add_argument("topic")
+    run_start.add_argument("--role", required=True, help="a role of .agents/roles/ (mmo role list)")
+    run_start.add_argument(
+        "--input", action="append", required=True, help="what it works on, e.g. 'kniha pp. 145-160' (repeatable)"
+    )
+    run_start.add_argument("--analyst", help="the model that does the run (default: --by)")
+    run_start.add_argument("--note")
+    run_start.set_defaults(func=cmd_run_start)
+    run_list = run.add_parser("list", help="the runs of a study and what each wrote")
+    run_list.add_argument("topic")
+    run_list.set_defaults(func=cmd_run_list)
+
+    roles = sub.add_parser("role", help="roles of subagents (.agents/roles/)").add_subparsers(
+        dest="action", required=True
+    )
+    role_list = roles.add_parser("list", help="the roles, their prompt versions and what they write")
+    role_list.add_argument("--env", type=Path, default=Path("."), help="the research environment (default: .)")
+    role_list.set_defaults(func=cmd_role_list)
 
     status = sub.add_parser("status", help="the map of phases, where the study is, what was made, reminders")
     status.add_argument("topic")

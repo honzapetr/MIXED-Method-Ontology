@@ -293,7 +293,7 @@ def looks_like_path(word: str) -> bool:
 
 
 # `mmo` commands that work on a study: `mmo <command> <action> <topic> ...`; they read its text or write its analysis
-MMO_STUDY_COMMANDS = {"quote", "code", "relation", "memo", "analysis", "review"}
+MMO_STUDY_COMMANDS = {"quote", "code", "relation", "memo", "analysis", "review", "run"}
 WRITES_FILES = re.compile(
     r"(>|\btee\b|\bsed\s+(-\w*i|--in-place)|\b(cp|mv|rm|del|move|copy)\b|Set-Content|Out-File|Add-Content)"
 )
