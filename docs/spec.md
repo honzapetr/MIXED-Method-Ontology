@@ -192,7 +192,13 @@ propose. What the method calls the researcher's decisions (`researcher_decides`)
   `mmo run start` records `web: true|false` in the run; `mmo-guard` denies WebSearch and WebFetch while no study of
   the environment lists the model (the hook sees no study, so one approving study opens the web tools; the run and
   the role say for which study).
-- A blind probe records the model's prior knowledge before the search (T45).
+- **Blind probe** (T45): `mmo probe start <topic> --source <id> [--analyst <model>]` starts a run of the role
+  `blind-probe` whose input is only the title and `citation.authors` of `source.yaml`, and prints the whole task. The
+  answer is a `reflexive` memo with `--prior-knowledge source:<id>`, recorded as `prior_knowledge: {source, model,
+  before_search, met_source_before}`. Context memos compare it with `--about memo:<probe>`; `mmo probe list` and
+  `mmo status` show each probe as compared or not, and remind of a positioned model not probed on a primary source.
+  `mmo-guard` keeps a subagent named `blind-probe` (hook field `agent_type`) away from the study's files but its
+  position, from `mmo` but `memo add`, and from the web.
 
 ## Out of scope now
 

@@ -488,11 +488,20 @@ def write_memo(
     method: str | None = None,
     phase: str | None = None,
     alternatives: list[str] | None = None,
+    prior_knowledge: dict[str, Any] | None = None,
 ) -> Path:
-    """A memo in `memos/` in the format of `docs/memos.md`; quotations go to `basis`."""
+    """A memo in `memos/` in the format of `docs/memos.md`; quotations go to `basis`.
+
+    `prior_knowledge` marks a blind probe's memo (T45): what a model knew of a source before it met it.
+    """
     store = Store(topic)
     store.may_propose(author, "memo")
     refs = [store.check_ref(ref) for ref in about or []]
+    if prior_knowledge:
+        if memo_type != "reflexive":
+            raise StoreError("prior knowledge is a reflexive memo of the model (--type reflexive)")
+        if f"source:{prior_knowledge['source']}" not in refs:
+            refs.append(f"source:{prior_knowledge['source']}")
     settings = study_settings(topic)
     if author.kind == "model" and settings["model"]["alternatives"] and memo_type == "analytic" and not alternatives:
         raise StoreError(
@@ -520,6 +529,8 @@ def write_memo(
         meta["basis"] = {"quotations": [q.record() for q in quotations]}
     if alternatives:
         meta["alternatives"] = list(alternatives)
+    if prior_knowledge:
+        meta["prior_knowledge"] = dict(prior_knowledge)
     if method:
         meta["method"] = method
     if phase:

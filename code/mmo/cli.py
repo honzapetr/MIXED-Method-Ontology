@@ -13,6 +13,8 @@ import yaml
 from mmo.analysis.context import add_request, close_request, plans, requests, rounds, start_round
 from mmo.analysis.context import summary as context_summary
 from mmo.analysis.method import check_method, study_methods
+from mmo.analysis.probe import prior_record, probes, start_probe
+from mmo.analysis.probe import task as probe_task
 from mmo.analysis.quote import MOVED, OK, Quotation, QuoteError, check_study, quote
 from mmo.analysis.review import decide, proposals
 from mmo.analysis.roles import check_roles, roles_dir, runs
@@ -525,8 +527,19 @@ def cmd_memo_add(args: argparse.Namespace) -> int:
     author = _author(args, topic)
     body = Path(args.file).read_text(encoding="utf-8") if args.file else (args.text or "")
     quotations = [_quotation(topic, source, words) for source, words in args.quote or []]
+    prior = prior_record(topic, Store(topic), author, args.prior_knowledge) if args.prior_knowledge else None
     path = write_memo(
-        topic, author, args.type, args.title, body, args.about, quotations, args.method, args.phase, args.alternative
+        topic,
+        author,
+        args.type,
+        args.title,
+        body,
+        args.about,
+        quotations,
+        args.method,
+        args.phase,
+        args.alternative,
+        prior_knowledge=prior,
     )
     print(f"memo {path.relative_to(topic.root).as_posix()}")
     return 0
@@ -689,6 +702,31 @@ def cmd_context_list(args: argparse.Namespace) -> int:
             f"{prov.get('speaker', '?')} ({prov.get('relation', 'provenance missing')}); "
             f"found by {found.get('how', '?')} in {found.get('place', '?')} on {found.get('date', '?')}"
         )
+    return 0
+
+
+def cmd_probe_start(args: argparse.Namespace) -> int:
+    """A blind probe of one model on one source: only the title and the author (T45)."""
+    topic = load_topic(args)
+    author = _author(args, topic)
+    event = start_probe(Store(topic), author, args.source, args.analyst or author.id)
+    print(f"{event['run']}: blind probe of {event['analyst']} on {args.source}")
+    print("hand the probe this task and nothing else:")
+    print(probe_task(event, topic.slug))
+    return 0
+
+
+def cmd_probe_list(args: argparse.Namespace) -> int:
+    topic = load_topic(args)
+    found = probes(topic)
+    for probe in found:
+        print(
+            f"{probe['memo']}: {probe['source']} by {probe['model']} ({probe['status']}); "
+            f"before the context search: {'yes' if probe.get('before_search') else 'no'}; "
+            f"had met the source: {'yes' if probe.get('met_source_before') else 'no'}"
+        )
+        print(f"    compared in: {', '.join(probe['compared_in']) or 'no memo yet (--about memo:<id>)'}")
+    print(f"{len(found)} blind probes" if found else "no blind probes")
     return 0
 
 
@@ -980,6 +1018,9 @@ def build_parser() -> argparse.ArgumentParser:
     m_add.add_argument("--method")
     m_add.add_argument("--phase")
     m_add.add_argument("--alternative", action="append", help="an alternative reading (a model offers them)")
+    m_add.add_argument(
+        "--prior-knowledge", metavar="source:<id>", help="a blind probe's answer: what the model knew of the source"
+    )
     m_add.set_defaults(func=cmd_memo_add)
 
     analysis = sub.add_parser("analysis", help="the analysis store of a study").add_subparsers(
@@ -1020,6 +1061,18 @@ def build_parser() -> argparse.ArgumentParser:
     run_list = run.add_parser("list", help="the runs of a study and what each wrote")
     run_list.add_argument("topic")
     run_list.set_defaults(func=cmd_run_list)
+
+    probe = sub.add_parser("probe", help="blind probe of a model's prior knowledge of a source (T45)").add_subparsers(
+        dest="action", required=True
+    )
+    p_start = probe.add_parser("start", parents=[who], help="a run of the role blind-probe: only title and author")
+    p_start.add_argument("topic")
+    p_start.add_argument("--source", required=True, help="the source the probe is about")
+    p_start.add_argument("--analyst", help="the probed model, e.g. the critic's (default: --by)")
+    p_start.set_defaults(func=cmd_probe_start)
+    p_list = probe.add_parser("list", help="prior-knowledge memos, when they were written, where they are compared")
+    p_list.add_argument("topic")
+    p_list.set_defaults(func=cmd_probe_list)
 
     context = sub.add_parser(
         "context", help="context search by the method and the questions: rounds, requests (ADR 0015)"

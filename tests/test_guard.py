@@ -261,3 +261,30 @@ def test_web_search_only_where_a_study_approves_it(root):
     assert _decide(root, "WebFetch", url="https://example.org") is None
     other = guard.pre_tool_use({"tool_name": "WebSearch", "tool_input": {"query": "x"}, "cwd": str(root)}, root, "n")
     assert other and other["hookSpecificOutput"]["permissionDecision"] == "deny", "approved for m, not for n"
+
+
+def test_a_blind_probe_stays_blind(root):
+    """T45: when the harness names the subagent blind-probe, the study, other mmo commands and the web stay closed."""
+    _open_study(root)
+    _write(root / "topics" / "s" / "topic.yaml", "title: S\nanalysis:\n  web_search: [m]\n")
+
+    def probe(tool: str, **tool_input) -> str | None:
+        event = {"tool_name": tool, "tool_input": tool_input, "cwd": str(root), "agent_type": "blind-probe"}
+        result = guard.pre_tool_use(event, root)
+        return result["hookSpecificOutput"]["permissionDecision"] if result else None
+
+    assert probe("Read", file_path=str(root / "topics" / "s" / "sources" / "k" / "text.md")) == "deny"
+    assert probe("Read", file_path=str(root / "topics" / "s" / "memos" / "2026-11-13-a.md")) == "deny"
+    assert probe("Read", file_path=str(root / "topics" / "s" / "topic.yaml")) == "deny"
+    assert probe("Grep", pattern="x", path=str(root)) == "deny"
+    assert probe("WebSearch", query="x") == "deny", "even where the study approves the web"
+    assert probe("Bash", command="uv run mmo quote find s k x") == "deny"
+    assert probe("Bash", command="cat topics/s/sources/k/notes.md") == "deny"
+    assert probe("Read", file_path=str(root / "analysts" / "m.md")) is None
+    assert probe("Read", file_path=str(root / "topics" / "s" / "positions" / "m.md")) is None
+    assert (
+        probe("Bash", command="uv run mmo memo add s --by m --run run-0001 --type reflexive --title P --text x") is None
+    )
+    assert _decide(root, "Read", file_path=str(root / "topics" / "s" / "memos" / "2026-11-13-a.md")) is None, (
+        "the lead is not blind"
+    )

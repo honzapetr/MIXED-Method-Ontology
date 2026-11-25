@@ -13,6 +13,7 @@ import yaml
 
 from mmo.analysis.context import summary as context_summary
 from mmo.analysis.method import current_phases, prompt_version, study_methods, study_settings, vocabulary
+from mmo.analysis.probe import summary as probe_summary
 from mmo.analysis.quote import FRONT_MATTER
 from mmo.analysis.roles import runs
 from mmo.analysis.store import ACTIVE_STATUSES, Store
@@ -76,12 +77,14 @@ def study_status(topic: Topic) -> list[str]:
         by_role = Counter(str(e.get("role")) for e in done)
         lines.append(f"runs of subagents: {len(done)} ({', '.join(f'{r} {n}' for r, n in sorted(by_role.items()))})")
     lines += context_summary(topic, store)
+    probe_lines, probe_reminders = probe_summary(topic)
+    lines += probe_lines
     changed = settings.changed()
     lines.append(
         "settings: free defaults" if not changed else "settings: " + ", ".join(f"{k}={v}" for k, v in changed.items())
     )
 
-    reminders: list[str] = []
+    reminders: list[str] = list(probe_reminders)
     for event in history:
         if event.get("op") in ("merge-codes", "split-code") and not event.get("reason"):
             what = event.get("into") if event["op"] == "merge-codes" else event.get("code")
