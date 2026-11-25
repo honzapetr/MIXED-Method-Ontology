@@ -12,9 +12,17 @@ Two hooks, both reading the hook's JSON from stdin:
   - ask the owner (permission prompt) when a profile or a position is being set to `confirmed`;
   - keep a blind probe blind (T45): when the harness names the subagent `blind-probe`, it reads nothing of a
     study but its position, runs no `mmo` but `memo add`, and gets no web tools;
+  - keep the critic's brief (`topics/<slug>/critic/`) the researcher's: a model does not write it (T46);
+  - the critic runs through `mmo critic run` (`agy`), never as a Claude Code subagent (T46);
   - deny web search and web fetch until the researcher lets a model search the web for a study (`analysis.web_search`
     of a study's `topic.yaml`, T44, ADR 0015); the hook sees no study here, so one approving study is enough, and the
     role and the run say which study it is for.
+
+`mmo-guard agy-pre-tool-use` is the same guard as a `PreToolUse` hook of the Antigravity CLI (`.agents/hooks.json`
+of the environment, T46): it maps `agy`'s tools onto the checks above. `agy` treats an answer without a decision as
+a denial, so a call the guard does not object to is `allow` inside a critic's run (`MMO_CRITIC_RUN`, set by
+`mmo critic run`) and `ask` otherwise. In round 1 of a critic's run (`MMO_CRITIC_ROUND=1`) the lead's memos,
+analysis files and the other analysts' positions stay closed: the critic reads independently first.
 
 The Bash checks are heuristics: they read paths out of the command line, not out of everything a shell can do.
 Only the standard library and PyYAML, so the hook starts quickly; nothing here imports the rest of `mmo`.
@@ -82,8 +90,17 @@ def claude_project_dir(root: Path) -> Path:
     return Path.home() / ".claude" / "projects" / re.sub(r"[^A-Za-z0-9]", "-", str(root))
 
 
+def agy_brain_dir() -> Path:
+    """The Antigravity CLI's own folder of conversations (its task logs, artifacts): ~/.gemini/antigravity-cli/brain."""
+    return Path.home() / ".gemini" / "antigravity-cli" / "brain"
+
+
 def allowed_outside(path: Path, root: Path) -> bool:
-    return inside(path, Path(tempfile.gettempdir()).resolve()) or inside(path, claude_project_dir(root))
+    return (
+        inside(path, Path(tempfile.gettempdir()).resolve())
+        or inside(path, claude_project_dir(root))
+        or inside(path, agy_brain_dir())
+    )
 
 
 # ---------------------------------------------------------------- analysts and studies
@@ -300,6 +317,11 @@ def looks_like_path(word: str) -> bool:
 
 # `mmo` commands that work on a study: `mmo <command> <action> <topic> ...`; they read its text or write its analysis
 BLIND_ROLE = "blind-probe"
+CRITIC_ROLE = "critic"
+CRITIC_HERE = (
+    "The critic is a model of another maker: it runs through mmo critic run (the Antigravity CLI), not as a subagent "
+    "of the lead (ADR 0014)."
+)
 
 
 def blind_path(path: Path, root: Path) -> bool:
@@ -336,7 +358,7 @@ def check_blind(tool: str, data: dict, cwd: Path, root: Path) -> dict | None:
     return None
 
 
-MMO_STUDY_COMMANDS = {"quote", "code", "relation", "memo", "analysis", "review", "run", "context"}
+MMO_STUDY_COMMANDS = {"quote", "code", "relation", "memo", "analysis", "review", "run", "context", "critic"}
 WRITES_FILES = re.compile(
     r"(>|\btee\b|\bsed\s+(-\w*i|--in-place)|\b(cp|mv|rm|del|move|copy)\b|Set-Content|Out-File|Add-Content)"
 )
@@ -397,6 +419,20 @@ def check_mmo(words: list[str], root: Path, model_id: str | None) -> dict | None
     )
 
 
+def in_brief(path: Path, root: Path) -> bool:
+    """`topics/<slug>/critic/`: the critic's brief and runs, written by the researcher and by `mmo critic`."""
+    if not inside(path, root):
+        return False
+    parts = Path(os.path.relpath(path, root)).parts
+    return len(parts) >= 3 and parts[0] == "topics" and parts[2] == "critic"
+
+
+BRIEF = (
+    "topics/<slug>/critic/ holds the critic's brief, written by the researcher (not by an analyst the critic checks), "
+    "and the record of its runs, written by mmo critic run. Propose a change of the brief in a memo."
+)
+
+
 def in_analysis(path: Path, root: Path) -> bool:
     """`topics/<slug>/analysis/...`: the analysis store, written by a model only through `mmo` (ADR 0013)."""
     if not inside(path, root):
@@ -453,6 +489,8 @@ def check_bash(command: str, cwd: Path, root: Path, model_id: str | None) -> dic
                 return found
             if in_analysis(path, root) and mmo_args(words) is None and WRITES_FILES.search(command):
                 return decision("deny", ANALYSIS_THROUGH_MMO)
+            if in_brief(path, root) and mmo_args(words) is None and WRITES_FILES.search(command):
+                return decision("deny", BRIEF)
             if CONFIRMED_ANYWHERE.search(command) and is_record(path, root):
                 return decision(
                     "ask", "This command may set a profile or a position to confirmed: only the owner confirms them."
@@ -492,6 +530,8 @@ def check_web(root: Path, model_id: str | None) -> dict | None:
 
 def pre_tool_use(event: dict, root: Path, model_id: str | None = None) -> dict | None:
     tool = event.get("tool_name", "")
+    if event.get("agent_type") == CRITIC_ROLE:
+        return decision("deny", CRITIC_HERE)
     if event.get("agent_type") == BLIND_ROLE and (
         found := check_blind(tool, event.get("tool_input") or {}, Path(event.get("cwd") or root), root)
     ):
@@ -510,6 +550,8 @@ def pre_tool_use(event: dict, root: Path, model_id: str | None = None) -> dict |
             return found
         if in_analysis(path, root):
             return decision("deny", ANALYSIS_THROUGH_MMO)
+        if in_brief(path, root):
+            return decision("deny", BRIEF)
         return ask_if_confirming(path, root, tool, data)
     if tool == "Grep":
         return check_search(to_path(data.get("path") or ".", cwd), root, model_id)
@@ -520,6 +562,100 @@ def pre_tool_use(event: dict, root: Path, model_id: str | None = None) -> dict |
             base = to_path(re.split(r"[*?\[]", pattern)[0] or "/", cwd)
         return check_path(base, root, model_id, reading=False)
     return None
+
+
+# ---------------------------------------------------------------- the Antigravity CLI (agy)
+
+AGY_WEB = re.compile(r"^(search_web|read_url_content|open_browser_url|read_browser_page|browser_.*|.*_browser_.*)$")
+AGY_WRITE = re.compile(r"(write|replace|edit|sed_file|delete|move|rename|create)")
+AGY_SEARCH = re.compile(r"(grep|search|find|list)")
+PATH_KEY = re.compile(r"(?i)(path|file|dir|cwd|target|uri)")
+
+
+def agy_paths(args: dict) -> list[str]:
+    found = []
+    for key, value in args.items():
+        if isinstance(value, str) and PATH_KEY.search(key):
+            found.append(value)
+        elif isinstance(value, list) and PATH_KEY.search(key):
+            found += [v for v in value if isinstance(v, str)]
+    return found
+
+
+def round_one_closed(path: Path, root: Path, model_id: str | None) -> bool:
+    """In round 1 the critic reads independently: the lead's memos, analysis and positions stay closed."""
+    if not inside(path, root):
+        return False
+    parts = Path(os.path.relpath(path, root)).parts
+    if len(parts) < 3 or parts[0] != "topics":
+        return False
+    if parts[2] in ("memos", "analysis"):
+        return True
+    return parts[2] == "positions" and len(parts) >= 4 and Path(parts[3]).stem != model_id
+
+
+ROUND_ONE = (
+    "Round 1: read the sources whole and only the labels and definitions of the codes (mmo code list) - not the "
+    "lead's memos, codings or positions. They open in round 2."
+)
+
+
+def agy_check(event: dict, root: Path, model_id: str | None, round_no: str | None) -> dict | None:
+    """One `agy` tool call through the checks of the guard; a Claude-style decision or None."""
+    call = event.get("toolCall") or {}
+    name = str(call.get("name") or "")
+    args = call.get("args") or {}
+    cwd = Path(str(args.get("Cwd") or event.get("cwd") or root))
+    if AGY_WEB.match(name):
+        return check_web(root, model_id)
+    if name == "run_command":
+        command = str(args.get("CommandLine") or "")
+        if round_no == "1":
+            mmo = [mmo_args(words) for words in bash_tokens(command)]
+            if any(a and a[0] in ("memo", "review", "relation") and a[1:2] != ["add"] for a in mmo):
+                return decision("deny", ROUND_ONE)
+            if any(a and a[:2] in (["code", "show"], ["quote", "check"]) for a in mmo):
+                return decision("deny", ROUND_ONE)
+            for words in bash_tokens(command):
+                for word in words[1:]:
+                    if looks_like_path(word) and round_one_closed(to_path(word, cwd), root, model_id):
+                        return decision("deny", ROUND_ONE)
+        return check_bash(command, cwd, root, model_id)
+    for raw in agy_paths(args):
+        path = to_path(raw, cwd)
+        if round_no == "1" and (
+            round_one_closed(path, root, model_id)
+            or (AGY_SEARCH.search(name) and not name.startswith("list") and studies_below(path, root))
+        ):
+            return decision("deny", ROUND_ONE)
+        if AGY_WRITE.search(name):
+            if found := check_path(path, root, model_id, reading=False):
+                return found
+            if in_analysis(path, root):
+                return decision("deny", ANALYSIS_THROUGH_MMO)
+            if in_brief(path, root):
+                return decision("deny", BRIEF)
+            if os.environ.get("MMO_CRITIC_RUN"):
+                return decision("deny", "The critic writes only through mmo (mmo memo add, mmo code apply).")
+            current = path.read_text(encoding="utf-8") if path.is_file() else ""
+            text = str(args.get("Content") or args.get("CodeContent") or args.get("ReplacementContent") or "")
+            if is_record(path, root) and _status(text or current) == "confirmed" and _status(current) != "confirmed":
+                return decision("ask", "Only the owner confirms a profile or a position.")
+        elif found := (
+            check_search(path, root, model_id) if AGY_SEARCH.search(name) else check_path(path, root, model_id)
+        ):
+            return found
+    return None
+
+
+def agy_pre_tool_use(event: dict, root: Path, model_id: str | None = None, round_no: str | None = None) -> dict:
+    """The answer `agy` expects: `{"decision": "allow"|"ask"|"deny"|"force_ask", "reason": ...}`."""
+    found = agy_check(event, root, model_id, round_no)
+    if found is None:
+        return {"decision": "allow" if os.environ.get("MMO_CRITIC_RUN") else "ask"}
+    out = found["hookSpecificOutput"]
+    kind = "force_ask" if out["permissionDecision"] == "ask" else out["permissionDecision"]
+    return {"decision": kind, "reason": out["permissionDecisionReason"]}
 
 
 # ---------------------------------------------------------------- session start
@@ -576,15 +712,26 @@ def session_start(event: dict, root: Path) -> str:
 
 def main(argv: list[str] | None = None) -> int:
     argv = sys.argv[1:] if argv is None else argv
-    if not argv or argv[0] not in ("session-start", "pre-tool-use"):
-        print("usage: mmo-guard session-start | pre-tool-use  (reads the hook's JSON from stdin)", file=sys.stderr)
+    if not argv or argv[0] not in ("session-start", "pre-tool-use", "agy-pre-tool-use"):
+        print(
+            "usage: mmo-guard session-start | pre-tool-use | agy-pre-tool-use  (reads the hook's JSON from stdin)",
+            file=sys.stderr,
+        )
         return 2
     raw = sys.stdin.buffer.read().decode("utf-8", errors="replace")
     event = json.loads(raw) if raw.strip() else {}
-    root = project_root(cwd=event.get("cwd"))
     out = sys.stdout
     if hasattr(out, "reconfigure"):
         out.reconfigure(encoding="utf-8")
+    if argv[0] == "agy-pre-tool-use":
+        workspace = (event.get("workspacePaths") or [None])[0]
+        root = Path(workspace or event.get("cwd") or os.getcwd()).resolve()
+        model_id = os.environ.get("MMO_ANALYST") or None
+        out.write(
+            json.dumps(agy_pre_tool_use(event, root, model_id, os.environ.get("MMO_CRITIC_ROUND")), ensure_ascii=False)
+        )
+        return 0
+    root = project_root(cwd=event.get("cwd"))
     if argv[0] == "session-start":
         context = session_start(event, root)
         out.write(

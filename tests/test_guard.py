@@ -288,3 +288,73 @@ def test_a_blind_probe_stays_blind(root):
     assert _decide(root, "Read", file_path=str(root / "topics" / "s" / "memos" / "2026-11-13-a.md")) is None, (
         "the lead is not blind"
     )
+
+
+def _agy(root, name: str, args: dict, model: str | None = "m", round_no: str | None = None) -> dict:
+    event = {"toolCall": {"name": name, "args": args}, "cwd": str(root), "workspacePaths": [str(root)]}
+    return guard.agy_pre_tool_use(event, root, model, round_no)
+
+
+def test_the_guard_as_a_hook_of_agy(root, monkeypatch):
+    """T46: the same checks for the Antigravity CLI; no objection is 'ask', or 'allow' inside a critic's run."""
+    text = str(root / "topics" / "s" / "sources" / "k" / "text.md")
+    assert _agy(root, "read_file", {"Path": text})["decision"] == "deny"
+    assert _agy(root, "run_command", {"CommandLine": f'cat "{text}"'})["decision"] == "deny"
+    assert _agy(root, "read_file", {"Path": str(root / "AGENTS.md")}) == {"decision": "ask"}
+    monkeypatch.setenv("MMO_CRITIC_RUN", "run-0001")
+    assert _agy(root, "read_file", {"Path": str(root / "AGENTS.md")}) == {"decision": "allow"}
+    _open_study(root)
+    assert _agy(root, "read_file", {"Path": text}) == {"decision": "allow"}
+    assert _agy(root, "search_web", {"query": "x"})["decision"] == "deny", "web only where the study approves"
+    assert _agy(root, "read_file", {"Path": str(root.parent / "elsewhere.txt")})["decision"] == "deny"
+    analysis = str(root / "topics" / "s" / "analysis" / "codings.jsonl")
+    assert "through mmo" in _agy(root, "write_file", {"Path": analysis, "Content": "x"})["reason"]
+    assert _agy(root, "write_file", {"Path": str(root / "methods" / "x.md"), "Content": "x"})["decision"] == "deny"
+    by_other = "uv run mmo memo add s --by n --run run-0001 --type analytic --title T --text x"
+    assert _agy(root, "run_command", {"CommandLine": by_other})["decision"] == "deny"
+    own = by_other.replace("--by n", "--by m")
+    assert _agy(root, "run_command", {"CommandLine": own}) == {"decision": "allow"}
+
+
+def test_round_one_of_the_critic_reads_independently(root, monkeypatch):
+    monkeypatch.setenv("MMO_CRITIC_RUN", "run-0001")
+    _open_study(root)
+    memo = str(root / "topics" / "s" / "memos" / "2026-11-13-a.md")
+    _write(root / "topics" / "s" / "positions" / "lead.md", "lead")
+    assert _agy(root, "read_file", {"Path": memo}, round_no="1")["decision"] == "deny"
+    assert _agy(root, "read_file", {"Path": memo}, round_no="2") == {"decision": "allow"}
+    lead = str(root / "topics" / "s" / "positions" / "lead.md")
+    assert _agy(root, "read_file", {"Path": lead}, round_no="1")["decision"] == "deny"
+    own = str(root / "topics" / "s" / "positions" / "m.md")
+    assert _agy(root, "read_file", {"Path": own}, round_no="1") == {"decision": "allow"}
+    assert _agy(root, "grep_search", {"SearchPath": str(root), "Query": "x"}, round_no="1")["decision"] == "deny"
+    assert _agy(root, "run_command", {"CommandLine": "uv run mmo memo list s"}, round_no="1")["decision"] == "deny"
+    assert _agy(root, "run_command", {"CommandLine": "uv run mmo code list s"}, round_no="1") == {"decision": "allow"}
+    add = "uv run mmo memo add s --by m --run run-0001 --type analytic --title T --text x"
+    assert _agy(root, "run_command", {"CommandLine": add}, round_no="1") == {"decision": "allow"}
+
+
+def test_the_brief_is_not_a_models_and_the_critic_is_no_claude_subagent(root):
+    brief = str(root / "topics" / "s" / "critic" / "brief.md")
+    assert "researcher" in _reason(root, "Write", file_path=brief, content="x")
+    assert _decide(root, "Bash", command=f'echo x > "{brief}"') == "deny"
+    event = {"tool_name": "Read", "tool_input": {"file_path": str(root / "AGENTS.md")}, "cwd": str(root)}
+    result = guard.pre_tool_use({**event, "agent_type": "critic"}, root)
+    assert "mmo critic run" in result["hookSpecificOutput"]["permissionDecisionReason"]
+
+
+def test_main_answers_agy(root, monkeypatch, capsys):
+    event = {
+        "toolCall": {"name": "read_file", "args": {"Path": str(root / "AGENTS.md")}},
+        "workspacePaths": [str(root)],
+    }
+    monkeypatch.setattr("sys.stdin", io.TextIOWrapper(io.BytesIO(json.dumps(event).encode("utf-8"))))
+    monkeypatch.delenv("MMO_CRITIC_RUN", raising=False)
+    assert guard.main(["agy-pre-tool-use"]) == 0
+    assert json.loads(capsys.readouterr().out) == {"decision": "ask"}
+
+
+def test_agy_may_read_its_own_task_logs(root):
+    log = guard.agy_brain_dir() / "conv" / ".system_generated" / "tasks" / "task-8.log"
+    assert _agy(root, "read_file", {"Path": str(log)}) == {"decision": "ask"}
+    assert _agy(root, "read_file", {"Path": str(guard.agy_brain_dir().parent / "settings.json")})["decision"] == "deny"

@@ -208,6 +208,23 @@ uv run mmo memo add <topic> ... --by <model> --run run-0001   # any write comman
   `.claude/settings.json` matches these tools.
 - `check_source` reports a context source without complete provenance; the studied (primary) source needs none.
 
+## The critic through agy (T46, ADR 0014)
+
+`code/mmo/analysis/critic.py`, `mmo critic brief|run|list`, `mmo-guard agy-pre-tool-use` (spec, "The critic of another
+maker").
+
+- `run_critic(topic, author, round, timeout_minutes, runner, dry_run)`; `runner(cmd, cwd, env, timeout)` returns
+  `(exit code, stdout, stderr)` - tests pass a fake `agy`.
+- `snapshot()` / `changes()` / `allowed_change()`: what a critic may change is `topics/<slug>/memos/*.md`, the four
+  analysis files and its run's record.
+- `parse_stream()` reads `agy` stream-json: the `result.response`, the tool steps (`step_update` DONE with a tool
+  step type) and the calls denied by a pre-tool hook.
+- `agy` facts found in the task (1.5.16): hooks from `.agents/hooks.json` of the workspace run in `-p` mode, also in
+  an untrusted workspace; the hook's input has `toolCall.name`, `toolCall.args` (`run_command.CommandLine`,
+  `read_file.Path`, `write_file.Path`/`Content`, `search_web.query`), `workspacePaths`, `cwd`, `modelName`;
+  an answer without `decision` denies; `run_command` runs PowerShell on Windows; the prompt goes as an argument
+  (from Python, not through Git Bash or PowerShell).
+
 ## Blind probe (T45, ADR 0015)
 
 `code/mmo/analysis/probe.py`, `mmo probe start|list`, `mmo memo add --prior-knowledge source:<id>`.
