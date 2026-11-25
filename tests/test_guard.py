@@ -267,6 +267,8 @@ def test_web_search_only_during_an_open_run_of_an_approving_study(root, monkeypa
     assert _decide(root, "WebSearch", query="Nazi v AI dobe recenze") == "deny"
     assert "analysis.web_search" in _reason(root, "WebFetch", url="https://example.org")
     assert _decide(root, "Bash", command="uv run mmo context list s") == "deny", "mmo context is closed with the study"
+    assert _decide(root, "Bash", command="uv run mmo outline s k") == "deny", "the outline reads text.md (T36)"
+    assert _decide(root, "Bash", command="uv run mmo coverage list s") == "deny"
     _write(root / "topics" / "s" / "topic.yaml", "title: S\nanalysis:\n  web_search: [m]\n")
     assert web() == "deny", "an approval alone does not open the web: a run does"
     assert "mmo run close" in _reason(root, "WebSearch", query="x")

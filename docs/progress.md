@@ -777,3 +777,29 @@
 - Next: the owner's review and PRs of T43-T48; then T36.
 
 - 2026-11-25: the owner approved the research environment's branches; `main` there fast-forwarded to `b2724cd` (T43-T48, via `update-ref`, no checkout of an old commit). Workshop PRs #7-#12, stacked, wait for review.
+
+## T36 – 2026-11-25 – Outline, coverage, keys for choosing passages
+- The owner's answers: the chapters are the researcher's (`outline.chapters` of `source.yaml`); coverage is declared
+  by the reader and completed from quotations.
+- Done (workshop, `task/T36-outline` from `main`): `code/mmo/analysis/outline.py` - `mmo outline <topic> <source>
+  [--coverage]` (parts from headings `part-NN`; chapters and parts without a heading declared in `outline` of
+  `source.yaml`, found by exact words, not renumbering), `mmo coverage add|list` (`op: coverage` with author, run and
+  `text_sha256`; whole > passages > map > quoted > nobody; a declaration on an earlier text is not counted).
+  `mmo status`: coverage per studied source and chapter, first impressions by author, the keys for choosing passages
+  (`analysis.passage_keys`, default first structural + questions, later reception + contrast) and the number of
+  `passage-choice` memos (new memo type). The guard closes `outline` and `coverage` on a closed study.
+- Done (research environment, `task/T36-outline` from `main`): SKAD `context-analysis` prompt 2026-11-25 (step 6, the
+  orientation reading: position restated, outline, the whole source chapter by chapter or by chapter readers,
+  coverage recorded, a first-impression memo with candidate passages and their keys, a reflexive memo after),
+  `fine-analysis` 2026-11-25 (`passage-choice`, coverage of passages), SKAD 2026-11-25.2; the role `chapter-reader`
+  records its coverage; skill `lead-analyst` "Coverage"; `docs/analysis.md` "Outline and coverage", `docs/memos.md`,
+  `topics/README.md`, `AGENTS.md` (protected paths for the owner's approval).
+- Tried on a copy of test 9 (`scratch/T36/env`, with trial chapters from the lead's map, not the researcher's): 60
+  parts from headings + `notes` (pp. 215-235, the notes and bibliography had no heading); after declaring what test 9
+  did - the whole book read for the map, chapters III, V, VI read whole - `mmo status` shows chapters I, II, IV, VII
+  and the introduction known only through the map: the gap the critic found. Notes at the ends of chapters stay in
+  the last section of a chapter unless the researcher declares them as parts. The orientation reading by a model was
+  not run (it is the first step of test 10).
+- Verified: `uv run pytest` 182 passed; ruff check and format clean; `mmo method check` 4 ok; `agents_sync.py
+  --check` clean.
+- Next: the owner's review; the researcher declares the chapters of the source of test 10; T47.

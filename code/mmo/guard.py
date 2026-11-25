@@ -359,7 +359,20 @@ def check_blind(tool: str, data: dict, cwd: Path, root: Path) -> dict | None:
     return None
 
 
-MMO_STUDY_COMMANDS = {"quote", "code", "relation", "memo", "analysis", "review", "run", "context", "critic"}
+MMO_NO_ACTION = {"outline"}  # `mmo outline <topic> <source>`: the study is the first argument
+MMO_STUDY_COMMANDS = {
+    "quote",
+    "code",
+    "relation",
+    "memo",
+    "analysis",
+    "review",
+    "run",
+    "context",
+    "critic",
+    "outline",
+    "coverage",
+}
 WRITES_FILES = re.compile(
     r"(>|\btee\b|\bsed\s+(-\w*i|--in-place)|\b(cp|mv|rm|del|move|copy)\b|Set-Content|Out-File|Add-Content)"
 )
@@ -407,7 +420,7 @@ def check_mmo(words: list[str], root: Path, model_id: str | None) -> dict | None
             f"You are {model_id}: write under your own id (--by {model_id}). Only the researcher writes as "
             f"themselves; a record of yours is a proposal until they decide.",
         )
-    slug = Path(args[2]).name
+    slug = Path(args[1] if args[0] in MMO_NO_ACTION else args[2]).name
     if not (root / "topics" / slug / "topic.yaml").is_file():
         return None
     ok, missing = study_open(root, slug, model_id)

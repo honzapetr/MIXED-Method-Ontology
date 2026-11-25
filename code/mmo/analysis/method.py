@@ -49,6 +49,7 @@ MEMO_TYPES = {
     "methodological",
     "steering",
     "search-plan",
+    "passage-choice",
 }
 PHASE_KEYS = ("goal", "input", "output", "memos", "model_role", "researcher_decides")
 PROPOSAL_KINDS = {"code", "coding", "relation", "memo"}  # what a model may write as a proposal (T29)
@@ -63,6 +64,8 @@ DEFAULTS: dict[str, Any] = {
     "quotation_required": {"memos": []},
     "web_search": [],
     "critic": {"analyst": "gemini-4-neon", "model": "gemini-4-neon-medium", "timeout_minutes": 60},
+    # keys for choosing passages for fine analysis (T36; the owner's default of 2026-11-19)
+    "passage_keys": {"first": ["structural", "questions"], "later": ["reception", "contrast"]},
 }
 CHOICES = {
     "codebook": {"emergent", "evolving", "fixed"},
@@ -274,6 +277,9 @@ def study_settings(topic: Topic) -> Settings:
         raise SettingsError("analysis.quotation_required.memos: a list of memo types")
     if not isinstance(settings["web_search"], list):
         raise SettingsError("analysis.web_search: a list of the model ids the researcher lets search the web")
+    for round_name, keys in settings["passage_keys"].items():
+        if round_name not in ("first", "later") or not isinstance(keys, list):
+            raise SettingsError("analysis.passage_keys: first and later, each a list of keys (e.g. structural)")
     return settings
 
 

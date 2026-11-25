@@ -13,6 +13,7 @@ import yaml
 
 from mmo.analysis.context import summary as context_summary
 from mmo.analysis.method import current_phases, prompt_version, study_methods, study_settings, vocabulary
+from mmo.analysis.outline import summary as coverage_summary
 from mmo.analysis.probe import summary as probe_summary
 from mmo.analysis.quote import FRONT_MATTER
 from mmo.analysis.roles import runs
@@ -76,6 +77,25 @@ def study_status(topic: Topic) -> list[str]:
     if done := runs(history):
         by_role = Counter(str(e.get("role")) for e in done)
         lines.append(f"runs of subagents: {len(done)} ({', '.join(f'{r} {n}' for r, n in sorted(by_role.items()))})")
+    impressions = [m for m in memos if m.get("type") == "first-impression"]
+    if impressions:
+        by_whom = Counter(str(m.get("author")) for m in impressions)
+        first = {}
+        for memo in impressions:
+            first.setdefault(str(memo.get("author")), str(memo.get("created", "?")))
+        lines.append(
+            "first impressions: " + ", ".join(f"{a} {n} (from {first[a]})" for a, n in sorted(by_whom.items()))
+        )
+    keys = settings["passage_keys"]
+    lines.append(
+        f"keys for choosing passages: first {', '.join(keys['first'])}; later {', '.join(keys['later'])}"
+        + (
+            f"; chosen in {memo_types['passage-choice']} passage-choice memos"
+            if memo_types.get("passage-choice")
+            else ""
+        )
+    )
+    lines += coverage_summary(topic, store)
     lines += context_summary(topic, store)
     probe_lines, probe_reminders = probe_summary(topic)
     lines += probe_lines
