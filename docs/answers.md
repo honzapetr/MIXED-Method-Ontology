@@ -266,3 +266,17 @@
 - Paid media archives (Newton, Anopress): the owner has no access; they are requests to the researcher.
 - Web search by a cloud model is approved per study, not in general.
 - What a model knows from training is probed before the search (owner's note 2026-11-23).
+
+## 2026-11-25 – Open decisions after T44-T46
+
+- The critic in a phase that does not allow codings (1B): `mmo` keeps the phase's limit (`model_proposes`) for every
+  role, the critic included. The SKAD critic's brief says: code counter-evidence on the existing codes when the phase
+  allows it; otherwise write it as an analytic memo with exact quotations and `about:` the code it concerns.
+- Web search (2B): an approval in a study applies to that study only. The guard allows web tools to a model only
+  while it has an open run in a study whose `analysis.web_search` lists it (the run records `web`), not because some
+  study of the environment approves it. A small task of its own, before T36.
+- The workshop's `AGENTS.md` (3C): the CLI line names the main groups of commands, including `role`, `run`,
+  `context`, `probe`, `critic`, and points to `uv run mmo --help` and `docs/analysis-store.md` for the details.
+- The work goes to the base research environment `../MIXED-Method-Ontology/` and to the workshop; test 9 is a record,
+  not repaired. Its context sources without provenance are not a fix; a new study records provenance when the
+  context searcher adds its sources.

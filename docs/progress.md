@@ -745,9 +745,12 @@
   environment when one study approves (it sees no study); (3) the workshop's `AGENTS.md` CLI line lacks `role`, `run`,
   `context`, `probe`, `critic` (protected).
 - Fixes noted for later: `new_test_env.py --carry` does not bring `text.md` of sources created in the earlier copy;
-  the context sources of test 9 have no provenance; prompts of the other SKAD phases are missing.
+  prompts of the other SKAD phases are missing; critic round 2 is untested.
 - Kept for reference: `scratch/test9/` (record of test 9), `scratch/T45/` (probe answers, agy streams),
   `scratch/T46/` (agy hook experiment, critic run output); test copies `zkusebna/t46-critic` (a real critic run,
   run-0002). `scratch/T44/` can be deleted.
 - Next: the owner's review and PRs; then T36 (outline, orientation reading, coverage), T47 (many decisions at once),
   then test 10 (one agent against the orchestrator on a new source).
+- 2026-11-25, the owner's answers (`docs/answers.md`): 1B (the critic's brief, not an exception in `mmo`), 2B (web
+  only in an open run of an approving study - a task before T36), 3C (the workshop's `AGENTS.md` CLI line). Test 9 is
+  not repaired; its missing provenance is dropped from the fixes.
