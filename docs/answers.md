@@ -282,3 +282,14 @@
   context searcher adds its sources.
 - A model's profile is written without the web: the model names the documents it needs, the owner saves them to
   `scratch/profile-<model-id>/` of the environment; what the model knows only from training is marked as such.
+
+## 2026-11-25 – Test 10 and the environment without knowledge of a study
+
+- The texts of the research environment (prompts, skills, roles, method texts, docs, profiles) hold no knowledge of a
+  particular study: no book, study, findings or "the first study / test 9" remarks. What is concrete arises in the
+  project (`topics/<slug>/`). A lesson from a test is kept as a general rule with a general reason. This is needed
+  anyway, so that the environment can analyse different things.
+- Test 10 runs on the same book (`kniha`, `nazi-v-ai-dobe`). The owner writes in their own position that the book was
+  walked once before (test 9) - in the test copy `zkusebna/test10`, not in the base environment: the position, the
+  chapters of the source and all else of the test belong to the test's project.
+
