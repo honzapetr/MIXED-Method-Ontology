@@ -152,6 +152,14 @@ uv run mmo analysis check <topic> [--record --by X]
   proposed codings and is refused while codings the researcher holds use it. Memos are decided in their front
   matter; an edit of a memo's text is made by hand and marked with `--note`.
 - **Only a person decides** (`decide` refuses a model; the guard denies `mmo review` other than `list` to a model).
+- **Many at once** (T47): `select(topic, refs, kind, author, role, run, phase)` - the waiting proposals matching every
+  filter; the phase is the one the study was in when the record was written (`phases_when_written()`: the history
+  event that wrote it - `memo`, `add-code`, `apply-code`, `relate` - against the `phase` events before it; a memo's
+  own `phase` field counts too). `decide_many()` - accept or reject only; each is `decide()` with the same reason or
+  note and one `batch` id (`batch-<time>`) in its `op: review` event; a proposal no longer waiting (decided in the
+  cascade of an earlier one) is skipped; an error is reported and the rest go on. CLI: `mmo review list|accept|reject
+  [refs] [--kind] [--author] [--role] [--from-run] [--phase] [--all] [--dry-run]` (`--from-run`, because `--run` is
+  the author's run); accept and reject without a reference or filter need `--all`.
 - **What a model may propose** (`Store.may_propose`): `model_proposes` of the current phase of each of the study's
   methods (a phase without it, or a method without a phase set, does not limit); one method allowing the kind is
   enough. A model may not rename, merge, split or recode (`researcher_only`) and withdraws only its own waiting
