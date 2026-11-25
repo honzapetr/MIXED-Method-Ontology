@@ -272,6 +272,7 @@ def run_critic(
     if dry_run:
         record.update(status="dry-run", command=[Path(cmd[0]).name, "-p", "<prompt.md>", *cmd[3:]])
         Store(topic).save(author, "critic-run", **record)
+        Store(topic).close_run(author, run, note="dry-run")
         return record
     env = {
         **os.environ,
@@ -311,6 +312,7 @@ def run_critic(
         yaml.safe_dump(record, allow_unicode=True, sort_keys=False), encoding="utf-8", newline="\n"
     )
     Store(topic).save(author, "critic-run", **record)
+    Store(topic).close_run(author, run, note=f"agy ended: {status}")
     return record
 
 

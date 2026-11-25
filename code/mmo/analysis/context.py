@@ -23,6 +23,7 @@ import yaml
 
 from mmo.analysis.method import study_methods, study_settings
 from mmo.analysis.quote import FRONT_MATTER
+from mmo.analysis.roles import closed_runs, runs
 from mmo.analysis.store import Author, Store, StoreError
 from mmo.core.topic import ROLE_CONTEXT, Topic
 
@@ -191,6 +192,10 @@ def summary(topic: Topic, store: Store | None = None) -> list[str]:
         )
     web = [str(m) for m in study_settings(topic)["web_search"]]
     lines.append(f"    web search approved for: {', '.join(web) if web else 'no model (analysis.web_search)'}")
+    closed = closed_runs(history)
+    open_web = [e["run"] for e in runs(history) if e.get("web") is True and e["run"] not in closed]
+    if open_web:
+        lines.append(f"    web open in runs: {', '.join(open_web)} (until mmo run close)")
     waiting = open_requests(history)
     if waiting:
         lines.append(f"    requests to the researcher: {len(waiting)} open")

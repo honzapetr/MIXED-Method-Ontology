@@ -5,7 +5,7 @@ from pathlib import Path
 import pytest
 import yaml
 
-from mmo.analysis.context import plans, start_round, web_allowed
+from mmo.analysis.context import plans, start_round, summary, web_allowed
 from mmo.analysis.method import SettingsError, check_context_search, check_method, study_settings
 from mmo.analysis.review import decide
 from mmo.analysis.status import study_status
@@ -86,7 +86,16 @@ def test_web_search_is_approved_per_study_and_per_model(topic: Topic) -> None:
     topic.save()
     topic = Topic.load(topic.root)
     assert web_allowed(topic, "m") and not web_allowed(topic, "n")
-    assert Store(topic).start_run(lead(topic), "m", "context-searcher", ["q3: reviews"])["web"] is True
+    store = Store(topic)
+    assert store.start_run(lead(topic), "m", "context-searcher", ["q3: reviews"])["web"] is True
+    assert store.start_run(lead(topic), "m", "context-searcher", ["q3"], web=False)["web"] is False
+    assert any("web open in runs: run-0002" in line for line in summary(topic))
+    with pytest.raises(StoreError, match="a subagent does not close runs"):
+        store.close_run(author_of(topic, "m", run="run-0002"), "run-0002")
+    assert store.close_run(lead(topic), "run-0002", "came back")["op"] == "run-closed"
+    with pytest.raises(StoreError, match="closed already"):
+        store.close_run(lead(topic), "run-0002")
+    assert not any("web open in runs" in line for line in summary(topic))
     topic.data["analysis"] = {"web_search": "m"}
     with pytest.raises(SettingsError, match="web_search"):
         study_settings(topic)

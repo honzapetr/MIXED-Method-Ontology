@@ -173,7 +173,8 @@ roles to `.claude/agents/` as Claude Code subagents.
 ```bash
 uv run mmo role list [--env <environment>]          # roles, prompt versions, what they write; problems of the files
 uv run mmo run start <topic> --role R --input "..." [--input ...] [--analyst <model>] [--note N] --by X [--prompt-version V]
-uv run mmo run list <topic>                         # each run, its input, what it wrote
+uv run mmo run close <topic> <run> --by X [--note N]   # the work came back; the web closes with the run (T48)
+uv run mmo run list <topic>                         # each run, its input, what it wrote, open or closed, web
 uv run mmo memo add <topic> ... --by <model> --run run-0001   # any write command takes --run
 ```
 
@@ -184,6 +185,8 @@ uv run mmo memo add <topic> ... --by <model> --run run-0001   # any write comman
   refused), `generated_by` gets `role` and `run`, and the role's `writes` limits what may be written (on top of
   `model_proposes` of the phase). An instance finder (`coding, memo`) can code only with existing codes, because a
   new label would add a code.
+- `run close` (the lead or the researcher, not a subagent) is `op: run-closed` (`run`, `analyst`, `note`); a run is
+  closed once. `closed_runs()` in `roles.py`.
 - `run list` finds what a run wrote by `generated_by.run` of codes, codings, relations and memos.
 - `analysis check` reports a record whose run is not in the history, or whose author or role differ from the run.
 - `mmo-guard` closes `mmo run` on a closed study like the other study commands.
@@ -202,10 +205,13 @@ uv run mmo memo add <topic> ... --by <model> --run run-0001   # any write comman
   `question`, `plan`), `request-closed` (`request`, `outcome`, `sources`). A round needs an approved plan; a second
   round of a plan needs `--gap`. A request's `--question` must be a question id of `topic.yaml`. Only the researcher
   closes a request.
-- `analysis.web_search` (a list of model ids) is a study setting; `start_run` records `web` for every run.
-- `mmo-guard` (`check_web`) denies `WebSearch` and `WebFetch` unless some `topics/*/topic.yaml` lists the model (or,
-  when the hook does not know the model, any model) in `analysis.web_search`. The research environment's
-  `.claude/settings.json` matches these tools.
+- `analysis.web_search` (a list of model ids) is a study setting; `start_run(..., web=True)` records `web` for every
+  run (`web=False` for a run that never searches, the blind probe).
+- `mmo-guard` (`check_web`, `open_web_runs`, T48) allows `WebSearch` and `WebFetch` only while some
+  `topics/<slug>/analysis/history.jsonl` has an open run (`op: run`, `web: true`, no `run-closed`) of the model (or,
+  when the hook does not know the model, of any model) that `analysis.web_search` of that study still lists;
+  `MMO_STUDY` narrows it to one study. The same for `agy`'s web tools. `mmo status` / `mmo context list` print
+  `web open in runs: ...`. The research environment's `.claude/settings.json` matches these tools.
 - `check_source` reports a context source without complete provenance; the studied (primary) source needs none.
 
 ## The critic through agy (T46, ADR 0014)

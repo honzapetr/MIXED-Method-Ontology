@@ -675,6 +675,19 @@ T27 when a PDF comes.
 - Paths: `code/mmo/`, `tests/`, `docs/`, `../MIXED-Method-Ontology/methods/`, `../MIXED-Method-Ontology/.agents/`
 - Depends on: T43, T39
 
+### T48 – The web only during an open run (owner's answer 2B, 2026-11-25) (done; owner approves)
+- Goal: an approval of web search applies to its study only, not to the whole environment.
+- Acceptance criteria:
+  - `mmo run close <topic> <run>` (the lead or the researcher) records `op: run-closed`; `mmo run list` and
+    `mmo status` show which runs are open and which may search the web.
+  - The guard (Claude Code and `agy`) allows web tools only while the model has an open run recorded `web: true` in a
+    study that still approves it; `MMO_STUDY` narrows it to one study.
+  - A blind probe's run never opens the web; the critic's run closes when `agy` ends.
+- Verify: `uv run pytest && uv run ruff check . && uv run ruff format --check .`
+- Paths: `code/mmo/`, `tests/`, `docs/`, `AGENTS.md` (3C), `../MIXED-Method-Ontology/docs/`,
+  `../MIXED-Method-Ontology/.agents/` (roles and the lead's skill), `../MIXED-Method-Ontology/methods/skad/` (1B)
+- Depends on: T44, T46
+
 ### T47 – Many decisions of the researcher at once
 - Goal: the researcher decides the proposals of several subagents without one command per record.
 - Acceptance criteria: one `mmo review` command accepts or rejects a list or a filter of proposals (by author, role,
