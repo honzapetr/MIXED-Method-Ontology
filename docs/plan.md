@@ -296,10 +296,14 @@ critic of another maker through `agy`, a context search by the method and the qu
 `lead-analyst`, SKAD phase prompts), T44 (context search by method), T45 (blind probe), T46 (critic through `agy`),
 T48 (the web only during an open run). Workshop PRs #7-#12; the research environment's `main` at `b2724cd`.
 
-**Done, waiting for the owner:** T36 (outline, chapters and parts declared in `source.yaml`, coverage, keys for
-choosing passages, the orientation reading in the SKAD prompts), on `task/T36-outline` in both repositories.
+**Done and merged (2026-11-25):** T36 (outline, chapters and parts declared in `source.yaml`, coverage, keys for
+choosing passages, the orientation reading in the SKAD prompts) - PR #13; the research environment's `main` at
+`24ca063`.
 
-**Next, in this order:** T47 (many decisions at once), then test 10 (one agent against the orchestrator on a new
+**Done, waiting for the owner:** T47 (many decisions at once: filters, dry run, one batch), on
+`task/T47-batch-review` in both repositories.
+
+**Next, in this order:** test 10 (one agent against the orchestrator on a new
 source; before it the researcher declares the chapters of the new source). After it: T28 (web pages), T37, T34, T30,
 T38, T35, T31; T40 and T41 when convenient; T27 when a PDF comes.
 
@@ -683,7 +687,7 @@ T38, T35, T31; T40 and T41 when convenient; T27 when a PDF comes.
   `../MIXED-Method-Ontology/.agents/` (roles and the lead's skill), `../MIXED-Method-Ontology/methods/skad/` (1B)
 - Depends on: T44, T46
 
-### T47 – Many decisions of the researcher at once
+### T47 – Many decisions of the researcher at once (done; owner approves)
 - Goal: the researcher decides the proposals of several subagents without one command per record.
 - Acceptance criteria: one `mmo review` command accepts or rejects a list or a filter of proposals (by author, role,
   phase, kind), each recorded as its own decision with the same note; a rejection still needs a reason; only a person

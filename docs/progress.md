@@ -803,3 +803,16 @@
 - Verified: `uv run pytest` 182 passed; ruff check and format clean; `mmo method check` 4 ok; `agents_sync.py
   --check` clean.
 - Next: the owner's review; the researcher declares the chapters of the source of test 10; T47.
+
+## T47 – 2026-11-25 – Many decisions of the researcher at once
+- Merged before it: T36 (PR #13); the research environment's `main` fast-forwarded to `24ca063`.
+- Done (workshop, `task/T47-batch-review`): `review.select()` (filters kind, author, role, run, and the phase the study
+  was in when the proposal was written - from the history), `review.decide_many()` (accept or reject; each its own
+  decision with the same note or reason and one `batch` id; a proposal decided in the cascade of an earlier one is
+  skipped; an error does not stop the rest). CLI: `mmo review list|accept|reject [refs] [--kind] [--author] [--role]
+  [--from-run] [--phase] [--all] [--dry-run]`; accept or reject with neither a reference nor a filter needs `--all`.
+  `decide()` now keeps the note of an accepted code, coding or relation in the history event too. The guard denies
+  a model a filtered decision as well.
+- Done (research environment, `task/T47-batch-review`): `docs/analysis.md` and `docs/how-it-works.md` (many at once).
+- Verified: `uv run pytest` 186 passed; ruff check and format clean.
+- Next: the owner's review; then test 10 (before it the researcher declares the chapters of the new source).

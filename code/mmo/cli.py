@@ -19,7 +19,7 @@ from mmo.analysis.outline import summary as coverage_summary
 from mmo.analysis.probe import prior_record, probes, start_probe
 from mmo.analysis.probe import task as probe_task
 from mmo.analysis.quote import MOVED, OK, Quotation, QuoteError, check_study, quote
-from mmo.analysis.review import decide, proposals
+from mmo.analysis.review import decide, decide_many, select
 from mmo.analysis.roles import check_roles, closed_runs, roles_dir, runs
 from mmo.analysis.roles import role as role_of
 from mmo.analysis.status import own_type_reminder, study_status
@@ -595,12 +595,53 @@ def cmd_phase(args: argparse.Namespace) -> int:
     return 0
 
 
+FILTERS = ("kind", "author", "role", "run_id", "phase")
+
+
+def _select(args: argparse.Namespace, topic: Topic) -> list:
+    f = {k: getattr(args, k, None) for k in FILTERS}
+    return select(topic, getattr(args, "refs", None), f["kind"], f["author"], f["role"], f["run_id"], f["phase"])
+
+
 def cmd_review_list(args: argparse.Namespace) -> int:
-    waiting = proposals(load_topic(args), args.kind)
+    waiting = _select(args, load_topic(args))
     for item in waiting:
         print(f"{item.ref}  [{item.provenance}]  {item.summary}")
     print(f"{len(waiting)} proposals wait for the researcher" if waiting else "no proposals wait")
     return 0
+
+
+def _review_many(args: argparse.Namespace, verdict: str) -> int:
+    """Accept or reject several proposals: by reference, by filter, or both (T47)."""
+    topic = load_topic(args)
+    filtered = any(getattr(args, k, None) for k in FILTERS)
+    if not args.refs and not filtered and not args.all:
+        print("which proposals? give references, a filter (--kind, --author, --role, --from-run, --phase) or --all")
+        return 1
+    chosen = _select(args, topic)
+    if not chosen:
+        print("no proposal waiting matches")
+        return 1
+    if args.dry_run:
+        for item in chosen:
+            print(f"would {verdict}: {item.ref}  [{item.provenance}]  {item.summary}")
+        print(f"{len(chosen)} proposals would be decided ({verdict}); nothing was written")
+        return 0
+    author = _author(args, topic)
+    results = decide_many(topic, author, [p.ref for p in chosen], verdict, getattr(args, "reason", None), args.note)
+    for result in results:
+        if "event" in result:
+            event = result["event"]
+            cascade = f" (with {', '.join(event['cascade'])})" if event.get("cascade") else ""
+            print(f"{result['ref']}: {event['verdict']}{cascade}")
+        elif "skipped" in result:
+            print(f"{result['ref']}: skipped - {result['skipped']}")
+        else:
+            print(f"{result['ref']}: not decided - {result['error']}", file=sys.stderr)
+    batch = next((r["event"].get("batch") for r in results if "event" in r), None)
+    done = sum(1 for r in results if "event" in r)
+    print(f"{done} of {len(results)} decided" + (f" ({batch})" if batch else ""))
+    return 1 if any("error" in r for r in results) else 0
 
 
 def _review(args: argparse.Namespace, verdict: str, changes: dict[str, str] | None = None) -> int:
@@ -616,11 +657,11 @@ def _review(args: argparse.Namespace, verdict: str, changes: dict[str, str] | No
 
 
 def cmd_review_accept(args: argparse.Namespace) -> int:
-    return _review(args, "accept")
+    return _review_many(args, "accept")
 
 
 def cmd_review_reject(args: argparse.Namespace) -> int:
-    return _review(args, "reject")
+    return _review_many(args, "reject")
 
 
 def cmd_review_edit(args: argparse.Namespace) -> int:
@@ -1255,20 +1296,29 @@ def build_parser() -> argparse.ArgumentParser:
 
     review = sub.add_parser("review", help="proposals of models: list, accept, edit, reject (the researcher)")
     review_sub = review.add_subparsers(dest="action", required=True)
-    r_list = review_sub.add_parser("list", help="what waits for the researcher")
+    filters = argparse.ArgumentParser(add_help=False)
+    filters.add_argument("--kind", choices=["code", "coding", "relation", "memo"])
+    filters.add_argument("--author", help="proposals of this model")
+    filters.add_argument("--role", help="proposals written in this role (e.g. chapter-reader)")
+    filters.add_argument("--from-run", dest="run_id", help="proposals written in this run (e.g. run-0003)")
+    filters.add_argument("--phase", help="proposals written while the study was in this phase")
+    r_list = review_sub.add_parser("list", parents=[filters], help="what waits for the researcher")
     r_list.add_argument("topic")
-    r_list.add_argument("--kind", choices=["code", "coding", "relation", "memo"])
-    r_list.set_defaults(func=cmd_review_list)
-    r_accept = review_sub.add_parser("accept", parents=[who], help="accept proposals as they are")
-    r_accept.add_argument("topic")
-    r_accept.add_argument("refs", nargs="+", help="code:<id>, coding:<id>, relation:<id>, memo:<id>")
-    r_accept.add_argument("--note")
+    r_list.set_defaults(func=cmd_review_list, refs=None)
+    many = argparse.ArgumentParser(add_help=False, parents=[filters])
+    many.add_argument("topic")
+    many.add_argument("refs", nargs="*", help="code:<id>, coding:<id>, relation:<id>, memo:<id>; or a filter")
+    many.add_argument("--all", action="store_true", help="every proposal waiting (when no filter is given)")
+    many.add_argument("--dry-run", action="store_true", help="show what would be decided; write nothing")
+    many.add_argument("--note")
+    r_accept = review_sub.add_parser(
+        "accept", parents=[who, many], help="accept proposals as they are: by reference or by filter"
+    )
     r_accept.set_defaults(func=cmd_review_accept)
-    r_reject = review_sub.add_parser("reject", parents=[who], help="reject proposals, with a reason")
-    r_reject.add_argument("topic")
-    r_reject.add_argument("refs", nargs="+")
+    r_reject = review_sub.add_parser(
+        "reject", parents=[who, many], help="reject proposals, with a reason: by reference or by filter"
+    )
     r_reject.add_argument("--reason", required=True)
-    r_reject.add_argument("--note")
     r_reject.set_defaults(func=cmd_review_reject)
     r_edit = review_sub.add_parser("edit", parents=[who], help="accept a proposal with changes (old values kept)")
     r_edit.add_argument("topic")

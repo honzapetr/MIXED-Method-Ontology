@@ -248,6 +248,9 @@ def test_only_the_researcher_decides_proposals(root):
         return result["hookSpecificOutput"]["permissionDecision"] if result else None
 
     assert decide("uv run mmo review accept s code:x --by m") == "deny"
+    assert decide("uv run mmo review accept s --role chapter-reader --by owner") == "deny", "a filter too (T47)"
+    assert decide("uv run mmo review reject s --all --reason x") == "deny"
+    assert decide("uv run mmo review list s --role chapter-reader") is None
     assert decide("uv run mmo review list s") is None, "a model may see what waits"
 
 

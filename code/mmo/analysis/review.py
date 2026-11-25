@@ -11,6 +11,10 @@ written by a model and therefore with `status: proposed`. The researcher decides
 The decision is written into the record (`decided: {verdict, by, at, reason | note, changes}`) and into the
 history; the model's provenance (`author`, `generated_by`) is never removed. Only a person decides. The
 researcher's own records are never proposals and need no decision.
+
+Many at once (T47): `select()` picks the waiting proposals by kind, author, role, run and the phase the study was in
+when each was written (from the history); `decide_many()` decides each as its own decision with the same reason or
+note and one `batch` id in each history event.
 """
 
 from __future__ import annotations
@@ -99,6 +103,7 @@ def decide(
     reason: str | None = None,
     note: str | None = None,
     changes: dict[str, str] | None = None,
+    batch: str | None = None,
 ) -> dict[str, Any]:
     """Accept, edit or reject one proposal; returns the history event."""
     if author.kind == "model":
@@ -121,7 +126,7 @@ def decide(
         raise StoreError(f"a {kind} edit changes only {sorted(EDITABLE[kind]) or 'the text, by hand'}")
 
     if kind == "memo":
-        return _decide_memo(topic, author, key, verdict, reason, note)
+        return _decide_memo(topic, author, key, verdict, reason, note, batch)
 
     store = Store(topic)
     record = {"code": store.code, "coding": store.coding, "relation": store._relation}[kind](key)
@@ -160,7 +165,15 @@ def decide(
                 cascade.append(f"coding:{coding['id']}")
     _stamp(record, author, verdict, reason=reason, note=note, changes=applied)
     return store.save(
-        author, "review", target=ref, verdict=VERDICTS[verdict], reason=reason, changes=applied, cascade=cascade
+        author,
+        "review",
+        target=ref,
+        verdict=VERDICTS[verdict],
+        reason=reason,
+        changes=applied,
+        cascade=cascade,
+        **({"note": note} if note else {}),
+        **({"batch": batch} if batch else {}),
     )
 
 
@@ -184,7 +197,7 @@ def _stamp(
 
 
 def _decide_memo(
-    topic: Topic, author: Author, key: str, verdict: str, reason: str | None, note: str | None
+    topic: Topic, author: Author, key: str, verdict: str, reason: str | None, note: str | None, batch: str | None
 ) -> dict[str, Any]:
     item = next((m for m in memo_files(topic) if m.data.get("id", m.path.stem) == key), None)
     if item is None:
@@ -194,5 +207,103 @@ def _decide_memo(
     _stamp(item.data, author, verdict, reason=reason, note=note)
     item.write()
     return Store(topic).save(
-        author, "review", target=f"memo:{key}", verdict=VERDICTS[verdict], reason=reason, note=note
+        author,
+        "review",
+        target=f"memo:{key}",
+        verdict=VERDICTS[verdict],
+        reason=reason,
+        note=note,
+        **({"batch": batch} if batch else {}),
     )
+
+
+# ---------------------------------------------------------------- many at once (T47)
+
+# the history operation that writes a record -> (its kind, the field with its id)
+CREATED_BY = {
+    "memo": ("memo", "memo"),
+    "add-code": ("code", "code"),
+    "apply-code": ("coding", "coding"),
+    "relate": ("relation", "relation"),
+}
+
+
+def phases_when_written(history: list[dict[str, Any]]) -> dict[str, set[str]]:
+    """Ref -> the phases (of every method) the study was in when the record was written."""
+    current: dict[str, str] = {}
+    found: dict[str, set[str]] = {}
+    for event in history:
+        op = event.get("op")
+        if op == "phase":
+            current[str(event.get("method"))] = str(event.get("phase"))
+        elif op in CREATED_BY:
+            kind, field = CREATED_BY[op]
+            if event.get(field):
+                found.setdefault(f"{kind}:{event[field]}", set(current.values()))
+    return found
+
+
+def select(
+    topic: Topic,
+    refs: list[str] | None = None,
+    kind: str | None = None,
+    author: str | None = None,
+    role: str | None = None,
+    run: str | None = None,
+    phase: str | None = None,
+) -> list[Proposal]:
+    """The waiting proposals that match every filter given; `refs` limits them to those references."""
+    waiting = proposals(topic, kind)
+    if refs:
+        known = {p.ref: p for p in waiting}
+        missing = [r for r in refs if r not in known]
+        if missing:
+            raise StoreError(f"not waiting for a decision: {', '.join(missing)} (mmo review list)")
+        waiting = [known[r] for r in refs]
+    phases = phases_when_written(Store(topic).history()) if phase else {}
+    out = []
+    for item in waiting:
+        made = item.record.get("generated_by") or {}
+        if author and item.record.get("author") != author:
+            continue
+        if role and made.get("role") != role:
+            continue
+        if run and made.get("run") != run:
+            continue
+        if phase and phase not in phases.get(item.ref, set()) and item.record.get("phase") != phase:
+            continue
+        out.append(item)
+    return out
+
+
+def decide_many(
+    topic: Topic,
+    author: Author,
+    refs: list[str],
+    verdict: str,
+    reason: str | None = None,
+    note: str | None = None,
+) -> list[dict[str, Any]]:
+    """Each proposal as its own decision, with the same reason or note and one batch id.
+
+    A proposal already decided by an earlier one of the batch (a code taken with its coding) is skipped; an error
+    in one does not stop the rest.
+    """
+    if author.kind == "model":
+        raise StoreError("only the researcher decides a proposal; a model may comment on it in a memo")
+    if verdict not in ("accept", "reject"):
+        raise StoreError("many at once: accept or reject (an edit is one proposal at a time)")
+    if verdict == "reject" and not (reason and reason.strip()):
+        raise StoreError("a rejection needs a reason (--reason)")
+    batch = f"batch-{now()}" if len(refs) > 1 else None
+    results: list[dict[str, Any]] = []
+    for ref in refs:
+        if ref not in {p.ref for p in proposals(topic)}:
+            results.append({"ref": ref, "skipped": "decided already in this batch (with another proposal)"})
+            continue
+        try:
+            event = decide(topic, author, ref, verdict, reason=reason, note=note, batch=batch)
+            results.append({"ref": ref, "event": event})
+        except StoreError as err:
+            results.append({"ref": ref, "error": str(err)})
+    return results
