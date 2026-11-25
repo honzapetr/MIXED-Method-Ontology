@@ -280,3 +280,5 @@
 - The work goes to the base research environment `../MIXED-Method-Ontology/` and to the workshop; test 9 is a record,
   not repaired. Its context sources without provenance are not a fix; a new study records provenance when the
   context searcher adds its sources.
+- A model's profile is written without the web: the model names the documents it needs, the owner saves them to
+  `scratch/profile-<model-id>/` of the environment; what the model knows only from training is marked as such.

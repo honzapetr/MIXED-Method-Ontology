@@ -771,7 +771,8 @@
   `--about code:<id>`), SKAD method 2026-11-25.1; `mmo run close` and the web rule in `docs/analysis.md`,
   `docs/how-it-works.md`, `AGENTS.md`, the role `context-searcher` and the skill `lead-analyst` (step "Close it")
   (protected; `agents_sync.py` run).
-- Note for the owner: web search while profiling a model (skill `profile-model`, step 3) happens outside any study,
-  so the guard now denies it there; before T48 one approving study opened it. To decide if it is needed.
+- The owner's answer: a model's profile is written without the web - skill `profile-model` step 3 asks the owner to
+  save the documents to `scratch/profile-<model-id>/` and marks what is known only from training (research env
+  `b2724cd`).
 - Next: the owner's review and PRs of T43-T48; then T36.
 
