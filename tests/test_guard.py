@@ -251,16 +251,40 @@ def test_only_the_researcher_decides_proposals(root):
     assert decide("uv run mmo review list s") is None, "a model may see what waits"
 
 
-def test_web_search_only_where_a_study_approves_it(root):
-    """T44, ADR 0015: a cloud model searches the web only with the researcher's approval for a study."""
+def _history(root: Path, slug: str, *events: dict) -> None:
+    _write(root / "topics" / slug / "analysis" / "history.jsonl", "".join(json.dumps(e) + "\n" for e in events))
+
+
+def test_web_search_only_during_an_open_run_of_an_approving_study(root, monkeypatch):
+    """T44, T48, ADR 0015: the approval is the study's; the web is open only while a run that may search it is open."""
+    monkeypatch.delenv("MMO_STUDY", raising=False)
+
+    def web(model: str | None = "m") -> str | None:
+        event = {"tool_name": "WebSearch", "tool_input": {"query": "x"}, "cwd": str(root)}
+        result = guard.pre_tool_use(event, root, model)
+        return result["hookSpecificOutput"]["permissionDecision"] if result else None
+
     assert _decide(root, "WebSearch", query="Nazi v AI dobe recenze") == "deny"
     assert "analysis.web_search" in _reason(root, "WebFetch", url="https://example.org")
     assert _decide(root, "Bash", command="uv run mmo context list s") == "deny", "mmo context is closed with the study"
     _write(root / "topics" / "s" / "topic.yaml", "title: S\nanalysis:\n  web_search: [m]\n")
-    assert _decide(root, "WebSearch", query="x") is None
-    assert _decide(root, "WebFetch", url="https://example.org") is None
-    other = guard.pre_tool_use({"tool_name": "WebSearch", "tool_input": {"query": "x"}, "cwd": str(root)}, root, "n")
-    assert other and other["hookSpecificOutput"]["permissionDecision"] == "deny", "approved for m, not for n"
+    assert web() == "deny", "an approval alone does not open the web: a run does"
+    assert "mmo run close" in _reason(root, "WebSearch", query="x")
+    started = {"op": "run", "run": "run-0001", "analyst": "m", "role": "context-searcher", "web": True}
+    _history(root, "s", started)
+    assert web() is None and _decide(root, "WebFetch", url="https://example.org") is None
+    assert web("n") == "deny", "the run is m's, not n's"
+    _write(root / "topics" / "b" / "topic.yaml", "title: B\n")
+    monkeypatch.setenv("MMO_STUDY", "b")
+    assert web() == "deny", "an open run in study s does not open the web for study b"
+    monkeypatch.delenv("MMO_STUDY")
+    _write(root / "topics" / "s" / "topic.yaml", "title: S\nanalysis:\n  web_search: []\n")
+    assert web() == "deny", "the researcher withdrew the approval"
+    _write(root / "topics" / "s" / "topic.yaml", "title: S\nanalysis:\n  web_search: [m]\n")
+    _history(root, "s", started, {"op": "run-closed", "run": "run-0001"})
+    assert web() == "deny", "closed with the run"
+    _history(root, "s", {**started, "web": False})
+    assert web() == "deny", "a run recorded without the web"
 
 
 def test_a_blind_probe_stays_blind(root):
@@ -305,7 +329,7 @@ def test_the_guard_as_a_hook_of_agy(root, monkeypatch):
     assert _agy(root, "read_file", {"Path": str(root / "AGENTS.md")}) == {"decision": "allow"}
     _open_study(root)
     assert _agy(root, "read_file", {"Path": text}) == {"decision": "allow"}
-    assert _agy(root, "search_web", {"query": "x"})["decision"] == "deny", "web only where the study approves"
+    assert _agy(root, "search_web", {"query": "x"})["decision"] == "deny", "web only in an open run that may"
     assert _agy(root, "read_file", {"Path": str(root.parent / "elsewhere.txt")})["decision"] == "deny"
     analysis = str(root / "topics" / "s" / "analysis" / "codings.jsonl")
     assert "through mmo" in _agy(root, "write_file", {"Path": analysis, "Content": "x"})["reason"]

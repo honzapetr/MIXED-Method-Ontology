@@ -54,6 +54,7 @@ def start_probe(store: Store, author: Author, source_id: str, analyst: str) -> d
         ROLE,
         [f"source:{source_id}", f"title: {title}", f"author: {', '.join(authors)}"],
         note="blind: only the title and the author; no text, no web, no study data",
+        web=False,
     )
 
 

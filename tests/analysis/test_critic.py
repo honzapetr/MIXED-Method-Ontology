@@ -169,8 +169,9 @@ def test_a_run_keeps_everything_and_accepts_only_what_a_critic_may_write(topic: 
     assert (run_dir / "response.md").read_text(encoding="utf-8") == "Done: 1 memo."
     assert "run_command" in (run_dir / "stream.jsonl").read_text(encoding="utf-8")
     assert record["steps"] == 2 and record["denied_by_guard"] == 1 and len(record["wrote"]) == 1
-    event = Store(topic).history()[-1]
+    event, closed = Store(topic).history()[-2:]
     assert event["op"] == "critic-run" and event["brief"]["template"] == "toy/critic@2026-11-24"
+    assert closed["op"] == "run-closed" and closed["run"] == "run-0001", "the run (and the web) closes when agy ends"
     assert brief_path.is_file()
 
     def rogue(cmd, cwd, env, timeout):

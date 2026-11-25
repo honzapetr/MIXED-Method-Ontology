@@ -18,7 +18,7 @@ from mmo.analysis.probe import prior_record, probes, start_probe
 from mmo.analysis.probe import task as probe_task
 from mmo.analysis.quote import MOVED, OK, Quotation, QuoteError, check_study, quote
 from mmo.analysis.review import decide, proposals
-from mmo.analysis.roles import check_roles, roles_dir, runs
+from mmo.analysis.roles import check_roles, closed_runs, roles_dir, runs
 from mmo.analysis.roles import role as role_of
 from mmo.analysis.status import own_type_reminder, study_status
 from mmo.analysis.store import ACTIVE_STATUSES, Author, Store, author_of, check_store, write_memo
@@ -773,15 +773,26 @@ def cmd_critic_list(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_run_close(args: argparse.Namespace) -> int:
+    """The lead closes a run when its work came back; the web closes with it (T48)."""
+    topic = load_topic(args)
+    event = Store(topic).close_run(_author(args, topic), args.run, args.note)
+    print(f"{event['run']} closed")
+    return 0
+
+
 def cmd_run_list(args: argparse.Namespace) -> int:
     topic = load_topic(args)
     store = Store(topic)
-    found = runs(store.history())
+    history = store.history()
+    found = runs(history)
+    closed = closed_runs(history)
     for event in found:
         records = store.run_records(event["run"])
+        state = f"closed {closed[event['run']]['at'][:16]}" if event["run"] in closed else "open"
         print(
             f"{event['run']}  {event['at'][:16]}  {event['analyst']} as {event['role']} ({event['prompt_version']}), "
-            f"started by {event.get('author', '?')}"
+            f"started by {event.get('author', '?')}; {state}{'; web' if event.get('web') else ''}"
         )
         print(f"    input: {'; '.join(event.get('input') or [])}")
         print(f"    wrote: {', '.join(records) if records else 'nothing in the analysis'}")
@@ -1101,6 +1112,11 @@ def build_parser() -> argparse.ArgumentParser:
     run_start.add_argument("--analyst", help="the model that does the run (default: --by)")
     run_start.add_argument("--note")
     run_start.set_defaults(func=cmd_run_start)
+    run_close = run.add_parser("close", parents=[who], help="close a run when its work came back (the lead)")
+    run_close.add_argument("topic")
+    run_close.add_argument("run", help="the run id, e.g. run-0003")
+    run_close.add_argument("--note")
+    run_close.set_defaults(func=cmd_run_close)
     run_list = run.add_parser("list", help="the runs of a study and what each wrote")
     run_list.add_argument("topic")
     run_list.set_defaults(func=cmd_run_list)

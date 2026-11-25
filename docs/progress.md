@@ -754,3 +754,26 @@
 - 2026-11-25, the owner's answers (`docs/answers.md`): 1B (the critic's brief, not an exception in `mmo`), 2B (web
   only in an open run of an approving study - a task before T36), 3C (the workshop's `AGENTS.md` CLI line). Test 9 is
   not repaired; its missing provenance is dropped from the fixes.
+
+## T48 – 2026-11-25 – The owner's answers 1B, 2B, 3C
+- Done (workshop, `task/T48-web-per-run` on top of T46):
+  - 2B: `mmo run close <topic> <run>` (`op: run-closed`, the lead or the researcher; `closed_runs()`); `run list`
+    shows open or closed and the web; `mmo status` / `context list` print `web open in runs`. `start_run(web=)`:
+    a blind probe's run is `web: false`. `mmo critic run` closes its run when `agy` ends (also a dry-run). The guard
+    (`check_web`, `open_web_runs`, `study_history`) allows web tools only during an open run recorded `web: true` of
+    the model in a study that still approves it; `MMO_STUDY` narrows to one study; the same for `agy`.
+  - 3C: the CLI line of `AGENTS.md` (protected, approved by the owner's answer): main groups of commands and pointers
+    to `mmo --help` and `docs/analysis-store.md`.
+  - spec, analysis-store, plan (T48).
+- Verified: `uv run pytest` 177 passed; ruff check and format clean; `mmo method check` 4 ok; `agents_sync.py --check` clean.
+- Done (research environment, `task/T48-web-per-run` on top of T46): 1B - the SKAD critic's brief template
+  2026-11-25 (code counter-evidence when the phase allows, otherwise an analytic memo with quotations and
+  `--about code:<id>`), SKAD method 2026-11-25.1; `mmo run close` and the web rule in `docs/analysis.md`,
+  `docs/how-it-works.md`, `AGENTS.md`, the role `context-searcher` and the skill `lead-analyst` (step "Close it")
+  (protected; `agents_sync.py` run).
+- The owner's answer: a model's profile is written without the web - skill `profile-model` step 3 asks the owner to
+  save the documents to `scratch/profile-<model-id>/` and marks what is known only from training (research env
+  `b2724cd`).
+- Next: the owner's review and PRs of T43-T48; then T36.
+
+- 2026-11-25: the owner approved the research environment's branches; `main` there fast-forwarded to `b2724cd` (T43-T48, via `update-ref`, no checkout of an old commit). Workshop PRs #7-#12, stacked, wait for review.

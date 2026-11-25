@@ -140,6 +140,11 @@ def runs(history: list[dict[str, Any]]) -> list[dict[str, Any]]:
     return [event for event in history if event.get("op") == "run"]
 
 
+def closed_runs(history: list[dict[str, Any]]) -> dict[str, dict[str, Any]]:
+    """Run id -> the event that closed it (`op: run-closed`, T48)."""
+    return {str(e["run"]): e for e in history if e.get("op") == "run-closed" and e.get("run")}
+
+
 def next_run_id(history: list[dict[str, Any]]) -> str:
     numbers = [int(e["run"].split("-")[1]) for e in runs(history) if str(e.get("run", "")).startswith("run-")]
     return f"run-{max(numbers, default=0) + 1:04d}"

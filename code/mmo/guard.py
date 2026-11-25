@@ -14,9 +14,10 @@ Two hooks, both reading the hook's JSON from stdin:
     study but its position, runs no `mmo` but `memo add`, and gets no web tools;
   - keep the critic's brief (`topics/<slug>/critic/`) the researcher's: a model does not write it (T46);
   - the critic runs through `mmo critic run` (`agy`), never as a Claude Code subagent (T46);
-  - deny web search and web fetch until the researcher lets a model search the web for a study (`analysis.web_search`
-    of a study's `topic.yaml`, T44, ADR 0015); the hook sees no study here, so one approving study is enough, and the
-    role and the run say which study it is for.
+  - deny web search and web fetch except during an open run of the model (`mmo run start`, recorded `web: true`, not
+    yet `mmo run close`) in a study whose researcher lets it search the web (`analysis.web_search` of `topic.yaml`;
+    T44, T48, ADR 0015). A web call names no study, so the run says which study it is for; `MMO_STUDY` (set by
+    `mmo critic run`) narrows it to one study.
 
 `mmo-guard agy-pre-tool-use` is the same guard as a `PreToolUse` hook of the Antigravity CLI (`.agents/hooks.json`
 of the environment, T46): it maps `agy`'s tools onto the checks above. `agy` treats an answer without a decision as
@@ -514,17 +515,53 @@ def web_approvals(root: Path) -> dict[str, list[str]]:
     return found
 
 
-def check_web(root: Path, model_id: str | None) -> dict | None:
-    approvals = web_approvals(root)
-    if model_id:
-        approvals = {slug: models for slug, models in approvals.items() if model_id in models}
-    if approvals:
+def study_history(root: Path, slug: str) -> list[dict]:
+    path = root / "topics" / slug / "analysis" / "history.jsonl"
+    events = []
+    if path.is_file():
+        for line in path.read_text(encoding="utf-8").splitlines():
+            try:
+                event = json.loads(line)
+            except json.JSONDecodeError:
+                continue
+            if isinstance(event, dict):
+                events.append(event)
+    return events
+
+
+def open_web_runs(root: Path, model_id: str | None, study: str | None = None) -> list[str]:
+    """`<slug>/<run>` of the open runs that may search the web: recorded `web: true`, not closed, the model still
+    approved by the study (T48)."""
+    found = []
+    for slug, models in web_approvals(root).items():
+        if study and slug != study:
+            continue
+        history = study_history(root, slug)
+        closed = {e.get("run") for e in history if e.get("op") == "run-closed"}
+        for event in history:
+            analyst = str(event.get("analyst"))
+            if (
+                event.get("op") == "run"
+                and event.get("web") is True
+                and event.get("run") not in closed
+                and analyst in models
+                and (not model_id or analyst == model_id)
+            ):
+                found.append(f"{slug}/{event.get('run')}")
+    return found
+
+
+def check_web(root: Path, model_id: str | None, study: str | None = None) -> dict | None:
+    if open_web_runs(root, model_id, study):
         return None
     return decision(
         "deny",
-        "No study here lets a model search the web: the researcher approves web search by a cloud model per study "
-        "(analysis.web_search in topic.yaml). Search where the approved search plan says without the web, or write "
-        "a request to the researcher (mmo context request).",
+        "The web is open only during a run in a study whose researcher lets this model search the web "
+        "(analysis.web_search in topic.yaml; mmo run start records web: true) until the run is closed (mmo run "
+        "close); no such run is open"
+        + (f" in {study}" if study else "")
+        + ". Search where the approved search plan says without the web, or write a request to the researcher "
+        "(mmo context request).",
     )
 
 
@@ -537,7 +574,7 @@ def pre_tool_use(event: dict, root: Path, model_id: str | None = None) -> dict |
     ):
         return found
     if tool in WEB_TOOLS:
-        return check_web(root, model_id)
+        return check_web(root, model_id, os.environ.get("MMO_STUDY"))
     data = event.get("tool_input") or {}
     cwd = Path(event.get("cwd") or root)
     if tool == "Bash":
@@ -607,7 +644,7 @@ def agy_check(event: dict, root: Path, model_id: str | None, round_no: str | Non
     args = call.get("args") or {}
     cwd = Path(str(args.get("Cwd") or event.get("cwd") or root))
     if AGY_WEB.match(name):
-        return check_web(root, model_id)
+        return check_web(root, model_id, os.environ.get("MMO_STUDY"))
     if name == "run_command":
         command = str(args.get("CommandLine") or "")
         if round_no == "1":

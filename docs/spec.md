@@ -215,9 +215,11 @@ propose. What the method calls the researcher's decisions (`researcher_decides`)
   `relation` (author | author-circle | independent), `judged`; written by `mmo source provenance`, reported missing
   by `mmo source check`.
 - `analysis.web_search: [<model id>]` in `topic.yaml`: the models the researcher lets search the web for the study.
-  `mmo run start` records `web: true|false` in the run; `mmo-guard` denies WebSearch and WebFetch while no study of
-  the environment lists the model (the hook sees no study, so one approving study opens the web tools; the run and
-  the role say for which study).
+  `mmo run start` records `web: true|false` in the run (`false` for a blind probe). `mmo-guard` allows WebSearch and
+  WebFetch only while the model has an open run recorded `web: true` in a study that still lists it; `mmo run close`
+  (the lead or the researcher) closes the run and the web with it, and `mmo critic run` closes the critic's run when
+  `agy` ends (T48, the owner's answer 2B of 2026-11-25). A web call names no study: the open run says which study it
+  is for, and `MMO_STUDY` (set by `mmo critic run`) narrows the check to that study.
 - **Blind probe** (T45): `mmo probe start <topic> --source <id> [--analyst <model>]` starts a run of the role
   `blind-probe` whose input is only the title and `citation.authors` of `source.yaml`, and prints the whole task. The
   answer is a `reflexive` memo with `--prior-knowledge source:<id>`, recorded as `prior_knowledge: {source, model,

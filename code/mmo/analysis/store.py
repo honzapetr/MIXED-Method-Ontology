@@ -34,7 +34,15 @@ from mmo.analysis.method import (
     study_settings,
 )
 from mmo.analysis.quote import GONE, OK, Quotation, check_record, read_final_text
-from mmo.analysis.roles import RoleError, environment, find_run, front_matter, next_run_id, position_roles
+from mmo.analysis.roles import (
+    RoleError,
+    closed_runs,
+    environment,
+    find_run,
+    front_matter,
+    next_run_id,
+    position_roles,
+)
 from mmo.analysis.roles import role as role_of
 from mmo.core.topic import Topic
 
@@ -380,9 +388,19 @@ class Store:
             raise StoreError(why)
 
     def start_run(
-        self, author: Author, analyst: str, role_id: str, inputs: list[str], note: str | None = None
+        self,
+        author: Author,
+        analyst: str,
+        role_id: str,
+        inputs: list[str],
+        note: str | None = None,
+        web: bool = True,
     ) -> dict[str, Any]:
-        """The lead (or the researcher) hands one piece of work to a subagent (T43, ADR 0014)."""
+        """The lead (or the researcher) hands one piece of work to a subagent (T43, ADR 0014).
+
+        `web=False` for a run that never searches the web (a blind probe); otherwise the run may search it when the
+        study approves the model. The guard opens the web only while such a run is open (T48).
+        """
         if author.run:
             raise StoreError(f"a subagent does not start runs ({author.run}); the lead analyst does")
         if not is_model(self.topic, analyst):
@@ -408,8 +426,20 @@ class Store:
             prompt_version=role.prompt_version,
             input=list(inputs),
             # whether the researcher lets this model search the web for the study (T44, ADR 0015)
-            web=analyst in [str(m) for m in study_settings(self.topic)["web_search"]],
+            web=web and analyst in [str(m) for m in study_settings(self.topic)["web_search"]],
             **({"note": note} if note else {}),
+        )
+
+    def close_run(self, author: Author, run_id: str, note: str | None = None) -> dict[str, Any]:
+        """The lead (or the researcher) closes a run when its work came back; the web closes with it (T48)."""
+        if author.run:
+            raise StoreError(f"a subagent does not close runs ({author.run}); the lead analyst does")
+        history = self.history()
+        event = find_run(history, run_id)
+        if run_id in closed_runs(history):
+            raise StoreError(f"{run_id} is closed already")
+        return self.save(
+            author, "run-closed", run=run_id, analyst=event.get("analyst"), **({"note": note} if note else {})
         )
 
     def run_records(self, run_id: str) -> list[str]:

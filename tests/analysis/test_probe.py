@@ -102,7 +102,9 @@ def test_context_memos_compare_the_probe_and_status_reminds_of_missing_probes(to
     assert "no blind probe of critic on kniha" in status and "no blind probe of lead on kniha" in status
     assert "owner on kniha" not in status, "the researcher is not probed"
     assert "recenze" not in status.split("reminders")[1], "context sources are not probed"
-    run = start_probe(Store(topic), lead(topic), "kniha", "lead")["run"]
+    probe_run = start_probe(Store(topic), lead(topic), "kniha", "lead")
+    assert probe_run["web"] is False, "a probe never opens the web (T48)"
+    run = probe_run["run"]
     probe = write_memo(
         topic,
         author_of(topic, "lead", run=run),
