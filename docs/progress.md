@@ -776,3 +776,4 @@
   `b2724cd`).
 - Next: the owner's review and PRs of T43-T48; then T36.
 
+- 2026-11-25: the owner approved the research environment's branches; `main` there fast-forwarded to `b2724cd` (T43-T48, via `update-ref`, no checkout of an old commit). Workshop PRs #7-#12, stacked, wait for review.
