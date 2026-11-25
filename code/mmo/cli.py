@@ -10,6 +10,8 @@ from pathlib import Path
 
 import yaml
 
+from mmo.analysis.context import add_request, close_request, plans, requests, rounds, start_round
+from mmo.analysis.context import summary as context_summary
 from mmo.analysis.method import check_method, study_methods
 from mmo.analysis.quote import MOVED, OK, Quotation, QuoteError, check_study, quote
 from mmo.analysis.review import decide, proposals
@@ -20,7 +22,8 @@ from mmo.analysis.store import ACTIVE_STATUSES, Author, Store, author_of, check_
 from mmo.config import Settings
 from mmo.core.check import check_source
 from mmo.core.migrate import migrate_topic, needs_migration
-from mmo.core.topic import ROLES, SOURCE_KINDS, Topic, sha256_file
+from mmo.core.provenance import FOUND_HOW, RELATIONS, provenance_record
+from mmo.core.topic import ROLES, SOURCE_KINDS, Topic, sha256_file, write_yaml
 from mmo.ingest.clean import clean_record, import_record, merge_variants
 from mmo.ingest.compare import cer
 from mmo.ingest.images import prepare_images
@@ -124,6 +127,33 @@ def cmd_source_check(args: argparse.Namespace) -> int:
             print(f"  - {finding}")
     if not sources:
         print(f"no sources yet: mmo source add {args.topic} <id> --kind ...")
+    return 0
+
+
+def cmd_source_provenance(args: argparse.Namespace) -> int:
+    """How a context source was found and whose voice it is (T44, ADR 0015)."""
+    topic = load_topic(args)
+    source = topic.source(args.source)
+    meta = source.metadata()
+    if not meta:
+        raise FileNotFoundError(f"no source {args.source}: mmo source add {args.topic} {args.source} ...")
+    meta["provenance"] = provenance_record(
+        args.how,
+        args.type,
+        args.character,
+        args.speaker,
+        args.relation,
+        query=args.query,
+        place=args.place,
+        found_on=args.date,
+        by=args.found_by,
+        plan=args.plan.removeprefix("memo:") if args.plan else None,
+        round_=args.round,
+        judged=args.judged,
+    )
+    write_yaml(source.metadata_file, meta)
+    prov = meta["provenance"]
+    print(f"{source.id}: {prov['type']}, {prov['character']}, {prov['speaker']} ({prov['relation']})")
     return 0
 
 
@@ -601,6 +631,64 @@ def cmd_run_start(args: argparse.Namespace) -> int:
         f"{'; '.join(event['input'])}"
     )
     print(f"the subagent writes with: --by {event['analyst']} --run {event['run']}")
+    print(
+        "web search: approved for this model in this study"
+        if event["web"]
+        else "web search: not approved for this model in this study (analysis.web_search) - it does not search the web"
+    )
+    return 0
+
+
+def cmd_context_round(args: argparse.Namespace) -> int:
+    topic = load_topic(args)
+    event = start_round(Store(topic), _author(args, topic), args.plan, args.reason, args.gap)
+    print(f"search round {event['round']} of the plan {event['plan']}: {event['reason']}")
+    return 0
+
+
+def cmd_context_request(args: argparse.Namespace) -> int:
+    topic = load_topic(args)
+    event = add_request(Store(topic), _author(args, topic), args.what, args.why, args.where, args.question, args.plan)
+    print(f"{event['request']} for the researcher: {event['what']}")
+    return 0
+
+
+def cmd_context_close(args: argparse.Namespace) -> int:
+    topic = load_topic(args)
+    event = close_request(Store(topic), _author(args, topic), args.request, args.outcome, args.source)
+    print(f"{event['request']} closed: {event['outcome']}")
+    return 0
+
+
+def cmd_context_list(args: argparse.Namespace) -> int:
+    """The search plans, rounds, requests and context sources of a study."""
+    topic = load_topic(args)
+    store = Store(topic)
+    history = store.history()
+    for line in context_summary(topic, store):
+        print(line)
+    for plan in plans(topic, store):
+        print(f"plan {plan.id}: {plan.title} ({plan.author}, {plan.status}{', approved' if plan.approved else ''})")
+    for event in rounds(history):
+        gaps = f" - gaps: {', '.join(event['gaps'])}" if event.get("gaps") else ""
+        print(
+            f"  round {event['round']} of {event['plan']} ({event['at'][:10]}, {event.get('author')}): "
+            f"{event['reason']}{gaps}"
+        )
+    for request in requests(history):
+        state = f"closed: {request['closed']['outcome']}" if request["closed"] else "open"
+        print(f"{request['request']} ({request.get('author')}): {request['what']} - {request['why']} [{state}]")
+    for source in topic.sources():
+        meta = source.metadata()
+        if meta.get("role") != "context":
+            continue
+        prov = meta.get("provenance") or {}
+        found = prov.get("found") or {}
+        print(
+            f"source {source.id}: {prov.get('type', '?')}, {prov.get('character', '?')}, "
+            f"{prov.get('speaker', '?')} ({prov.get('relation', 'provenance missing')}); "
+            f"found by {found.get('how', '?')} in {found.get('place', '?')} on {found.get('date', '?')}"
+        )
     return 0
 
 
@@ -688,6 +776,24 @@ def build_parser() -> argparse.ArgumentParser:
     check.add_argument("topic")
     check.add_argument("source", nargs="?", help="one source (default: all)")
     check.set_defaults(func=cmd_source_check)
+    prov = source.add_parser(
+        "provenance", help="how a context source was found and whose voice it is (type, character, relation)"
+    )
+    prov.add_argument("topic")
+    prov.add_argument("source")
+    prov.add_argument("--how", required=True, choices=FOUND_HOW, help="found by a search, cited, or brought in")
+    prov.add_argument("--query", help="the query of the search")
+    prov.add_argument("--place", help="where: a catalogue, Webarchiv NK, a register, a database, the web, ...")
+    prov.add_argument("--date", help="when it was found (default: today)")
+    prov.add_argument("--found-by", help="who found it: a model id or the researcher")
+    prov.add_argument("--plan", help="the search-plan memo it was found by")
+    prov.add_argument("--round", type=int, help="the round of the plan")
+    prov.add_argument("--type", required=True, help="review, interview, register entry, readers' discussion, ...")
+    prov.add_argument("--character", required=True, help="e.g. promotional, critical, neutral")
+    prov.add_argument("--speaker", required=True, help="who speaks in it")
+    prov.add_argument("--relation", required=True, choices=RELATIONS, help="the speaker's relation to the object")
+    prov.add_argument("--judged", help="how the relation was judged")
+    prov.set_defaults(func=cmd_source_provenance)
     finalize = source.add_parser(
         "finalize", help="write text.md, the text for the analysis, from the variant chosen in source.yaml (text)"
     )
@@ -914,6 +1020,33 @@ def build_parser() -> argparse.ArgumentParser:
     run_list = run.add_parser("list", help="the runs of a study and what each wrote")
     run_list.add_argument("topic")
     run_list.set_defaults(func=cmd_run_list)
+
+    context = sub.add_parser(
+        "context", help="context search by the method and the questions: rounds, requests (ADR 0015)"
+    ).add_subparsers(dest="action", required=True)
+    c_round = context.add_parser("round", parents=[who], help="a round of the search by an approved plan")
+    c_round.add_argument("topic")
+    c_round.add_argument("--plan", required=True, help="the search-plan memo (memo:<id>), approved by the researcher")
+    c_round.add_argument("--reason", required=True, help="the first round, or the gap that starts a new one")
+    c_round.add_argument("--gap", action="append", help="memo:<id> that found the gap (needed for a later round)")
+    c_round.set_defaults(func=cmd_context_round)
+    c_request = context.add_parser("request", parents=[who], help="ask the researcher for what a model cannot reach")
+    c_request.add_argument("topic")
+    c_request.add_argument("--what", required=True, help="e.g. reviews of the book in Newton Media")
+    c_request.add_argument("--why", required=True, help="what it would tell, for which question")
+    c_request.add_argument("--where", help="where it is: a paid archive, a library, a person")
+    c_request.add_argument("--question", help="the research question it serves (an id of topic.yaml)")
+    c_request.add_argument("--plan", help="the search-plan memo it comes from")
+    c_request.set_defaults(func=cmd_context_request)
+    c_close = context.add_parser("close", parents=[who], help="say what came of a request (the researcher)")
+    c_close.add_argument("topic")
+    c_close.add_argument("request", help="request-<n>")
+    c_close.add_argument("--outcome", required=True, help="e.g. 'two reviews brought in', 'not obtainable'")
+    c_close.add_argument("--source", action="append", help="a source brought in by it (repeatable)")
+    c_close.set_defaults(func=cmd_context_close)
+    c_list = context.add_parser("list", help="plans, rounds, requests and context sources with their provenance")
+    c_list.add_argument("topic")
+    c_list.set_defaults(func=cmd_context_list)
 
     roles = sub.add_parser("role", help="roles of subagents (.agents/roles/)").add_subparsers(
         dest="action", required=True

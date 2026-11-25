@@ -11,6 +11,7 @@ from typing import Any
 
 import yaml
 
+from mmo.analysis.context import summary as context_summary
 from mmo.analysis.method import current_phases, prompt_version, study_methods, study_settings, vocabulary
 from mmo.analysis.quote import FRONT_MATTER
 from mmo.analysis.roles import runs
@@ -74,6 +75,7 @@ def study_status(topic: Topic) -> list[str]:
     if done := runs(history):
         by_role = Counter(str(e.get("role")) for e in done)
         lines.append(f"runs of subagents: {len(done)} ({', '.join(f'{r} {n}' for r, n in sorted(by_role.items()))})")
+    lines += context_summary(topic, store)
     changed = settings.changed()
     lines.append(
         "settings: free defaults" if not changed else "settings: " + ", ".join(f"{k}={v}" for k, v in changed.items())

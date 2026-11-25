@@ -249,3 +249,15 @@ def test_only_the_researcher_decides_proposals(root):
 
     assert decide("uv run mmo review accept s code:x --by m") == "deny"
     assert decide("uv run mmo review list s") is None, "a model may see what waits"
+
+
+def test_web_search_only_where_a_study_approves_it(root):
+    """T44, ADR 0015: a cloud model searches the web only with the researcher's approval for a study."""
+    assert _decide(root, "WebSearch", query="Nazi v AI dobe recenze") == "deny"
+    assert "analysis.web_search" in _reason(root, "WebFetch", url="https://example.org")
+    assert _decide(root, "Bash", command="uv run mmo context list s") == "deny", "mmo context is closed with the study"
+    _write(root / "topics" / "s" / "topic.yaml", "title: S\nanalysis:\n  web_search: [m]\n")
+    assert _decide(root, "WebSearch", query="x") is None
+    assert _decide(root, "WebFetch", url="https://example.org") is None
+    other = guard.pre_tool_use({"tool_name": "WebSearch", "tool_input": {"query": "x"}, "cwd": str(root)}, root, "n")
+    assert other and other["hookSpecificOutput"]["permissionDecision"] == "deny", "approved for m, not for n"

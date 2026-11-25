@@ -190,3 +190,20 @@ uv run mmo memo add <topic> ... --by <model> --run run-0001   # any write comman
 - Phase prompts (T39): `prompt` of a phase in `method.yaml` (versioned file); `mmo status` shows it with the
   `--prompt-version <method>/<phase>@<version>` to use. Method-specific role prompts: optional `roles:` of
   `method.yaml` (role -> file with a `version:` line), checked by `mmo method check`.
+
+## Context search (T44, ADR 0015)
+
+`code/mmo/analysis/context.py` (plans, rounds, requests, the summary for `mmo status`), `code/mmo/core/provenance.py`
+(`provenance` of `source.yaml`), `mmo context round|request|close|list`, `mmo source provenance`.
+
+- Memo type `search-plan`. `plans()` reads the memos of that type; approved = `accepted` or `edited`, or written by
+  the researcher (no `generated_by`) and not rejected or withdrawn.
+- History events: `search-round` (`plan`, `round`, `reason`, `gaps`), `request` (`request`, `what`, `why`, `where`,
+  `question`, `plan`), `request-closed` (`request`, `outcome`, `sources`). A round needs an approved plan; a second
+  round of a plan needs `--gap`. A request's `--question` must be a question id of `topic.yaml`. Only the researcher
+  closes a request.
+- `analysis.web_search` (a list of model ids) is a study setting; `start_run` records `web` for every run.
+- `mmo-guard` (`check_web`) denies `WebSearch` and `WebFetch` unless some `topics/*/topic.yaml` lists the model (or,
+  when the hook does not know the model, any model) in `analysis.web_search`. The research environment's
+  `.claude/settings.json` matches these tools.
+- `check_source` reports a context source without complete provenance; the studied (primary) source needs none.

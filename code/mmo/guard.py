@@ -9,7 +9,10 @@ Two hooks, both reading the hook's JSON from stdin:
   - deny reading a study's data (`sources/<id>/text.md`, `segments.jsonl`, `ingest/`, `files/`, `ground-truth/`, the
     study's `work/`) until a model has a confirmed profile and a confirmed position in that study written from the
     current profile version;
-  - ask the owner (permission prompt) when a profile or a position is being set to `confirmed`.
+  - ask the owner (permission prompt) when a profile or a position is being set to `confirmed`;
+  - deny web search and web fetch until the researcher lets a model search the web for a study (`analysis.web_search`
+    of a study's `topic.yaml`, T44, ADR 0015); the hook sees no study here, so one approving study is enough, and the
+    role and the run say which study it is for.
 
 The Bash checks are heuristics: they read paths out of the command line, not out of everything a shell can do.
 Only the standard library and PyYAML, so the hook starts quickly; nothing here imports the rest of `mmo`.
@@ -37,6 +40,7 @@ CONFIRMED_ANYWHERE = re.compile(r"(?i)status:\s*confirmed")
 DRIVE_POSIX = re.compile(r"^/([a-zA-Z])(/|$)")
 DRIVE_WIN = re.compile(r"^[a-zA-Z]:[\\/]")
 GLOB_CHARS = re.compile(r"[*?\[]")
+WEB_TOOLS = {"WebSearch", "WebFetch"}
 
 
 # ---------------------------------------------------------------- paths
@@ -293,7 +297,7 @@ def looks_like_path(word: str) -> bool:
 
 
 # `mmo` commands that work on a study: `mmo <command> <action> <topic> ...`; they read its text or write its analysis
-MMO_STUDY_COMMANDS = {"quote", "code", "relation", "memo", "analysis", "review", "run"}
+MMO_STUDY_COMMANDS = {"quote", "code", "relation", "memo", "analysis", "review", "run", "context"}
 WRITES_FILES = re.compile(
     r"(>|\btee\b|\bsed\s+(-\w*i|--in-place)|\b(cp|mv|rm|del|move|copy)\b|Set-Content|Out-File|Add-Content)"
 )
@@ -419,8 +423,38 @@ def check_bash(command: str, cwd: Path, root: Path, model_id: str | None) -> dic
     return None
 
 
+def web_approvals(root: Path) -> dict[str, list[str]]:
+    """Study slug -> the models its researcher lets search the web (`analysis.web_search` of `topic.yaml`)."""
+    found = {}
+    for path in sorted((root / "topics").glob("*/topic.yaml")):
+        try:
+            data = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+        except yaml.YAMLError:
+            continue
+        models = ((data.get("analysis") or {}) if isinstance(data, dict) else {}).get("web_search") or []
+        if isinstance(models, list) and models:
+            found[path.parent.name] = [str(m) for m in models]
+    return found
+
+
+def check_web(root: Path, model_id: str | None) -> dict | None:
+    approvals = web_approvals(root)
+    if model_id:
+        approvals = {slug: models for slug, models in approvals.items() if model_id in models}
+    if approvals:
+        return None
+    return decision(
+        "deny",
+        "No study here lets a model search the web: the researcher approves web search by a cloud model per study "
+        "(analysis.web_search in topic.yaml). Search where the approved search plan says without the web, or write "
+        "a request to the researcher (mmo context request).",
+    )
+
+
 def pre_tool_use(event: dict, root: Path, model_id: str | None = None) -> dict | None:
     tool = event.get("tool_name", "")
+    if tool in WEB_TOOLS:
+        return check_web(root, model_id)
     data = event.get("tool_input") or {}
     cwd = Path(event.get("cwd") or root)
     if tool == "Bash":

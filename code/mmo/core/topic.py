@@ -37,6 +37,7 @@ SOURCE_FIELDS = (
     "printed_pages",
     "retakes",
     "text",
+    "provenance",
     "note",
 )
 NOTES_TEMPLATE = """# {title}

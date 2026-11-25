@@ -171,17 +171,28 @@ propose. What the method calls the researcher's decisions (`researcher_decides`)
   run.
 - Subagents inside Claude Code use the lead's model.
 
-## Context search (planned; ADR 0015)
+## Context search (ADR 0015; built in T44, the blind probe in T45)
 
-- `method.yaml` describes what relevant context is for the method, what it is derived from, the types of sources and
-  when the search is repeated.
-- A **search plan** memo, approved by the researcher, per research question: context needed, types and character of
-  sources and why, where to look (not only the web), how independence is judged, when to stop.
-- What a model cannot reach (paid archives, printed sources, interviews) is a request to the researcher.
-- `source.yaml` of a candidate: query, place and date found; type and character; speaker and relation to the object
-  (author, author's circle, independent).
-- A blind probe records the model's prior knowledge before the search.
-- `topic.yaml` records the researcher's approval of web search by a cloud model, per study.
+- `method.yaml` has `context_search`: `derived_from`, `source_types` (list), `character`, `where` (list), `repeat`;
+  `mmo method check` checks its shape, never its content.
+- A **search plan** is a memo of type `search-plan`, per research question: context needed, types and character of
+  sources and why, where to look (not only the web), how independence is judged, when to stop. A model's plan is
+  approved when the researcher accepts or edits it; the researcher's own plan is approved as written.
+- `mmo context round` records a round by an approved plan (`op: search-round`, `plan`, `round`, `reason`); a later
+  round of the same plan names the gap that started it (`gaps: [memo:<id>]`).
+- What a model cannot reach (paid archives, printed sources, interviews) is a request to the researcher:
+  `mmo context request` (`op: request`, `request-<n>`, `what`, `why`, `where`, `question`, `plan`); only the
+  researcher closes it (`mmo context close`, `op: request-closed`, `outcome`, `sources`). `mmo status` lists the open
+  ones.
+- `source.yaml` of a context source: `provenance` - `found` (`how`: search | reference | researcher; `query` for a
+  search; `place` unless the researcher brought it; `date`; `by`; `plan`; `round`), `type`, `character`, `speaker`,
+  `relation` (author | author-circle | independent), `judged`; written by `mmo source provenance`, reported missing
+  by `mmo source check`.
+- `analysis.web_search: [<model id>]` in `topic.yaml`: the models the researcher lets search the web for the study.
+  `mmo run start` records `web: true|false` in the run; `mmo-guard` denies WebSearch and WebFetch while no study of
+  the environment lists the model (the hook sees no study, so one approving study opens the web tools; the run and
+  the role say for which study).
+- A blind probe records the model's prior knowledge before the search (T45).
 
 ## Out of scope now
 

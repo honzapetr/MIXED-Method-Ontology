@@ -648,3 +648,27 @@
   (T46 enforces); prompts of the other SKAD phases; the workshop's `AGENTS.md` CLI line lacks `role`, `run`
   (protected); `zkusebna/test9` had a stale `.git/index.lock` from Google Drive (fixed) - watch for it in new copies.
 - Next session: T44 (context search by method) on a new branch from `task/T43-roles` (or from `main` after merge).
+
+## T44 – 2026-11-24
+- Done: context search by the method and the research questions (ADR 0015).
+  - Workshop: `code/mmo/analysis/context.py` (search plans = memos of type `search-plan`, rounds, requests to the
+    researcher, summary for `mmo status`), `code/mmo/core/provenance.py` (`provenance` of `source.yaml`, reported by
+    `mmo source check` for context sources), `mmo context round|request|close|list`, `mmo source provenance`,
+    `analysis.web_search` (study setting), `web` recorded on every run, `check_context_search` in `mmo method check`,
+    `mmo-guard` denies `WebSearch`/`WebFetch` unless a study lists the model in `analysis.web_search`.
+  - Research environment (branch `task/T44-context-search` on `task/T43-roles`): `context_search` in the method.yaml
+    of SKAD (version 2026-11-24.1), grounded theory, thematic analysis and the template (2026-11-24); SKAD role prompt
+    `prompts/roles/context-searcher.md` mapped by `roles:`; docs (`analysis.md` "Context search", `how-it-works.md`
+    7b, `memos.md`, `topics/README.md`, `methods/README.md`). Protected, for the owner's approval:
+    `.agents/roles/context-searcher.md` (+ generated copy), `.claude/settings.json` (hook matcher gets
+    `WebSearch|WebFetch`), `AGENTS.md` (commands row).
+- Verified: `uv run pytest` 163 passed; `uv run ruff check .` and `ruff format --check .` clean; `mmo method check`
+  4 ok; `agents_sync --check` clean. Trial in `scratch/T44/env` (metadata of test 9's `nazi-v-ai-dobe`, no texts):
+  a plan for q3 was refused for a round while proposed, accepted, round 1 recorded, a context-searcher run said
+  "web search: not approved", a request for Newton/Anopress listed by `mmo status`, provenance of
+  `recenze-iliteratura` recorded; `mmo context list` showed 13 of 14 context sources without provenance (they came
+  before T44).
+- Next: the owner approves the protected paths and the method changes; a real context searcher (with or without web)
+  runs in test 10. Open: the guard opens web tools for the whole environment when one study approves (it sees no
+  study); the context sources of test 9 have no provenance - fill them when the study is carried over. Next task T45
+  (blind probe). `scratch/T44/` can be deleted (trial only).
